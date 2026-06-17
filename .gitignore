@@ -3,7 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.sqlite3
-# db.sqlite3
+db.sqlite3
+backup_phase*.json
 
 # Virtual Environments
 hostello_env/
