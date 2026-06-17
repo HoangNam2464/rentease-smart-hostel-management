@@ -32,6 +32,7 @@ urlpatterns = [
     path('tenant/invoices/<int:pk>/', views.tenant_invoice_detail, name='tenant_invoice_detail'),
     path('tenant/payments/', views.tenant_payments_list, name='tenant_payments_list'),
     path('tenant/repairs/', views.tenant_repairs_list, name='tenant_repairs_list'),
+    path('tenant/repairs/new/', views.tenant_repair_create, name='tenant_repair_create'),
     path('tenant/repairs/<int:pk>/', views.tenant_repair_detail, name='tenant_repair_detail'),
     path('tenant/notifications/', views.tenant_notifications_list, name='tenant_notifications_list'),
     path('tenant/notifications/<int:pk>/', views.tenant_notification_detail, name='tenant_notification_detail'),

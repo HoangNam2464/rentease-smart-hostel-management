@@ -13,7 +13,7 @@ from properties.models import Room
 from tenants.models import Tenant
 
 from .decorators import is_admin_user, owner_required, tenant_required
-from .forms import RentEaseAuthenticationForm
+from .forms import RentEaseAuthenticationForm, TenantRepairRequestForm
 
 
 def _choice_value(choices, label, fallback):
@@ -119,6 +119,16 @@ def tenant_payments_queryset(tenant):
 
 def tenant_repairs_queryset(tenant):
     return RepairRequest.objects.select_related('room').filter(tenant=tenant)
+
+
+def tenant_active_rooms_queryset(tenant):
+    active_contract_status = _choice_value(Contract.STATUS_CHOICES, 'Active', 'active')
+    return (
+        Room.objects
+        .filter(contracts__tenant=tenant, contracts__status=active_contract_status)
+        .distinct()
+        .order_by('room_code')
+    )
 
 
 def tenant_notifications_queryset(tenant):
@@ -497,6 +507,35 @@ def tenant_repairs_list(request):
     return render(request, 'portal/tenant_repairs_list.html', {
         'tenant': tenant,
         'repairs': repairs,
+    })
+
+
+@tenant_required
+def tenant_repair_create(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    allowed_rooms = tenant_active_rooms_queryset(tenant)
+    has_allowed_rooms = allowed_rooms.exists()
+
+    if request.method == 'POST':
+        form = TenantRepairRequestForm(request.POST, allowed_rooms=allowed_rooms)
+        if not has_allowed_rooms:
+            messages.error(request, 'No active room is linked to your tenant profile.')
+        elif form.is_valid():
+            repair = form.save(commit=False)
+            repair.tenant = tenant
+            repair.save()
+            messages.success(request, 'Repair request submitted successfully.')
+            return redirect('portal:tenant_repairs_list')
+    else:
+        form = TenantRepairRequestForm(allowed_rooms=allowed_rooms)
+
+    return render(request, 'portal/tenant_repair_form.html', {
+        'tenant': tenant,
+        'form': form,
+        'has_allowed_rooms': has_allowed_rooms,
     })
 
 

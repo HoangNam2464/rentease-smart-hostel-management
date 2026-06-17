@@ -1,0 +1,53 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Submit Repair Request - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Submit Repair Request</h1>
+    <p>Create a repair request for a room linked to your active contract.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if not has_allowed_rooms %}
+            <div class="alert warning">
+                No active room is linked to your tenant profile. Please contact the property manager before submitting a repair request.
+            </div>
+            <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+        {% else %}
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="form-field">
+                    {{ form.room.label_tag }}
+                    {{ form.room }}
+                    {{ form.room.errors }}
+                </div>
+
+                <div class="form-field">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <div class="form-field">
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="form-field">
+                    {{ form.priority.label_tag }}
+                    {{ form.priority }}
+                    {{ form.priority.errors }}
+                </div>
+
+                <button class="button primary" type="submit">Submit Repair Request</button>
+                <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+            </form>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
