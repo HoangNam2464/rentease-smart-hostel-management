@@ -1,0 +1,56 @@
+{% extends "reports/base.html" %}
+
+{% block report_content %}
+<h1>Billing Report</h1>
+
+<form method="get" class="filter-form">
+  <label>Month <input type="number" name="month" min="1" max="12" value="{{ month }}"></label>
+  <label>Year <input type="number" name="year" min="2000" value="{{ year }}"></label>
+  <label>Status
+    <select name="status">
+      <option value="">All</option>
+      {% for value, label in status_choices %}
+      <option value="{{ value }}"{% if status == value %} selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit">Filter</button>
+</form>
+
+<div class="metric-grid">
+  <div class="metric-card">Total invoice amount<strong>{{ total_invoice_amount }}</strong></div>
+  <div class="metric-card">Paid amount<strong>{{ paid_amount }}</strong></div>
+  <div class="metric-card">Remaining debt<strong>{{ remaining_debt }}</strong></div>
+</div>
+
+<table class="report-table">
+  <thead>
+    <tr>
+      <th>Invoice</th>
+      <th>Contract</th>
+      <th>Room</th>
+      <th>Tenant</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Paid</th>
+      <th>Remaining</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for invoice in invoices %}
+    <tr>
+      <td>{{ invoice.invoice_code }}</td>
+      <td>{{ invoice.contract.contract_code }}</td>
+      <td>{{ invoice.contract.room.room_code }}</td>
+      <td>{{ invoice.contract.tenant.full_name }}</td>
+      <td>{{ invoice.get_status_display }}</td>
+      <td>{{ invoice.total_amount }}</td>
+      <td>{{ invoice.paid_amount }}</td>
+      <td>{{ invoice.remaining_amount }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8">No invoices found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

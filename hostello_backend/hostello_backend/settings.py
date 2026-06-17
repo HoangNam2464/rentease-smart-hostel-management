@@ -55,6 +55,7 @@ LOCAL_APPS = [
     'billing',
     'maintenance',
     'listings',
+    'reports',
     'students', 
     'attendance',
     'requests',
@@ -231,6 +232,7 @@ JAZZMIN_SETTINGS = {
     # Top Menu
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Reports", "url": "/reports/", "permissions": ["auth.view_user"]},
         {"name": "View Site", "url": "/", "new_window": True},
     ],
 
@@ -253,6 +255,7 @@ JAZZMIN_SETTINGS = {
         "billing",
         "maintenance",
         "listings",
+        "reports",
         "students",
         "attendance",
         "requests",

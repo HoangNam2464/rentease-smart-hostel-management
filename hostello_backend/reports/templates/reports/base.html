@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .report-nav { margin: 0 0 20px; }
+  .report-nav a { margin-right: 12px; }
+  .metric-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 24px; }
+  .metric-card { border: 1px solid #ddd; border-radius: 6px; padding: 14px; background: #fff; }
+  .metric-card strong { display: block; font-size: 22px; margin-top: 6px; }
+  .report-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .report-table th, .report-table td { border-bottom: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+  .report-section { margin-bottom: 28px; }
+  .filter-form { margin-bottom: 18px; }
+  .filter-form input, .filter-form select { margin-right: 8px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-nav">
+  <a href="{% url 'reports:dashboard' %}">Dashboard</a>
+  <a href="{% url 'reports:billing' %}">Billing</a>
+  <a href="{% url 'reports:rooms' %}">Rooms</a>
+  <a href="{% url 'reports:tenants_contracts' %}">Tenants & Contracts</a>
+  <a href="{% url 'reports:maintenance' %}">Maintenance</a>
+  <a href="{% url 'reports:listings' %}">Listings</a>
+</div>
+{% block report_content %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "reports/base.html" %}
+
+{% block report_content %}
+<h1>Maintenance Report</h1>
+
+<div class="metric-grid">
+  <div class="metric-card">Completed maintenance cost<strong>{{ maintenance_cost_summary }}</strong></div>
+</div>
+
+<div class="report-section">
+  <h2>Pending repair requests</h2>
+  <table class="report-table">
+    <thead><tr><th>Title</th><th>Room</th><th>Tenant</th><th>Priority</th><th>Requested at</th></tr></thead>
+    <tbody>
+      {% for request in pending_repair_requests %}
+      <tr>
+        <td>{{ request.title }}</td>
+        <td>{{ request.room.room_code }}</td>
+        <td>{{ request.tenant|default:"-" }}</td>
+        <td>{{ request.get_priority_display }}</td>
+        <td>{{ request.requested_at }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No pending repair requests.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="report-section">
+  <h2>Completed maintenance records</h2>
+  <table class="report-table">
+    <thead><tr><th>Type</th><th>Room</th><th>Vendor</th><th>Cost</th><th>Performed date</th></tr></thead>
+    <tbody>
+      {% for record in completed_maintenance_records %}
+      <tr>
+        <td>{{ record.maintenance_type }}</td>
+        <td>{{ record.room.room_code }}</td>
+        <td>{{ record.vendor_name|default:"-" }}</td>
+        <td>{{ record.cost }}</td>
+        <td>{{ record.performed_date }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No completed maintenance records.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

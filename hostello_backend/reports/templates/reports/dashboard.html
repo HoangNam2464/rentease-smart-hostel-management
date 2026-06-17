@@ -1,0 +1,20 @@
+{% extends "reports/base.html" %}
+
+{% block report_content %}
+<h1>RentEase Dashboard</h1>
+<p>Current billing period: {{ metrics.month }}/{{ metrics.year }}</p>
+
+<div class="metric-grid">
+  <div class="metric-card">Total rooms<strong>{{ metrics.total_rooms }}</strong></div>
+  <div class="metric-card">Available rooms<strong>{{ metrics.available_rooms }}</strong></div>
+  <div class="metric-card">Occupied rooms<strong>{{ metrics.occupied_rooms }}</strong></div>
+  <div class="metric-card">Total tenants<strong>{{ metrics.total_tenants }}</strong></div>
+  <div class="metric-card">Active contracts<strong>{{ metrics.active_contracts }}</strong></div>
+  <div class="metric-card">Monthly invoice total<strong>{{ metrics.monthly_invoice_total }}</strong></div>
+  <div class="metric-card">Paid this month<strong>{{ metrics.paid_amount_this_month }}</strong></div>
+  <div class="metric-card">Outstanding debt<strong>{{ metrics.outstanding_debt }}</strong></div>
+  <div class="metric-card">Pending repairs<strong>{{ metrics.pending_repair_requests }}</strong></div>
+  <div class="metric-card">Published listings<strong>{{ metrics.published_room_listings }}</strong></div>
+  <div class="metric-card">Pending viewings<strong>{{ metrics.pending_viewing_registrations }}</strong></div>
+</div>
+{% endblock %}

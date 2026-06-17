@@ -1,0 +1,64 @@
+{% extends "reports/base.html" %}
+
+{% block report_content %}
+<h1>Tenant and Contract Report</h1>
+
+<div class="report-section">
+  <h2>Contracts ending in {{ ending_soon_days }} days</h2>
+  <table class="report-table">
+    <thead><tr><th>Contract</th><th>Room</th><th>Tenant</th><th>End date</th><th>Rent</th></tr></thead>
+    <tbody>
+      {% for contract in contracts_ending_soon %}
+      <tr>
+        <td>{{ contract.contract_code }}</td>
+        <td>{{ contract.room.room_code }}</td>
+        <td>{{ contract.tenant.full_name }}</td>
+        <td>{{ contract.end_date }}</td>
+        <td>{{ contract.rent_amount }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No contracts ending soon.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="report-section">
+  <h2>Active contracts</h2>
+  <table class="report-table">
+    <thead><tr><th>Contract</th><th>Room</th><th>Tenant</th><th>Start</th><th>End</th></tr></thead>
+    <tbody>
+      {% for contract in active_contracts %}
+      <tr>
+        <td>{{ contract.contract_code }}</td>
+        <td>{{ contract.room.room_code }}</td>
+        <td>{{ contract.tenant.full_name }}</td>
+        <td>{{ contract.start_date }}</td>
+        <td>{{ contract.end_date }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No active contracts found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="report-section">
+  <h2>Active tenants</h2>
+  <table class="report-table">
+    <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for tenant in active_tenants %}
+      <tr>
+        <td>{{ tenant.full_name }}</td>
+        <td>{{ tenant.phone_number }}</td>
+        <td>{{ tenant.email }}</td>
+        <td>{{ tenant.get_status_display }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No active tenants found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
