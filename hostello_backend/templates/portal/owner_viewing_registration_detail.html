@@ -21,6 +21,7 @@
         {% if registration.note %}
             <p style="line-height: 1.6;"><strong>Note:</strong> {{ registration.note }}</p>
         {% endif %}
+        <a class="button primary" href="{% url 'portal:owner_viewing_registration_process' registration.pk %}">Process Viewing Registration</a>
         <a class="button" href="{% url 'portal:owner_viewing_registrations_list' %}">Back to viewing registrations</a>
     </div>
 </section>

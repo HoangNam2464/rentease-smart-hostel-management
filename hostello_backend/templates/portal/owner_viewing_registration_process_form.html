@@ -1,0 +1,55 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Process Viewing Registration - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Process Viewing Registration</h1>
+    <p>Update the processing status and internal note for this viewing request.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <h2>Registration Summary</h2>
+        <p><strong>Listing:</strong> {{ registration.listing.title }}</p>
+        <p><strong>Room:</strong> {{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</p>
+        <p><strong>Visitor:</strong> {{ registration.full_name }}</p>
+        <p><strong>Phone:</strong> {{ registration.phone }}</p>
+        <p><strong>Email:</strong> {{ registration.email|default:"-" }}</p>
+        <p><strong>Preferred date:</strong> {{ registration.preferred_date }}</p>
+        <p><strong>Preferred time:</strong> {{ registration.preferred_time|default:"-" }}</p>
+        <p><strong>Current status:</strong> {{ registration.get_status_display }}</p>
+        {% if registration.note %}
+            <p style="line-height: 1.6;"><strong>Visitor note:</strong> {{ registration.note }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.admin_note.id_for_label }}">Admin note</label>
+                {{ form.admin_note }}
+                {{ form.admin_note.errors }}
+            </div>
+
+            <button class="button primary" type="submit">Save Changes</button>
+            <a class="button" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Cancel</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

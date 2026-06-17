@@ -24,6 +24,7 @@ urlpatterns = [
     path('owner/listings/', views.owner_listings_list, name='owner_listings_list'),
     path('owner/listings/<int:pk>/', views.owner_listing_detail, name='owner_listing_detail'),
     path('owner/viewing-registrations/', views.owner_viewing_registrations_list, name='owner_viewing_registrations_list'),
+    path('owner/viewing-registrations/<int:pk>/process/', views.owner_viewing_registration_process, name='owner_viewing_registration_process'),
     path('owner/viewing-registrations/<int:pk>/', views.owner_viewing_registration_detail, name='owner_viewing_registration_detail'),
     path('tenant/dashboard/', views.tenant_dashboard, name='tenant_dashboard'),
     path('tenant/profile/', views.tenant_profile, name='tenant_profile'),

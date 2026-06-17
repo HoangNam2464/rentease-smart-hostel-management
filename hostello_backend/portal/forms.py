@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
+from listings.models import ViewingRegistration
 from maintenance.models import RepairRequest
 
 
@@ -63,4 +64,18 @@ class OwnerRepairProcessForm(forms.ModelForm):
         ):
             raise forms.ValidationError('Completed repair requests cannot be moved back to a non-completed status.')
 
+        return status
+
+
+class OwnerViewingRegistrationProcessForm(forms.Form):
+    status = forms.ChoiceField(choices=ViewingRegistration.STATUS_CHOICES)
+    admin_note = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 5}),
+    )
+
+    def clean_status(self):
+        status = self.cleaned_data['status']
+        if status not in dict(ViewingRegistration.STATUS_CHOICES):
+            raise forms.ValidationError('Selected status is not valid.')
         return status

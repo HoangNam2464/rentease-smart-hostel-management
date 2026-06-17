@@ -4,6 +4,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
@@ -13,7 +14,12 @@ from properties.models import Room
 from tenants.models import Tenant
 
 from .decorators import is_admin_user, owner_required, tenant_required
-from .forms import OwnerRepairProcessForm, RentEaseAuthenticationForm, TenantRepairRequestForm
+from .forms import (
+    OwnerRepairProcessForm,
+    OwnerViewingRegistrationProcessForm,
+    RentEaseAuthenticationForm,
+    TenantRepairRequestForm,
+)
 
 
 def _choice_value(choices, label, fallback):
@@ -403,6 +409,37 @@ def owner_viewing_registration_detail(request, pk):
     return render(request, 'portal/owner_viewing_registration_detail.html', {
         'profile': profile,
         'registration': registration,
+    })
+
+
+@owner_required
+def owner_viewing_registration_process(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    registration = get_object_or_404(owner_viewing_registrations_queryset(profile), pk=pk)
+
+    if request.method == 'POST':
+        form = OwnerViewingRegistrationProcessForm(request.POST)
+        if form.is_valid():
+            owner_viewing_registrations_queryset(profile).filter(pk=registration.pk).update(
+                status=form.cleaned_data['status'],
+                admin_note=form.cleaned_data['admin_note'],
+                updated_at=timezone.now(),
+            )
+            messages.success(request, 'Viewing registration updated successfully.')
+            return redirect('portal:owner_viewing_registrations_list')
+    else:
+        form = OwnerViewingRegistrationProcessForm(initial={
+            'status': registration.status,
+            'admin_note': registration.admin_note,
+        })
+
+    return render(request, 'portal/owner_viewing_registration_process_form.html', {
+        'profile': profile,
+        'registration': registration,
+        'form': form,
     })
 
 
