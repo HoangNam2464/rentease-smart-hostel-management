@@ -339,6 +339,6 @@ class RoomAdmin(admin.ModelAdmin):
     available_spots.short_description = 'Available'
 
 # Customize admin site
-admin.site.site_header = "HOSTELLO Administration"
-admin.site.site_title = "HOSTELLO Admin"
-admin.site.index_title = "Hostel Management System"
+admin.site.site_header = "RentEase Administration"
+admin.site.site_title = "RentEase Admin"
+admin.site.index_title = "RentEase Management System"

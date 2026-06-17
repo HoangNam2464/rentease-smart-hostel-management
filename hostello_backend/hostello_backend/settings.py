@@ -215,24 +215,30 @@ HOSTELLO_EMAIL_SETTINGS = {
 
 # Jazzmin Configuration
 JAZZMIN_SETTINGS = {
-    "site_title": "HOSTELLO Admin",
-    "site_header": "HOSTELLO",
-    "site_brand": "HOSTELLO",
-    "site_icon": "fas fa-home",
+    "site_title": "RentEase Admin",
+    "site_header": "RentEase",
+    "site_brand": "RentEase",
+    "site_icon": None,
     "custom_css": "admin/css/custom_admin.css",
-    "welcome_sign": "Welcome to HOSTELLO Admin Panel",
-    "copyright": "HOSTELLO © 2025",
+    "welcome_sign": "Welcome to RentEase Admin Panel",
+    "copyright": "RentEase © 2026",
     "site_logo": None,
     "login_logo": None,
     "login_logo_dark": None,
     "site_logo_classes": "img-circle",
-    "search_model": ["students.Student", "attendance.RoomAttendance"],
+    "search_model": [
+        "properties.Room",
+        "tenants.Tenant",
+        "contracts.Contract",
+        "billing.Invoice",
+        "listings.RoomListing",
+    ],
     "user_avatar": None,
 
     # Top Menu
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"name": "Reports", "url": "/reports/", "permissions": ["auth.view_user"]},
+        {"name": "Reports Dashboard", "url": "/reports/", "permissions": ["auth.view_user"]},
         {"name": "View Site", "url": "/", "new_window": True},
     ],
 
@@ -298,7 +304,7 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": False,
 
     # Custom CSS
-    "custom_css": None,
+    "custom_css": "admin/css/custom_admin.css",
     "custom_js": None,
 
     # Show/hide the sidebar

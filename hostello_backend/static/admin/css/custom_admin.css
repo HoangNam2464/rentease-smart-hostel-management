@@ -1,10 +1,10 @@
-/* Replace A logo with H letter */
+/* Replace default logo with RentEase initial */
 .brand-link .brand-image {
     display: none !important;
 }
 
 .brand-link::before {
-    content: "H";
+    content: "R";
     font-size: 28px;
     font-weight: 900;
     color: #ffffff;

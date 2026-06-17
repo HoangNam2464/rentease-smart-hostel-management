@@ -685,6 +685,6 @@ class AttendanceNotificationAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
 
 
-admin.site.site_header = "HOSTELLO Enhanced Attendance Management"
-admin.site.site_title = "HOSTELLO Admin"
-admin.site.index_title = "Enhanced Attendance Management System"
+admin.site.site_header = "RentEase Attendance Management"
+admin.site.site_title = "RentEase Admin"
+admin.site.index_title = "RentEase Management System"
