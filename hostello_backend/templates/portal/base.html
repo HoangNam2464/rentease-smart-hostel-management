@@ -237,6 +237,15 @@
                         <a href="/owner/listings/">Owner Listings</a>
                         <a href="/owner/viewing-registrations/">Owner Viewings</a>
                     {% endif %}
+                    {% if request.user.is_tenant or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                        <a href="/tenant/dashboard/">Tenant Dashboard</a>
+                        <a href="/tenant/profile/">Tenant Profile</a>
+                        <a href="/tenant/contracts/">Tenant Contracts</a>
+                        <a href="/tenant/invoices/">Tenant Invoices</a>
+                        <a href="/tenant/payments/">Tenant Payments</a>
+                        <a href="/tenant/repairs/">Tenant Repairs</a>
+                        <a href="/tenant/notifications/">Tenant Notifications</a>
+                    {% endif %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/admin/">Admin</a>
                         <a href="/reports/">Reports</a>

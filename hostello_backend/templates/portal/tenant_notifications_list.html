@@ -1,0 +1,41 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Tenant Notifications - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Notifications</h1>
+    <p>Read-only notifications connected to your tenant profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if notifications %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Title</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Type</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Read</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Sent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for notification in notifications %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:tenant_notification_detail' notification.pk %}">{{ notification.title }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ notification.get_notification_type_display }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ notification.is_read|yesno:"Yes,No" }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ notification.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No notifications are linked to your tenant profile yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

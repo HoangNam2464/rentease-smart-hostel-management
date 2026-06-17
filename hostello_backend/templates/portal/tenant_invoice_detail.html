@@ -1,0 +1,25 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ invoice.invoice_code|default:invoice.pk }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ invoice.invoice_code|default:invoice.pk }}</h1>
+    <p>Read-only invoice details connected to your contract.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Contract:</strong> {{ invoice.contract.contract_code }}</p>
+        <p><strong>Room:</strong> {{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</p>
+        <p><strong>Month/year:</strong> {{ invoice.month }}/{{ invoice.year }}</p>
+        <p><strong>Issued date:</strong> {{ invoice.issued_date }}</p>
+        <p><strong>Due date:</strong> {{ invoice.due_date|default:"-" }}</p>
+        <p><strong>Total amount:</strong> {{ invoice.total_amount }}</p>
+        <p><strong>Paid amount:</strong> {{ invoice.paid_amount }}</p>
+        <p><strong>Remaining amount:</strong> {{ invoice.remaining_amount }}</p>
+        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+        <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Back to invoices</a>
+    </div>
+</section>
+{% endblock %}

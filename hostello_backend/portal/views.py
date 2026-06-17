@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
 
-from billing.models import Invoice
+from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import Notification, RepairRequest
@@ -47,6 +47,20 @@ def render_missing_owner_profile(request):
     })
 
 
+def get_tenant_profile(user):
+    try:
+        return user.tenant_profile
+    except ObjectDoesNotExist:
+        return None
+
+
+def render_missing_tenant_profile(request):
+    return render(request, 'portal/tenant_dashboard.html', {
+        'missing_profile': True,
+        'message': 'Tenant profile is not linked yet.',
+    })
+
+
 def owner_rooms_queryset(profile):
     return Room.objects.filter(owner=profile)
 
@@ -80,6 +94,38 @@ def owner_viewing_registrations_queryset(profile):
         ViewingRegistration.objects
         .select_related('listing', 'listing__room', 'tenant')
         .filter(listing__room__owner=profile)
+    )
+
+
+def tenant_contracts_queryset(tenant):
+    return Contract.objects.select_related('room').filter(tenant=tenant)
+
+
+def tenant_invoices_queryset(tenant):
+    return (
+        Invoice.objects
+        .select_related('contract', 'contract__room')
+        .filter(contract__tenant=tenant)
+    )
+
+
+def tenant_payments_queryset(tenant):
+    return (
+        PaymentHistory.objects
+        .select_related('invoice', 'invoice__contract', 'invoice__contract__room')
+        .filter(invoice__contract__tenant=tenant)
+    )
+
+
+def tenant_repairs_queryset(tenant):
+    return RepairRequest.objects.select_related('room').filter(tenant=tenant)
+
+
+def tenant_notifications_queryset(tenant):
+    return (
+        Notification.objects
+        .select_related('invoice', 'repair_request')
+        .filter(tenant=tenant)
     )
 
 
@@ -328,13 +374,9 @@ def owner_viewing_registration_detail(request, pk):
 
 @tenant_required
 def tenant_dashboard(request):
-    try:
-        tenant = request.user.tenant_profile
-    except ObjectDoesNotExist:
-        return render(request, 'portal/tenant_dashboard.html', {
-            'missing_profile': True,
-            'message': 'Tenant profile is not linked yet.',
-        })
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
 
     active_contract_status = _choice_value(Contract.STATUS_CHOICES, 'Active', 'active')
     open_repair_statuses = [
@@ -366,6 +408,134 @@ def tenant_dashboard(request):
     return render(request, 'portal/tenant_dashboard.html', {
         'tenant': tenant,
         'metrics': metrics,
+    })
+
+
+@tenant_required
+def tenant_profile(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    return render(request, 'portal/tenant_profile.html', {
+        'tenant': tenant,
+    })
+
+
+@tenant_required
+def tenant_contracts_list(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    contracts = tenant_contracts_queryset(tenant).order_by('-start_date', 'contract_code')
+    return render(request, 'portal/tenant_contracts_list.html', {
+        'tenant': tenant,
+        'contracts': contracts,
+    })
+
+
+@tenant_required
+def tenant_contract_detail(request, pk):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    contract = get_object_or_404(tenant_contracts_queryset(tenant), pk=pk)
+    return render(request, 'portal/tenant_contract_detail.html', {
+        'tenant': tenant,
+        'contract': contract,
+    })
+
+
+@tenant_required
+def tenant_invoices_list(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    invoices = tenant_invoices_queryset(tenant).order_by('-year', '-month', 'invoice_code')
+    return render(request, 'portal/tenant_invoices_list.html', {
+        'tenant': tenant,
+        'invoices': invoices,
+    })
+
+
+@tenant_required
+def tenant_invoice_detail(request, pk):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    invoice = get_object_or_404(tenant_invoices_queryset(tenant), pk=pk)
+    return render(request, 'portal/tenant_invoice_detail.html', {
+        'tenant': tenant,
+        'invoice': invoice,
+    })
+
+
+@tenant_required
+def tenant_payments_list(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    payments = tenant_payments_queryset(tenant).order_by('-paid_at', '-created_at')
+    return render(request, 'portal/tenant_payments_list.html', {
+        'tenant': tenant,
+        'payments': payments,
+    })
+
+
+@tenant_required
+def tenant_repairs_list(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    repairs = tenant_repairs_queryset(tenant).order_by('-requested_at', '-created_at')
+    return render(request, 'portal/tenant_repairs_list.html', {
+        'tenant': tenant,
+        'repairs': repairs,
+    })
+
+
+@tenant_required
+def tenant_repair_detail(request, pk):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    repair = get_object_or_404(tenant_repairs_queryset(tenant), pk=pk)
+    return render(request, 'portal/tenant_repair_detail.html', {
+        'tenant': tenant,
+        'repair': repair,
+    })
+
+
+@tenant_required
+def tenant_notifications_list(request):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    notifications = tenant_notifications_queryset(tenant).order_by('-created_at')
+    return render(request, 'portal/tenant_notifications_list.html', {
+        'tenant': tenant,
+        'notifications': notifications,
+    })
+
+
+@tenant_required
+def tenant_notification_detail(request, pk):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    notification = get_object_or_404(tenant_notifications_queryset(tenant), pk=pk)
+    return render(request, 'portal/tenant_notification_detail.html', {
+        'tenant': tenant,
+        'notification': notification,
     })
 
 

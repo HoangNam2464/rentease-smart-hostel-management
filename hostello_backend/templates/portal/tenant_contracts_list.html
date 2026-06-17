@@ -1,0 +1,45 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Tenant Contracts - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Contracts</h1>
+    <p>Read-only list of contracts connected to your tenant profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if contracts %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Contract</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Start</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">End</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Rent</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contract in contracts %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:tenant_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ contract.room.room_code }} - {{ contract.room.room_name }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ contract.start_date }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ contract.end_date }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ contract.rent_amount }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ contract.get_status_display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No contracts are linked to your tenant profile yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

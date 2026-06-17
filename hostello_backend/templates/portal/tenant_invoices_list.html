@@ -1,0 +1,47 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Tenant Invoices - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Invoices</h1>
+    <p>Read-only list of invoices connected to your contracts.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if invoices %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Invoice</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Contract</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Month</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Total</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Remaining</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in invoices %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:tenant_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.contract.contract_code }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.contract.room.room_code }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.month }}/{{ invoice.year }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.total_amount }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.remaining_amount }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ invoice.get_status_display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No invoices are linked to your contracts yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

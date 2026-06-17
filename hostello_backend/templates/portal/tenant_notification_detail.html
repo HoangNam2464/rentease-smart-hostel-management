@@ -1,0 +1,23 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ notification.title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ notification.title }}</h1>
+    <p>Read-only notification details connected to your tenant profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Type:</strong> {{ notification.get_notification_type_display }}</p>
+        <p><strong>Read:</strong> {{ notification.is_read|yesno:"Yes,No" }}</p>
+        <p><strong>Sent at:</strong> {{ notification.created_at }}</p>
+        {% if notification.read_at %}
+            <p><strong>Read at:</strong> {{ notification.read_at }}</p>
+        {% endif %}
+        <p style="line-height: 1.6;"><strong>Message:</strong> {{ notification.message }}</p>
+        <a class="button" href="{% url 'portal:tenant_notifications_list' %}">Back to notifications</a>
+    </div>
+</section>
+{% endblock %}
