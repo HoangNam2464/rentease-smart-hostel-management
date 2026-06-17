@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-from listings.models import ViewingRegistration
+from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
 
 
@@ -65,6 +65,41 @@ class OwnerRepairProcessForm(forms.ModelForm):
             raise forms.ValidationError('Completed repair requests cannot be moved back to a non-completed status.')
 
         return status
+
+
+class OwnerRoomListingForm(forms.ModelForm):
+    class Meta:
+        model = RoomListing
+        fields = [
+            'room',
+            'title',
+            'description',
+            'listing_price',
+            'deposit_amount',
+            'status',
+            'available_from',
+            'expired_at',
+            'image_url',
+        ]
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 5}),
+            'available_from': forms.DateInput(attrs={'type': 'date'}),
+            'expired_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+        }
+
+    def __init__(self, *args, allowed_rooms=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        room_model = RoomListing._meta.get_field('room').remote_field.model
+        self.allowed_rooms = allowed_rooms if allowed_rooms is not None else room_model.objects.none()
+        self.fields['room'].queryset = self.allowed_rooms
+        self.fields['room'].required = True
+        self.fields['expired_at'].input_formats = ['%Y-%m-%dT%H:%M']
+
+    def clean_room(self):
+        room = self.cleaned_data['room']
+        if not self.allowed_rooms.filter(pk=room.pk).exists():
+            raise forms.ValidationError('Selected room is not linked to your owner profile.')
+        return room
 
 
 class OwnerViewingRegistrationProcessForm(forms.Form):

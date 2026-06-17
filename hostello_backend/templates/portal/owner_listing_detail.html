@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ listing.title }}</h1>
-    <p>Read-only listing details for one of your rooms.</p>
+    <p>Listing details for one of your rooms.</p>
 </section>
 
 <section class="card">
@@ -21,6 +21,7 @@
         <p><strong>Published at:</strong> {{ listing.published_at|default:"-" }}</p>
         <p><strong>Expired at:</strong> {{ listing.expired_at|default:"-" }}</p>
         <p style="line-height: 1.6;"><strong>Description:</strong> {{ listing.description }}</p>
+        <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}">Edit Listing</a>
         <a class="button" href="{% url 'portal:owner_listings_list' %}">Back to listings</a>
     </div>
 </section>

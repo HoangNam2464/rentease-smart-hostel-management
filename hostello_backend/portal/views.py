@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -16,6 +16,7 @@ from tenants.models import Tenant
 from .decorators import is_admin_user, owner_required, tenant_required
 from .forms import (
     OwnerRepairProcessForm,
+    OwnerRoomListingForm,
     OwnerViewingRegistrationProcessForm,
     RentEaseAuthenticationForm,
     TenantRepairRequestForm,
@@ -279,6 +280,66 @@ def owner_listing_detail(request, pk):
     return render(request, 'portal/owner_listing_detail.html', {
         'profile': profile,
         'listing': listing,
+    })
+
+
+@owner_required
+def owner_listing_create(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    allowed_rooms = owner_rooms_queryset(profile).order_by('room_code')
+
+    if request.method == 'POST':
+        form = OwnerRoomListingForm(request.POST, allowed_rooms=allowed_rooms)
+        if form.is_valid():
+            try:
+                form.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            else:
+                messages.success(request, 'Room listing created successfully.')
+                return redirect('portal:owner_listings_list')
+    else:
+        form = OwnerRoomListingForm(allowed_rooms=allowed_rooms)
+
+    return render(request, 'portal/owner_listing_form.html', {
+        'profile': profile,
+        'form': form,
+        'form_title': 'Create Room Listing',
+        'submit_label': 'Create Listing',
+    })
+
+
+@owner_required
+def owner_listing_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    listing = get_object_or_404(owner_listings_queryset(profile), pk=pk)
+    allowed_rooms = owner_rooms_queryset(profile).order_by('room_code')
+
+    if request.method == 'POST':
+        form = OwnerRoomListingForm(request.POST, instance=listing, allowed_rooms=allowed_rooms)
+        if form.is_valid():
+            try:
+                form.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            else:
+                messages.success(request, 'Room listing updated successfully.')
+                return redirect('portal:owner_listing_detail', pk=listing.pk)
+    else:
+        form = OwnerRoomListingForm(instance=listing, allowed_rooms=allowed_rooms)
+
+    return render(request, 'portal/owner_listing_form.html', {
+        'profile': profile,
+        'listing': listing,
+        'form': form,
+        'form_title': 'Edit Room Listing',
+        'submit_label': 'Save Changes',
     })
 
 

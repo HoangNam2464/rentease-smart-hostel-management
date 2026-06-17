@@ -1,0 +1,85 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ form_title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ form_title }}</h1>
+    <p>Create or update a public room listing for one of your own rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.room.id_for_label }}">Room</label>
+                {{ form.room }}
+                {{ form.room.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.title.id_for_label }}">Title</label>
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.listing_price.id_for_label }}">Listing price</label>
+                {{ form.listing_price }}
+                {{ form.listing_price.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.deposit_amount.id_for_label }}">Deposit amount</label>
+                {{ form.deposit_amount }}
+                {{ form.deposit_amount.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.available_from.id_for_label }}">Available from</label>
+                {{ form.available_from }}
+                {{ form.available_from.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.expired_at.id_for_label }}">Expired at</label>
+                {{ form.expired_at }}
+                {{ form.expired_at.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.image_url.id_for_label }}">Image URL</label>
+                {{ form.image_url }}
+                {{ form.image_url.errors }}
+            </div>
+
+            <button class="button primary" type="submit">{{ submit_label }}</button>
+            {% if listing %}
+                <a class="button" href="{% url 'portal:owner_listing_detail' listing.pk %}">Cancel</a>
+            {% else %}
+                <a class="button" href="{% url 'portal:owner_listings_list' %}">Cancel</a>
+            {% endif %}
+        </form>
+    </div>
+</section>
+{% endblock %}
