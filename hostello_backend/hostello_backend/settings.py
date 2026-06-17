@@ -251,7 +251,13 @@ JAZZMIN_SETTINGS = {
     # Side Menu ordering
     "show_sidebar": True,
     "navigation_expanded": True,
-    "hide_apps": [],
+    "hide_apps": [
+        "students",
+        "attendance",
+        "fees",
+        "requests",
+        "notices",
+    ],
     "hide_models": [],
     "order_with_respect_to": [
         "accounts",
