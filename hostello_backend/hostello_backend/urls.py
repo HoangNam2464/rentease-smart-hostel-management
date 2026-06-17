@@ -8,6 +8,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('portal.urls')),
+    path('legacy/', include('students.urls')),
     path('', include('students.urls')),  # All student views
     path("api/", include("requests.urls")),  # All request views
     # path("fees/", include("fees.urls")),

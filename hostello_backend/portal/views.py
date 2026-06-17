@@ -1,0 +1,142 @@
+from django.contrib import messages
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import redirect, render
+
+from billing.models import Invoice
+from contracts.models import Contract
+from listings.models import RoomListing
+from maintenance.models import Notification, RepairRequest
+from properties.models import Room
+
+from .decorators import is_admin_user, owner_required, tenant_required
+from .forms import RentEaseAuthenticationForm
+
+
+def _choice_value(choices, label, fallback):
+    for value, display in choices:
+        if display == label:
+            return value
+    return fallback
+
+
+def get_role_redirect_url(user):
+    if is_admin_user(user):
+        return '/admin/'
+    if getattr(user, 'is_owner', False) or getattr(user, 'user_type', None) == 'OWNER':
+        return '/owner/dashboard/'
+    if getattr(user, 'is_tenant', False) or getattr(user, 'user_type', None) == 'TENANT':
+        return '/tenant/dashboard/'
+    return '/access-denied/'
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect(get_role_redirect_url(request.user))
+
+    form = RentEaseAuthenticationForm(request, data=request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        auth_login(request, form.get_user())
+        return redirect(get_role_redirect_url(form.get_user()))
+
+    return render(request, 'portal/login.html', {'form': form})
+
+
+def logout_view(request):
+    auth_logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('/')
+
+
+@login_required(login_url='/login/')
+def dashboard_redirect(request):
+    return redirect(get_role_redirect_url(request.user))
+
+
+@owner_required
+def owner_dashboard(request):
+    try:
+        profile = request.user.rentease_profile
+    except ObjectDoesNotExist:
+        return render(request, 'portal/owner_dashboard.html', {
+            'missing_profile': True,
+            'message': 'Owner profile is not linked yet.',
+        })
+
+    occupied_status = _choice_value(Room.STATUS_CHOICES, 'Occupied', 'occupied')
+    active_contract_status = _choice_value(Contract.STATUS_CHOICES, 'Active', 'active')
+
+    owner_rooms = Room.objects.filter(owner=profile)
+    owner_contracts = Contract.objects.filter(room__owner=profile)
+    owner_invoices = Invoice.objects.filter(contract__room__owner=profile)
+
+    metrics = {
+        'total_rooms': owner_rooms.count(),
+        'occupied_rooms': owner_rooms.filter(status=occupied_status).count(),
+        'active_contracts': owner_contracts.filter(status=active_contract_status).count(),
+        'unpaid_or_partial_invoices': owner_invoices.filter(
+            status__in=[Invoice.STATUS_UNPAID, Invoice.STATUS_PARTIAL],
+        ).count(),
+        'pending_repair_requests': RepairRequest.objects.filter(
+            room__owner=profile,
+            status=RepairRequest.STATUS_PENDING,
+        ).count(),
+        'published_listings': RoomListing.objects.filter(
+            room__owner=profile,
+            status=RoomListing.STATUS_PUBLISHED,
+        ).count(),
+    }
+
+    return render(request, 'portal/owner_dashboard.html', {
+        'profile': profile,
+        'metrics': metrics,
+    })
+
+
+@tenant_required
+def tenant_dashboard(request):
+    try:
+        tenant = request.user.tenant_profile
+    except ObjectDoesNotExist:
+        return render(request, 'portal/tenant_dashboard.html', {
+            'missing_profile': True,
+            'message': 'Tenant profile is not linked yet.',
+        })
+
+    active_contract_status = _choice_value(Contract.STATUS_CHOICES, 'Active', 'active')
+    open_repair_statuses = [
+        RepairRequest.STATUS_PENDING,
+        RepairRequest.STATUS_IN_PROGRESS,
+    ]
+
+    active_contract = (
+        Contract.objects
+        .select_related('room')
+        .filter(tenant=tenant, status=active_contract_status)
+        .order_by('-start_date')
+        .first()
+    )
+    invoices = Invoice.objects.filter(contract__tenant=tenant)
+    open_repairs = RepairRequest.objects.filter(tenant=tenant, status__in=open_repair_statuses)
+    unread_notifications = Notification.objects.filter(tenant=tenant, is_read=False)
+
+    metrics = {
+        'tenant_name': tenant.full_name,
+        'current_contract': active_contract,
+        'unpaid_or_partial_invoices': invoices.filter(
+            status__in=[Invoice.STATUS_UNPAID, Invoice.STATUS_PARTIAL],
+        ).count(),
+        'open_repair_requests': open_repairs.count(),
+        'unread_notifications': unread_notifications.count(),
+    }
+
+    return render(request, 'portal/tenant_dashboard.html', {
+        'tenant': tenant,
+        'metrics': metrics,
+    })
+
+
+def access_denied(request):
+    return render(request, 'portal/access_denied.html', status=403)

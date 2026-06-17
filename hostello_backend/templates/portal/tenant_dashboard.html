@@ -1,0 +1,47 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Tenant Dashboard - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Tenant Dashboard</h1>
+    {% if tenant %}
+        <p>Welcome, {{ tenant.full_name }}. This dashboard only summarizes data connected to your tenant profile.</p>
+    {% else %}
+        <p>RentEase tenant portal foundation.</p>
+    {% endif %}
+</section>
+
+{% if missing_profile %}
+    <div class="alert warning">{{ message }}</div>
+{% else %}
+    <section class="grid">
+        <article class="card metric">
+            <span>Tenant name</span>
+            <strong style="font-size: 1.35rem;">{{ metrics.tenant_name }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Current contract</span>
+            <strong style="font-size: 1.35rem;">
+                {% if metrics.current_contract %}
+                    {{ metrics.current_contract.contract_code }}
+                {% else %}
+                    None
+                {% endif %}
+            </strong>
+        </article>
+        <article class="card metric">
+            <span>Unpaid or partial invoices</span>
+            <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Open repair requests</span>
+            <strong>{{ metrics.open_repair_requests }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Unread notifications</span>
+            <strong>{{ metrics.unread_notifications }}</strong>
+        </article>
+    </section>
+{% endif %}
+{% endblock %}

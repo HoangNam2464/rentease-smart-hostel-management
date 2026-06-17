@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RentEase Portal{% endblock %}</title>
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #172033;
+            --muted: #64748b;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --border: #dbe3ef;
+            --success: #16a34a;
+            --warning: #d97706;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .topbar {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar-inner {
+            width: min(1120px, calc(100% - 32px));
+            min-height: 64px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            color: #ffffff;
+            background: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav a,
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #ffffff;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .button.primary,
+        .nav a.primary {
+            color: #ffffff;
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .button.primary:hover,
+        .nav a.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 36px 0;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            letter-spacing: 0;
+        }
+
+        .page-header p {
+            max-width: 720px;
+            margin: 10px 0 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--card);
+            box-shadow: 0 12px 32px rgba(23, 32, 51, 0.07);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .metric {
+            padding: 20px;
+        }
+
+        .metric span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .metric strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 2rem;
+        }
+
+        .alert {
+            padding: 16px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .alert.warning {
+            border-color: rgba(217, 119, 6, 0.3);
+            background: rgba(217, 119, 6, 0.08);
+        }
+
+        .form-field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            font-weight: 700;
+        }
+
+        .form-field input {
+            min-height: 44px;
+            padding: 0 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .errorlist {
+            color: #b91c1c;
+            margin: 0 0 14px;
+            padding-left: 18px;
+        }
+
+        @media (max-width: 760px) {
+            .topbar-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 12px 0;
+            }
+
+            .nav {
+                justify-content: flex-start;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark">R</span>
+                <span>RentEase</span>
+            </a>
+            <nav class="nav" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/dashboard/">Dashboard</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                        <a href="/admin/">Admin</a>
+                        <a href="/reports/">Reports</a>
+                    {% endif %}
+                    <a class="primary" href="/logout/">Logout</a>
+                {% else %}
+                    <a class="primary" href="/login/">Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

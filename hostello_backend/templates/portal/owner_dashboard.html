@@ -1,0 +1,45 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Owner Dashboard - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Owner Dashboard</h1>
+    {% if profile %}
+        <p>Welcome, {{ profile.full_name }}. This dashboard only summarizes data connected to your owner profile.</p>
+    {% else %}
+        <p>RentEase owner portal foundation.</p>
+    {% endif %}
+</section>
+
+{% if missing_profile %}
+    <div class="alert warning">{{ message }}</div>
+{% else %}
+    <section class="grid">
+        <article class="card metric">
+            <span>Total rooms</span>
+            <strong>{{ metrics.total_rooms }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Occupied rooms</span>
+            <strong>{{ metrics.occupied_rooms }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Active contracts</span>
+            <strong>{{ metrics.active_contracts }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Unpaid or partial invoices</span>
+            <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Pending repair requests</span>
+            <strong>{{ metrics.pending_repair_requests }}</strong>
+        </article>
+        <article class="card metric">
+            <span>Published listings</span>
+            <strong>{{ metrics.published_listings }}</strong>
+        </article>
+    </section>
+{% endif %}
+{% endblock %}

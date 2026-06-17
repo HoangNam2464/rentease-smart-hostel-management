@@ -1,0 +1,17 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Access Denied - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Access denied</h1>
+    <p>Your account does not have permission to open this page.</p>
+</section>
+
+<div class="card">
+    <div class="card-body">
+        <p>Please return to your dashboard or contact an administrator if this looks wrong.</p>
+        <a class="button primary" href="/dashboard/">Go to dashboard</a>
+    </div>
+</div>
+{% endblock %}

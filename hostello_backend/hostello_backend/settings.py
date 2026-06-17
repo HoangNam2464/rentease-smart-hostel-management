@@ -56,6 +56,7 @@ LOCAL_APPS = [
     'maintenance',
     'listings',
     'reports',
+    'portal',
     'students', 
     'attendance',
     'requests',
