@@ -1,0 +1,60 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Register Viewing - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Register a Viewing</h1>
+    <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}</p>
+</section>
+
+<section class="card" style="max-width: 680px;">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-field">
+                <label for="{{ form.full_name.id_for_label }}">Full name</label>
+                {{ form.full_name }}
+                {{ form.full_name.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.phone.id_for_label }}">Phone</label>
+                {{ form.phone }}
+                {{ form.phone.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.preferred_date.id_for_label }}">Preferred date</label>
+                {{ form.preferred_date }}
+                {{ form.preferred_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.preferred_time.id_for_label }}">Preferred time</label>
+                {{ form.preferred_time }}
+                {{ form.preferred_time.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.note.id_for_label }}">Note</label>
+                {{ form.note }}
+                {{ form.note.errors }}
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="button primary" type="submit">Submit registration</button>
+                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

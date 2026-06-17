@@ -1,0 +1,53 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ listing.title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ listing.title }}</h1>
+    <p>{{ listing.room.room_code }} - {{ listing.room.room_name }}</p>
+</section>
+
+<section class="card">
+    {% if listing.image_url %}
+        <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 100%; max-height: 380px; object-fit: cover; border-radius: 10px 10px 0 0;">
+    {% endif %}
+    <div class="card-body">
+        <p style="line-height: 1.65; color: var(--muted);">{{ listing.description }}</p>
+
+        <section class="grid" style="margin: 24px 0;">
+            <article class="card metric">
+                <span>Listing price</span>
+                <strong>{{ listing.listing_price }}</strong>
+            </article>
+            <article class="card metric">
+                <span>Deposit</span>
+                <strong>{{ listing.deposit_amount }}</strong>
+            </article>
+            <article class="card metric">
+                <span>Available from</span>
+                <strong style="font-size: 1.35rem;">{{ listing.available_from }}</strong>
+            </article>
+        </section>
+
+        <h2 style="font-size: 1.3rem;">Room information</h2>
+        <p><strong>Room code:</strong> {{ listing.room.room_code }}</p>
+        <p><strong>Room name:</strong> {{ listing.room.room_name }}</p>
+        {% if listing.room.floor %}
+            <p><strong>Floor:</strong> {{ listing.room.floor }}</p>
+        {% endif %}
+        {% if listing.room.area %}
+            <p><strong>Area:</strong> {{ listing.room.area }} m2</p>
+        {% endif %}
+        <p><strong>Max occupants:</strong> {{ listing.room.max_occupants }}</p>
+        {% if listing.room.description %}
+            <p style="line-height: 1.6;"><strong>Description:</strong> {{ listing.room.description }}</p>
+        {% endif %}
+
+        <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="button primary" href="{% url 'listings:viewing_registration_create' listing.pk %}">Register viewing</a>
+            <a class="button" href="{% url 'listings:public_listing_list' %}">Back to rooms</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
