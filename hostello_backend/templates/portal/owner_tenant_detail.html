@@ -1,0 +1,38 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ tenant.full_name }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ tenant.full_name }}</h1>
+    <p>Read-only tenant details connected to your room contracts.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Full name:</strong> {{ tenant.full_name }}</p>
+        <p><strong>Phone:</strong> {{ tenant.phone_number|default:"-" }}</p>
+        <p><strong>Email:</strong> {{ tenant.email|default:"-" }}</p>
+        <p><strong>Address:</strong> {{ tenant.address|default:"-" }}</p>
+        <p><strong>Date of birth:</strong> {{ tenant.date_of_birth|default:"-" }}</p>
+        <p><strong>Gender:</strong> {{ tenant.get_gender_display|default:"-" }}</p>
+        <p><strong>Status:</strong> {{ tenant.get_status_display }}</p>
+
+        <h2 style="font-size: 1.25rem; margin-top: 24px;">Linked contracts</h2>
+        {% if contracts %}
+            <ul>
+                {% for contract in contracts %}
+                    <li>
+                        <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
+                        - {{ contract.room.room_code }} - {{ contract.get_status_display }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: var(--muted);">No linked contracts found.</p>
+        {% endif %}
+
+        <a class="button" href="{% url 'portal:owner_tenants_list' %}">Back to tenants</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ registration.full_name }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ registration.full_name }}</h1>
+    <p>Read-only viewing registration details for one of your room listings.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Listing:</strong> {{ registration.listing.title }}</p>
+        <p><strong>Room:</strong> {{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</p>
+        <p><strong>Full name:</strong> {{ registration.full_name }}</p>
+        <p><strong>Phone:</strong> {{ registration.phone }}</p>
+        <p><strong>Email:</strong> {{ registration.email|default:"-" }}</p>
+        <p><strong>Preferred date:</strong> {{ registration.preferred_date }}</p>
+        <p><strong>Preferred time:</strong> {{ registration.preferred_time|default:"-" }}</p>
+        <p><strong>Status:</strong> {{ registration.get_status_display }}</p>
+        {% if registration.note %}
+            <p style="line-height: 1.6;"><strong>Note:</strong> {{ registration.note }}</p>
+        {% endif %}
+        <a class="button" href="{% url 'portal:owner_viewing_registrations_list' %}">Back to viewing registrations</a>
+    </div>
+</section>
+{% endblock %}

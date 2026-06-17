@@ -1,0 +1,43 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Owner Viewing Registrations - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Viewing Registrations</h1>
+    <p>Read-only list of viewing requests for your room listings.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if registrations %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Visitor</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Listing</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Preferred date</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registration in registrations %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.listing.title }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.listing.room.room_code }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.preferred_date }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.get_status_display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No viewing registrations are linked to your listings yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

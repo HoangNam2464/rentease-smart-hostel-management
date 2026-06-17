@@ -1,0 +1,41 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Owner Tenants - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Tenants</h1>
+    <p>Read-only list of tenants connected to contracts for your rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if tenants %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Tenant</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Phone</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Email</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tenant in tenants %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:owner_tenant_detail' tenant.pk %}">{{ tenant.full_name }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.phone_number|default:"-" }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.email|default:"-" }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.get_status_display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No tenants are linked to your room contracts yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

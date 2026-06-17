@@ -1,0 +1,26 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ repair.title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ repair.title }}</h1>
+    <p>Read-only repair request details connected to one of your rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Room:</strong> {{ repair.room.room_code }} - {{ repair.room.room_name }}</p>
+        <p><strong>Tenant:</strong> {{ repair.tenant.full_name|default:"-" }}</p>
+        <p><strong>Priority:</strong> {{ repair.get_priority_display }}</p>
+        <p><strong>Status:</strong> {{ repair.get_status_display }}</p>
+        <p><strong>Requested at:</strong> {{ repair.requested_at }}</p>
+        <p><strong>Resolved at:</strong> {{ repair.resolved_at|default:"-" }}</p>
+        <p style="line-height: 1.6;"><strong>Description:</strong> {{ repair.description }}</p>
+        {% if repair.image %}
+            <p><strong>Image:</strong> Available in admin.</p>
+        {% endif %}
+        <a class="button" href="{% url 'portal:owner_repairs_list' %}">Back to repairs</a>
+    </div>
+</section>
+{% endblock %}

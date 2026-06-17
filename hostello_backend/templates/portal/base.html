@@ -230,8 +230,12 @@
                     {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/owner/dashboard/">Owner Dashboard</a>
                         <a href="/owner/rooms/">Owner Rooms</a>
+                        <a href="/owner/tenants/">Owner Tenants</a>
                         <a href="/owner/contracts/">Owner Contracts</a>
+                        <a href="/owner/invoices/">Owner Invoices</a>
+                        <a href="/owner/repairs/">Owner Repairs</a>
                         <a href="/owner/listings/">Owner Listings</a>
+                        <a href="/owner/viewing-registrations/">Owner Viewings</a>
                     {% endif %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/admin/">Admin</a>

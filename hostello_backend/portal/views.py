@@ -7,9 +7,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from billing.models import Invoice
 from contracts.models import Contract
-from listings.models import RoomListing
+from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import Notification, RepairRequest
 from properties.models import Room
+from tenants.models import Tenant
 
 from .decorators import is_admin_user, owner_required, tenant_required
 from .forms import RentEaseAuthenticationForm
@@ -56,6 +57,30 @@ def owner_contracts_queryset(profile):
 
 def owner_listings_queryset(profile):
     return RoomListing.objects.select_related('room').filter(room__owner=profile)
+
+
+def owner_tenants_queryset(profile):
+    return Tenant.objects.filter(contracts__room__owner=profile).distinct()
+
+
+def owner_invoices_queryset(profile):
+    return (
+        Invoice.objects
+        .select_related('contract', 'contract__room', 'contract__tenant')
+        .filter(contract__room__owner=profile)
+    )
+
+
+def owner_repairs_queryset(profile):
+    return RepairRequest.objects.select_related('room', 'tenant').filter(room__owner=profile)
+
+
+def owner_viewing_registrations_queryset(profile):
+    return (
+        ViewingRegistration.objects
+        .select_related('listing', 'listing__room', 'tenant')
+        .filter(listing__room__owner=profile)
+    )
 
 
 def login_view(request):
@@ -192,6 +217,112 @@ def owner_listing_detail(request, pk):
     return render(request, 'portal/owner_listing_detail.html', {
         'profile': profile,
         'listing': listing,
+    })
+
+
+@owner_required
+def owner_tenants_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    tenants = owner_tenants_queryset(profile).order_by('full_name')
+    return render(request, 'portal/owner_tenants_list.html', {
+        'profile': profile,
+        'tenants': tenants,
+    })
+
+
+@owner_required
+def owner_tenant_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    tenant = get_object_or_404(owner_tenants_queryset(profile), pk=pk)
+    contracts = owner_contracts_queryset(profile).filter(tenant=tenant).order_by('-start_date', 'contract_code')
+    return render(request, 'portal/owner_tenant_detail.html', {
+        'profile': profile,
+        'tenant': tenant,
+        'contracts': contracts,
+    })
+
+
+@owner_required
+def owner_invoices_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    invoices = owner_invoices_queryset(profile).order_by('-year', '-month', 'invoice_code')
+    return render(request, 'portal/owner_invoices_list.html', {
+        'profile': profile,
+        'invoices': invoices,
+    })
+
+
+@owner_required
+def owner_invoice_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    invoice = get_object_or_404(owner_invoices_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_invoice_detail.html', {
+        'profile': profile,
+        'invoice': invoice,
+    })
+
+
+@owner_required
+def owner_repairs_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    repairs = owner_repairs_queryset(profile).order_by('-requested_at', '-created_at')
+    return render(request, 'portal/owner_repairs_list.html', {
+        'profile': profile,
+        'repairs': repairs,
+    })
+
+
+@owner_required
+def owner_repair_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    repair = get_object_or_404(owner_repairs_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_repair_detail.html', {
+        'profile': profile,
+        'repair': repair,
+    })
+
+
+@owner_required
+def owner_viewing_registrations_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    registrations = owner_viewing_registrations_queryset(profile).order_by('-created_at')
+    return render(request, 'portal/owner_viewing_registrations_list.html', {
+        'profile': profile,
+        'registrations': registrations,
+    })
+
+
+@owner_required
+def owner_viewing_registration_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    registration = get_object_or_404(owner_viewing_registrations_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_viewing_registration_detail.html', {
+        'profile': profile,
+        'registration': registration,
     })
 
 
