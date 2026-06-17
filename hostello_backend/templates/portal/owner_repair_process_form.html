@@ -1,0 +1,44 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Process Repair Request - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Process Repair Request</h1>
+    <p>Update the status and owner note for a repair request connected to one of your rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <h2 style="font-size: 1.25rem; margin-top: 0;">Repair summary</h2>
+        <p><strong>Title:</strong> {{ repair.title }}</p>
+        <p><strong>Room:</strong> {{ repair.room.room_code }} - {{ repair.room.room_name }}</p>
+        <p><strong>Tenant:</strong> {{ repair.tenant.full_name|default:"-" }}</p>
+        <p><strong>Tenant phone:</strong> {{ repair.tenant.phone_number|default:"-" }}</p>
+        <p><strong>Priority:</strong> {{ repair.get_priority_display }}</p>
+        <p><strong>Current status:</strong> {{ repair.get_status_display }}</p>
+        <p><strong>Requested at:</strong> {{ repair.requested_at }}</p>
+        <p style="line-height: 1.6;"><strong>Description:</strong> {{ repair.description }}</p>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-field">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-field">
+                {{ form.owner_note.label_tag }}
+                {{ form.owner_note }}
+                {{ form.owner_note.errors }}
+            </div>
+
+            <button class="button primary" type="submit">Save Repair Status</button>
+            <a class="button" href="{% url 'portal:owner_repair_detail' repair.pk %}">Back to repair</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

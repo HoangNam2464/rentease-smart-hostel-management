@@ -39,3 +39,28 @@ class TenantRepairRequestForm(forms.ModelForm):
         if not self.allowed_rooms.filter(pk=room.pk).exists():
             raise forms.ValidationError('Selected room is not linked to your active contracts.')
         return room
+
+
+class OwnerRepairProcessForm(forms.ModelForm):
+    class Meta:
+        model = RepairRequest
+        fields = ['status', 'owner_note']
+        widgets = {
+            'owner_note': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def clean_status(self):
+        status = self.cleaned_data['status']
+        if status not in dict(RepairRequest.STATUS_CHOICES):
+            raise forms.ValidationError('Selected status is not valid.')
+
+        if (
+            self.instance
+            and self.instance.pk
+            and self.instance.resolved_at
+            and self.instance.status == RepairRequest.STATUS_COMPLETED
+            and status != RepairRequest.STATUS_COMPLETED
+        ):
+            raise forms.ValidationError('Completed repair requests cannot be moved back to a non-completed status.')
+
+        return status

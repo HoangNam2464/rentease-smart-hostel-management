@@ -20,6 +20,9 @@
         {% if repair.image %}
             <p><strong>Image:</strong> Available in admin.</p>
         {% endif %}
+        <p>
+            <a class="button primary" href="{% url 'portal:owner_repair_process' repair.pk %}">Process Repair Request</a>
+        </p>
         <a class="button" href="{% url 'portal:owner_repairs_list' %}">Back to repairs</a>
     </div>
 </section>

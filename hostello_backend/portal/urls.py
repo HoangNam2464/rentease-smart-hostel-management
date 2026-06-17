@@ -20,6 +20,7 @@ urlpatterns = [
     path('owner/invoices/<int:pk>/', views.owner_invoice_detail, name='owner_invoice_detail'),
     path('owner/repairs/', views.owner_repairs_list, name='owner_repairs_list'),
     path('owner/repairs/<int:pk>/', views.owner_repair_detail, name='owner_repair_detail'),
+    path('owner/repairs/<int:pk>/process/', views.owner_repair_process, name='owner_repair_process'),
     path('owner/listings/', views.owner_listings_list, name='owner_listings_list'),
     path('owner/listings/<int:pk>/', views.owner_listing_detail, name='owner_listing_detail'),
     path('owner/viewing-registrations/', views.owner_viewing_registrations_list, name='owner_viewing_registrations_list'),
