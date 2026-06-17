@@ -1,0 +1,45 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Owner Listings - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>My Room Listings</h1>
+    <p>Read-only list of listings for rooms linked to your owner profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if listings %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Listing</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Price</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Deposit</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Available</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for listing in listings %}
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:owner_listing_detail' listing.pk %}">{{ listing.title }}</a>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.room.room_code }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.listing_price }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.deposit_amount }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.get_status_display }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.available_from }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="margin: 0; color: var(--muted);">No listings are linked to your rooms yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from billing.models import Invoice
 from contracts.models import Contract
@@ -32,6 +32,32 @@ def get_role_redirect_url(user):
     return '/access-denied/'
 
 
+def get_owner_profile(user):
+    try:
+        return user.rentease_profile
+    except ObjectDoesNotExist:
+        return None
+
+
+def render_missing_owner_profile(request):
+    return render(request, 'portal/owner_dashboard.html', {
+        'missing_profile': True,
+        'message': 'Owner profile is not linked yet.',
+    })
+
+
+def owner_rooms_queryset(profile):
+    return Room.objects.filter(owner=profile)
+
+
+def owner_contracts_queryset(profile):
+    return Contract.objects.select_related('room', 'tenant').filter(room__owner=profile)
+
+
+def owner_listings_queryset(profile):
+    return RoomListing.objects.select_related('room').filter(room__owner=profile)
+
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect(get_role_redirect_url(request.user))
@@ -57,19 +83,15 @@ def dashboard_redirect(request):
 
 @owner_required
 def owner_dashboard(request):
-    try:
-        profile = request.user.rentease_profile
-    except ObjectDoesNotExist:
-        return render(request, 'portal/owner_dashboard.html', {
-            'missing_profile': True,
-            'message': 'Owner profile is not linked yet.',
-        })
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
 
     occupied_status = _choice_value(Room.STATUS_CHOICES, 'Occupied', 'occupied')
     active_contract_status = _choice_value(Contract.STATUS_CHOICES, 'Active', 'active')
 
-    owner_rooms = Room.objects.filter(owner=profile)
-    owner_contracts = Contract.objects.filter(room__owner=profile)
+    owner_rooms = owner_rooms_queryset(profile)
+    owner_contracts = owner_contracts_queryset(profile)
     owner_invoices = Invoice.objects.filter(contract__room__owner=profile)
 
     metrics = {
@@ -92,6 +114,84 @@ def owner_dashboard(request):
     return render(request, 'portal/owner_dashboard.html', {
         'profile': profile,
         'metrics': metrics,
+    })
+
+
+@owner_required
+def owner_rooms_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    rooms = owner_rooms_queryset(profile).order_by('room_code')
+    return render(request, 'portal/owner_rooms_list.html', {
+        'profile': profile,
+        'rooms': rooms,
+    })
+
+
+@owner_required
+def owner_room_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    room = get_object_or_404(owner_rooms_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_room_detail.html', {
+        'profile': profile,
+        'room': room,
+    })
+
+
+@owner_required
+def owner_contracts_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    contracts = owner_contracts_queryset(profile).order_by('-start_date', 'contract_code')
+    return render(request, 'portal/owner_contracts_list.html', {
+        'profile': profile,
+        'contracts': contracts,
+    })
+
+
+@owner_required
+def owner_contract_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    contract = get_object_or_404(owner_contracts_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_contract_detail.html', {
+        'profile': profile,
+        'contract': contract,
+    })
+
+
+@owner_required
+def owner_listings_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    listings = owner_listings_queryset(profile).order_by('-published_at', '-created_at')
+    return render(request, 'portal/owner_listings_list.html', {
+        'profile': profile,
+        'listings': listings,
+    })
+
+
+@owner_required
+def owner_listing_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    listing = get_object_or_404(owner_listings_queryset(profile), pk=pk)
+    return render(request, 'portal/owner_listing_detail.html', {
+        'profile': profile,
+        'listing': listing,
     })
 
 

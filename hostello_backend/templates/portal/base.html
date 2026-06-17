@@ -227,6 +227,11 @@
                 <a href="/rooms/">Rooms</a>
                 <a href="/dashboard/">Dashboard</a>
                 {% if request.user.is_authenticated %}
+                    {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                        <a href="/owner/rooms/">Owner Rooms</a>
+                        <a href="/owner/contracts/">Owner Contracts</a>
+                        <a href="/owner/listings/">Owner Listings</a>
+                    {% endif %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/admin/">Admin</a>
                         <a href="/reports/">Reports</a>

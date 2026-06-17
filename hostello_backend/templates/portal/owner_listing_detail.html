@@ -1,0 +1,27 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ listing.title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ listing.title }}</h1>
+    <p>Read-only listing details for one of your rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px; margin-bottom: 18px;">
+        {% endif %}
+        <p><strong>Room:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</p>
+        <p><strong>Listing price:</strong> {{ listing.listing_price }}</p>
+        <p><strong>Deposit amount:</strong> {{ listing.deposit_amount }}</p>
+        <p><strong>Status:</strong> {{ listing.get_status_display }}</p>
+        <p><strong>Available from:</strong> {{ listing.available_from }}</p>
+        <p><strong>Published at:</strong> {{ listing.published_at|default:"-" }}</p>
+        <p><strong>Expired at:</strong> {{ listing.expired_at|default:"-" }}</p>
+        <p style="line-height: 1.6;"><strong>Description:</strong> {{ listing.description }}</p>
+        <a class="button" href="{% url 'portal:owner_listings_list' %}">Back to listings</a>
+    </div>
+</section>
+{% endblock %}

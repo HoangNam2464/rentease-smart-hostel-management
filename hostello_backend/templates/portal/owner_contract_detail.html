@@ -1,0 +1,25 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ contract.contract_code }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ contract.contract_code }}</h1>
+    <p>Read-only contract details for one of your rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Tenant:</strong> {{ contract.tenant.full_name }}</p>
+        <p><strong>Room:</strong> {{ contract.room.room_code }} - {{ contract.room.room_name }}</p>
+        <p><strong>Signed date:</strong> {{ contract.signed_date }}</p>
+        <p><strong>Start date:</strong> {{ contract.start_date }}</p>
+        <p><strong>End date:</strong> {{ contract.end_date }}</p>
+        <p><strong>Rent amount:</strong> {{ contract.rent_amount }}</p>
+        <p><strong>Deposit amount:</strong> {{ contract.deposit_amount }}</p>
+        <p><strong>Payment cycle:</strong> {{ contract.get_payment_cycle_display }}</p>
+        <p><strong>Status:</strong> {{ contract.get_status_display }}</p>
+        <a class="button" href="{% url 'portal:owner_contracts_list' %}">Back to contracts</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ room.room_code }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ room.room_code }} - {{ room.room_name }}</h1>
+    <p>Read-only room details for your owner profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <p><strong>Room code:</strong> {{ room.room_code }}</p>
+        <p><strong>Room name:</strong> {{ room.room_name }}</p>
+        <p><strong>Floor:</strong> {{ room.floor|default:"-" }}</p>
+        <p><strong>Area:</strong> {{ room.area|default:"-" }}</p>
+        <p><strong>Max occupants:</strong> {{ room.max_occupants }}</p>
+        <p><strong>Status:</strong> {{ room.get_status_display }}</p>
+        <p><strong>Default rent:</strong> {{ room.default_rent }}</p>
+        {% if room.description %}
+            <p style="line-height: 1.6;"><strong>Description:</strong> {{ room.description }}</p>
+        {% endif %}
+        <a class="button" href="{% url 'portal:owner_rooms_list' %}">Back to rooms</a>
+    </div>
+</section>
+{% endblock %}
