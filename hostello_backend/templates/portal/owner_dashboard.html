@@ -21,6 +21,10 @@
             <strong>{{ metrics.total_rooms }}</strong>
         </article>
         <article class="card metric">
+            <span>Available rooms</span>
+            <strong>{{ metrics.available_rooms }}</strong>
+        </article>
+        <article class="card metric">
             <span>Occupied rooms</span>
             <strong>{{ metrics.occupied_rooms }}</strong>
         </article>
@@ -29,17 +33,275 @@
             <strong>{{ metrics.active_contracts }}</strong>
         </article>
         <article class="card metric">
-            <span>Unpaid or partial invoices</span>
-            <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
+            <span>Outstanding debt</span>
+            <strong>{{ metrics.outstanding_debt }}</strong>
         </article>
         <article class="card metric">
-            <span>Pending repair requests</span>
-            <strong>{{ metrics.pending_repair_requests }}</strong>
+            <span>Pending repairs</span>
+            <strong>{{ metrics.pending_repairs }}</strong>
         </article>
-        <article class="card metric">
-            <span>Published listings</span>
-            <strong>{{ metrics.published_listings }}</strong>
-        </article>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Billing Summary</h2>
+            <div class="grid">
+                <article class="metric">
+                    <span>Total invoices</span>
+                    <strong>{{ metrics.total_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Draft</span>
+                    <strong>{{ metrics.draft_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Unpaid</span>
+                    <strong>{{ metrics.unpaid_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Partial</span>
+                    <strong>{{ metrics.partial_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Paid</span>
+                    <strong>{{ metrics.paid_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Overdue</span>
+                    <strong>{{ metrics.overdue_invoices }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Total amount</span>
+                    <strong>{{ metrics.total_invoice_amount }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Paid amount</span>
+                    <strong>{{ metrics.paid_amount }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Outstanding debt</span>
+                    <strong>{{ metrics.outstanding_debt }}</strong>
+                </article>
+            </div>
+            <p style="margin-bottom: 0;">
+                <a class="button" href="/owner/invoices/">Open invoices</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Rooms &amp; Contracts</h2>
+            <div class="grid">
+                <article class="metric">
+                    <span>Maintenance rooms</span>
+                    <strong>{{ metrics.maintenance_rooms }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Inactive rooms</span>
+                    <strong>{{ metrics.inactive_rooms }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Total contracts</span>
+                    <strong>{{ metrics.total_contracts }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Draft contracts</span>
+                    <strong>{{ metrics.draft_contracts }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Expired contracts</span>
+                    <strong>{{ metrics.expired_contracts }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Terminated contracts</span>
+                    <strong>{{ metrics.terminated_contracts }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Ending in {{ ending_soon_days }} days</span>
+                    <strong>{{ metrics.contracts_ending_soon }}</strong>
+                </article>
+            </div>
+            <p style="margin-bottom: 0;">
+                <a class="button" href="/owner/rooms/">Open rooms</a>
+                <a class="button" href="/owner/contracts/">Open contracts</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Repairs</h2>
+            <div class="grid">
+                <article class="metric">
+                    <span>Pending</span>
+                    <strong>{{ metrics.pending_repairs }}</strong>
+                </article>
+                <article class="metric">
+                    <span>In progress</span>
+                    <strong>{{ metrics.in_progress_repairs }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Completed</span>
+                    <strong>{{ metrics.completed_repairs }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Cancelled</span>
+                    <strong>{{ metrics.cancelled_repairs }}</strong>
+                </article>
+            </div>
+            <p style="margin-bottom: 0;">
+                <a class="button" href="/owner/repairs/">Open repairs</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Listings &amp; Viewings</h2>
+            <div class="grid">
+                <article class="metric">
+                    <span>Published listings</span>
+                    <strong>{{ metrics.published_listings }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Pending viewings</span>
+                    <strong>{{ metrics.pending_viewing_registrations }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Confirmed viewings</span>
+                    <strong>{{ metrics.confirmed_viewing_registrations }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Completed viewings</span>
+                    <strong>{{ metrics.completed_viewing_registrations }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Cancelled viewings</span>
+                    <strong>{{ metrics.cancelled_viewing_registrations }}</strong>
+                </article>
+                <article class="metric">
+                    <span>No-show viewings</span>
+                    <strong>{{ metrics.no_show_viewing_registrations }}</strong>
+                </article>
+            </div>
+            <p style="margin-bottom: 0;">
+                <a class="button" href="/owner/listings/">Open listings</a>
+                <a class="button" href="/owner/viewing-registrations/">Open viewings</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Recent Payments</h2>
+            {% if recent.payments %}
+                <div style="display: grid; gap: 12px;">
+                    {% for payment in recent.payments %}
+                        <article>
+                            <strong>{{ payment.amount }}</strong>
+                            <div style="color: var(--muted); line-height: 1.5;">
+                                {{ payment.get_method_display }} for {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
+                                on {{ payment.paid_at }}
+                                {% if payment.transaction_code %} - {{ payment.transaction_code }}{% endif %}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="margin: 0; color: var(--muted);">No payments have been recorded yet.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Recent Invoices</h2>
+            {% if recent.invoices %}
+                <div style="display: grid; gap: 12px;">
+                    {% for invoice in recent.invoices %}
+                        <article>
+                            <strong>
+                                <a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
+                            </strong>
+                            <div style="color: var(--muted); line-height: 1.5;">
+                                {{ invoice.contract.room.room_code }} - {{ invoice.month }}/{{ invoice.year }} -
+                                {{ invoice.get_status_display }} - remaining {{ invoice.remaining_amount }}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="margin: 0; color: var(--muted);">No invoices are linked to your rooms yet.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Upcoming Contract Endings</h2>
+            {% if recent.upcoming_contracts %}
+                <div style="display: grid; gap: 12px;">
+                    {% for contract in recent.upcoming_contracts %}
+                        <article>
+                            <strong>
+                                <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
+                            </strong>
+                            <div style="color: var(--muted); line-height: 1.5;">
+                                {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - ends {{ contract.end_date }}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="margin: 0; color: var(--muted);">No active contracts are ending soon.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Pending Repairs</h2>
+            {% if recent.pending_repairs %}
+                <div style="display: grid; gap: 12px;">
+                    {% for repair in recent.pending_repairs %}
+                        <article>
+                            <strong>
+                                <a href="{% url 'portal:owner_repair_detail' repair.pk %}">{{ repair.title }}</a>
+                            </strong>
+                            <div style="color: var(--muted); line-height: 1.5;">
+                                {{ repair.room.room_code }} - {{ repair.get_priority_display }} - requested {{ repair.requested_at }}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="margin: 0; color: var(--muted);">No pending repair requests.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-body">
+            <h2 style="margin-top: 0;">Pending Viewing Registrations</h2>
+            {% if recent.pending_viewings %}
+                <div style="display: grid; gap: 12px;">
+                    {% for registration in recent.pending_viewings %}
+                        <article>
+                            <strong>
+                                <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
+                            </strong>
+                            <div style="color: var(--muted); line-height: 1.5;">
+                                {{ registration.listing.title }} - preferred {{ registration.preferred_date }}
+                                {% if registration.preferred_time %} at {{ registration.preferred_time }}{% endif %}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="margin: 0; color: var(--muted);">No pending viewing registrations.</p>
+            {% endif %}
+        </div>
     </section>
 {% endif %}
 {% endblock %}
