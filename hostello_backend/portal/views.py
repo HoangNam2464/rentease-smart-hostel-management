@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -16,6 +17,7 @@ from tenants.models import Tenant
 from .decorators import is_admin_user, owner_required, tenant_required
 from .forms import (
     OwnerRepairProcessForm,
+    OwnerRoomForm,
     OwnerRoomListingForm,
     OwnerViewingRegistrationProcessForm,
     RentEaseAuthenticationForm,
@@ -228,6 +230,71 @@ def owner_room_detail(request, pk):
     return render(request, 'portal/owner_room_detail.html', {
         'profile': profile,
         'room': room,
+    })
+
+
+@owner_required
+def owner_room_create(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    if request.method == 'POST':
+        form = OwnerRoomForm(request.POST, owner_profile=profile)
+        if form.is_valid():
+            room = form.save(commit=False)
+            room.owner = profile
+            try:
+                room.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error('room_code', 'This owner already has a room with this room code.')
+            else:
+                messages.success(request, 'Room created successfully.')
+                return redirect('portal:owner_rooms_list')
+    else:
+        form = OwnerRoomForm(owner_profile=profile)
+
+    return render(request, 'portal/owner_room_form.html', {
+        'profile': profile,
+        'form': form,
+        'form_title': 'Create Room',
+        'submit_label': 'Create Room',
+    })
+
+
+@owner_required
+def owner_room_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    room = get_object_or_404(owner_rooms_queryset(profile), pk=pk)
+
+    if request.method == 'POST':
+        form = OwnerRoomForm(request.POST, instance=room, owner_profile=profile)
+        if form.is_valid():
+            updated_room = form.save(commit=False)
+            updated_room.owner = profile
+            try:
+                updated_room.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error('room_code', 'This owner already has a room with this room code.')
+            else:
+                messages.success(request, 'Room updated successfully.')
+                return redirect('portal:owner_room_detail', pk=room.pk)
+    else:
+        form = OwnerRoomForm(instance=room, owner_profile=profile)
+
+    return render(request, 'portal/owner_room_form.html', {
+        'profile': profile,
+        'room': room,
+        'form': form,
+        'form_title': 'Edit Room',
+        'submit_label': 'Save Changes',
     })
 
 

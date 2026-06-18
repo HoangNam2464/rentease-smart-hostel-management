@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
+from properties.models import Room
 
 
 class RentEaseAuthenticationForm(AuthenticationForm):
@@ -15,6 +16,43 @@ class RentEaseAuthenticationForm(AuthenticationForm):
             'fields may be case-sensitive.'
         ),
     }
+
+
+class OwnerRoomForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = [
+            'room_code',
+            'room_name',
+            'floor',
+            'area',
+            'max_occupants',
+            'default_rent',
+            'status',
+            'description',
+        ]
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def __init__(self, *args, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.owner_profile = owner_profile
+
+    def clean_room_code(self):
+        room_code = self.cleaned_data['room_code']
+        if self.owner_profile and Room.objects.filter(
+            owner=self.owner_profile,
+            room_code=room_code,
+        ).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('This owner already has a room with this room code.')
+        return room_code
+
+    def clean_max_occupants(self):
+        max_occupants = self.cleaned_data['max_occupants']
+        if max_occupants < 1:
+            raise forms.ValidationError('Ensure this value is greater than or equal to 1.')
+        return max_occupants
 
 
 class TenantRepairRequestForm(forms.ModelForm):

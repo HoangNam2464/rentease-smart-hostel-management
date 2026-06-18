@@ -1,0 +1,79 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ form_title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ form_title }}</h1>
+    <p>Create or update a room linked to your owner profile.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.room_code.id_for_label }}">Room code</label>
+                {{ form.room_code }}
+                {{ form.room_code.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.room_name.id_for_label }}">Room name</label>
+                {{ form.room_name }}
+                {{ form.room_name.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.floor.id_for_label }}">Floor</label>
+                {{ form.floor }}
+                {{ form.floor.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.area.id_for_label }}">Area</label>
+                {{ form.area }}
+                {{ form.area.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.max_occupants.id_for_label }}">Max occupants</label>
+                {{ form.max_occupants }}
+                {{ form.max_occupants.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.default_rent.id_for_label }}">Default rent</label>
+                {{ form.default_rent }}
+                {{ form.default_rent.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <button class="button primary" type="submit">{{ submit_label }}</button>
+            {% if room %}
+                <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Cancel</a>
+            {% else %}
+                <a class="button" href="{% url 'portal:owner_rooms_list' %}">Cancel</a>
+            {% endif %}
+        </form>
+    </div>
+</section>
+{% endblock %}

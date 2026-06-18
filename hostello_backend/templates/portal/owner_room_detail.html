@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ room.room_code }} - {{ room.room_name }}</h1>
-    <p>Read-only room details for your owner profile.</p>
+    <p>Room details for your owner profile.</p>
 </section>
 
 <section class="card">
@@ -20,6 +20,7 @@
         {% if room.description %}
             <p style="line-height: 1.6;"><strong>Description:</strong> {{ room.description }}</p>
         {% endif %}
+        <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}">Edit Room</a>
         <a class="button" href="{% url 'portal:owner_rooms_list' %}">Back to rooms</a>
     </div>
 </section>

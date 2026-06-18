@@ -5,7 +5,8 @@
 {% block content %}
 <section class="page-header">
     <h1>My Rooms</h1>
-    <p>Read-only list of rooms linked to your owner profile.</p>
+    <p>Manage rooms linked to your owner profile.</p>
+    <p><a class="button primary" href="{% url 'portal:owner_room_create' %}">Create Room</a></p>
 </section>
 
 <section class="card">
