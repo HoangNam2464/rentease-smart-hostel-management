@@ -12,7 +12,42 @@ C. Usable locally, but not production-ready.
 
 ## Next Action
 
-Recommended next action:
+There are now two recommended roadmap tracks. Choose the next track based on the current project goal.
+
+If the immediate goal is Python course demo, prioritize Track A first.
+
+If the goal is real deployment, prioritize Track B first.
+
+Both tracks must follow the SPQM workflow and Definition of Done.
+
+## Track A: Demo/Product Polish Track
+
+Purpose: make the current Python/Django project look and feel more like a real usable product for demo and presentation.
+
+Recommended order:
+
+1. UI/UX audit and redesign planning
+2. Public UI polish
+3. Owner dashboard/sidebar/layout polish
+4. Owner CRUD page polish
+5. Tenant portal polish
+6. README/demo package
+7. screenshots/video demo support
+
+## Track B: Real Production Readiness Track
+
+Purpose: make the project safer for real deployment later.
+
+Recommended order:
+
+1. Production Settings Split
+2. Owner Billing Detail / Utility Entry
+3. Account Lifecycle
+4. Deployment Readiness
+5. CI/test coverage
+6. optional legacy cleanup
+
+Recommended next production-hardening action:
 
 ```text
 Phase 14B-2: Production Settings Split Planning

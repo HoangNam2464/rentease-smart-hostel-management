@@ -169,3 +169,18 @@ Read these files before implementation work:
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md`
 - `docs/agent/RENTEASE_WORKFLOW.md`
+
+## SPQM Documentation
+
+Future agents must also read the SPQM documentation when doing planning, quality, release, UI, production, billing, or documentation work.
+
+SPQM files:
+
+- `docs/spqm/SPQM_OVERVIEW.md`
+- `docs/spqm/PROCESS_MODEL.md`
+- `docs/spqm/DEFINITION_OF_DONE.md`
+- `docs/spqm/BACKLOG_AND_PRIORITIES.md`
+- `docs/spqm/CHANGE_MANAGEMENT.md`
+- `docs/spqm/QUALITY_METRICS.md`
+- `docs/spqm/RELEASE_CHECKLIST.md`
+- `docs/spqm/PYTHON_DJANGO_QUALITY_STACK.md`

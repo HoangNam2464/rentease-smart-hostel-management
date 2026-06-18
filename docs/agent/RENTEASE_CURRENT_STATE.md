@@ -26,6 +26,20 @@ Latest production-hardening tag:
 phase14b1-remove-legacy-root-api-fees
 ```
 
+Latest agent guidance docs commit:
+
+```text
+7da10ec Add RentEase agent guidance docs
+```
+
+SPQM documentation baseline:
+
+```text
+docs/spqm/
+```
+
+The SPQM documentation baseline has been created to support process, quality, backlog, metrics, release readiness, and continuous improvement.
+
 ## Runtime State
 
 - Local runtime works.
@@ -33,6 +47,15 @@ phase14b1-remove-legacy-root-api-fees
 - Migration dry-run says `No changes detected`.
 - RentEase is ready for local demo and controlled testing.
 - RentEase is not production-ready yet.
+
+## Documentation Layers
+
+RentEase now has two documentation layers:
+
+- `docs/agent/` for coding-agent project memory, safety rules, current state, security rules, roadmap, and workflow.
+- `docs/spqm/` for process model, quality gates, backlog, metrics, release checklist, and continuous improvement.
+
+These documents support future work, but they do not make RentEase production-ready by themselves.
 
 ## Completed Locked Phases
 
