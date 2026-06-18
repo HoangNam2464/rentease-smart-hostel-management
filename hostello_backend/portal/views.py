@@ -20,6 +20,7 @@ from .forms import (
     OwnerContractUpdateForm,
     OwnerInvoiceCreateForm,
     OwnerInvoiceUpdateForm,
+    OwnerPaymentCreateForm,
     OwnerRepairProcessForm,
     OwnerRoomForm,
     OwnerRoomListingForm,
@@ -96,6 +97,14 @@ def owner_invoices_queryset(profile):
         Invoice.objects
         .select_related('contract', 'contract__room', 'contract__tenant')
         .filter(contract__room__owner=profile)
+    )
+
+
+def owner_payments_queryset(profile):
+    return (
+        PaymentHistory.objects
+        .select_related('invoice', 'invoice__contract', 'invoice__contract__room')
+        .filter(invoice__contract__room__owner=profile)
     )
 
 
@@ -553,9 +562,11 @@ def owner_invoice_detail(request, pk):
         return render_missing_owner_profile(request)
 
     invoice = get_object_or_404(owner_invoices_queryset(profile), pk=pk)
+    payments = owner_payments_queryset(profile).filter(invoice=invoice).order_by('-paid_at', '-created_at')
     return render(request, 'portal/owner_invoice_detail.html', {
         'profile': profile,
         'invoice': invoice,
+        'payments': payments,
     })
 
 
@@ -631,6 +642,37 @@ def owner_invoice_update(request, pk):
         'form': form,
         'form_title': 'Edit Invoice',
         'submit_label': 'Save Changes',
+    })
+
+
+@owner_required
+def owner_payment_create(request, invoice_pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    invoice = get_object_or_404(owner_invoices_queryset(profile), pk=invoice_pk)
+
+    if request.method == 'POST':
+        form = OwnerPaymentCreateForm(request.POST, invoice=invoice)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.invoice = invoice
+            payment.collector = request.user
+            try:
+                payment.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            else:
+                messages.success(request, 'Payment recorded successfully.')
+                return redirect('portal:owner_invoice_detail', pk=invoice.pk)
+    else:
+        form = OwnerPaymentCreateForm(invoice=invoice)
+
+    return render(request, 'portal/owner_payment_form.html', {
+        'profile': profile,
+        'invoice': invoice,
+        'form': form,
     })
 
 

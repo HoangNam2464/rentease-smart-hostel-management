@@ -1,0 +1,72 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Record Payment - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Record Payment</h1>
+    <p>Record a payment for one invoice connected to your own room contract.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <h2 style="margin-top: 0;">Invoice Summary</h2>
+        <p><strong>Invoice:</strong> {{ invoice.invoice_code|default:invoice.pk }}</p>
+        <p><strong>Contract:</strong> {{ invoice.contract.contract_code }}</p>
+        <p><strong>Room:</strong> {{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</p>
+        <p><strong>Tenant:</strong> {{ invoice.contract.tenant.full_name }}</p>
+        <p><strong>Month/year:</strong> {{ invoice.month }}/{{ invoice.year }}</p>
+        <p><strong>Total amount:</strong> {{ invoice.total_amount }}</p>
+        <p><strong>Paid amount:</strong> {{ invoice.paid_amount }}</p>
+        <p><strong>Remaining amount:</strong> {{ invoice.remaining_amount }}</p>
+        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+    </div>
+</section>
+
+<section class="card" style="margin-top: 16px;">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.amount.id_for_label }}">Amount</label>
+                {{ form.amount }}
+                {{ form.amount.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.method.id_for_label }}">Method</label>
+                {{ form.method }}
+                {{ form.method.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.transaction_code.id_for_label }}">Reference</label>
+                {{ form.transaction_code }}
+                {{ form.transaction_code.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.paid_at.id_for_label }}">Paid at</label>
+                {{ form.paid_at }}
+                {{ form.paid_at.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.note.id_for_label }}">Note</label>
+                {{ form.note }}
+                {{ form.note.errors }}
+            </div>
+
+            <button class="button primary" type="submit">Record Payment</button>
+            <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Cancel</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

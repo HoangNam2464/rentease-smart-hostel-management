@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-from billing.models import Invoice
+from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
@@ -214,6 +214,55 @@ class OwnerInvoiceUpdateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
             'due_date': forms.DateInput(attrs={'type': 'date'}),
             'note': forms.Textarea(attrs={'rows': 5}),
         }
+
+
+class OwnerPaymentCreateForm(forms.ModelForm):
+    class Meta:
+        model = PaymentHistory
+        fields = [
+            'amount',
+            'method',
+            'transaction_code',
+            'paid_at',
+            'note',
+        ]
+        widgets = {
+            'paid_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+            'note': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def __init__(self, *args, invoice=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.invoice = invoice
+        if self.invoice:
+            self.instance.invoice = self.invoice
+        self.fields['paid_at'].input_formats = ['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M']
+
+    def _post_clean(self):
+        if self.invoice:
+            self.instance.invoice = self.invoice
+        if self.errors.get('amount'):
+            return
+        super()._post_clean()
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        if amount <= 0:
+            raise forms.ValidationError('Payment amount must be greater than zero.')
+
+        if not self.invoice:
+            raise forms.ValidationError('Invoice is required before recording a payment.')
+
+        if self.invoice.total_amount <= 0:
+            raise forms.ValidationError('Cannot record a payment for a zero-total invoice.')
+
+        if self.invoice.remaining_amount <= 0:
+            raise forms.ValidationError('This invoice is already fully paid.')
+
+        if amount > self.invoice.remaining_amount:
+            raise forms.ValidationError('Payment amount cannot exceed invoice remaining amount.')
+
+        return amount
 
 
 class TenantRepairRequestForm(forms.ModelForm):
