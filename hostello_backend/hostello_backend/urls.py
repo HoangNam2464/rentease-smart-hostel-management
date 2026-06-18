@@ -12,9 +12,6 @@ urlpatterns = [
     path("rooms/", include("listings.urls")),
     path('', include('portal.urls')),
     path('legacy/', include('students.urls')),
-    path("api/", include("requests.urls")),  # All request views
-    # path("fees/", include("fees.urls")),
-    path("fees/", include("fees.urls", namespace="fees")),
     path("reports/", include("reports.urls")),
     path("accounts/login/", RedirectView.as_view(url="/login/", permanent=False))
     
