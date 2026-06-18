@@ -18,6 +18,12 @@
         <p><strong>Gender:</strong> {{ tenant.get_gender_display|default:"-" }}</p>
         <p><strong>Status:</strong> {{ tenant.get_status_display }}</p>
 
+        {% if is_shared_tenant %}
+            <div class="notice warning" style="margin-top: 16px;">
+                This tenant is linked to multiple owners, so their shared profile is read-only in the owner portal.
+            </div>
+        {% endif %}
+
         <h2 style="font-size: 1.25rem; margin-top: 24px;">Linked contracts</h2>
         {% if contracts %}
             <ul>
@@ -32,7 +38,9 @@
             <p style="color: var(--muted);">No linked contracts found.</p>
         {% endif %}
 
-        <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit Tenant</a>
+        {% if not is_shared_tenant %}
+            <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit Tenant</a>
+        {% endif %}
         <a class="button" href="{% url 'portal:owner_tenants_list' %}">Back to tenants</a>
     </div>
 </section>

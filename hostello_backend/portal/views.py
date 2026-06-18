@@ -103,6 +103,10 @@ def owner_tenants_queryset(profile):
     return Tenant.objects.filter(contracts__room__owner=profile).distinct()
 
 
+def is_tenant_shared_across_owners(tenant):
+    return tenant.contracts.values('room__owner').distinct().count() > 1
+
+
 def owner_invoices_queryset(profile):
     return (
         Invoice.objects
@@ -565,10 +569,12 @@ def owner_tenant_detail(request, pk):
 
     tenant = get_object_or_404(owner_tenants_queryset(profile), pk=pk)
     contracts = owner_contracts_queryset(profile).filter(tenant=tenant).order_by('-start_date', 'contract_code')
+    is_shared_tenant = is_tenant_shared_across_owners(tenant)
     return render(request, 'portal/owner_tenant_detail.html', {
         'profile': profile,
         'tenant': tenant,
         'contracts': contracts,
+        'is_shared_tenant': is_shared_tenant,
     })
 
 
@@ -579,6 +585,12 @@ def owner_tenant_update(request, pk):
         return render_missing_owner_profile(request)
 
     tenant = get_object_or_404(owner_tenants_queryset(profile), pk=pk)
+    if is_tenant_shared_across_owners(tenant):
+        messages.warning(
+            request,
+            'This tenant is linked to multiple owners, so their shared profile is read-only in the owner portal.',
+        )
+        return redirect('portal:owner_tenant_detail', pk=tenant.pk)
 
     if request.method == 'POST':
         form = OwnerTenantForm(request.POST, instance=tenant)
