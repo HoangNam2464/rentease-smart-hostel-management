@@ -164,11 +164,27 @@ Do not update these files silently during feature work unless documentation upda
 
 Read these files before implementation work:
 
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/AUTONOMOUS_EXECUTION_PLAN.md`
 - `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md`
 - `docs/agent/RENTEASE_WORKFLOW.md`
+
+## Autonomous Work
+
+Future agents may continue autonomously by reading:
+
+- `AGENTS.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/AUTONOMOUS_EXECUTION_PLAN.md`
+
+The user can start autonomous work with:
+
+```text
+Read AGENTS.md, docs/agent/NEXT_ACTION.md, and docs/agent/AUTONOMOUS_EXECUTION_PLAN.md. Continue RentEase autonomously until the project is complete, blocked, or near limit.
+```
 
 ## SPQM Documentation
 

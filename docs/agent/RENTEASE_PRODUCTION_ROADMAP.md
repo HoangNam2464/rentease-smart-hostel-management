@@ -14,6 +14,8 @@ C. Usable locally, but not production-ready.
 
 There are now two recommended roadmap tracks. Choose the next track based on the current project goal.
 
+`docs/agent/NEXT_ACTION.md` controls the immediate next step. If this roadmap and `NEXT_ACTION.md` differ, read both and follow `NEXT_ACTION.md` for the immediate phase unless the user explicitly changes priority.
+
 If the immediate goal is Python course demo, prioritize Track A first.
 
 If the goal is real deployment, prioritize Track B first.

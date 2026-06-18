@@ -40,6 +40,15 @@ docs/spqm/
 
 The SPQM documentation baseline has been created to support process, quality, backlog, metrics, release readiness, and continuous improvement.
 
+Autonomous execution docs:
+
+```text
+docs/agent/AUTONOMOUS_EXECUTION_PLAN.md
+docs/agent/NEXT_ACTION.md
+```
+
+These files allow future agent sessions to start from a short prompt, read the current next action, and continue safely through approved documentation, UI, and planning work.
+
 ## Runtime State
 
 - Local runtime works.
@@ -56,6 +65,8 @@ RentEase now has two documentation layers:
 - `docs/spqm/` for process model, quality gates, backlog, metrics, release checklist, and continuous improvement.
 
 These documents support future work, but they do not make RentEase production-ready by themselves.
+
+`docs/agent/NEXT_ACTION.md` controls the immediate next recommended phase. Agents must read it before choosing new work.
 
 ## Completed Locked Phases
 
