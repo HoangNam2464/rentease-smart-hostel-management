@@ -4,9 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 # from fees.admin import FeesAdminSite
 from fees import admin as fees_admin 
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('admin/', admin.site.urls),
     path("rooms/", include("listings.urls")),
     path('', include('portal.urls')),
