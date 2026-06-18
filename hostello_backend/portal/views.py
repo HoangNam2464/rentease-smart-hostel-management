@@ -18,6 +18,8 @@ from .decorators import is_admin_user, owner_required, tenant_required
 from .forms import (
     OwnerContractCreateForm,
     OwnerContractUpdateForm,
+    OwnerInvoiceCreateForm,
+    OwnerInvoiceUpdateForm,
     OwnerRepairProcessForm,
     OwnerRoomForm,
     OwnerRoomListingForm,
@@ -554,6 +556,81 @@ def owner_invoice_detail(request, pk):
     return render(request, 'portal/owner_invoice_detail.html', {
         'profile': profile,
         'invoice': invoice,
+    })
+
+
+@owner_required
+def owner_invoice_create(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    if request.method == 'POST':
+        form = OwnerInvoiceCreateForm(request.POST, owner_profile=profile)
+        if form.is_valid():
+            try:
+                invoice = form.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error(None, 'An invoice already exists for this contract, month, and year.')
+            else:
+                messages.success(request, 'Invoice created successfully.')
+                return redirect('portal:owner_invoice_detail', pk=invoice.pk)
+    else:
+        form = OwnerInvoiceCreateForm(owner_profile=profile)
+
+    return render(request, 'portal/owner_invoice_form.html', {
+        'profile': profile,
+        'form': form,
+        'form_title': 'Create Invoice',
+        'submit_label': 'Create Invoice',
+    })
+
+
+@owner_required
+def owner_invoice_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    invoice = get_object_or_404(owner_invoices_queryset(profile), pk=pk)
+
+    if request.method == 'POST':
+        original_contract = invoice.contract
+        original_invoice_code = invoice.invoice_code
+        original_total_amount = invoice.total_amount
+        original_paid_amount = invoice.paid_amount
+        original_remaining_amount = invoice.remaining_amount
+        original_status = invoice.status
+
+        form = OwnerInvoiceUpdateForm(request.POST, instance=invoice)
+        if form.is_valid():
+            updated_invoice = form.save(commit=False)
+            updated_invoice.contract = original_contract
+            updated_invoice.invoice_code = original_invoice_code
+            updated_invoice.total_amount = original_total_amount
+            updated_invoice.paid_amount = original_paid_amount
+            updated_invoice.remaining_amount = original_remaining_amount
+            updated_invoice.status = original_status
+            try:
+                updated_invoice.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error(None, 'An invoice already exists for this contract, month, and year.')
+            else:
+                messages.success(request, 'Invoice updated successfully.')
+                return redirect('portal:owner_invoice_detail', pk=invoice.pk)
+    else:
+        form = OwnerInvoiceUpdateForm(instance=invoice)
+
+    return render(request, 'portal/owner_invoice_form.html', {
+        'profile': profile,
+        'invoice': invoice,
+        'form': form,
+        'form_title': 'Edit Invoice',
+        'submit_label': 'Save Changes',
     })
 
 

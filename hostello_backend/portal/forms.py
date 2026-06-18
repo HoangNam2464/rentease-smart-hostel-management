@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
+from billing.models import Invoice
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
@@ -155,6 +156,64 @@ class OwnerContractUpdateForm(forms.ModelForm):
             owner_contracts = owner_contracts.exclude(pk=self.instance.pk)
         self.fields['previous_contract'].queryset = owner_contracts.order_by('-start_date', 'contract_code')
         self.fields['previous_contract'].required = False
+
+
+class OwnerInvoiceValidationMixin:
+    def clean_month(self):
+        month = self.cleaned_data['month']
+        if month < 1 or month > 12:
+            raise forms.ValidationError('Enter a valid month from 1 to 12.')
+        return month
+
+    def clean_year(self):
+        year = self.cleaned_data['year']
+        if year < 2000:
+            raise forms.ValidationError('Enter a valid year greater than or equal to 2000.')
+        return year
+
+
+class OwnerInvoiceCreateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = [
+            'contract',
+            'month',
+            'year',
+            'issued_date',
+            'due_date',
+            'note',
+        ]
+        widgets = {
+            'issued_date': forms.DateInput(attrs={'type': 'date'}),
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'note': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def __init__(self, *args, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        owner_contracts = (
+            Contract.objects.filter(room__owner=owner_profile)
+            if owner_profile
+            else Contract.objects.none()
+        )
+        self.fields['contract'].queryset = owner_contracts.order_by('-start_date', 'contract_code')
+
+
+class OwnerInvoiceUpdateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = [
+            'month',
+            'year',
+            'issued_date',
+            'due_date',
+            'note',
+        ]
+        widgets = {
+            'issued_date': forms.DateInput(attrs={'type': 'date'}),
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'note': forms.Textarea(attrs={'rows': 5}),
+        }
 
 
 class TenantRepairRequestForm(forms.ModelForm):
