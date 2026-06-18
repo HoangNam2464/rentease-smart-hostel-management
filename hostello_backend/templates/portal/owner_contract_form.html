@@ -1,0 +1,101 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ form_title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ form_title }}</h1>
+    <p>Create or update contract business fields for your own rooms.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% if form.room %}
+                <div class="form-field">
+                    <label for="{{ form.room.id_for_label }}">Room</label>
+                    {{ form.room }}
+                    {{ form.room.errors }}
+                </div>
+            {% endif %}
+
+            {% if form.tenant %}
+                <div class="form-field">
+                    <label for="{{ form.tenant.id_for_label }}">Tenant</label>
+                    {{ form.tenant }}
+                    {{ form.tenant.errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.previous_contract.id_for_label }}">Previous contract</label>
+                {{ form.previous_contract }}
+                {{ form.previous_contract.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.contract_code.id_for_label }}">Contract code</label>
+                {{ form.contract_code }}
+                {{ form.contract_code.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.signed_date.id_for_label }}">Signed date</label>
+                {{ form.signed_date }}
+                {{ form.signed_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.start_date.id_for_label }}">Start date</label>
+                {{ form.start_date }}
+                {{ form.start_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.end_date.id_for_label }}">End date</label>
+                {{ form.end_date }}
+                {{ form.end_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.rent_amount.id_for_label }}">Rent amount</label>
+                {{ form.rent_amount }}
+                {{ form.rent_amount.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.deposit_amount.id_for_label }}">Deposit amount</label>
+                {{ form.deposit_amount }}
+                {{ form.deposit_amount.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.payment_cycle.id_for_label }}">Payment cycle</label>
+                {{ form.payment_cycle }}
+                {{ form.payment_cycle.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <button class="button primary" type="submit">{{ submit_label }}</button>
+            {% if contract %}
+                <a class="button" href="{% url 'portal:owner_contract_detail' contract.pk %}">Cancel</a>
+            {% else %}
+                <a class="button" href="{% url 'portal:owner_contracts_list' %}">Cancel</a>
+            {% endif %}
+        </form>
+    </div>
+</section>
+{% endblock %}

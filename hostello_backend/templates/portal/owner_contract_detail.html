@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ contract.contract_code }}</h1>
-    <p>Read-only contract details for one of your rooms.</p>
+    <p>Contract details for one of your rooms.</p>
 </section>
 
 <section class="card">
@@ -19,6 +19,7 @@
         <p><strong>Deposit amount:</strong> {{ contract.deposit_amount }}</p>
         <p><strong>Payment cycle:</strong> {{ contract.get_payment_cycle_display }}</p>
         <p><strong>Status:</strong> {{ contract.get_status_display }}</p>
+        <a class="button primary" href="{% url 'portal:owner_contract_update' contract.pk %}">Edit Contract</a>
         <a class="button" href="{% url 'portal:owner_contracts_list' %}">Back to contracts</a>
     </div>
 </section>

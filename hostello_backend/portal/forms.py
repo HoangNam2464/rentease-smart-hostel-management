@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
+from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
 from properties.models import Room
@@ -72,6 +73,88 @@ class OwnerTenantForm(forms.ModelForm):
             'address': forms.Textarea(attrs={'rows': 5}),
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
+
+
+class TenantNameChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.full_name
+
+
+class OwnerContractCreateForm(forms.ModelForm):
+    tenant = TenantNameChoiceField(queryset=Tenant.objects.none())
+
+    class Meta:
+        model = Contract
+        fields = [
+            'room',
+            'tenant',
+            'previous_contract',
+            'contract_code',
+            'signed_date',
+            'start_date',
+            'end_date',
+            'rent_amount',
+            'deposit_amount',
+            'payment_cycle',
+            'status',
+        ]
+        widgets = {
+            'signed_date': forms.DateInput(attrs={'type': 'date'}),
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.owner_profile = owner_profile
+        owner_rooms = Room.objects.filter(owner=owner_profile) if owner_profile else Room.objects.none()
+        owner_tenants = (
+            Tenant.objects.filter(contracts__room__owner=owner_profile).distinct()
+            if owner_profile
+            else Tenant.objects.none()
+        )
+        owner_contracts = (
+            Contract.objects.filter(room__owner=owner_profile)
+            if owner_profile
+            else Contract.objects.none()
+        )
+        self.fields['room'].queryset = owner_rooms.order_by('room_code')
+        self.fields['tenant'].queryset = owner_tenants.order_by('full_name')
+        self.fields['previous_contract'].queryset = owner_contracts.order_by('-start_date', 'contract_code')
+        self.fields['previous_contract'].required = False
+
+
+class OwnerContractUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Contract
+        fields = [
+            'previous_contract',
+            'contract_code',
+            'signed_date',
+            'start_date',
+            'end_date',
+            'rent_amount',
+            'deposit_amount',
+            'payment_cycle',
+            'status',
+        ]
+        widgets = {
+            'signed_date': forms.DateInput(attrs={'type': 'date'}),
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        owner_contracts = (
+            Contract.objects.filter(room__owner=owner_profile)
+            if owner_profile
+            else Contract.objects.none()
+        )
+        if self.instance and self.instance.pk:
+            owner_contracts = owner_contracts.exclude(pk=self.instance.pk)
+        self.fields['previous_contract'].queryset = owner_contracts.order_by('-start_date', 'contract_code')
+        self.fields['previous_contract'].required = False
 
 
 class TenantRepairRequestForm(forms.ModelForm):

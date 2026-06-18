@@ -16,6 +16,8 @@ from tenants.models import Tenant
 
 from .decorators import is_admin_user, owner_required, tenant_required
 from .forms import (
+    OwnerContractCreateForm,
+    OwnerContractUpdateForm,
     OwnerRepairProcessForm,
     OwnerRoomForm,
     OwnerRoomListingForm,
@@ -322,6 +324,70 @@ def owner_contract_detail(request, pk):
     return render(request, 'portal/owner_contract_detail.html', {
         'profile': profile,
         'contract': contract,
+    })
+
+
+@owner_required
+def owner_contract_create(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    if request.method == 'POST':
+        form = OwnerContractCreateForm(request.POST, owner_profile=profile)
+        if form.is_valid():
+            try:
+                contract = form.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error('contract_code', 'This contract code is already in use.')
+            else:
+                messages.success(request, 'Contract created successfully.')
+                return redirect('portal:owner_contract_detail', pk=contract.pk)
+    else:
+        form = OwnerContractCreateForm(owner_profile=profile)
+
+    return render(request, 'portal/owner_contract_form.html', {
+        'profile': profile,
+        'form': form,
+        'form_title': 'Create Contract',
+        'submit_label': 'Create Contract',
+    })
+
+
+@owner_required
+def owner_contract_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    contract = get_object_or_404(owner_contracts_queryset(profile), pk=pk)
+
+    if request.method == 'POST':
+        form = OwnerContractUpdateForm(request.POST, instance=contract, owner_profile=profile)
+        if form.is_valid():
+            updated_contract = form.save(commit=False)
+            updated_contract.room = contract.room
+            updated_contract.tenant = contract.tenant
+            try:
+                updated_contract.save()
+            except ValidationError as exc:
+                form.add_error(None, exc)
+            except IntegrityError:
+                form.add_error('contract_code', 'This contract code is already in use.')
+            else:
+                messages.success(request, 'Contract updated successfully.')
+                return redirect('portal:owner_contract_detail', pk=contract.pk)
+    else:
+        form = OwnerContractUpdateForm(instance=contract, owner_profile=profile)
+
+    return render(request, 'portal/owner_contract_form.html', {
+        'profile': profile,
+        'contract': contract,
+        'form': form,
+        'form_title': 'Edit Contract',
+        'submit_label': 'Save Changes',
     })
 
 
