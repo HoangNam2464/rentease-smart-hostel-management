@@ -157,6 +157,30 @@
             font-size: 1.15rem;
         }
 
+        .demo-access {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .demo-access p {
+            margin: 0 0 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .demo-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .demo-links .button {
+            min-height: 40px;
+            padding: 0 14px;
+            font-size: 0.92rem;
+        }
+
         .feature-list {
             display: grid;
             gap: 14px;
@@ -214,50 +238,56 @@
                 <span>RentEase</span>
             </div>
             <div class="nav-links">
-                <a class="button" href="/admin/">Admin Panel</a>
-                <a class="button primary" href="/reports/">Reports Dashboard</a>
+                <a class="button primary" href="/rooms/">Browse Rooms</a>
+                <a class="button" href="/login/">Login</a>
             </div>
         </nav>
 
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-main">
-                <p class="eyebrow">MVP ready for demo</p>
+                <p class="eyebrow">Rental management made simple</p>
                 <h1 id="page-title">RentEase - Web Quản Lý Nhà Trọ</h1>
                 <p class="description">
-                    A Django-based rental management system for managing rooms,
-                    tenants, contracts, invoices, payments, repair requests,
-                    maintenance, listings, viewing registrations, and reports.
+                    Browse available rooms, register for a viewing, and manage
+                    rental operations from one clean RentEase workspace.
                 </p>
                 <div class="actions">
-                    <a class="button primary" href="/admin/">Open Admin Panel</a>
-                    <a class="button" href="/reports/">View Reports Dashboard</a>
+                    <a class="button primary" href="/rooms/">Browse Rooms</a>
+                    <a class="button" href="/login/">Login</a>
                 </div>
             </div>
 
             <aside class="summary" aria-label="Feature summary">
-                <h2>Built with Django Admin and Jazzmin</h2>
+                <h2>Built for the RentEase demo flow</h2>
                 <ul class="feature-list">
                     <li>
-                        <strong>Rental operations</strong>
-                        Rooms, tenants, co-tenants, and contracts.
+                        <strong>Public room browsing</strong>
+                        View published room listings and submit viewing requests.
                     </li>
                     <li>
-                        <strong>Billing workflow</strong>
-                        Price configuration, invoices, payments, and debt tracking.
+                        <strong>Owner workspace</strong>
+                        Manage rooms, tenants, contracts, invoices, payments, and repairs.
                     </li>
                     <li>
-                        <strong>Service management</strong>
-                        Repair requests, maintenance records, and notifications.
+                        <strong>Tenant workspace</strong>
+                        Review contracts, invoices, payments, repairs, and notifications.
                     </li>
                     <li>
-                        <strong>Demo reports</strong>
-                        Dashboard summaries for billing, rooms, tenants, maintenance, and listings.
+                        <strong>Reports and admin</strong>
+                        Staff users can review summaries and manage demo data.
                     </li>
                 </ul>
+                <div class="demo-access">
+                    <p>Demo and staff access</p>
+                    <div class="demo-links">
+                        <a class="button" href="/admin/">Admin Panel</a>
+                        <a class="button" href="/reports/">Reports Dashboard</a>
+                    </div>
+                </div>
             </aside>
         </section>
 
-        <p class="footer">RentEase MVP is ready for final project demonstration.</p>
+        <p class="footer">RentEase is ready for public browsing and role-based demo workflows.</p>
     </main>
 </body>
 </html>
