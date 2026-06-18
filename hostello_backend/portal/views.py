@@ -19,6 +19,7 @@ from .forms import (
     OwnerRepairProcessForm,
     OwnerRoomForm,
     OwnerRoomListingForm,
+    OwnerTenantForm,
     OwnerViewingRegistrationProcessForm,
     RentEaseAuthenticationForm,
     TenantRepairRequestForm,
@@ -435,6 +436,32 @@ def owner_tenant_detail(request, pk):
         'profile': profile,
         'tenant': tenant,
         'contracts': contracts,
+    })
+
+
+@owner_required
+def owner_tenant_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    tenant = get_object_or_404(owner_tenants_queryset(profile), pk=pk)
+
+    if request.method == 'POST':
+        form = OwnerTenantForm(request.POST, instance=tenant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tenant updated successfully.')
+            return redirect('portal:owner_tenant_detail', pk=tenant.pk)
+    else:
+        form = OwnerTenantForm(instance=tenant)
+
+    return render(request, 'portal/owner_tenant_form.html', {
+        'profile': profile,
+        'tenant': tenant,
+        'form': form,
+        'form_title': 'Edit Tenant',
+        'submit_label': 'Save Changes',
     })
 
 

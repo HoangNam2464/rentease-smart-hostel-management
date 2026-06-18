@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>My Tenants</h1>
-    <p>Read-only list of tenants connected to contracts for your rooms.</p>
+    <p>Tenants connected to contracts for your rooms.</p>
 </section>
 
 <section class="card">
@@ -18,6 +18,7 @@
                         <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Phone</th>
                         <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Email</th>
                         <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,9 @@
                             <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.phone_number|default:"-" }}</td>
                             <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.email|default:"-" }}</td>
                             <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ tenant.get_status_display }}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <a href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit</a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

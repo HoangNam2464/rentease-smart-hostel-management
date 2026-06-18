@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ tenant.full_name }}</h1>
-    <p>Read-only tenant details connected to your room contracts.</p>
+    <p>Tenant details connected to your room contracts.</p>
 </section>
 
 <section class="card">
@@ -32,6 +32,7 @@
             <p style="color: var(--muted);">No linked contracts found.</p>
         {% endif %}
 
+        <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit Tenant</a>
         <a class="button" href="{% url 'portal:owner_tenants_list' %}">Back to tenants</a>
     </div>
 </section>

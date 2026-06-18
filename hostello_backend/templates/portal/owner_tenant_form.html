@@ -1,0 +1,69 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ form_title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>{{ form_title }}</h1>
+    <p>Update approved tenant contact and profile fields for tenants linked to your room contracts.</p>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.full_name.id_for_label }}">Full name</label>
+                {{ form.full_name }}
+                {{ form.full_name.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.phone_number.id_for_label }}">Phone</label>
+                {{ form.phone_number }}
+                {{ form.phone_number.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.address.id_for_label }}">Address</label>
+                {{ form.address }}
+                {{ form.address.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.date_of_birth.id_for_label }}">Date of birth</label>
+                {{ form.date_of_birth }}
+                {{ form.date_of_birth.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.gender.id_for_label }}">Gender</label>
+                {{ form.gender }}
+                {{ form.gender.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <button class="button primary" type="submit">{{ submit_label }}</button>
+            <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Cancel</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

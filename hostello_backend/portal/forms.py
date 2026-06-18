@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
 from properties.models import Room
+from tenants.models import Tenant
 
 
 class RentEaseAuthenticationForm(AuthenticationForm):
@@ -53,6 +54,24 @@ class OwnerRoomForm(forms.ModelForm):
         if max_occupants < 1:
             raise forms.ValidationError('Ensure this value is greater than or equal to 1.')
         return max_occupants
+
+
+class OwnerTenantForm(forms.ModelForm):
+    class Meta:
+        model = Tenant
+        fields = [
+            'full_name',
+            'email',
+            'phone_number',
+            'address',
+            'date_of_birth',
+            'gender',
+            'status',
+        ]
+        widgets = {
+            'address': forms.Textarea(attrs={'rows': 5}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 
 class TenantRepairRequestForm(forms.ModelForm):
