@@ -18,11 +18,11 @@
     <section class="grid">
         <article class="card metric">
             <span>Tenant name</span>
-            <strong style="font-size: 1.35rem;">{{ metrics.tenant_name }}</strong>
+            <strong class="metric-label">{{ metrics.tenant_name }}</strong>
         </article>
         <article class="card metric">
             <span>Current contract</span>
-            <strong style="font-size: 1.35rem;">
+            <strong class="metric-label">
                 {% if metrics.current_contract %}
                     {{ metrics.current_contract.contract_code }}
                 {% else %}

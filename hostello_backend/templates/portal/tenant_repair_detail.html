@@ -10,13 +10,20 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Room:</strong> {{ repair.room.room_code }} - {{ repair.room.room_name }}</p>
-        <p><strong>Priority:</strong> {{ repair.get_priority_display }}</p>
-        <p><strong>Status:</strong> {{ repair.get_status_display }}</p>
-        <p><strong>Requested at:</strong> {{ repair.requested_at }}</p>
-        <p><strong>Resolved at:</strong> {{ repair.resolved_at|default:"-" }}</p>
-        <p style="line-height: 1.6;"><strong>Description:</strong> {{ repair.description }}</p>
-        <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+        <ul class="info-list">
+            <li><span>Room</span><strong>{{ repair.room.room_code }} - {{ repair.room.room_name }}</strong></li>
+            <li><span>Priority</span><strong>{{ repair.get_priority_display }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
+            <li><span>Requested at</span><strong>{{ repair.requested_at }}</strong></li>
+            <li><span>Resolved at</span><strong>{{ repair.resolved_at|default:"-" }}</strong></li>
+        </ul>
+        <section class="section">
+            <h2>Description</h2>
+            <p class="listing-description">{{ repair.description }}</p>
+        </section>
+        <div class="page-actions">
+            <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+        </div>
     </div>
 </section>
 {% endblock %}

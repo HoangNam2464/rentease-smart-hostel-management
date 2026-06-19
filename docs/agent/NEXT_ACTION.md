@@ -67,23 +67,31 @@ Summary document:
 docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md
 ```
 
+Phase 15B-4 Tenant Portal Polish is complete.
+
+Summary document:
+
+```text
+docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md
+```
+
 ## Immediate Next Step
 
 Start:
 
 ```text
-Phase 15B-4: Tenant Portal Polish
+Phase 15C: UI Regression and Demo Package
 ```
 
 Goal:
 
-Improve tenant-facing dashboard, profile, contracts, invoices, payments, repairs, and notifications pages.
+Verify polished public, owner, and tenant UI end to end, then prepare a concise demo-readiness package.
 
 Initial scope:
 
-- template/UI/CSS polish only
-- improve tenant page headers, cards, tables, forms, empty states, and status labels
-- preserve tenant-scoped query behavior untouched
+- run route smoke tests for public, owner, tenant, admin, reports, and legacy paths
+- verify no raw template tags or obvious privacy leaks
+- update demo/release docs with current UI state
 - avoid model, migration, route, and business logic changes
 
 Do not change models, migrations, routes, settings, or business logic.
@@ -94,8 +102,8 @@ Do not change models, migrations, routes, settings, or business logic.
 2. Phase 15B-1: Public UI Polish - completed
 3. Phase 15B-2: Owner Layout and Dashboard Polish - completed
 4. Phase 15B-3: Owner CRUD Page Polish - completed
-5. Phase 15B-4: Tenant Portal Polish - next
-6. Phase 15C: UI Regression and Demo Package
+5. Phase 15B-4: Tenant Portal Polish - completed
+6. Phase 15C: UI Regression and Demo Package - next
 
 ## Recommended Production Track
 

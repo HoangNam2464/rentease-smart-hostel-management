@@ -51,9 +51,9 @@
 - [x] owner sidebar/navigation is consistent
 - [x] owner rooms/listings/contracts/invoices pages are readable
 - [x] owner payment recording is easy to find from invoice detail
-- [ ] tenant dashboard is clear
-- [ ] tenant invoices/payments/repairs/notifications are readable
-- [ ] empty states are understandable
+- [x] tenant dashboard is clear
+- [x] tenant invoices/payments/repairs/notifications are readable
+- [x] empty states are understandable
 - [ ] no HOSTELLO branding appears in RentEase demo paths
 - [ ] no raw Django template tags are visible
 - [ ] no private data appears on public pages

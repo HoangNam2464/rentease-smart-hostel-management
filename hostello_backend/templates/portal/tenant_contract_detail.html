@@ -10,19 +10,23 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Room:</strong> {{ contract.room.room_code }} - {{ contract.room.room_name }}</p>
-        <p><strong>Room status:</strong> {{ contract.room.get_status_display }}</p>
-        <p><strong>Floor:</strong> {{ contract.room.floor|default:"-" }}</p>
-        <p><strong>Area:</strong> {{ contract.room.area|default:"-" }}</p>
-        <p><strong>Max occupants:</strong> {{ contract.room.max_occupants }}</p>
-        <p><strong>Signed date:</strong> {{ contract.signed_date }}</p>
-        <p><strong>Start date:</strong> {{ contract.start_date }}</p>
-        <p><strong>End date:</strong> {{ contract.end_date }}</p>
-        <p><strong>Rent amount:</strong> {{ contract.rent_amount }}</p>
-        <p><strong>Deposit amount:</strong> {{ contract.deposit_amount }}</p>
-        <p><strong>Payment cycle:</strong> {{ contract.get_payment_cycle_display }}</p>
-        <p><strong>Status:</strong> {{ contract.get_status_display }}</p>
-        <a class="button" href="{% url 'portal:tenant_contracts_list' %}">Back to contracts</a>
+        <ul class="info-list">
+            <li><span>Room</span><strong>{{ contract.room.room_code }} - {{ contract.room.room_name }}</strong></li>
+            <li><span>Room status</span><strong><span class="status-badge">{{ contract.room.get_status_display }}</span></strong></li>
+            <li><span>Floor</span><strong>{{ contract.room.floor|default:"-" }}</strong></li>
+            <li><span>Area</span><strong>{{ contract.room.area|default:"-" }}</strong></li>
+            <li><span>Max occupants</span><strong>{{ contract.room.max_occupants }}</strong></li>
+            <li><span>Signed date</span><strong>{{ contract.signed_date }}</strong></li>
+            <li><span>Start date</span><strong>{{ contract.start_date }}</strong></li>
+            <li><span>End date</span><strong>{{ contract.end_date }}</strong></li>
+            <li><span>Rent amount</span><strong>{{ contract.rent_amount }}</strong></li>
+            <li><span>Deposit amount</span><strong>{{ contract.deposit_amount }}</strong></li>
+            <li><span>Payment cycle</span><strong>{{ contract.get_payment_cycle_display }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ contract.get_status_display }}</span></strong></li>
+        </ul>
+        <div class="page-actions">
+            <a class="button" href="{% url 'portal:tenant_contracts_list' %}">Back to contracts</a>
+        </div>
     </div>
 </section>
 {% endblock %}

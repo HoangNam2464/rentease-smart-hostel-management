@@ -10,36 +10,39 @@
 
 <section class="card">
     <div class="card-body">
-        <p style="margin-top: 0;">
+        <div class="toolbar">
+            <p class="help-text">Track your submitted repair requests and open a new request for your active room.</p>
             <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Submit Repair Request</a>
-        </p>
+        </div>
         {% if repairs %}
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Request</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Priority</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Requested</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for repair in repairs %}
+            <div class="table-wrap section">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
-                                <a href="{% url 'portal:tenant_repair_detail' repair.pk %}">{{ repair.title }}</a>
-                            </td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ repair.room.room_code }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ repair.get_priority_display }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ repair.get_status_display }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ repair.requested_at }}</td>
+                            <th>Request</th>
+                            <th>Room</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Requested</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for repair in repairs %}
+                            <tr>
+                                <td><a href="{% url 'portal:tenant_repair_detail' repair.pk %}">{{ repair.title }}</a></td>
+                                <td>{{ repair.room.room_code }}</td>
+                                <td>{{ repair.get_priority_display }}</td>
+                                <td><span class="status-badge">{{ repair.get_status_display }}</span></td>
+                                <td>{{ repair.requested_at }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-            <p style="margin: 0; color: var(--muted);">No repair requests are linked to your tenant profile yet.</p>
+            <div class="empty-state">
+                <p>No repair requests are linked to your tenant profile yet.</p>
+            </div>
         {% endif %}
     </div>
 </section>

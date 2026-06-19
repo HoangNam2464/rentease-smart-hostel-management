@@ -10,14 +10,21 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Type:</strong> {{ notification.get_notification_type_display }}</p>
-        <p><strong>Read:</strong> {{ notification.is_read|yesno:"Yes,No" }}</p>
-        <p><strong>Sent at:</strong> {{ notification.created_at }}</p>
-        {% if notification.read_at %}
-            <p><strong>Read at:</strong> {{ notification.read_at }}</p>
-        {% endif %}
-        <p style="line-height: 1.6;"><strong>Message:</strong> {{ notification.message }}</p>
-        <a class="button" href="{% url 'portal:tenant_notifications_list' %}">Back to notifications</a>
+        <ul class="info-list">
+            <li><span>Type</span><strong>{{ notification.get_notification_type_display }}</strong></li>
+            <li><span>Read</span><strong><span class="status-badge">{{ notification.is_read|yesno:"Read,Unread" }}</span></strong></li>
+            <li><span>Sent at</span><strong>{{ notification.created_at }}</strong></li>
+            {% if notification.read_at %}
+                <li><span>Read at</span><strong>{{ notification.read_at }}</strong></li>
+            {% endif %}
+        </ul>
+        <section class="section">
+            <h2>Message</h2>
+            <p class="listing-description">{{ notification.message }}</p>
+        </section>
+        <div class="page-actions">
+            <a class="button" href="{% url 'portal:tenant_notifications_list' %}">Back to notifications</a>
+        </div>
     </div>
 </section>
 {% endblock %}

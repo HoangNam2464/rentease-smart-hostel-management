@@ -10,16 +10,20 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Contract:</strong> {{ invoice.contract.contract_code }}</p>
-        <p><strong>Room:</strong> {{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</p>
-        <p><strong>Month/year:</strong> {{ invoice.month }}/{{ invoice.year }}</p>
-        <p><strong>Issued date:</strong> {{ invoice.issued_date }}</p>
-        <p><strong>Due date:</strong> {{ invoice.due_date|default:"-" }}</p>
-        <p><strong>Total amount:</strong> {{ invoice.total_amount }}</p>
-        <p><strong>Paid amount:</strong> {{ invoice.paid_amount }}</p>
-        <p><strong>Remaining amount:</strong> {{ invoice.remaining_amount }}</p>
-        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
-        <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Back to invoices</a>
+        <ul class="info-list">
+            <li><span>Contract</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+            <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Issued date</span><strong>{{ invoice.issued_date }}</strong></li>
+            <li><span>Due date</span><strong>{{ invoice.due_date|default:"-" }}</strong></li>
+            <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
+            <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
+            <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+        </ul>
+        <div class="page-actions">
+            <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Back to invoices</a>
+        </div>
     </div>
 </section>
 {% endblock %}

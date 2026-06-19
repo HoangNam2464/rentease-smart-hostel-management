@@ -9,6 +9,7 @@
 - `6acd658 Polish public RentEase UI`
 - `015bd1b Polish owner portal layout dashboard`
 - Phase 15B-3 commit in this run: `Polish RentEase owner management pages`
+- Phase 15B-4 commit in this run: `Polish RentEase tenant portal pages`
 
 ### Completed
 
@@ -23,6 +24,7 @@
 - Completed Phase 15B-1 Public UI Polish.
 - Completed Phase 15B-2 Owner Layout and Dashboard Polish.
 - Completed Phase 15B-3 Owner CRUD Page Polish.
+- Completed Phase 15B-4 Tenant Portal Polish.
 
 ### Files Changed
 
@@ -30,6 +32,7 @@
 - `docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md`
 - `docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md`
 - `docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md`
+- `docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
@@ -64,6 +67,18 @@
 - `hostello_backend/templates/portal/owner_viewing_registrations_list.html`
 - `hostello_backend/templates/portal/owner_viewing_registration_detail.html`
 - `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
+- `hostello_backend/templates/portal/tenant_dashboard.html`
+- `hostello_backend/templates/portal/tenant_profile.html`
+- `hostello_backend/templates/portal/tenant_contracts_list.html`
+- `hostello_backend/templates/portal/tenant_contract_detail.html`
+- `hostello_backend/templates/portal/tenant_invoices_list.html`
+- `hostello_backend/templates/portal/tenant_invoice_detail.html`
+- `hostello_backend/templates/portal/tenant_payments_list.html`
+- `hostello_backend/templates/portal/tenant_repairs_list.html`
+- `hostello_backend/templates/portal/tenant_repair_detail.html`
+- `hostello_backend/templates/portal/tenant_repair_form.html`
+- `hostello_backend/templates/portal/tenant_notifications_list.html`
+- `hostello_backend/templates/portal/tenant_notification_detail.html`
 
 ### Checks Run
 
@@ -77,23 +92,25 @@
 - `phase15b1-public-ui-polish`
 - `phase15b2-owner-layout-dashboard-polish`
 - `phase15b3-owner-crud-polish`
+- `phase15b4-tenant-portal-polish`
 
 ### Current Blockers
 
 - No technical blocker.
 - Owner detail smoke tests could not use detail pages because the local `owner_test` account currently has no owner-scoped sample records. List/create route smoke tests passed.
+- Tenant detail smoke tests could not use detail pages because the local `tenant_test` account currently has no tenant-scoped sample records. List/form route smoke tests passed.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 15B-4: Tenant Portal Polish
+Phase 15C: UI Regression and Demo Package
 ```
 
 Start with:
 
-- tenant dashboard/profile/contracts/invoices/payments pages
-- tenant repairs and notifications pages
-- preserve tenant-scoped data access
+- public, owner, and tenant route smoke tests
+- reports/admin/legacy route regression checks
+- demo-readiness documentation refresh
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree

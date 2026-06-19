@@ -81,6 +81,14 @@ docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md
 
 Phase 15B-3 improved owner list/detail/form pages for rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations without changing models, routes, schema, or business logic.
 
+Phase 15B-4 tenant portal polish:
+
+```text
+docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md
+```
+
+Phase 15B-4 improved tenant dashboard, profile, contracts, invoices, payments, repairs, and notifications pages without changing models, routes, schema, or business logic.
+
 ## Runtime State
 
 - Local runtime works.
@@ -166,6 +174,10 @@ Phase 15B-3 Owner CRUD Page Polish
 
 Tag: `phase15b3-owner-crud-polish`
 
+Phase 15B-4 Tenant Portal Polish
+
+Tag: `phase15b4-tenant-portal-polish`
+
 ## Working Now
 
 - Public landing page
@@ -209,10 +221,10 @@ Tag: `phase15b3-owner-crud-polish`
 Current recommended next action:
 
 ```text
-Phase 15B-4: Tenant Portal Polish
+Phase 15C: UI Regression and Demo Package
 ```
 
-Goal: improve tenant portal pages while preserving tenant-scoped data access.
+Goal: verify polished public, owner, and tenant UI end to end and prepare a concise demo-readiness package.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

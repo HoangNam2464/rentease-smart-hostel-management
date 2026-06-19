@@ -16,6 +16,7 @@
             </div>
             <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
         {% else %}
+            <p class="help-text">Submit only the issue details. The owner will manage repair status and follow-up notes.</p>
             <form method="post" novalidate>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -44,8 +45,10 @@
                     {{ form.priority.errors }}
                 </div>
 
-                <button class="button primary" type="submit">Submit Repair Request</button>
-                <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+                <div class="page-actions">
+                    <button class="button primary" type="submit">Submit Repair Request</button>
+                    <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+                </div>
             </form>
         {% endif %}
     </div>
