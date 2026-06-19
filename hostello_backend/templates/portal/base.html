@@ -103,6 +103,46 @@
             background: var(--primary-dark);
         }
 
+        .role-nav {
+            border-top: 1px solid var(--border);
+            background: #ffffff;
+        }
+
+        .role-nav-inner {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .role-label {
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .role-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            padding: 0 12px;
+            border-radius: 999px;
+            color: var(--text);
+            background: #f8fafc;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .role-nav a:hover {
+            background: #eef4ff;
+        }
+
         .container {
             width: min(1120px, calc(100% - 32px));
             margin: 0 auto;
@@ -265,6 +305,49 @@
             gap: 16px;
         }
 
+        .dashboard-section {
+            margin-top: 18px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .recent-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .recent-item {
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .recent-item:last-child {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+
+        .recent-meta {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
         .metric {
             padding: 20px;
         }
@@ -341,6 +424,11 @@
                 justify-content: flex-start;
             }
 
+            .role-nav-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -348,6 +436,11 @@
             .listing-grid,
             .details-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
             }
         }
     </style>
@@ -364,25 +457,6 @@
                 <a href="/rooms/">Rooms</a>
                 <a href="/dashboard/">Dashboard</a>
                 {% if request.user.is_authenticated %}
-                    {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                        <a href="/owner/dashboard/">Owner Dashboard</a>
-                        <a href="/owner/rooms/">Owner Rooms</a>
-                        <a href="/owner/tenants/">Owner Tenants</a>
-                        <a href="/owner/contracts/">Owner Contracts</a>
-                        <a href="/owner/invoices/">Owner Invoices</a>
-                        <a href="/owner/repairs/">Owner Repairs</a>
-                        <a href="/owner/listings/">Owner Listings</a>
-                        <a href="/owner/viewing-registrations/">Owner Viewings</a>
-                    {% endif %}
-                    {% if request.user.is_tenant or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                        <a href="/tenant/dashboard/">Tenant Dashboard</a>
-                        <a href="/tenant/profile/">Tenant Profile</a>
-                        <a href="/tenant/contracts/">Tenant Contracts</a>
-                        <a href="/tenant/invoices/">Tenant Invoices</a>
-                        <a href="/tenant/payments/">Tenant Payments</a>
-                        <a href="/tenant/repairs/">Tenant Repairs</a>
-                        <a href="/tenant/notifications/">Tenant Notifications</a>
-                    {% endif %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/admin/">Admin</a>
                         <a href="/reports/">Reports</a>
@@ -393,6 +467,37 @@
                 {% endif %}
             </nav>
         </div>
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                <nav class="role-nav" aria-label="Owner navigation">
+                    <div class="role-nav-inner">
+                        <span class="role-label">Owner</span>
+                        <a href="/owner/dashboard/">Dashboard</a>
+                        <a href="/owner/rooms/">Rooms</a>
+                        <a href="/owner/tenants/">Tenants</a>
+                        <a href="/owner/contracts/">Contracts</a>
+                        <a href="/owner/invoices/">Invoices</a>
+                        <a href="/owner/repairs/">Repairs</a>
+                        <a href="/owner/listings/">Listings</a>
+                        <a href="/owner/viewing-registrations/">Viewings</a>
+                    </div>
+                </nav>
+            {% endif %}
+            {% if request.user.is_tenant or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                <nav class="role-nav" aria-label="Tenant navigation">
+                    <div class="role-nav-inner">
+                        <span class="role-label">Tenant</span>
+                        <a href="/tenant/dashboard/">Dashboard</a>
+                        <a href="/tenant/profile/">Profile</a>
+                        <a href="/tenant/contracts/">Contracts</a>
+                        <a href="/tenant/invoices/">Invoices</a>
+                        <a href="/tenant/payments/">Payments</a>
+                        <a href="/tenant/repairs/">Repairs</a>
+                        <a href="/tenant/notifications/">Notifications</a>
+                    </div>
+                </nav>
+            {% endif %}
+        {% endif %}
     </header>
 
     <main class="container">

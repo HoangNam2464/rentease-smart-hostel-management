@@ -13,11 +13,13 @@
 - Read autonomous execution docs and required security/SPQM docs.
 - Completed Phase 15A UI/UX Audit and Redesign Planning.
 - Completed Phase 15B-1 Public UI Polish.
+- Completed Phase 15B-2 Owner Layout and Dashboard Polish.
 
 ### Files Changed
 
 - `docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md`
 - `docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md`
+- `docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
@@ -29,6 +31,7 @@
 - `hostello_backend/templates/listings/viewing_registration_form.html`
 - `hostello_backend/templates/listings/viewing_registration_success.html`
 - `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/owner_dashboard.html`
 
 ### Checks Run
 
@@ -40,6 +43,7 @@
 - `autonomous-execution-plan-baseline`
 - `phase15a-ui-ux-audit-plan` after Phase 15A commit is pushed
 - `phase15b1-public-ui-polish` after Phase 15B-1 commit is pushed
+- `phase15b2-owner-layout-dashboard-polish` after Phase 15B-2 commit is pushed
 
 ### Current Blockers
 
@@ -49,16 +53,17 @@
 ### Exact Next Recommended Action
 
 ```text
-Phase 15B-2: Owner Layout and Dashboard Polish
+Phase 15B-3: Owner CRUD Page Polish
 ```
 
 Start with:
 
-- simplify crowded owner navigation
-- improve owner dashboard hierarchy
+- owner rooms list/detail/form
+- owner listings list/detail/form
+- owner contracts/invoices/payment pages
 - preserve owner-scoped data access
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree
 
-Working tree should be clean after Phase 15B-1 commit and tag are completed.
+Working tree should be clean after Phase 15B-2 commit and tag are completed.

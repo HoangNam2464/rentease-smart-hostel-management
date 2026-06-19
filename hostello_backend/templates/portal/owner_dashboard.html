@@ -15,6 +15,22 @@
 {% if missing_profile %}
     <div class="alert warning">{{ message }}</div>
 {% else %}
+    <section class="card">
+        <div class="card-body">
+            <div class="section-heading">
+                <div>
+                    <h2>Owner workspace</h2>
+                    <p class="help-text">Jump into the most common owner workflows for the demo.</p>
+                </div>
+                <div class="section-actions">
+                    <a class="button primary" href="/owner/rooms/new/">Create room</a>
+                    <a class="button" href="/owner/listings/new/">Create listing</a>
+                    <a class="button" href="/owner/invoices/new/">Create invoice</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="grid">
         <article class="card metric">
             <span>Total rooms</span>
@@ -42,9 +58,14 @@
         </article>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Billing Summary</h2>
+            <div class="section-heading">
+                <h2>Billing Summary</h2>
+                <div class="section-actions">
+                    <a class="button" href="/owner/invoices/">Open invoices</a>
+                </div>
+            </div>
             <div class="grid">
                 <article class="metric">
                     <span>Total invoices</span>
@@ -83,15 +104,18 @@
                     <strong>{{ metrics.outstanding_debt }}</strong>
                 </article>
             </div>
-            <p style="margin-bottom: 0;">
-                <a class="button" href="/owner/invoices/">Open invoices</a>
-            </p>
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Rooms &amp; Contracts</h2>
+            <div class="section-heading">
+                <h2>Rooms &amp; Contracts</h2>
+                <div class="section-actions">
+                    <a class="button" href="/owner/rooms/">Open rooms</a>
+                    <a class="button" href="/owner/contracts/">Open contracts</a>
+                </div>
+            </div>
             <div class="grid">
                 <article class="metric">
                     <span>Maintenance rooms</span>
@@ -122,16 +146,17 @@
                     <strong>{{ metrics.contracts_ending_soon }}</strong>
                 </article>
             </div>
-            <p style="margin-bottom: 0;">
-                <a class="button" href="/owner/rooms/">Open rooms</a>
-                <a class="button" href="/owner/contracts/">Open contracts</a>
-            </p>
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Repairs</h2>
+            <div class="section-heading">
+                <h2>Repairs</h2>
+                <div class="section-actions">
+                    <a class="button" href="/owner/repairs/">Open repairs</a>
+                </div>
+            </div>
             <div class="grid">
                 <article class="metric">
                     <span>Pending</span>
@@ -150,15 +175,18 @@
                     <strong>{{ metrics.cancelled_repairs }}</strong>
                 </article>
             </div>
-            <p style="margin-bottom: 0;">
-                <a class="button" href="/owner/repairs/">Open repairs</a>
-            </p>
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Listings &amp; Viewings</h2>
+            <div class="section-heading">
+                <h2>Listings &amp; Viewings</h2>
+                <div class="section-actions">
+                    <a class="button" href="/owner/listings/">Open listings</a>
+                    <a class="button" href="/owner/viewing-registrations/">Open viewings</a>
+                </div>
+            </div>
             <div class="grid">
                 <article class="metric">
                     <span>Published listings</span>
@@ -185,22 +213,18 @@
                     <strong>{{ metrics.no_show_viewing_registrations }}</strong>
                 </article>
             </div>
-            <p style="margin-bottom: 0;">
-                <a class="button" href="/owner/listings/">Open listings</a>
-                <a class="button" href="/owner/viewing-registrations/">Open viewings</a>
-            </p>
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Recent Payments</h2>
+            <h2>Recent Payments</h2>
             {% if recent.payments %}
-                <div style="display: grid; gap: 12px;">
+                <div class="recent-list">
                     {% for payment in recent.payments %}
-                        <article>
+                        <article class="recent-item">
                             <strong>{{ payment.amount }}</strong>
-                            <div style="color: var(--muted); line-height: 1.5;">
+                            <div class="recent-meta">
                                 {{ payment.get_method_display }} for {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
                                 on {{ payment.paid_at }}
                                 {% if payment.transaction_code %} - {{ payment.transaction_code }}{% endif %}
@@ -214,17 +238,17 @@
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Recent Invoices</h2>
+            <h2>Recent Invoices</h2>
             {% if recent.invoices %}
-                <div style="display: grid; gap: 12px;">
+                <div class="recent-list">
                     {% for invoice in recent.invoices %}
-                        <article>
+                        <article class="recent-item">
                             <strong>
                                 <a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
                             </strong>
-                            <div style="color: var(--muted); line-height: 1.5;">
+                            <div class="recent-meta">
                                 {{ invoice.contract.room.room_code }} - {{ invoice.month }}/{{ invoice.year }} -
                                 {{ invoice.get_status_display }} - remaining {{ invoice.remaining_amount }}
                             </div>
@@ -237,17 +261,17 @@
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Upcoming Contract Endings</h2>
+            <h2>Upcoming Contract Endings</h2>
             {% if recent.upcoming_contracts %}
-                <div style="display: grid; gap: 12px;">
+                <div class="recent-list">
                     {% for contract in recent.upcoming_contracts %}
-                        <article>
+                        <article class="recent-item">
                             <strong>
                                 <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
                             </strong>
-                            <div style="color: var(--muted); line-height: 1.5;">
+                            <div class="recent-meta">
                                 {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - ends {{ contract.end_date }}
                             </div>
                         </article>
@@ -259,17 +283,17 @@
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Pending Repairs</h2>
+            <h2>Pending Repairs</h2>
             {% if recent.pending_repairs %}
-                <div style="display: grid; gap: 12px;">
+                <div class="recent-list">
                     {% for repair in recent.pending_repairs %}
-                        <article>
+                        <article class="recent-item">
                             <strong>
                                 <a href="{% url 'portal:owner_repair_detail' repair.pk %}">{{ repair.title }}</a>
                             </strong>
-                            <div style="color: var(--muted); line-height: 1.5;">
+                            <div class="recent-meta">
                                 {{ repair.room.room_code }} - {{ repair.get_priority_display }} - requested {{ repair.requested_at }}
                             </div>
                         </article>
@@ -281,17 +305,17 @@
         </div>
     </section>
 
-    <section class="card" style="margin-top: 18px;">
+    <section class="card dashboard-section">
         <div class="card-body">
-            <h2 style="margin-top: 0;">Pending Viewing Registrations</h2>
+            <h2>Pending Viewing Registrations</h2>
             {% if recent.pending_viewings %}
-                <div style="display: grid; gap: 12px;">
+                <div class="recent-list">
                     {% for registration in recent.pending_viewings %}
-                        <article>
+                        <article class="recent-item">
                             <strong>
                                 <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
                             </strong>
-                            <div style="color: var(--muted); line-height: 1.5;">
+                            <div class="recent-meta">
                                 {{ registration.listing.title }} - preferred {{ registration.preferred_date }}
                                 {% if registration.preferred_time %} at {{ registration.preferred_time }}{% endif %}
                             </div>

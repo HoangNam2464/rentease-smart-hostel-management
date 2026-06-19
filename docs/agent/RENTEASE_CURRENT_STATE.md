@@ -65,6 +65,14 @@ docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md
 
 Phase 15B-1 improved the public landing/listing/viewing-registration flow without changing models, routes, schema, or business logic.
 
+Phase 15B-2 owner layout/dashboard polish:
+
+```text
+docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md
+```
+
+Phase 15B-2 simplified role navigation and improved owner dashboard hierarchy without changing owner-scoped query behavior.
+
 ## Runtime State
 
 - Local runtime works.
@@ -142,6 +150,10 @@ Phase 15B-1 Public UI Polish
 
 Tag: `phase15b1-public-ui-polish`
 
+Phase 15B-2 Owner Layout and Dashboard Polish
+
+Tag: `phase15b2-owner-layout-dashboard-polish`
+
 ## Working Now
 
 - Public landing page
@@ -185,10 +197,10 @@ Tag: `phase15b1-public-ui-polish`
 Current recommended next action:
 
 ```text
-Phase 15B-2: Owner Layout and Dashboard Polish
+Phase 15B-3: Owner CRUD Page Polish
 ```
 
-Goal: improve owner portal layout and owner dashboard hierarchy while preserving owner-scoped data access.
+Goal: improve owner CRUD list/detail/form pages while preserving owner-scoped data access.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

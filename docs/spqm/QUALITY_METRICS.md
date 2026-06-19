@@ -17,7 +17,7 @@
 | Documented phases | 12 listed locked phases | Baseline count |
 | Locked documentation baselines | Agent docs baseline planned; SPQM baseline planned | Tags pending during SPQM integration |
 | UI pages audited | Representative template-level audit completed | Phase 15A |
-| UI pages polished | Public landing/listing/viewing flow polished | Phase 15B-1 |
+| UI pages polished | Public flow and owner dashboard/layout polished | Phase 15B-2 |
 | Demo checklist status | Partially complete | Needs final review per release checklist |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
@@ -73,7 +73,7 @@ Baseline:
 | Documented phases | 12 listed locked phases |
 | Locked documentation baselines | Agent guidance docs baseline, SPQM baseline, autonomous execution baseline |
 | UI pages audited | Representative template-level audit completed in Phase 15A |
-| UI pages polished | Public landing/listing/viewing flow polished in Phase 15B-1 |
+| UI pages polished | Public flow polished in Phase 15B-1; owner layout/dashboard polished in Phase 15B-2 |
 | Demo checklist status | Partially complete |
 | Production blockers remaining | 7 known blockers |
 

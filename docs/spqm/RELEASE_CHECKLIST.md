@@ -47,8 +47,8 @@
 - [x] public room detail is readable
 - [x] viewing registration form is understandable
 - [ ] login page is clear
-- [ ] owner dashboard layout is clear
-- [ ] owner sidebar/navigation is consistent
+- [x] owner dashboard layout is clear
+- [x] owner sidebar/navigation is consistent
 - [ ] owner rooms/listings/contracts/invoices pages are readable
 - [ ] owner payment recording is easy to find from invoice detail
 - [ ] tenant dashboard is clear
