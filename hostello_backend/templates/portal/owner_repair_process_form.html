@@ -10,15 +10,20 @@
 
 <section class="card">
     <div class="card-body">
-        <h2 style="font-size: 1.25rem; margin-top: 0;">Repair summary</h2>
-        <p><strong>Title:</strong> {{ repair.title }}</p>
-        <p><strong>Room:</strong> {{ repair.room.room_code }} - {{ repair.room.room_name }}</p>
-        <p><strong>Tenant:</strong> {{ repair.tenant.full_name|default:"-" }}</p>
-        <p><strong>Tenant phone:</strong> {{ repair.tenant.phone_number|default:"-" }}</p>
-        <p><strong>Priority:</strong> {{ repair.get_priority_display }}</p>
-        <p><strong>Current status:</strong> {{ repair.get_status_display }}</p>
-        <p><strong>Requested at:</strong> {{ repair.requested_at }}</p>
-        <p style="line-height: 1.6;"><strong>Description:</strong> {{ repair.description }}</p>
+        <h2>Repair summary</h2>
+        <ul class="info-list">
+            <li><span>Title</span><strong>{{ repair.title }}</strong></li>
+            <li><span>Room</span><strong>{{ repair.room.room_code }} - {{ repair.room.room_name }}</strong></li>
+            <li><span>Tenant</span><strong>{{ repair.tenant.full_name|default:"-" }}</strong></li>
+            <li><span>Tenant phone</span><strong>{{ repair.tenant.phone_number|default:"-" }}</strong></li>
+            <li><span>Priority</span><strong>{{ repair.get_priority_display }}</strong></li>
+            <li><span>Current status</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
+            <li><span>Requested at</span><strong>{{ repair.requested_at }}</strong></li>
+        </ul>
+        <section class="section">
+            <h2>Description</h2>
+            <p class="listing-description">{{ repair.description }}</p>
+        </section>
 
         <form method="post" novalidate>
             {% csrf_token %}
@@ -36,8 +41,10 @@
                 {{ form.owner_note.errors }}
             </div>
 
-            <button class="button primary" type="submit">Save Repair Status</button>
-            <a class="button" href="{% url 'portal:owner_repair_detail' repair.pk %}">Back to repair</a>
+            <div class="page-actions">
+                <button class="button primary" type="submit">Save Repair Status</button>
+                <a class="button" href="{% url 'portal:owner_repair_detail' repair.pk %}">Back to repair</a>
+            </div>
         </form>
     </div>
 </section>

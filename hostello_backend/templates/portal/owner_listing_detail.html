@@ -11,18 +11,25 @@
 <section class="card">
     <div class="card-body">
         {% if listing.image_url %}
-            <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px; margin-bottom: 18px;">
+            <img class="listing-media detail" src="{{ listing.image_url }}" alt="{{ listing.title }}">
         {% endif %}
-        <p><strong>Room:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</p>
-        <p><strong>Listing price:</strong> {{ listing.listing_price }}</p>
-        <p><strong>Deposit amount:</strong> {{ listing.deposit_amount }}</p>
-        <p><strong>Status:</strong> {{ listing.get_status_display }}</p>
-        <p><strong>Available from:</strong> {{ listing.available_from }}</p>
-        <p><strong>Published at:</strong> {{ listing.published_at|default:"-" }}</p>
-        <p><strong>Expired at:</strong> {{ listing.expired_at|default:"-" }}</p>
-        <p style="line-height: 1.6;"><strong>Description:</strong> {{ listing.description }}</p>
-        <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}">Edit Listing</a>
-        <a class="button" href="{% url 'portal:owner_listings_list' %}">Back to listings</a>
+        <ul class="info-list">
+            <li><span>Room</span><strong>{{ listing.room.room_code }} - {{ listing.room.room_name }}</strong></li>
+            <li><span>Listing price</span><strong>{{ listing.listing_price }}</strong></li>
+            <li><span>Deposit amount</span><strong>{{ listing.deposit_amount }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ listing.get_status_display }}</span></strong></li>
+            <li><span>Available from</span><strong>{{ listing.available_from }}</strong></li>
+            <li><span>Published at</span><strong>{{ listing.published_at|default:"-" }}</strong></li>
+            <li><span>Expired at</span><strong>{{ listing.expired_at|default:"-" }}</strong></li>
+        </ul>
+        <section class="section">
+            <h2>Description</h2>
+            <p class="listing-description">{{ listing.description }}</p>
+        </section>
+        <div class="page-actions">
+            <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}">Edit Listing</a>
+            <a class="button" href="{% url 'portal:owner_listings_list' %}">Back to listings</a>
+        </div>
     </div>
 </section>
 {% endblock %}

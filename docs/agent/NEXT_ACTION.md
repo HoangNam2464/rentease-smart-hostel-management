@@ -57,24 +57,33 @@ Summary document:
 docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md
 ```
 
+## Completed Current Step
+
+Phase 15B-3 Owner CRUD Page Polish is complete.
+
+Summary document:
+
+```text
+docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md
+```
+
 ## Immediate Next Step
 
 Start:
 
 ```text
-Phase 15B-3: Owner CRUD Page Polish
+Phase 15B-4: Tenant Portal Polish
 ```
 
 Goal:
 
-Improve owner list/detail/form pages for rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations.
+Improve tenant-facing dashboard, profile, contracts, invoices, payments, repairs, and notifications pages.
 
 Initial scope:
 
-- improve table readability
-- improve detail page hierarchy
-- improve form helper text and action placement
-- keep owner-scoped query behavior untouched
+- template/UI/CSS polish only
+- improve tenant page headers, cards, tables, forms, empty states, and status labels
+- preserve tenant-scoped query behavior untouched
 - avoid model, migration, route, and business logic changes
 
 Do not change models, migrations, routes, settings, or business logic.
@@ -84,8 +93,8 @@ Do not change models, migrations, routes, settings, or business logic.
 1. Phase 15A: UI/UX Audit and Redesign Planning - completed
 2. Phase 15B-1: Public UI Polish - completed
 3. Phase 15B-2: Owner Layout and Dashboard Polish - completed
-4. Phase 15B-3: Owner CRUD Page Polish - next
-5. Phase 15B-4: Tenant Portal Polish
+4. Phase 15B-3: Owner CRUD Page Polish - completed
+5. Phase 15B-4: Tenant Portal Polish - next
 6. Phase 15C: UI Regression and Demo Package
 
 ## Recommended Production Track

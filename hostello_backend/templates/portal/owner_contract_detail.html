@@ -10,17 +10,21 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Tenant:</strong> {{ contract.tenant.full_name }}</p>
-        <p><strong>Room:</strong> {{ contract.room.room_code }} - {{ contract.room.room_name }}</p>
-        <p><strong>Signed date:</strong> {{ contract.signed_date }}</p>
-        <p><strong>Start date:</strong> {{ contract.start_date }}</p>
-        <p><strong>End date:</strong> {{ contract.end_date }}</p>
-        <p><strong>Rent amount:</strong> {{ contract.rent_amount }}</p>
-        <p><strong>Deposit amount:</strong> {{ contract.deposit_amount }}</p>
-        <p><strong>Payment cycle:</strong> {{ contract.get_payment_cycle_display }}</p>
-        <p><strong>Status:</strong> {{ contract.get_status_display }}</p>
-        <a class="button primary" href="{% url 'portal:owner_contract_update' contract.pk %}">Edit Contract</a>
-        <a class="button" href="{% url 'portal:owner_contracts_list' %}">Back to contracts</a>
+        <ul class="info-list">
+            <li><span>Tenant</span><strong>{{ contract.tenant.full_name }}</strong></li>
+            <li><span>Room</span><strong>{{ contract.room.room_code }} - {{ contract.room.room_name }}</strong></li>
+            <li><span>Signed date</span><strong>{{ contract.signed_date }}</strong></li>
+            <li><span>Start date</span><strong>{{ contract.start_date }}</strong></li>
+            <li><span>End date</span><strong>{{ contract.end_date }}</strong></li>
+            <li><span>Rent amount</span><strong>{{ contract.rent_amount }}</strong></li>
+            <li><span>Deposit amount</span><strong>{{ contract.deposit_amount }}</strong></li>
+            <li><span>Payment cycle</span><strong>{{ contract.get_payment_cycle_display }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ contract.get_status_display }}</span></strong></li>
+        </ul>
+        <div class="page-actions">
+            <a class="button primary" href="{% url 'portal:owner_contract_update' contract.pk %}">Edit Contract</a>
+            <a class="button" href="{% url 'portal:owner_contracts_list' %}">Back to contracts</a>
+        </div>
     </div>
 </section>
 {% endblock %}

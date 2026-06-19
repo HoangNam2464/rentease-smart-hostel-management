@@ -10,18 +10,25 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Room code:</strong> {{ room.room_code }}</p>
-        <p><strong>Room name:</strong> {{ room.room_name }}</p>
-        <p><strong>Floor:</strong> {{ room.floor|default:"-" }}</p>
-        <p><strong>Area:</strong> {{ room.area|default:"-" }}</p>
-        <p><strong>Max occupants:</strong> {{ room.max_occupants }}</p>
-        <p><strong>Status:</strong> {{ room.get_status_display }}</p>
-        <p><strong>Default rent:</strong> {{ room.default_rent }}</p>
+        <ul class="info-list">
+            <li><span>Room code</span><strong>{{ room.room_code }}</strong></li>
+            <li><span>Room name</span><strong>{{ room.room_name }}</strong></li>
+            <li><span>Floor</span><strong>{{ room.floor|default:"-" }}</strong></li>
+            <li><span>Area</span><strong>{{ room.area|default:"-" }}</strong></li>
+            <li><span>Max occupants</span><strong>{{ room.max_occupants }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ room.get_status_display }}</span></strong></li>
+            <li><span>Default rent</span><strong>{{ room.default_rent }}</strong></li>
+        </ul>
         {% if room.description %}
-            <p style="line-height: 1.6;"><strong>Description:</strong> {{ room.description }}</p>
+            <section class="section">
+                <h2>Description</h2>
+                <p class="listing-description">{{ room.description }}</p>
+            </section>
         {% endif %}
-        <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}">Edit Room</a>
-        <a class="button" href="{% url 'portal:owner_rooms_list' %}">Back to rooms</a>
+        <div class="page-actions">
+            <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}">Edit Room</a>
+            <a class="button" href="{% url 'portal:owner_rooms_list' %}">Back to rooms</a>
+        </div>
     </div>
 </section>
 {% endblock %}

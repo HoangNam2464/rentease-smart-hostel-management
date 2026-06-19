@@ -10,38 +10,44 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Full name:</strong> {{ tenant.full_name }}</p>
-        <p><strong>Phone:</strong> {{ tenant.phone_number|default:"-" }}</p>
-        <p><strong>Email:</strong> {{ tenant.email|default:"-" }}</p>
-        <p><strong>Address:</strong> {{ tenant.address|default:"-" }}</p>
-        <p><strong>Date of birth:</strong> {{ tenant.date_of_birth|default:"-" }}</p>
-        <p><strong>Gender:</strong> {{ tenant.get_gender_display|default:"-" }}</p>
-        <p><strong>Status:</strong> {{ tenant.get_status_display }}</p>
+        <ul class="info-list">
+            <li><span>Full name</span><strong>{{ tenant.full_name }}</strong></li>
+            <li><span>Phone</span><strong>{{ tenant.phone_number|default:"-" }}</strong></li>
+            <li><span>Email</span><strong>{{ tenant.email|default:"-" }}</strong></li>
+            <li><span>Address</span><strong>{{ tenant.address|default:"-" }}</strong></li>
+            <li><span>Date of birth</span><strong>{{ tenant.date_of_birth|default:"-" }}</strong></li>
+            <li><span>Gender</span><strong>{{ tenant.get_gender_display|default:"-" }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ tenant.get_status_display }}</span></strong></li>
+        </ul>
 
         {% if is_shared_tenant %}
-            <div class="notice warning" style="margin-top: 16px;">
+            <div class="alert warning section">
                 This tenant is linked to multiple owners, so their shared profile is read-only in the owner portal.
             </div>
         {% endif %}
 
-        <h2 style="font-size: 1.25rem; margin-top: 24px;">Linked contracts</h2>
+        <h2 class="section">Linked contracts</h2>
         {% if contracts %}
-            <ul>
+            <div class="recent-list">
                 {% for contract in contracts %}
-                    <li>
+                    <article class="recent-item">
                         <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
-                        - {{ contract.room.room_code }} - {{ contract.get_status_display }}
-                    </li>
+                        <div class="recent-meta">{{ contract.room.room_code }} - {{ contract.get_status_display }}</div>
+                    </article>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
-            <p style="color: var(--muted);">No linked contracts found.</p>
+            <div class="empty-state">
+                <p>No linked contracts found.</p>
+            </div>
         {% endif %}
 
-        {% if not is_shared_tenant %}
-            <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit Tenant</a>
-        {% endif %}
-        <a class="button" href="{% url 'portal:owner_tenants_list' %}">Back to tenants</a>
+        <div class="page-actions">
+            {% if not is_shared_tenant %}
+                <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit Tenant</a>
+            {% endif %}
+            <a class="button" href="{% url 'portal:owner_tenants_list' %}">Back to tenants</a>
+        </div>
     </div>
 </section>
 {% endblock %}

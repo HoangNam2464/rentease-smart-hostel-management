@@ -4,42 +4,48 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>My Room Listings</h1>
-    <p>Manage listings for rooms linked to your owner profile.</p>
-    <p><a class="button primary" href="{% url 'portal:owner_listing_create' %}">Create Listing</a></p>
+    <div class="toolbar">
+        <div>
+            <h1>My Room Listings</h1>
+            <p>Manage listings for rooms linked to your owner profile.</p>
+        </div>
+        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Create Listing</a>
+    </div>
 </section>
 
 <section class="card">
     <div class="card-body">
         {% if listings %}
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Listing</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Price</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Deposit</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Available</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for listing in listings %}
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
-                                <a href="{% url 'portal:owner_listing_detail' listing.pk %}">{{ listing.title }}</a>
-                            </td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.room.room_code }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.listing_price }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.deposit_amount }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.get_status_display }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ listing.available_from }}</td>
+                            <th>Listing</th>
+                            <th>Room</th>
+                            <th>Price</th>
+                            <th>Deposit</th>
+                            <th>Status</th>
+                            <th>Available</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for listing in listings %}
+                            <tr>
+                                <td><a href="{% url 'portal:owner_listing_detail' listing.pk %}">{{ listing.title }}</a></td>
+                                <td>{{ listing.room.room_code }}</td>
+                                <td>{{ listing.listing_price }}</td>
+                                <td>{{ listing.deposit_amount }}</td>
+                                <td><span class="status-badge">{{ listing.get_status_display }}</span></td>
+                                <td>{{ listing.available_from }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-            <p style="margin: 0; color: var(--muted);">No listings are linked to your rooms yet.</p>
+            <div class="empty-state">
+                <p>No listings are linked to your rooms yet. Create a listing after a room is available.</p>
+            </div>
         {% endif %}
     </div>
 </section>

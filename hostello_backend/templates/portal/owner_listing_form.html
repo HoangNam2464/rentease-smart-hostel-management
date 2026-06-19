@@ -10,6 +10,7 @@
 
 <section class="card">
     <div class="card-body">
+        <p class="help-text">Listings are public-facing room posts. Use clear titles, fair prices, and publish only one active listing per room.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -73,12 +74,14 @@
                 {{ form.image_url.errors }}
             </div>
 
-            <button class="button primary" type="submit">{{ submit_label }}</button>
-            {% if listing %}
-                <a class="button" href="{% url 'portal:owner_listing_detail' listing.pk %}">Cancel</a>
-            {% else %}
-                <a class="button" href="{% url 'portal:owner_listings_list' %}">Cancel</a>
-            {% endif %}
+            <div class="page-actions">
+                <button class="button primary" type="submit">{{ submit_label }}</button>
+                {% if listing %}
+                    <a class="button" href="{% url 'portal:owner_listing_detail' listing.pk %}">Cancel</a>
+                {% else %}
+                    <a class="button" href="{% url 'portal:owner_listings_list' %}">Cancel</a>
+                {% endif %}
+            </div>
         </form>
     </div>
 </section>

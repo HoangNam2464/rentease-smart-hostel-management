@@ -10,55 +10,66 @@
 
 <section class="card">
     <div class="card-body">
-        <p><strong>Contract:</strong> {{ invoice.contract.contract_code }}</p>
-        <p><strong>Room:</strong> {{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</p>
-        <p><strong>Tenant:</strong> {{ invoice.contract.tenant.full_name }}</p>
-        <p><strong>Month/year:</strong> {{ invoice.month }}/{{ invoice.year }}</p>
-        <p><strong>Issued date:</strong> {{ invoice.issued_date }}</p>
-        <p><strong>Due date:</strong> {{ invoice.due_date|default:"-" }}</p>
-        <p><strong>Total amount:</strong> {{ invoice.total_amount }}</p>
-        <p><strong>Paid amount:</strong> {{ invoice.paid_amount }}</p>
-        <p><strong>Remaining amount:</strong> {{ invoice.remaining_amount }}</p>
-        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+        <ul class="info-list">
+            <li><span>Contract</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+            <li><span>Tenant</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
+            <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Issued date</span><strong>{{ invoice.issued_date }}</strong></li>
+            <li><span>Due date</span><strong>{{ invoice.due_date|default:"-" }}</strong></li>
+            <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
+            <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
+            <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+        </ul>
         {% if invoice.note %}
-            <p style="line-height: 1.6;"><strong>Note:</strong> {{ invoice.note }}</p>
+            <section class="section">
+                <h2>Note</h2>
+                <p class="listing-description">{{ invoice.note }}</p>
+            </section>
         {% endif %}
-        {% if invoice.remaining_amount %}
-            <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}">Record Payment</a>
-        {% endif %}
-        <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}">Edit Invoice</a>
-        <a class="button" href="{% url 'portal:owner_invoices_list' %}">Back to invoices</a>
+        <div class="page-actions">
+            {% if invoice.remaining_amount %}
+                <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}">Record Payment</a>
+            {% endif %}
+            <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}">Edit Invoice</a>
+            <a class="button" href="{% url 'portal:owner_invoices_list' %}">Back to invoices</a>
+        </div>
     </div>
 </section>
 
-<section class="card" style="margin-top: 16px;">
+<section class="card section">
     <div class="card-body">
-        <h2 style="margin-top: 0;">Payment History</h2>
+        <h2>Payment History</h2>
         {% if payments %}
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Amount</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Method</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Reference</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Paid at</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Note</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for payment in payments %}
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ payment.amount }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ payment.get_method_display }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ payment.transaction_code|default:"-" }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ payment.paid_at }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ payment.note|default:"-" }}</td>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Reference</th>
+                            <th>Paid at</th>
+                            <th>Note</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                            <tr>
+                                <td>{{ payment.amount }}</td>
+                                <td>{{ payment.get_method_display }}</td>
+                                <td>{{ payment.transaction_code|default:"-" }}</td>
+                                <td>{{ payment.paid_at }}</td>
+                                <td>{{ payment.note|default:"-" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-            <p style="margin: 0; color: var(--muted);">No payments have been recorded for this invoice yet.</p>
+            <div class="empty-state">
+                <p>No payments have been recorded for this invoice yet.</p>
+            </div>
         {% endif %}
     </div>
 </section>

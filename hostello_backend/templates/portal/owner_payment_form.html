@@ -10,21 +10,24 @@
 
 <section class="card">
     <div class="card-body">
-        <h2 style="margin-top: 0;">Invoice Summary</h2>
-        <p><strong>Invoice:</strong> {{ invoice.invoice_code|default:invoice.pk }}</p>
-        <p><strong>Contract:</strong> {{ invoice.contract.contract_code }}</p>
-        <p><strong>Room:</strong> {{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</p>
-        <p><strong>Tenant:</strong> {{ invoice.contract.tenant.full_name }}</p>
-        <p><strong>Month/year:</strong> {{ invoice.month }}/{{ invoice.year }}</p>
-        <p><strong>Total amount:</strong> {{ invoice.total_amount }}</p>
-        <p><strong>Paid amount:</strong> {{ invoice.paid_amount }}</p>
-        <p><strong>Remaining amount:</strong> {{ invoice.remaining_amount }}</p>
-        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+        <h2>Invoice Summary</h2>
+        <ul class="info-list">
+            <li><span>Invoice</span><strong>{{ invoice.invoice_code|default:invoice.pk }}</strong></li>
+            <li><span>Contract</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+            <li><span>Tenant</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
+            <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
+            <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
+            <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
+            <li><span>Status</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+        </ul>
     </div>
 </section>
 
-<section class="card" style="margin-top: 16px;">
+<section class="card section">
     <div class="card-body">
+        <p class="help-text">Record one payment against this invoice. The billing logic will update paid amount, remaining amount, and invoice status.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -64,8 +67,10 @@
                 {{ form.note.errors }}
             </div>
 
-            <button class="button primary" type="submit">Record Payment</button>
-            <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Cancel</a>
+            <div class="page-actions">
+                <button class="button primary" type="submit">Record Payment</button>
+                <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Cancel</a>
+            </div>
         </form>
     </div>
 </section>

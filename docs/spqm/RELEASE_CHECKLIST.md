@@ -49,8 +49,8 @@
 - [ ] login page is clear
 - [x] owner dashboard layout is clear
 - [x] owner sidebar/navigation is consistent
-- [ ] owner rooms/listings/contracts/invoices pages are readable
-- [ ] owner payment recording is easy to find from invoice detail
+- [x] owner rooms/listings/contracts/invoices pages are readable
+- [x] owner payment recording is easy to find from invoice detail
 - [ ] tenant dashboard is clear
 - [ ] tenant invoices/payments/repairs/notifications are readable
 - [ ] empty states are understandable

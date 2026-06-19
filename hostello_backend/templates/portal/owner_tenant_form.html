@@ -10,6 +10,7 @@
 
 <section class="card">
     <div class="card-body">
+        <p class="help-text">Only contact and profile fields are editable here. Account credentials and identity documents stay protected.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -61,8 +62,10 @@
                 {{ form.status.errors }}
             </div>
 
-            <button class="button primary" type="submit">{{ submit_label }}</button>
-            <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Cancel</a>
+            <div class="page-actions">
+                <button class="button primary" type="submit">{{ submit_label }}</button>
+                <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Cancel</a>
+            </div>
         </form>
     </div>
 </section>

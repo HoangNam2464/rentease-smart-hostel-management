@@ -73,6 +73,14 @@ docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md
 
 Phase 15B-2 simplified role navigation and improved owner dashboard hierarchy without changing owner-scoped query behavior.
 
+Phase 15B-3 owner CRUD page polish:
+
+```text
+docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md
+```
+
+Phase 15B-3 improved owner list/detail/form pages for rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations without changing models, routes, schema, or business logic.
+
 ## Runtime State
 
 - Local runtime works.
@@ -154,6 +162,10 @@ Phase 15B-2 Owner Layout and Dashboard Polish
 
 Tag: `phase15b2-owner-layout-dashboard-polish`
 
+Phase 15B-3 Owner CRUD Page Polish
+
+Tag: `phase15b3-owner-crud-polish`
+
 ## Working Now
 
 - Public landing page
@@ -197,10 +209,10 @@ Tag: `phase15b2-owner-layout-dashboard-polish`
 Current recommended next action:
 
 ```text
-Phase 15B-3: Owner CRUD Page Polish
+Phase 15B-4: Tenant Portal Polish
 ```
 
-Goal: improve owner CRUD list/detail/form pages while preserving owner-scoped data access.
+Goal: improve tenant portal pages while preserving tenant-scoped data access.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

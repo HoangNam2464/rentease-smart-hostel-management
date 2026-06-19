@@ -11,32 +11,34 @@
 <section class="card">
     <div class="card-body">
         {% if registrations %}
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Visitor</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Listing</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Room</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Preferred date</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid var(--border);">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for registration in registrations %}
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
                         <tr>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">
-                                <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
-                            </td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.listing.title }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.listing.room.room_code }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.preferred_date }}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid var(--border);">{{ registration.get_status_display }}</td>
+                            <th>Visitor</th>
+                            <th>Listing</th>
+                            <th>Room</th>
+                            <th>Preferred date</th>
+                            <th>Status</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for registration in registrations %}
+                            <tr>
+                                <td><a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a></td>
+                                <td>{{ registration.listing.title }}</td>
+                                <td>{{ registration.listing.room.room_code }}</td>
+                                <td>{{ registration.preferred_date }}</td>
+                                <td><span class="status-badge">{{ registration.get_status_display }}</span></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-            <p style="margin: 0; color: var(--muted);">No viewing registrations are linked to your listings yet.</p>
+            <div class="empty-state">
+                <p>No viewing registrations are linked to your listings yet.</p>
+            </div>
         {% endif %}
     </div>
 </section>

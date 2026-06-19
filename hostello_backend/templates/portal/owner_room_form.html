@@ -10,6 +10,7 @@
 
 <section class="card">
     <div class="card-body">
+        <p class="help-text">Keep room details clear for contracts, listings, invoices, and tenant-facing information.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -67,12 +68,14 @@
                 {{ form.description.errors }}
             </div>
 
-            <button class="button primary" type="submit">{{ submit_label }}</button>
-            {% if room %}
-                <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Cancel</a>
-            {% else %}
-                <a class="button" href="{% url 'portal:owner_rooms_list' %}">Cancel</a>
-            {% endif %}
+            <div class="page-actions">
+                <button class="button primary" type="submit">{{ submit_label }}</button>
+                {% if room %}
+                    <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Cancel</a>
+                {% else %}
+                    <a class="button" href="{% url 'portal:owner_rooms_list' %}">Cancel</a>
+                {% endif %}
+            </div>
         </form>
     </div>
 </section>
