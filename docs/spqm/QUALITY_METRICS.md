@@ -18,7 +18,8 @@
 | Locked documentation baselines | Agent docs baseline planned; SPQM baseline planned | Tags pending during SPQM integration |
 | UI pages audited | Representative template-level audit completed | Phase 15A |
 | UI pages polished | Public flow, owner dashboard/layout, owner CRUD pages, and tenant portal polished | Phase 15B-4 |
-| Demo checklist status | Partially complete | Needs final review per release checklist |
+| UI route regression | Public, owner, tenant, reports, admin, and legacy safety routes checked | Phase 15C |
+| Demo checklist status | Improved | Demo script and screenshot checklist created in Phase 15C |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -74,7 +75,8 @@ Baseline:
 | Locked documentation baselines | Agent guidance docs baseline, SPQM baseline, autonomous execution baseline |
 | UI pages audited | Representative template-level audit completed in Phase 15A |
 | UI pages polished | Public flow polished in Phase 15B-1; owner layout/dashboard polished in Phase 15B-2; owner CRUD pages polished in Phase 15B-3; tenant portal polished in Phase 15B-4 |
-| Demo checklist status | Partially complete |
+| UI route regression | Phase 15C route regression completed for tested routes |
+| Demo checklist status | Demo script and screenshot checklist created; sample data plan still needed |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

@@ -89,6 +89,16 @@ docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md
 
 Phase 15B-4 improved tenant dashboard, profile, contracts, invoices, payments, repairs, and notifications pages without changing models, routes, schema, or business logic.
 
+Phase 15C UI regression and demo package:
+
+```text
+docs/ui/RENTEASE_UI_REGRESSION_REPORT.md
+docs/demo/DEMO_SCRIPT.md
+docs/demo/SCREENSHOT_CHECKLIST.md
+```
+
+Phase 15C verified polished public, owner, tenant, reports, admin, and legacy safety routes, then documented the demo script, screenshot checklist, known sample-data limitation, and next recommended phase.
+
 ## Runtime State
 
 - Local runtime works.
@@ -178,6 +188,10 @@ Phase 15B-4 Tenant Portal Polish
 
 Tag: `phase15b4-tenant-portal-polish`
 
+Phase 15C UI Regression and Demo Package
+
+Tag: `phase15c-ui-demo-readiness`
+
 ## Working Now
 
 - Public landing page
@@ -221,10 +235,10 @@ Tag: `phase15b4-tenant-portal-polish`
 Current recommended next action:
 
 ```text
-Phase 15C: UI Regression and Demo Package
+Phase 15D: Demo Data Readiness Plan
 ```
 
-Goal: verify polished public, owner, and tenant UI end to end and prepare a concise demo-readiness package.
+Goal: plan safe local demo data for owner and tenant detail-page walkthroughs.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

@@ -10,6 +10,7 @@
 - `015bd1b Polish owner portal layout dashboard`
 - Phase 15B-3 commit in this run: `Polish RentEase owner management pages`
 - Phase 15B-4 commit in this run: `Polish RentEase tenant portal pages`
+- Phase 15C commit in this run: `Add RentEase UI regression and demo docs`
 
 ### Completed
 
@@ -25,6 +26,7 @@
 - Completed Phase 15B-2 Owner Layout and Dashboard Polish.
 - Completed Phase 15B-3 Owner CRUD Page Polish.
 - Completed Phase 15B-4 Tenant Portal Polish.
+- Completed Phase 15C UI Regression and Demo Package.
 
 ### Files Changed
 
@@ -33,6 +35,9 @@
 - `docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md`
 - `docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md`
 - `docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md`
+- `docs/ui/RENTEASE_UI_REGRESSION_REPORT.md`
+- `docs/demo/DEMO_SCRIPT.md`
+- `docs/demo/SCREENSHOT_CHECKLIST.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
@@ -93,24 +98,26 @@
 - `phase15b2-owner-layout-dashboard-polish`
 - `phase15b3-owner-crud-polish`
 - `phase15b4-tenant-portal-polish`
+- `phase15c-ui-demo-readiness`
 
 ### Current Blockers
 
 - No technical blocker.
 - Owner detail smoke tests could not use detail pages because the local `owner_test` account currently has no owner-scoped sample records. List/create route smoke tests passed.
 - Tenant detail smoke tests could not use detail pages because the local `tenant_test` account currently has no tenant-scoped sample records. List/form route smoke tests passed.
+- Phase 15C confirmed public listing id `12` is available for public detail and viewing registration pages.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 15C: UI Regression and Demo Package
+Phase 15D: Demo Data Readiness Plan
 ```
 
 Start with:
 
-- public, owner, and tenant route smoke tests
-- reports/admin/legacy route regression checks
-- demo-readiness documentation refresh
+- plan fake local-only demo data
+- choose manual admin setup, fixture JSON, or a local-only management command
+- include owner/tenant scoped records for detail-page walkthroughs
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree

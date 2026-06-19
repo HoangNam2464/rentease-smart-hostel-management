@@ -4,7 +4,7 @@
 
 - [ ] README complete
 - [ ] run instructions verified
-- [ ] demo script available
+- [x] demo script available
 - [ ] screenshots prepared
 - [ ] test accounts available locally
 - [ ] Django check passes
@@ -16,8 +16,8 @@
 - [ ] tenant portal works
 - [ ] admin works
 - [ ] reports remain staff-only
-- [ ] route regression checked
-- [ ] privacy/security checks completed
+- [x] route regression checked
+- [x] privacy/security checks completed
 - [ ] GitHub tag created after approval
 
 ## Production Readiness Checklist
@@ -54,21 +54,21 @@
 - [x] tenant dashboard is clear
 - [x] tenant invoices/payments/repairs/notifications are readable
 - [x] empty states are understandable
-- [ ] no HOSTELLO branding appears in RentEase demo paths
-- [ ] no raw Django template tags are visible
-- [ ] no private data appears on public pages
+- [x] no HOSTELLO branding appears in RentEase demo paths
+- [x] no raw Django template tags are visible
+- [x] no private data appears on public pages
 
 ## Documentation Readiness Checklist
 
 - [ ] AGENTS.md updated if status changed
-- [ ] current state docs updated
+- [x] current state docs updated
 - [ ] production roadmap updated
 - [ ] SPQM docs updated if process changed
 - [ ] README matches current run process
 - [ ] demo checklist matches current UI
 - [ ] security notes mention known production gaps
-- [ ] unknown items marked `Not verified`
-- [ ] future items marked `Planned`
+- [x] unknown items marked `Not verified`
+- [x] future items marked `Planned`
 
 ## Video Demo Checklist
 

@@ -77,22 +77,35 @@ docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md
 
 ## Immediate Next Step
 
+Phase 15C UI Regression and Demo Package is complete.
+
+Created documents:
+
+```text
+docs/ui/RENTEASE_UI_REGRESSION_REPORT.md
+docs/demo/DEMO_SCRIPT.md
+docs/demo/SCREENSHOT_CHECKLIST.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 15C: UI Regression and Demo Package
+Phase 15D: Demo Data Readiness Plan
 ```
 
 Goal:
 
-Verify polished public, owner, and tenant UI end to end, then prepare a concise demo-readiness package.
+Plan safe local demo data so owner and tenant detail pages can be demonstrated clearly without using real personal data.
 
 Initial scope:
 
-- run route smoke tests for public, owner, tenant, admin, reports, and legacy paths
-- verify no raw template tags or obvious privacy leaks
-- update demo/release docs with current UI state
-- avoid model, migration, route, and business logic changes
+- inspect existing models and sample data needs
+- decide between manual admin setup, fixture JSON, or a local-only management command
+- define fake owner, tenant, room, contract, invoice, payment, repair, notification, listing, and viewing registration records
+- avoid schema changes and production data
+- do not create demo data until the plan is approved
 
 Do not change models, migrations, routes, settings, or business logic.
 
@@ -103,7 +116,8 @@ Do not change models, migrations, routes, settings, or business logic.
 3. Phase 15B-2: Owner Layout and Dashboard Polish - completed
 4. Phase 15B-3: Owner CRUD Page Polish - completed
 5. Phase 15B-4: Tenant Portal Polish - completed
-6. Phase 15C: UI Regression and Demo Package - next
+6. Phase 15C: UI Regression and Demo Package - completed
+7. Phase 15D: Demo Data Readiness Plan - next
 
 ## Recommended Production Track
 
