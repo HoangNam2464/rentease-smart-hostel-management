@@ -6,6 +6,8 @@
 - [ ] run instructions verified
 - [x] demo script available
 - [ ] screenshots prepared
+- [x] demo data plan available
+- [ ] demo data seeded locally
 - [ ] test accounts available locally
 - [ ] Django check passes
 - [ ] migration dry-run says `No changes detected`

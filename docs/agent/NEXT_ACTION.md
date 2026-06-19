@@ -92,20 +92,20 @@ docs/demo/SCREENSHOT_CHECKLIST.md
 Start:
 
 ```text
-Phase 15D: Demo Data Readiness Plan
+Phase 15E: Safe Demo Data Seed Implementation
 ```
 
 Goal:
 
-Plan safe local demo data so owner and tenant detail pages can be demonstrated clearly without using real personal data.
+Implement a local-only, idempotent demo data seed workflow so the polished UI can be demonstrated with realistic fake owner and tenant records.
 
 Initial scope:
 
-- inspect existing models and sample data needs
-- decide between manual admin setup, fixture JSON, or a local-only management command
-- define fake owner, tenant, room, contract, invoice, payment, repair, notification, listing, and viewing registration records
-- avoid schema changes and production data
-- do not create demo data until the plan is approved
+- create a guarded management command if approved
+- seed fake local-only records with `DEMO-` prefixes
+- support dry-run and safe reset behavior
+- avoid schema changes, migrations, and database file commits
+- verify owner_test and tenant_test can demonstrate detail pages
 
 Do not change models, migrations, routes, settings, or business logic.
 
@@ -117,7 +117,8 @@ Do not change models, migrations, routes, settings, or business logic.
 4. Phase 15B-3: Owner CRUD Page Polish - completed
 5. Phase 15B-4: Tenant Portal Polish - completed
 6. Phase 15C: UI Regression and Demo Package - completed
-7. Phase 15D: Demo Data Readiness Plan - next
+7. Phase 15D: Demo Data Readiness Plan - completed
+8. Phase 15E: Safe Demo Data Seed Implementation - next
 
 ## Recommended Production Track
 

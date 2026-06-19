@@ -99,6 +99,14 @@ docs/demo/SCREENSHOT_CHECKLIST.md
 
 Phase 15C verified polished public, owner, tenant, reports, admin, and legacy safety routes, then documented the demo script, screenshot checklist, known sample-data limitation, and next recommended phase.
 
+Phase 15D demo data readiness plan:
+
+```text
+docs/demo/DEMO_DATA_READINESS_PLAN.md
+```
+
+Phase 15D audited the current local demo accounts, model relationships, sample-data gaps, and recommended a guarded local-only management command for safe fake demo data.
+
 ## Runtime State
 
 - Local runtime works.
@@ -192,6 +200,10 @@ Phase 15C UI Regression and Demo Package
 
 Tag: `phase15c-ui-demo-readiness`
 
+Phase 15D Demo Data Readiness Plan
+
+Tag: `phase15d-demo-data-readiness-plan`
+
 ## Working Now
 
 - Public landing page
@@ -235,10 +247,10 @@ Tag: `phase15c-ui-demo-readiness`
 Current recommended next action:
 
 ```text
-Phase 15D: Demo Data Readiness Plan
+Phase 15E: Safe Demo Data Seed Implementation
 ```
 
-Goal: plan safe local demo data for owner and tenant detail-page walkthroughs.
+Goal: implement the approved guarded local-only demo data seed workflow without schema changes.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

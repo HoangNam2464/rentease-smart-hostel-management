@@ -11,6 +11,7 @@
 - Phase 15B-3 commit in this run: `Polish RentEase owner management pages`
 - Phase 15B-4 commit in this run: `Polish RentEase tenant portal pages`
 - Phase 15C commit in this run: `Add RentEase UI regression and demo docs`
+- Phase 15D commit in this run: `Add RentEase demo data readiness plan`
 
 ### Completed
 
@@ -27,6 +28,7 @@
 - Completed Phase 15B-3 Owner CRUD Page Polish.
 - Completed Phase 15B-4 Tenant Portal Polish.
 - Completed Phase 15C UI Regression and Demo Package.
+- Completed Phase 15D Demo Data Readiness Plan.
 
 ### Files Changed
 
@@ -38,6 +40,7 @@
 - `docs/ui/RENTEASE_UI_REGRESSION_REPORT.md`
 - `docs/demo/DEMO_SCRIPT.md`
 - `docs/demo/SCREENSHOT_CHECKLIST.md`
+- `docs/demo/DEMO_DATA_READINESS_PLAN.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
@@ -99,6 +102,7 @@
 - `phase15b3-owner-crud-polish`
 - `phase15b4-tenant-portal-polish`
 - `phase15c-ui-demo-readiness`
+- `phase15d-demo-data-readiness-plan`
 
 ### Current Blockers
 
@@ -106,18 +110,20 @@
 - Owner detail smoke tests could not use detail pages because the local `owner_test` account currently has no owner-scoped sample records. List/create route smoke tests passed.
 - Tenant detail smoke tests could not use detail pages because the local `tenant_test` account currently has no tenant-scoped sample records. List/form route smoke tests passed.
 - Phase 15C confirmed public listing id `12` is available for public detail and viewing registration pages.
+- Phase 15D confirmed `owner_test` and `tenant_test` exist and have linked profiles, but no scoped records for detail-page demos.
+- Phase 15D recommends a guarded local-only management command for Phase 15E.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 15D: Demo Data Readiness Plan
+Phase 15E: Safe Demo Data Seed Implementation
 ```
 
 Start with:
 
-- plan fake local-only demo data
-- choose manual admin setup, fixture JSON, or a local-only management command
-- include owner/tenant scoped records for detail-page walkthroughs
+- implement guarded local-only seed command if approved
+- use `DEMO-` prefixes and fake data only
+- support dry-run and safe reset
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree
