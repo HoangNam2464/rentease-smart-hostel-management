@@ -12,15 +12,23 @@
 - Ran migration dry-run successfully with `No changes detected`.
 - Read autonomous execution docs and required security/SPQM docs.
 - Completed Phase 15A UI/UX Audit and Redesign Planning.
+- Completed Phase 15B-1 Public UI Polish.
 
 ### Files Changed
 
 - `docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md`
+- `docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
 - `docs/spqm/RELEASE_CHECKLIST.md`
 - `docs/agent/AUTONOMOUS_WORK_LOG.md`
+- `hostello_backend/templates/home.html`
+- `hostello_backend/templates/listings/public_listing_list.html`
+- `hostello_backend/templates/listings/public_listing_detail.html`
+- `hostello_backend/templates/listings/viewing_registration_form.html`
+- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `hostello_backend/templates/portal/base.html`
 
 ### Checks Run
 
@@ -31,6 +39,7 @@
 
 - `autonomous-execution-plan-baseline`
 - `phase15a-ui-ux-audit-plan` after Phase 15A commit is pushed
+- `phase15b1-public-ui-polish` after Phase 15B-1 commit is pushed
 
 ### Current Blockers
 
@@ -40,16 +49,16 @@
 ### Exact Next Recommended Action
 
 ```text
-Phase 15B-1: Public UI Polish
+Phase 15B-2: Owner Layout and Dashboard Polish
 ```
 
 Start with:
 
-- fix public landing headline encoding
-- improve `/rooms/`
-- improve public room detail
-- improve viewing registration form and success page
+- simplify crowded owner navigation
+- improve owner dashboard hierarchy
+- preserve owner-scoped data access
+- avoid model, route, migration, and business logic changes
 
 ### Working Tree
 
-Working tree should be clean after Phase 15A commit and tag are completed.
+Working tree should be clean after Phase 15B-1 commit and tag are completed.

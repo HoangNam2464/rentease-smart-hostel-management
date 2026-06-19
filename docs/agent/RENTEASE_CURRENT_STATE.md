@@ -57,6 +57,14 @@ docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md
 
 Phase 15A identified public landing encoding, crowded portal navigation, inline-style-heavy templates, table-heavy owner/tenant pages, and basic public listing visuals as demo polish targets.
 
+Phase 15B-1 public UI polish:
+
+```text
+docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md
+```
+
+Phase 15B-1 improved the public landing/listing/viewing-registration flow without changing models, routes, schema, or business logic.
+
 ## Runtime State
 
 - Local runtime works.
@@ -130,6 +138,10 @@ Phase 15A UI/UX Audit and Redesign Planning
 
 Tag: `phase15a-ui-ux-audit-plan`
 
+Phase 15B-1 Public UI Polish
+
+Tag: `phase15b1-public-ui-polish`
+
 ## Working Now
 
 - Public landing page
@@ -173,10 +185,10 @@ Tag: `phase15a-ui-ux-audit-plan`
 Current recommended next action:
 
 ```text
-Phase 15B-1: Public UI Polish
+Phase 15B-2: Owner Layout and Dashboard Polish
 ```
 
-Goal: polish the public RentEase landing/listing/viewing-registration flow before owner and tenant portal polish.
+Goal: improve owner portal layout and owner dashboard hierarchy while preserving owner-scoped data access.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

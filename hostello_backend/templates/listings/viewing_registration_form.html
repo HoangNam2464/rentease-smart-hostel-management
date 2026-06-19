@@ -8,8 +8,11 @@
     <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}</p>
 </section>
 
-<section class="card" style="max-width: 680px;">
+<section class="card form-panel">
     <div class="card-body">
+        <p class="help-text">
+            Share your contact information and preferred viewing time. The owner will review your request from RentEase.
+        </p>
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -50,7 +53,7 @@
                 {{ form.note.errors }}
             </div>
 
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div class="page-actions">
                 <button class="button primary" type="submit">Submit registration</button>
                 <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Cancel</a>
             </div>

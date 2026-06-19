@@ -39,34 +39,43 @@ Audit document:
 docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md
 ```
 
+## Completed Current Step
+
+Phase 15B-1 Public UI Polish is complete.
+
+Summary document:
+
+```text
+docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md
+```
+
 ## Immediate Next Step
 
 Start:
 
 ```text
-Phase 15B-1: Public UI Polish
+Phase 15B-2: Owner Layout and Dashboard Polish
 ```
 
 Goal:
 
-Improve the public RentEase UI before login.
+Improve the owner portal layout and dashboard hierarchy.
 
 Initial scope:
 
-- fix public landing headline encoding
-- improve `/`
-- improve `/rooms/`
-- improve `/rooms/<id>/`
-- improve `/rooms/<id>/register/`
-- improve `/rooms/<id>/register/success/`
+- simplify crowded owner navigation
+- improve owner dashboard metric grouping
+- improve owner page actions and section hierarchy
+- preserve owner-scoped query behavior
+- avoid model, migration, route, and business logic changes
 
 Do not change models, migrations, routes, settings, or business logic.
 
 ## Recommended Demo Track
 
 1. Phase 15A: UI/UX Audit and Redesign Planning - completed
-2. Phase 15B-1: Public UI Polish - next
-3. Phase 15B-2: Owner Layout and Dashboard Polish
+2. Phase 15B-1: Public UI Polish - completed
+3. Phase 15B-2: Owner Layout and Dashboard Polish - next
 4. Phase 15B-3: Owner CRUD Page Polish
 5. Phase 15B-4: Tenant Portal Polish
 6. Phase 15C: UI Regression and Demo Package

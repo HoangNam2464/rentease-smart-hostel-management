@@ -42,10 +42,10 @@
 ## UI Demo Readiness Checklist
 
 - [x] UI/UX audit and redesign planning completed
-- [ ] public landing page looks like RentEase
-- [ ] public room list is readable
-- [ ] public room detail is readable
-- [ ] viewing registration form is understandable
+- [x] public landing page looks like RentEase
+- [x] public room list is readable
+- [x] public room detail is readable
+- [x] viewing registration form is understandable
 - [ ] login page is clear
 - [ ] owner dashboard layout is clear
 - [ ] owner sidebar/navigation is consistent

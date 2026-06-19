@@ -8,12 +8,12 @@
     <p>Your request for {{ listing.title }} has been sent. The property owner or administrator can follow up from RentEase Admin.</p>
 </section>
 
-<section class="card" style="max-width: 680px;">
+<section class="card form-panel">
     <div class="card-body">
-        <p style="line-height: 1.6; color: var(--muted);">
+        <p class="help-text">
             Thank you for your interest. Your registration has been saved with pending status.
         </p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div class="page-actions">
             <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Back to listing</a>
             <a class="button" href="{% url 'listings:public_listing_list' %}">Browse more rooms</a>
         </div>

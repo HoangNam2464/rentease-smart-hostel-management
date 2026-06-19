@@ -9,28 +9,34 @@
 </section>
 
 {% if listings %}
-    <section class="grid">
+    <section class="listing-grid">
         {% for listing in listings %}
-            <article class="card">
+            <article class="card listing-card">
                 {% if listing.image_url %}
-                    <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 100%; height: 190px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}">
+                {% else %}
+                    <div class="listing-placeholder">RentEase Room</div>
                 {% endif %}
                 <div class="card-body">
-                    <h2 style="margin: 0 0 10px; font-size: 1.25rem;">{{ listing.title }}</h2>
-                    <p style="margin: 0 0 14px; color: var(--muted); line-height: 1.5;">
+                    <h2 class="listing-title">{{ listing.title }}</h2>
+                    <p class="listing-description">
                         {{ listing.description|truncatewords:24 }}
                     </p>
-                    <p style="margin: 0 0 8px;"><strong>Room:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</p>
-                    {% if listing.room.floor %}
-                        <p style="margin: 0 0 8px;"><strong>Floor:</strong> {{ listing.room.floor }}</p>
-                    {% endif %}
-                    {% if listing.room.area %}
-                        <p style="margin: 0 0 8px;"><strong>Area:</strong> {{ listing.room.area }} m2</p>
-                    {% endif %}
-                    <p style="margin: 0 0 8px;"><strong>Max occupants:</strong> {{ listing.room.max_occupants }}</p>
-                    <p style="margin: 0 0 8px;"><strong>Price:</strong> {{ listing.listing_price }}</p>
-                    <p style="margin: 0 0 8px;"><strong>Deposit:</strong> {{ listing.deposit_amount }}</p>
-                    <p style="margin: 0 0 18px;"><strong>Available from:</strong> {{ listing.available_from }}</p>
+                    <ul class="meta-list">
+                        <li><strong>Room:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
+                        {% if listing.room.floor %}
+                            <li><strong>Floor:</strong> {{ listing.room.floor }}</li>
+                        {% endif %}
+                        {% if listing.room.area %}
+                            <li><strong>Area:</strong> {{ listing.room.area }} m2</li>
+                        {% endif %}
+                        <li><strong>Max occupants:</strong> {{ listing.room.max_occupants }}</li>
+                        <li><strong>Available from:</strong> {{ listing.available_from }}</li>
+                    </ul>
+                    <div class="price-row">
+                        <span>Monthly price</span>
+                        <strong>{{ listing.listing_price }}</strong>
+                    </div>
                     <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">View details</a>
                 </div>
             </article>
@@ -38,8 +44,8 @@
     </section>
 {% else %}
     <div class="card">
-        <div class="card-body">
-            <p style="margin: 0; color: var(--muted);">No published room listings are available right now.</p>
+        <div class="card-body empty-state">
+            <p>No published room listings are available right now. Please check back later.</p>
         </div>
     </div>
 {% endif %}
