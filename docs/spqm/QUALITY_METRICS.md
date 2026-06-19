@@ -16,7 +16,7 @@
 | Root legacy `/fees/` exposure | Removed | Phase 14B-1 |
 | Documented phases | 12 listed locked phases | Baseline count |
 | Locked documentation baselines | Agent docs baseline planned; SPQM baseline planned | Tags pending during SPQM integration |
-| UI pages audited | Not verified | Planned |
+| UI pages audited | Representative template-level audit completed | Phase 15A |
 | UI pages polished | Not verified | Planned |
 | Demo checklist status | Partially complete | Needs final review per release checklist |
 | Production blockers remaining | 7 known blockers | See production blockers section |
@@ -71,8 +71,8 @@ Baseline:
 | Metric | Baseline |
 | --- | --- |
 | Documented phases | 12 listed locked phases |
-| Locked documentation baselines | Agent guidance docs baseline and SPQM baseline expected after integration |
-| UI pages audited | Not verified |
+| Locked documentation baselines | Agent guidance docs baseline, SPQM baseline, autonomous execution baseline |
+| UI pages audited | Representative template-level audit completed in Phase 15A |
 | UI pages polished | Not verified |
 | Demo checklist status | Partially complete |
 | Production blockers remaining | 7 known blockers |

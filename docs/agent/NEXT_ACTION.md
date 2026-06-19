@@ -29,22 +29,43 @@ Completed documentation baselines:
 - `agent-guidance-docs-baseline`
 - `spqm-documentation-baseline`
 
-## Next After SPQM Baseline
+## Completed Current Step
+
+Phase 15A UI/UX Audit and Redesign Planning is complete.
+
+Audit document:
+
+```text
+docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md
+```
+
+## Immediate Next Step
 
 Start:
 
 ```text
-Phase 15A: UI/UX Audit and Redesign Planning
+Phase 15B-1: Public UI Polish
 ```
 
 Goal:
 
-Audit current UI weakness and create a safe redesign plan before editing templates.
+Improve the public RentEase UI before login.
+
+Initial scope:
+
+- fix public landing headline encoding
+- improve `/`
+- improve `/rooms/`
+- improve `/rooms/<id>/`
+- improve `/rooms/<id>/register/`
+- improve `/rooms/<id>/register/success/`
+
+Do not change models, migrations, routes, settings, or business logic.
 
 ## Recommended Demo Track
 
-1. Phase 15A: UI/UX Audit and Redesign Planning
-2. Phase 15B-1: Public UI Polish
+1. Phase 15A: UI/UX Audit and Redesign Planning - completed
+2. Phase 15B-1: Public UI Polish - next
 3. Phase 15B-2: Owner Layout and Dashboard Polish
 4. Phase 15B-3: Owner CRUD Page Polish
 5. Phase 15B-4: Tenant Portal Polish

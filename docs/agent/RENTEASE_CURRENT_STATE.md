@@ -49,6 +49,14 @@ docs/agent/NEXT_ACTION.md
 
 These files allow future agent sessions to start from a short prompt, read the current next action, and continue safely through approved documentation, UI, and planning work.
 
+Phase 15A UI/UX audit plan:
+
+```text
+docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md
+```
+
+Phase 15A identified public landing encoding, crowded portal navigation, inline-style-heavy templates, table-heavy owner/tenant pages, and basic public listing visuals as demo polish targets.
+
 ## Runtime State
 
 - Local runtime works.
@@ -118,6 +126,10 @@ Phase 14B-1 Remove Legacy Root API / Fees Routes
 
 Tag: `phase14b1-remove-legacy-root-api-fees`
 
+Phase 15A UI/UX Audit and Redesign Planning
+
+Tag: `phase15a-ui-ux-audit-plan`
+
 ## Working Now
 
 - Public landing page
@@ -161,12 +173,12 @@ Tag: `phase14b1-remove-legacy-root-api-fees`
 Current recommended next action:
 
 ```text
-Phase 14B-2: Production Settings Split Planning
+Phase 15B-1: Public UI Polish
 ```
 
-Goal: make settings production-aware while preserving local development.
+Goal: polish the public RentEase landing/listing/viewing-registration flow before owner and tenant portal polish.
 
-Do not implement before planning and approval.
+Do not change models, migrations, schema, routes, settings, or business logic.
 
 ## Do Not Assume
 
