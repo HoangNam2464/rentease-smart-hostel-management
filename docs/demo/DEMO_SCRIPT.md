@@ -127,11 +127,11 @@ Talk track:
 
 Owners can manage their own rooms, listings, linked tenants, contracts, invoice headers, payments, repairs, and viewing registrations. Each page is owner-scoped.
 
-If current local test data is empty, explain that Phase 15D will prepare safe demo data for richer detail-page walkthroughs.
+Seeded demo data is available after Phase 15E. Use the owner pages to open demo rooms, contracts, invoices, repairs, and viewing registrations.
 
 ### 8. Owner Billing And Payment
 
-Open an owner invoice detail page if sample data exists.
+Open a demo owner invoice detail page.
 
 Talk track:
 
@@ -193,17 +193,16 @@ Talk track:
 
 The current project is strong for local demo and controlled testing, but it is not production-ready yet. Remaining production work includes production settings, production database configuration, deployment setup, account lifecycle, and owner billing detail/utility entry.
 
-## Current Demo Data Limitation
+## Current Demo Data Status
 
-At the Phase 15C checkpoint:
+After Phase 15E:
 
-- `owner_test` has no scoped owner sample records.
-- `tenant_test` has no scoped tenant sample records.
-- published public listings exist, including listing id `12`.
+- `owner_test` has scoped demo rooms, listings, contracts, invoices, payments, repairs, and viewing registrations.
+- `tenant_test` has scoped demo contract, invoice, payment, repairs, and notifications.
+- public demo listings are available.
 
 Recommended next phase:
 
 ```text
-Phase 15D: Demo Data Readiness Plan
+Phase 15F: Final Demo Walkthrough Verification
 ```
-

@@ -107,6 +107,16 @@ docs/demo/DEMO_DATA_READINESS_PLAN.md
 
 Phase 15D audited the current local demo accounts, model relationships, sample-data gaps, and recommended a guarded local-only management command for safe fake demo data.
 
+Phase 15E safe demo data seed implementation:
+
+```text
+hostello_backend/portal/management/commands/seed_rentease_demo_data.py
+docs/demo/DEMO_DATA_SEED_IMPLEMENTATION_NOTES.md
+docs/demo/DEMO_DATA_SEED_USAGE.md
+```
+
+Phase 15E implemented and verified a guarded local-only demo data seed command with dry-run support, idempotent seed behavior, and demo-prefixed data.
+
 ## Runtime State
 
 - Local runtime works.
@@ -204,6 +214,10 @@ Phase 15D Demo Data Readiness Plan
 
 Tag: `phase15d-demo-data-readiness-plan`
 
+Phase 15E Safe Demo Data Seed Implementation
+
+Tag: `phase15e-demo-data-seed`
+
 ## Working Now
 
 - Public landing page
@@ -247,10 +261,10 @@ Tag: `phase15d-demo-data-readiness-plan`
 Current recommended next action:
 
 ```text
-Phase 15E: Safe Demo Data Seed Implementation
+Phase 15F: Final Demo Walkthrough Verification
 ```
 
-Goal: implement the approved guarded local-only demo data seed workflow without schema changes.
+Goal: use seeded demo data to verify the full 3-5 minute demo flow and prepare the final demo package.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

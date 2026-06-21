@@ -92,20 +92,20 @@ docs/demo/SCREENSHOT_CHECKLIST.md
 Start:
 
 ```text
-Phase 15E: Safe Demo Data Seed Implementation
+Phase 15F: Final Demo Walkthrough Verification
 ```
 
 Goal:
 
-Implement a local-only, idempotent demo data seed workflow so the polished UI can be demonstrated with realistic fake owner and tenant records.
+Use seeded demo data to verify the full 3-5 minute demo flow and prepare the final demo package.
 
 Initial scope:
 
-- create a guarded management command if approved
-- seed fake local-only records with `DEMO-` prefixes
-- support dry-run and safe reset behavior
+- run through the demo script end to end
+- verify screenshot checklist coverage
+- verify public, owner, tenant, admin, reports, and legacy safety routes
+- record final demo limitations and next production-readiness step
 - avoid schema changes, migrations, and database file commits
-- verify owner_test and tenant_test can demonstrate detail pages
 
 Do not change models, migrations, routes, settings, or business logic.
 
@@ -118,7 +118,8 @@ Do not change models, migrations, routes, settings, or business logic.
 5. Phase 15B-4: Tenant Portal Polish - completed
 6. Phase 15C: UI Regression and Demo Package - completed
 7. Phase 15D: Demo Data Readiness Plan - completed
-8. Phase 15E: Safe Demo Data Seed Implementation - next
+8. Phase 15E: Safe Demo Data Seed Implementation - completed
+9. Phase 15F: Final Demo Walkthrough Verification - next
 
 ## Recommended Production Track
 

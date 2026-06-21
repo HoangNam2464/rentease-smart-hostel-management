@@ -20,7 +20,7 @@
 | UI pages polished | Public flow, owner dashboard/layout, owner CRUD pages, and tenant portal polished | Phase 15B-4 |
 | UI route regression | Public, owner, tenant, reports, admin, and legacy safety routes checked | Phase 15C |
 | Demo checklist status | Improved | Demo script, screenshot checklist, and demo data plan created |
-| Demo data readiness | Planned | Phase 15D recommends guarded local-only seed command |
+| Demo data readiness | Implemented locally | Phase 15E seed command created and verified |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -78,7 +78,7 @@ Baseline:
 | UI pages polished | Public flow polished in Phase 15B-1; owner layout/dashboard polished in Phase 15B-2; owner CRUD pages polished in Phase 15B-3; tenant portal polished in Phase 15B-4 |
 | UI route regression | Phase 15C route regression completed for tested routes |
 | Demo checklist status | Demo script and screenshot checklist created; sample data seed implementation still needed |
-| Demo data readiness | Phase 15D plan completed; implementation planned for Phase 15E |
+| Demo data readiness | Phase 15E seed command completed; final walkthrough verification planned |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

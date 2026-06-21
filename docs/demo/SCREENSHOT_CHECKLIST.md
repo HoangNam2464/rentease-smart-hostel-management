@@ -17,15 +17,15 @@ Capture a clean visual set for project presentation, README updates, or a short 
 
 - [ ] Owner dashboard at `/owner/dashboard/`
 - [ ] Owner rooms list at `/owner/rooms/`
-- [ ] Owner room detail if demo data exists
+- [ ] Owner room detail
 - [ ] Owner room create/edit form
 - [ ] Owner listings list at `/owner/listings/`
-- [ ] Owner listing detail if demo data exists
+- [ ] Owner listing detail
 - [ ] Owner tenants list at `/owner/tenants/`
 - [ ] Owner contracts list at `/owner/contracts/`
 - [ ] Owner invoices list at `/owner/invoices/`
-- [ ] Owner invoice detail if demo data exists
-- [ ] Owner payment recording form if demo data exists
+- [ ] Owner invoice detail
+- [ ] Owner payment recording form
 - [ ] Owner repairs list at `/owner/repairs/`
 - [ ] Owner viewing registrations list at `/owner/viewing-registrations/`
 
@@ -34,9 +34,9 @@ Capture a clean visual set for project presentation, README updates, or a short 
 - [ ] Tenant dashboard at `/tenant/dashboard/`
 - [ ] Tenant profile at `/tenant/profile/`
 - [ ] Tenant contracts list at `/tenant/contracts/`
-- [ ] Tenant contract detail if demo data exists
+- [ ] Tenant contract detail
 - [ ] Tenant invoices list at `/tenant/invoices/`
-- [ ] Tenant invoice detail if demo data exists
+- [ ] Tenant invoice detail
 - [ ] Tenant payments list at `/tenant/payments/`
 - [ ] Tenant repairs list at `/tenant/repairs/`
 - [ ] Tenant repair submission form at `/tenant/repairs/new/`
@@ -65,13 +65,12 @@ Before publishing screenshots, confirm:
 - [ ] no `.env`, SECRET_KEY, database path, or backup file names are visible
 - [ ] no private owner or tenant data from real users is visible
 
-## Current Limitation
+## Current Demo Data Status
 
-At Phase 15C, public listing screenshots are available, but owner and tenant detail screenshots need scoped demo data.
+After Phase 15E, scoped owner and tenant demo records are available for screenshots.
 
 Recommended next phase:
 
 ```text
-Phase 15D: Demo Data Readiness Plan
+Phase 15F: Final Demo Walkthrough Verification
 ```
-
