@@ -17,6 +17,12 @@ complete-product
 Final local demo release tag:
 
 ```text
+release-rentease-polished-local-demo-v2
+```
+
+Previous local demo release tag:
+
+```text
 release-rentease-complete-product-v1
 ```
 
@@ -134,6 +140,14 @@ docs/demo/FINAL_DEMO_PACKAGE.md
 
 Phase 16A updated the project README and final demo package around the verified local demo flow, setup commands, seed usage, demo accounts, safety notes, and production limitations.
 
+Phase 16B final local demo release verification:
+
+```text
+release-rentease-polished-local-demo-v2
+```
+
+Phase 16B reran Django checks, migration dry-run, demo seed command, final route smoke tests, privacy scan, and raw template scan before locking the polished local demo release.
+
 ## Runtime State
 
 - Local runtime works.
@@ -243,6 +257,10 @@ Phase 16A README and Final Demo Package Polish
 
 Tag: `phase16a-readme-final-demo-package`
 
+Phase 16B Final Local Demo Release
+
+Tag: `release-rentease-polished-local-demo-v2`
+
 ## Working Now
 
 - Public landing page
@@ -273,6 +291,7 @@ Tag: `phase16a-readme-final-demo-package`
 - Legacy available only under `/legacy/` and `/legacy/login/`
 - Seeded local demo walkthrough across public, owner, tenant, admin, reports, and legacy safety routes
 - Final README and local demo package documentation
+- Final polished local demo release tag
 
 ## Important Production Gaps
 
@@ -288,10 +307,16 @@ Tag: `phase16a-readme-final-demo-package`
 Current recommended next action:
 
 ```text
-Phase 16B: Final Local Demo Release Tag
+Track A: Capture screenshots and record demo video
 ```
 
-Goal: run final verification and create the final local-demo release tag after the UI, seed data, walkthrough, README, and final demo package are complete.
+Goal: prepare visual submission assets from the verified local demo package.
+
+Alternative production track:
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 

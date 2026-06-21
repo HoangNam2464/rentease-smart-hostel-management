@@ -15,6 +15,7 @@
 - Phase 15E commit in this run: `Add safe RentEase demo data seed command`
 - Phase 15F commit in this run: `Add RentEase final demo walkthrough verification`
 - Phase 16A commit in this run: `Polish RentEase README and final demo package`
+- Phase 16B commit in this run: `Mark RentEase polished local demo release ready`
 
 ### Completed
 
@@ -35,6 +36,7 @@
 - Completed Phase 15E Safe Demo Data Seed Implementation.
 - Completed Phase 15F Final Demo Walkthrough Verification.
 - Completed Phase 16A README and Final Demo Package Polish.
+- Completed Phase 16B Final Local Demo Release Tag.
 
 ### Files Changed
 
@@ -120,6 +122,7 @@
 - `phase15e-demo-data-seed`
 - `phase15f-final-demo-walkthrough`
 - `phase16a-readme-final-demo-package`
+- `release-rentease-polished-local-demo-v2`
 
 ### Current Blockers
 
@@ -130,22 +133,30 @@
 - Phase 15F route smoke tests passed for public, owner, tenant, admin, reports, and legacy safety paths.
 - Public/owner/tenant privacy scan found no citizen ID, private notes, collector internals, or raw template tags.
 - Phase 16A updated README and final demo package documentation.
+- Phase 16B final smoke test passed: 42 routes tested, 0 bad status results, 32 privacy pages scanned, 0 leaks, 0 raw template pages.
+- Phase 16B reran the seed command successfully and confirmed demo data remains available.
 - Screenshots still need to be captured manually if required for submission.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 16B: Final Local Demo Release Tag
+Track A: Capture screenshots and record demo video
 ```
 
 Start with:
 
-- run final branch/status checks
-- run Django check and migration dry-run
-- verify documentation package is present
-- verify database files are not tracked
-- create final local-demo release tag
+- start local server
+- capture screenshots from `docs/demo/SCREENSHOT_CHECKLIST.md`
+- record a 3 to 5 minute demo using `docs/demo/DEMO_SCRIPT.md`
+- avoid showing passwords, secrets, citizen ID data, or private local files
+- keep production limitations explicit
 - avoid model, route, migration, and business logic changes
+
+Alternative next production track:
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```
 
 ### Working Tree
 

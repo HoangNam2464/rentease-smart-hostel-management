@@ -21,6 +21,7 @@
 | UI route regression | Public, owner, tenant, reports, admin, and legacy safety routes checked | Phase 15C |
 | Demo checklist status | Packaged | Demo script, screenshot checklist, seed usage, final walkthrough report, README, and final demo package updated |
 | Demo data readiness | Verified locally | Phase 15F verified seeded demo data across public, owner, and tenant flows |
+| Final local demo release | Ready | Phase 16B verified and tagged `release-rentease-polished-local-demo-v2` |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -79,6 +80,7 @@ Baseline:
 | UI route regression | Phase 15C route regression completed for tested routes |
 | Demo checklist status | Demo script, screenshot checklist, final walkthrough report, README, and final demo package available |
 | Demo data readiness | Phase 15F verified seeded local demo data for public, owner, and tenant walkthroughs |
+| Final local demo release | Phase 16B final smoke verification completed; tag `release-rentease-polished-local-demo-v2` |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

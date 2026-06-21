@@ -10,7 +10,14 @@ The project started from the original HOSTELLO codebase and has been reshaped in
 - UI polished for public, owner, and tenant flows.
 - Safe local demo data seed command available.
 - Final demo walkthrough verified in Phase 15F.
+- Final polished local demo release verified in Phase 16B.
 - Not production-ready yet.
+
+Final local demo release tag:
+
+```text
+release-rentease-polished-local-demo-v2
+```
 
 Known production gaps:
 
@@ -235,6 +242,15 @@ The final demo walkthrough verification passed with seeded local data:
 - No raw Django template tags were detected.
 - Local demo is ready.
 
+Final local demo release verification in Phase 16B also passed:
+
+- Django check passed.
+- Migration dry-run reported `No changes detected`.
+- Demo seed command reran successfully.
+- 42 final route smoke tests passed.
+- 32 public/owner/tenant product pages passed privacy scanning.
+- Root legacy `/api/requests/` and `/fees/` remained unavailable.
+
 ## Documentation Map
 
 | Path | Purpose |
@@ -264,9 +280,14 @@ See:
 docs/demo/FINAL_DEMO_PACKAGE.md
 ```
 
-Recommended next phase after this README/demo package polish:
+Recommended next step after this polished local demo release:
 
 ```text
-Phase 16B: Final Local Demo Release Tag
+Track A: Capture screenshots and record demo video
 ```
 
+Alternative production track:
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```

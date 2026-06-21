@@ -131,15 +131,38 @@ docs/demo/FINAL_DEMO_PACKAGE.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 16B: Final Local Demo Release Tag
 ```
 
-Goal:
+Summary:
 
-Run final verification and create a final local-demo release tag after UI, seed data, walkthrough, README, and final demo package are complete.
+- final Django check passed
+- migration dry-run reported `No changes detected`
+- demo seed command was rerun successfully
+- public, owner, tenant, admin/report protection, and legacy safety routes were smoke tested
+- privacy/raw-template scan passed on tested product pages
+- final local demo release tag is `release-rentease-polished-local-demo-v2`
+
+## Immediate Next Step
+
+Choose one track:
+
+```text
+Track A: Capture screenshots and record demo video
+```
+
+Recommended if the immediate priority is course submission or presentation.
+
+Alternative:
+
+```text
+Track B: Phase 14B-2 Production Settings Split Planning
+```
+
+Recommended if the immediate priority is moving from local demo readiness toward real production readiness.
 
 Do not change models, migrations, routes, settings, or business logic.
 
@@ -155,7 +178,8 @@ Do not change models, migrations, routes, settings, or business logic.
 8. Phase 15E: Safe Demo Data Seed Implementation - completed
 9. Phase 15F: Final Demo Walkthrough Verification - completed
 10. Phase 16A: README and Final Demo Package Polish - completed
-11. Phase 16B: Final Local Demo Release Tag - next
+11. Phase 16B: Final Local Demo Release Tag - completed
+12. Track A: Capture screenshots and record demo video - recommended next for presentation
 
 ## Recommended Production Track
 

@@ -12,6 +12,13 @@ Current demo package status:
 - demo seed command implemented
 - final demo walkthrough verified
 - README updated for local setup and presentation
+- final polished local demo release verified
+
+Final local demo release tag:
+
+```text
+release-rentease-polished-local-demo-v2
+```
 
 RentEase is not production-ready yet.
 
@@ -203,6 +210,18 @@ Latest verified walkthrough:
 - Sensitive data leaks: none detected on tested product pages
 - Raw template tags: none detected
 
+Final release verification:
+
+- Phase: Phase 16B Final Local Demo Release Tag
+- Django check: passed
+- Migration dry-run: `No changes detected`
+- Demo seed command: passed and remained idempotent
+- Route smoke tests: 42 routes passed
+- Privacy scan: 32 public/owner/tenant product pages passed
+- Sensitive data leaks: none detected on tested product pages
+- Raw template tags: none detected
+- Root legacy `/api/requests/` and `/fees/` remained unavailable
+
 Detailed report:
 
 ```text
@@ -237,9 +256,14 @@ Remaining production work:
 
 RentEase is ready for a local Python/Django course demo and presentation after Phase 16A documentation polish.
 
-Recommended next phase:
+Recommended next step:
 
 ```text
-Phase 16B: Final Local Demo Release Tag
+Track A: Capture screenshots and record demo video
 ```
 
+Alternative production track:
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```

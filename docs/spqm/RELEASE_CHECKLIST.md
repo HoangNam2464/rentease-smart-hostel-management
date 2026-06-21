@@ -21,7 +21,7 @@
 - [x] reports remain staff-only
 - [x] route regression checked
 - [x] privacy/security checks completed
-- [ ] GitHub tag created after approval
+- [x] GitHub tag created after approval
 
 ## Production Readiness Checklist
 
@@ -89,10 +89,10 @@
 
 ## Final Git Checklist
 
-- [ ] branch is `complete-product`
-- [ ] working tree is clean
-- [ ] latest commit is pushed
-- [ ] required tag is created only after approval
-- [ ] tag is pushed
-- [ ] old tags are not moved
-- [ ] no force push was used
+- [x] branch is `complete-product`
+- [x] working tree is clean
+- [x] latest commit is pushed
+- [x] required tag is created only after approval
+- [x] tag is pushed
+- [x] old tags are not moved
+- [x] no force push was used
