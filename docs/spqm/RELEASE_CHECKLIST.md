@@ -60,6 +60,8 @@
 - [x] no HOSTELLO branding appears in RentEase demo paths
 - [x] no raw Django template tags are visible
 - [x] no private data appears on public pages
+- [x] full UI completeness audit completed
+- [ ] remaining UI polish items resolved
 
 ## Documentation Readiness Checklist
 

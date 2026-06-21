@@ -166,6 +166,38 @@ Recommended if the immediate priority is moving from local demo readiness toward
 
 Do not change models, migrations, routes, settings, or business logic.
 
+## Immediate Next Step
+
+Completed current step:
+
+```text
+Phase 17A: Full UI Completeness Audit
+```
+
+Summary:
+
+- audited public, owner, tenant, admin/reports, legacy, error, empty-state, responsive, branding, and privacy UI areas
+- confirmed current UI is good enough for local demo
+- identified remaining polish around reports, custom error pages, process form labels, and minor inline styles
+
+Report:
+
+```text
+docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 17B: Remaining UI Polish
+```
+
+Goal:
+
+Address the remaining low-risk UI polish items from Phase 17A without changing models, migrations, schema, business logic, production settings, or route security.
+
 ## Recommended Demo Track
 
 1. Phase 15A: UI/UX Audit and Redesign Planning - completed
@@ -179,7 +211,8 @@ Do not change models, migrations, routes, settings, or business logic.
 9. Phase 15F: Final Demo Walkthrough Verification - completed
 10. Phase 16A: README and Final Demo Package Polish - completed
 11. Phase 16B: Final Local Demo Release Tag - completed
-12. Track A: Capture screenshots and record demo video - recommended next for presentation
+12. Phase 17A: Full UI Completeness Audit - completed
+13. Phase 17B: Remaining UI Polish - next
 
 ## Recommended Production Track
 

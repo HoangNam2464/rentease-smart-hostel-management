@@ -148,6 +148,14 @@ release-rentease-polished-local-demo-v2
 
 Phase 16B reran Django checks, migration dry-run, demo seed command, final route smoke tests, privacy scan, and raw template scan before locking the polished local demo release.
 
+Phase 17A full UI completeness audit:
+
+```text
+docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md
+```
+
+Phase 17A audited the complete visible RentEase UI after the polished local demo release and identified remaining low-risk polish candidates.
+
 ## Runtime State
 
 - Local runtime works.
@@ -261,6 +269,10 @@ Phase 16B Final Local Demo Release
 
 Tag: `release-rentease-polished-local-demo-v2`
 
+Phase 17A Full UI Completeness Audit
+
+Tag: `phase17a-full-ui-completeness-audit`
+
 ## Working Now
 
 - Public landing page
@@ -292,6 +304,7 @@ Tag: `release-rentease-polished-local-demo-v2`
 - Seeded local demo walkthrough across public, owner, tenant, admin, reports, and legacy safety routes
 - Final README and local demo package documentation
 - Final polished local demo release tag
+- Full UI completeness audit document
 
 ## Important Production Gaps
 
@@ -307,10 +320,10 @@ Tag: `release-rentease-polished-local-demo-v2`
 Current recommended next action:
 
 ```text
-Track A: Capture screenshots and record demo video
+Phase 17B: Remaining UI Polish
 ```
 
-Goal: prepare visual submission assets from the verified local demo package.
+Goal: address the remaining low-risk UI polish items found in Phase 17A.
 
 Alternative production track:
 
