@@ -14,6 +14,7 @@
 - Phase 15D commit in this run: `Add RentEase demo data readiness plan`
 - Phase 15E commit in this run: `Add safe RentEase demo data seed command`
 - Phase 15F commit in this run: `Add RentEase final demo walkthrough verification`
+- Phase 16A commit in this run: `Polish RentEase README and final demo package`
 
 ### Completed
 
@@ -33,6 +34,7 @@
 - Completed Phase 15D Demo Data Readiness Plan.
 - Completed Phase 15E Safe Demo Data Seed Implementation.
 - Completed Phase 15F Final Demo Walkthrough Verification.
+- Completed Phase 16A README and Final Demo Package Polish.
 
 ### Files Changed
 
@@ -48,6 +50,8 @@
 - `docs/demo/DEMO_DATA_SEED_IMPLEMENTATION_NOTES.md`
 - `docs/demo/DEMO_DATA_SEED_USAGE.md`
 - `docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md`
+- `README.md`
+- `docs/demo/FINAL_DEMO_PACKAGE.md`
 - `hostello_backend/portal/management/__init__.py`
 - `hostello_backend/portal/management/commands/__init__.py`
 - `hostello_backend/portal/management/commands/seed_rentease_demo_data.py`
@@ -115,6 +119,7 @@
 - `phase15d-demo-data-readiness-plan`
 - `phase15e-demo-data-seed`
 - `phase15f-final-demo-walkthrough`
+- `phase16a-readme-final-demo-package`
 
 ### Current Blockers
 
@@ -124,19 +129,22 @@
 - Current local demo data includes 5 owner demo rooms, 2 contracts, 2 invoices, 2 payments, 2 repairs, 3 viewing registrations, and at least 3 published listings.
 - Phase 15F route smoke tests passed for public, owner, tenant, admin, reports, and legacy safety paths.
 - Public/owner/tenant privacy scan found no citizen ID, private notes, collector internals, or raw template tags.
+- Phase 16A updated README and final demo package documentation.
+- Screenshots still need to be captured manually if required for submission.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 16A: README and Final Demo Package Polish
+Phase 16B: Final Local Demo Release Tag
 ```
 
 Start with:
 
-- update README run/demo instructions
-- document demo accounts and seed command usage
-- align project summary with local-demo-ready status
-- keep production limitations explicit
+- run final branch/status checks
+- run Django check and migration dry-run
+- verify documentation package is present
+- verify database files are not tracked
+- create final local-demo release tag
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree

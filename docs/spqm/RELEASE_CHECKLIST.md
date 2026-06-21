@@ -2,8 +2,8 @@
 
 ## Local Demo Release Checklist
 
-- [ ] README complete
-- [ ] run instructions verified
+- [x] README complete
+- [x] run instructions verified
 - [x] demo script available
 - [ ] screenshots prepared
 - [x] demo data plan available
@@ -67,7 +67,7 @@
 - [x] current state docs updated
 - [ ] production roadmap updated
 - [ ] SPQM docs updated if process changed
-- [ ] README matches current run process
+- [x] README matches current run process
 - [x] demo checklist matches current UI
 - [ ] security notes mention known production gaps
 - [x] unknown items marked `Not verified`

@@ -19,7 +19,7 @@
 | UI pages audited | Representative template-level audit completed | Phase 15A |
 | UI pages polished | Public flow, owner dashboard/layout, owner CRUD pages, and tenant portal polished | Phase 15B-4 |
 | UI route regression | Public, owner, tenant, reports, admin, and legacy safety routes checked | Phase 15C |
-| Demo checklist status | Walkthrough verified | Demo script, screenshot checklist, seed usage, and final walkthrough report updated |
+| Demo checklist status | Packaged | Demo script, screenshot checklist, seed usage, final walkthrough report, README, and final demo package updated |
 | Demo data readiness | Verified locally | Phase 15F verified seeded demo data across public, owner, and tenant flows |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
@@ -77,7 +77,7 @@ Baseline:
 | UI pages audited | Representative template-level audit completed in Phase 15A |
 | UI pages polished | Public flow polished in Phase 15B-1; owner layout/dashboard polished in Phase 15B-2; owner CRUD pages polished in Phase 15B-3; tenant portal polished in Phase 15B-4 |
 | UI route regression | Phase 15C route regression completed for tested routes |
-| Demo checklist status | Demo script, screenshot checklist, and final walkthrough report available |
+| Demo checklist status | Demo script, screenshot checklist, final walkthrough report, README, and final demo package available |
 | Demo data readiness | Phase 15F verified seeded local demo data for public, owner, and tenant walkthroughs |
 | Production blockers remaining | 7 known blockers |
 

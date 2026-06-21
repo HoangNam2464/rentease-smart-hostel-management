@@ -125,6 +125,15 @@ docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md
 
 Phase 15F reran the demo seed command and verified public, owner, tenant, admin, reports, and legacy-safety routes with seeded local demo data.
 
+Phase 16A README and final demo package polish:
+
+```text
+README.md
+docs/demo/FINAL_DEMO_PACKAGE.md
+```
+
+Phase 16A updated the project README and final demo package around the verified local demo flow, setup commands, seed usage, demo accounts, safety notes, and production limitations.
+
 ## Runtime State
 
 - Local runtime works.
@@ -230,6 +239,10 @@ Phase 15F Final Demo Walkthrough Verification
 
 Tag: `phase15f-final-demo-walkthrough`
 
+Phase 16A README and Final Demo Package Polish
+
+Tag: `phase16a-readme-final-demo-package`
+
 ## Working Now
 
 - Public landing page
@@ -259,6 +272,7 @@ Tag: `phase15f-final-demo-walkthrough`
 - Staff-only reports
 - Legacy available only under `/legacy/` and `/legacy/login/`
 - Seeded local demo walkthrough across public, owner, tenant, admin, reports, and legacy safety routes
+- Final README and local demo package documentation
 
 ## Important Production Gaps
 
@@ -274,10 +288,10 @@ Tag: `phase15f-final-demo-walkthrough`
 Current recommended next action:
 
 ```text
-Phase 16A: README and Final Demo Package Polish
+Phase 16B: Final Local Demo Release Tag
 ```
 
-Goal: update README and final presentation/submission docs around the verified local demo flow.
+Goal: run final verification and create the final local-demo release tag after the UI, seed data, walkthrough, README, and final demo package are complete.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 
