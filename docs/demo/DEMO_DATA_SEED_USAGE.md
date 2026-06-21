@@ -125,3 +125,17 @@ Confirm:
 - public room browsing shows demo listings
 - no citizen ID values/files are shown in demo pages
 
+## Phase 15F Walkthrough Verification
+
+Phase 15F reran the seed command and verified the local demo flow with:
+
+- 5 owner demo rooms
+- at least 3 published demo listings
+- 2 owner demo contracts
+- 2 owner demo invoices
+- 2 demo payment records
+- 2 demo repair requests
+- 2 tenant notifications
+- 3 viewing registrations
+
+The current local database may contain additional published listings from earlier tests. For presentation, open `/rooms/` and select a visible published demo listing instead of relying on a fixed numeric ID.

@@ -13,6 +13,7 @@
 - Phase 15C commit in this run: `Add RentEase UI regression and demo docs`
 - Phase 15D commit in this run: `Add RentEase demo data readiness plan`
 - Phase 15E commit in this run: `Add safe RentEase demo data seed command`
+- Phase 15F commit in this run: `Add RentEase final demo walkthrough verification`
 
 ### Completed
 
@@ -31,6 +32,7 @@
 - Completed Phase 15C UI Regression and Demo Package.
 - Completed Phase 15D Demo Data Readiness Plan.
 - Completed Phase 15E Safe Demo Data Seed Implementation.
+- Completed Phase 15F Final Demo Walkthrough Verification.
 
 ### Files Changed
 
@@ -45,6 +47,7 @@
 - `docs/demo/DEMO_DATA_READINESS_PLAN.md`
 - `docs/demo/DEMO_DATA_SEED_IMPLEMENTATION_NOTES.md`
 - `docs/demo/DEMO_DATA_SEED_USAGE.md`
+- `docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md`
 - `hostello_backend/portal/management/__init__.py`
 - `hostello_backend/portal/management/commands/__init__.py`
 - `hostello_backend/portal/management/commands/seed_rentease_demo_data.py`
@@ -111,30 +114,29 @@
 - `phase15c-ui-demo-readiness`
 - `phase15d-demo-data-readiness-plan`
 - `phase15e-demo-data-seed`
+- `phase15f-final-demo-walkthrough`
 
 ### Current Blockers
 
 - No technical blocker.
-- Owner detail smoke tests could not use detail pages because the local `owner_test` account currently has no owner-scoped sample records. List/create route smoke tests passed.
-- Tenant detail smoke tests could not use detail pages because the local `tenant_test` account currently has no tenant-scoped sample records. List/form route smoke tests passed.
-- Phase 15C confirmed public listing id `12` is available for public detail and viewing registration pages.
-- Phase 15D confirmed `owner_test` and `tenant_test` exist and have linked profiles, but no scoped records for detail-page demos.
-- Phase 15D recommends a guarded local-only management command for Phase 15E.
 - Phase 15E created and verified `seed_rentease_demo_data`.
-- Seed result: 5 demo rooms, 3 published demo listings, 2 contracts, 2 invoices, 2 payments, 2 repairs, 3 viewing registrations, and 2 tenant notifications.
-- Demo route smoke tests passed for public, owner, and tenant detail pages.
+- Phase 15F reran the seed command successfully.
+- Current local demo data includes 5 owner demo rooms, 2 contracts, 2 invoices, 2 payments, 2 repairs, 3 viewing registrations, and at least 3 published listings.
+- Phase 15F route smoke tests passed for public, owner, tenant, admin, reports, and legacy safety paths.
+- Public/owner/tenant privacy scan found no citizen ID, private notes, collector internals, or raw template tags.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 15F: Final Demo Walkthrough Verification
+Phase 16A: README and Final Demo Package Polish
 ```
 
 Start with:
 
-- run full scripted demo walkthrough with seeded data
-- verify screenshot checklist coverage
-- document final demo readiness and remaining limitations
+- update README run/demo instructions
+- document demo accounts and seed command usage
+- align project summary with local-demo-ready status
+- keep production limitations explicit
 - avoid model, route, migration, and business logic changes
 
 ### Working Tree

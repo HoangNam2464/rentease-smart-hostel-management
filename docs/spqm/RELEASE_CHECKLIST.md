@@ -8,16 +8,17 @@
 - [ ] screenshots prepared
 - [x] demo data plan available
 - [x] demo data seeded locally
-- [ ] test accounts available locally
-- [ ] Django check passes
-- [ ] migration dry-run says `No changes detected`
-- [ ] public landing page works
-- [ ] public rooms work
-- [ ] login works
-- [ ] owner portal works
-- [ ] tenant portal works
-- [ ] admin works
-- [ ] reports remain staff-only
+- [x] final demo walkthrough verified
+- [x] test accounts available locally
+- [x] Django check passes
+- [x] migration dry-run says `No changes detected`
+- [x] public landing page works
+- [x] public rooms work
+- [x] login works
+- [x] owner portal works
+- [x] tenant portal works
+- [x] admin works
+- [x] reports remain staff-only
 - [x] route regression checked
 - [x] privacy/security checks completed
 - [ ] GitHub tag created after approval
@@ -67,7 +68,7 @@
 - [ ] production roadmap updated
 - [ ] SPQM docs updated if process changed
 - [ ] README matches current run process
-- [ ] demo checklist matches current UI
+- [x] demo checklist matches current UI
 - [ ] security notes mention known production gaps
 - [x] unknown items marked `Not verified`
 - [x] future items marked `Planned`

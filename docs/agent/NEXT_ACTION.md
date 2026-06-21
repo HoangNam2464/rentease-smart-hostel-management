@@ -89,23 +89,43 @@ docs/demo/SCREENSHOT_CHECKLIST.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 15F: Final Demo Walkthrough Verification
 ```
 
+Summary:
+
+- seeded demo data was verified
+- public, owner, tenant, admin, reports, and legacy safety routes were smoke tested
+- owner and tenant detail pages now have demo records
+- final demo walkthrough report was created
+
+Report:
+
+```text
+docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 16A: README and Final Demo Package Polish
+```
+
 Goal:
 
-Use seeded demo data to verify the full 3-5 minute demo flow and prepare the final demo package.
+Prepare final submission/presentation documentation around the verified demo:
 
-Initial scope:
-
-- run through the demo script end to end
-- verify screenshot checklist coverage
-- verify public, owner, tenant, admin, reports, and legacy safety routes
-- record final demo limitations and next production-readiness step
-- avoid schema changes, migrations, and database file commits
+- README run instructions
+- demo accounts section
+- seed command instructions
+- final project summary
+- screenshot/demo checklist alignment
+- local-demo vs production-ready limitations
 
 Do not change models, migrations, routes, settings, or business logic.
 
@@ -119,7 +139,8 @@ Do not change models, migrations, routes, settings, or business logic.
 6. Phase 15C: UI Regression and Demo Package - completed
 7. Phase 15D: Demo Data Readiness Plan - completed
 8. Phase 15E: Safe Demo Data Seed Implementation - completed
-9. Phase 15F: Final Demo Walkthrough Verification - next
+9. Phase 15F: Final Demo Walkthrough Verification - completed
+10. Phase 16A: README and Final Demo Package Polish - next
 
 ## Recommended Production Track
 

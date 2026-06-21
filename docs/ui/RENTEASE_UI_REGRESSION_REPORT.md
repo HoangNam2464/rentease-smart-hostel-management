@@ -177,15 +177,37 @@ Note:
 
 No broken pages were found in the tested route set.
 
+## Phase 15F Follow-Up
+
+Phase 15E added a safe local demo data seed command.
+
+Phase 15F reran the seed command and verified:
+
+- `owner_test` has scoped rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations.
+- `tenant_test` has scoped contract, invoice, payment, repair, and notification records.
+- public room browsing has published demo listings.
+- owner and tenant detail-page smoke tests can now be demonstrated.
+
+Phase 15F route smoke test summary:
+
+| Area | Result |
+| --- | --- |
+| Public route flow | Passed |
+| Owner route flow | Passed |
+| Tenant route flow | Passed |
+| Admin/reports route flow | Passed |
+| Legacy route safety | Passed |
+| Public/owner/tenant privacy scan | Passed |
+| Raw template syntax scan | Passed |
+
 ## Known Limitations
 
-- `owner_test` has no scoped sample records, so owner detail pages cannot be demonstrated clearly with the current local data.
-- `tenant_test` has no scoped sample records, so tenant detail pages cannot be demonstrated clearly with the current local data.
-- Demo data readiness should be handled in a separate planning phase before recording or presenting the final demo.
+- RentEase is ready for local demo, but not production-ready.
+- Production settings, production database, deployment setup, account lifecycle, and owner billing detail/utility entry remain future work.
+- Local demo data should not be committed, published, or reused as real data.
 
 ## Final UI Regression Conclusion
 
 Phase 15C route regression passed for the polished public, owner, tenant, reports, admin, and legacy safety routes tested.
 
-The UI is ready for a local walkthrough, but the demo still needs scoped sample data for owner and tenant detail pages.
-
+Phase 15F confirmed the seeded demo data is sufficient for the final local walkthrough.

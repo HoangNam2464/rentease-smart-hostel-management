@@ -14,12 +14,10 @@ Use fake local-only data.
 
 Recommended preparation:
 
-- create at least one owner with rooms
-- create at least one published room listing
-- create at least one tenant linked to a contract
-- create at least one invoice and payment
-- create at least one repair request
-- create at least one viewing registration
+- run the safe local demo seed command from `docs/demo/DEMO_DATA_SEED_USAGE.md`
+- verify `owner_test`, `tenant_test`, and `admin_test` can log in
+- confirm `/rooms/` shows published demo listings
+- confirm owner and tenant dashboards show demo records
 
 Do not show:
 
@@ -57,12 +55,12 @@ Visitors can browse published room listings without seeing private tenant, contr
 
 ### 3. Public Room Detail
 
-Open one published room detail page.
+Open one published room detail page from `/rooms/`.
 
-Example from current local data:
+Example from the Phase 15F local verification:
 
 ```text
-/rooms/12/
+/rooms/17/
 ```
 
 Talk track:
@@ -74,14 +72,14 @@ The public detail page shows listing information and public-safe room details on
 Open:
 
 ```text
-/rooms/12/register/
+/rooms/<published_id>/register/
 ```
 
 Talk track:
 
 A visitor can submit a room viewing registration without automatically creating a user account, tenant record, or contract.
 
-If demo data is not ready, show the form without submitting.
+For a fast presentation, show the form without submitting. If a submission is needed, use fake visitor data only.
 
 ### 5. Owner Login
 
@@ -127,7 +125,7 @@ Talk track:
 
 Owners can manage their own rooms, listings, linked tenants, contracts, invoice headers, payments, repairs, and viewing registrations. Each page is owner-scoped.
 
-Seeded demo data is available after Phase 15E. Use the owner pages to open demo rooms, contracts, invoices, repairs, and viewing registrations.
+Seeded demo data is available after Phase 15E and was verified in Phase 15F. Use the owner pages to open demo rooms, contracts, invoices, repairs, and viewing registrations.
 
 ### 8. Owner Billing And Payment
 
@@ -195,14 +193,15 @@ The current project is strong for local demo and controlled testing, but it is n
 
 ## Current Demo Data Status
 
-After Phase 15E:
+After Phase 15F:
 
 - `owner_test` has scoped demo rooms, listings, contracts, invoices, payments, repairs, and viewing registrations.
 - `tenant_test` has scoped demo contract, invoice, payment, repairs, and notifications.
 - public demo listings are available.
+- the final walkthrough route smoke test passed with seeded demo data.
 
 Recommended next phase:
 
 ```text
-Phase 15F: Final Demo Walkthrough Verification
+Phase 16A: README and Final Demo Package Polish
 ```

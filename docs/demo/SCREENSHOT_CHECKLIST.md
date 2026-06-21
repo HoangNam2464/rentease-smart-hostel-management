@@ -8,9 +8,9 @@ Capture a clean visual set for project presentation, README updates, or a short 
 
 - [ ] Landing page at `/`
 - [ ] Public room list at `/rooms/`
-- [ ] Public room detail, for example `/rooms/12/`
-- [ ] Viewing registration form, for example `/rooms/12/register/`
-- [ ] Viewing registration success page, for example `/rooms/12/register/success/`
+- [ ] Public room detail from the first visible published listing
+- [ ] Viewing registration form for the selected published listing
+- [ ] Viewing registration success page for the selected published listing
 - [ ] Portal login at `/login/`
 
 ## Owner Screenshots
@@ -67,10 +67,10 @@ Before publishing screenshots, confirm:
 
 ## Current Demo Data Status
 
-After Phase 15E, scoped owner and tenant demo records are available for screenshots.
+After Phase 15F, scoped owner and tenant demo records were verified for screenshots.
 
 Recommended next phase:
 
 ```text
-Phase 15F: Final Demo Walkthrough Verification
+Phase 16A: README and Final Demo Package Polish
 ```

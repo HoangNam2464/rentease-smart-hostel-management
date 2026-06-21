@@ -117,6 +117,14 @@ docs/demo/DEMO_DATA_SEED_USAGE.md
 
 Phase 15E implemented and verified a guarded local-only demo data seed command with dry-run support, idempotent seed behavior, and demo-prefixed data.
 
+Phase 15F final demo walkthrough verification:
+
+```text
+docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md
+```
+
+Phase 15F reran the demo seed command and verified public, owner, tenant, admin, reports, and legacy-safety routes with seeded local demo data.
+
 ## Runtime State
 
 - Local runtime works.
@@ -218,6 +226,10 @@ Phase 15E Safe Demo Data Seed Implementation
 
 Tag: `phase15e-demo-data-seed`
 
+Phase 15F Final Demo Walkthrough Verification
+
+Tag: `phase15f-final-demo-walkthrough`
+
 ## Working Now
 
 - Public landing page
@@ -246,6 +258,7 @@ Tag: `phase15e-demo-data-seed`
 - Admin site
 - Staff-only reports
 - Legacy available only under `/legacy/` and `/legacy/login/`
+- Seeded local demo walkthrough across public, owner, tenant, admin, reports, and legacy safety routes
 
 ## Important Production Gaps
 
@@ -261,10 +274,10 @@ Tag: `phase15e-demo-data-seed`
 Current recommended next action:
 
 ```text
-Phase 15F: Final Demo Walkthrough Verification
+Phase 16A: README and Final Demo Package Polish
 ```
 
-Goal: use seeded demo data to verify the full 3-5 minute demo flow and prepare the final demo package.
+Goal: update README and final presentation/submission docs around the verified local demo flow.
 
 Do not change models, migrations, schema, routes, settings, or business logic.
 
