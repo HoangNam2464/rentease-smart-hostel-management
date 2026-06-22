@@ -164,6 +164,14 @@ docs/ui/PHASE_17B_REMAINING_UI_POLISH.md
 
 Phase 17B polished reports, custom error pages, owner process form labels, login layout, and small inline-style issues without changing models, migrations, schema, business logic, production settings, or route security.
 
+Phase 17C final visual QA and screenshot checklist:
+
+```text
+docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
+```
+
+Phase 17C prepared the final browser visual QA checklist, screenshot checklist, video demo checklist, responsive checks, and privacy checklist for manual capture.
+
 ## Runtime State
 
 - Local runtime works.
@@ -285,6 +293,10 @@ Phase 17B Remaining UI Polish
 
 Tag: `phase17b-remaining-ui-polish`
 
+Phase 17C Final Visual QA and Screenshot Checklist
+
+Tag: `phase17c-final-visual-qa`
+
 ## Working Now
 
 - Public landing page
@@ -318,6 +330,7 @@ Tag: `phase17b-remaining-ui-polish`
 - Final polished local demo release tag
 - Full UI completeness audit document
 - Remaining UI polish pass
+- Final visual QA and screenshot checklist
 
 ## Important Production Gaps
 
@@ -333,10 +346,10 @@ Tag: `phase17b-remaining-ui-polish`
 Current recommended next action:
 
 ```text
-Phase 17C: Final Visual QA and Screenshot Checklist
+Phase 18A: Screenshot Capture and Demo Video Preparation
 ```
 
-Goal: run final visual QA with seeded demo data and confirm screenshot checklist coverage.
+Goal: use the final visual QA checklist to manually capture screenshots and record the 3-5 minute demo video.
 
 Alternative production track:
 

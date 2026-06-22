@@ -18,6 +18,7 @@
 - Phase 16B commit in this run: `Mark RentEase polished local demo release ready`
 - Phase 17A commit in this run: `Add RentEase full UI completeness audit`
 - Phase 17B commit in this run: `Polish remaining RentEase UI surfaces`
+- Phase 17C commit in this run: `Add RentEase final visual QA checklist`
 
 ### Completed
 
@@ -41,6 +42,7 @@
 - Completed Phase 16B Final Local Demo Release Tag.
 - Completed Phase 17A Full UI Completeness Audit.
 - Completed Phase 17B Remaining UI Polish.
+- Completed Phase 17C Final Visual QA and Screenshot Checklist.
 
 ### Files Changed
 
@@ -60,6 +62,7 @@
 - `docs/demo/FINAL_DEMO_PACKAGE.md`
 - `docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md`
 - `docs/ui/PHASE_17B_REMAINING_UI_POLISH.md`
+- `docs/ui/PHASE_17C_FINAL_VISUAL_QA.md`
 - `hostello_backend/reports/templates/reports/base.html`
 - `hostello_backend/templates/404.html`
 - `hostello_backend/templates/500.html`
@@ -140,6 +143,7 @@
 - `release-rentease-polished-local-demo-v2`
 - `phase17a-full-ui-completeness-audit`
 - `phase17b-remaining-ui-polish`
+- `phase17c-final-visual-qa`
 
 ### Current Blockers
 
@@ -156,12 +160,13 @@
 - Remaining UI polish items: reports visual polish, custom 404/500 pages, owner process form label clarity, and minor inline style cleanup.
 - Phase 17B addressed reports polish, custom error pages, process labels, login polish, and minor inline style cleanup.
 - Phase 17B smoke test passed: 36 routes tested, 0 bad status results, 24 privacy pages scanned, 0 leaks, 0 raw template pages.
+- Phase 17C created final visual QA, screenshot, responsive, and video demo checklist documentation.
 - Screenshots still need to be captured manually if required for submission.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 17C: Final Visual QA and Screenshot Checklist
+Phase 18A: Screenshot Capture and Demo Video Preparation
 ```
 
 Start with:
@@ -170,6 +175,7 @@ Start with:
 - verify key pages visually in a real browser viewport
 - capture screenshots from `docs/demo/SCREENSHOT_CHECKLIST.md`
 - confirm no visual regressions after Phase 17B
+- record or prepare the 3 to 5 minute demo video
 - avoid model, route, migration, and business logic changes
 - avoid model, route, migration, and business logic changes
 

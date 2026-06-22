@@ -4,6 +4,12 @@
 
 Capture a clean visual set for project presentation, README updates, or a short demo video.
 
+Use this checklist together with:
+
+```text
+docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
+```
+
 ## Public Screenshots
 
 - [ ] Landing page at `/`
@@ -27,7 +33,9 @@ Capture a clean visual set for project presentation, README updates, or a short 
 - [ ] Owner invoice detail
 - [ ] Owner payment recording form
 - [ ] Owner repairs list at `/owner/repairs/`
+- [ ] Owner repair process form
 - [ ] Owner viewing registrations list at `/owner/viewing-registrations/`
+- [ ] Owner viewing registration process form
 
 ## Tenant Screenshots
 
@@ -47,6 +55,14 @@ Capture a clean visual set for project presentation, README updates, or a short 
 - [ ] Admin login redirect from `/admin/`
 - [ ] Reports protected redirect from `/reports/` as anonymous
 - [ ] Reports dashboard as staff/admin if a staff demo account is available
+- [ ] Billing report as staff/admin
+- [ ] Room report as staff/admin
+- [ ] Listing report as staff/admin
+
+## Error Page Screenshots
+
+- [ ] RentEase 404 page under `DEBUG=False` if environment allows
+- [ ] RentEase 500 page only if safely simulated later
 
 ## Legacy Safety Screenshots
 
@@ -64,13 +80,15 @@ Before publishing screenshots, confirm:
 - [ ] no citizen ID images/files are visible
 - [ ] no `.env`, SECRET_KEY, database path, or backup file names are visible
 - [ ] no private owner or tenant data from real users is visible
+- [ ] no raw Django template tags are visible
+- [ ] no broken static assets are visible
 
 ## Current Demo Data Status
 
-After Phase 15F, scoped owner and tenant demo records were verified for screenshots.
+After Phase 17C, this checklist is aligned with the final visual QA plan.
 
 Recommended next phase:
 
 ```text
-Phase 16A: README and Final Demo Package Polish
+Phase 18A: Screenshot Capture and Demo Video Preparation
 ```

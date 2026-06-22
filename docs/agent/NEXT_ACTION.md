@@ -211,15 +211,36 @@ docs/ui/PHASE_17B_REMAINING_UI_POLISH.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 17C: Final Visual QA and Screenshot Checklist
 ```
 
+Summary:
+
+- created final visual QA checklist
+- updated screenshot checklist
+- updated demo script and final demo package
+- documented browser pages, desktop/mobile checks, screenshot set, video outline, and privacy checks
+
+Report:
+
+```text
+docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 18A: Screenshot Capture and Demo Video Preparation
+```
+
 Goal:
 
-Run final visual QA with seeded demo data, confirm screenshot checklist coverage, and prepare a final UI-ready tag if no issues remain.
+Use the final visual QA checklist to manually capture screenshots and record the 3-5 minute demo video.
 
 ## Recommended Demo Track
 
@@ -236,7 +257,8 @@ Run final visual QA with seeded demo data, confirm screenshot checklist coverage
 11. Phase 16B: Final Local Demo Release Tag - completed
 12. Phase 17A: Full UI Completeness Audit - completed
 13. Phase 17B: Remaining UI Polish - completed
-14. Phase 17C: Final Visual QA and Screenshot Checklist - next
+14. Phase 17C: Final Visual QA and Screenshot Checklist - completed
+15. Phase 18A: Screenshot Capture and Demo Video Preparation - next
 
 ## Recommended Production Track
 

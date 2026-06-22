@@ -13,6 +13,7 @@ Current demo package status:
 - final demo walkthrough verified
 - README updated for local setup and presentation
 - final polished local demo release verified
+- final visual QA checklist prepared
 
 Final local demo release tag:
 
@@ -175,12 +176,14 @@ Capture these for presentation:
 - tenant payments
 - tenant repairs
 - staff reports if needed
+- custom 404 page if using `DEBUG=False`
 - legacy route isolation if security scope is discussed
 
 Full checklist:
 
 ```text
 docs/demo/SCREENSHOT_CHECKLIST.md
+docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 ```
 
 ## Video Demo Outline
@@ -222,6 +225,15 @@ Final release verification:
 - Raw template tags: none detected
 - Root legacy `/api/requests/` and `/fees/` remained unavailable
 
+Final visual QA planning:
+
+- Phase: Phase 17C Final Visual QA and Screenshot Checklist
+- Browser page list: documented
+- Desktop/mobile viewport checklist: documented
+- Screenshot checklist: updated
+- Video demo checklist: updated
+- Security/privacy visual checklist: documented
+
 Detailed report:
 
 ```text
@@ -259,7 +271,7 @@ RentEase is ready for a local Python/Django course demo and presentation after P
 Recommended next step:
 
 ```text
-Track A: Capture screenshots and record demo video
+Phase 18A: Screenshot Capture and Demo Video Preparation
 ```
 
 Alternative production track:

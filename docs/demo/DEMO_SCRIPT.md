@@ -18,6 +18,7 @@ Recommended preparation:
 - verify `owner_test`, `tenant_test`, and `admin_test` can log in
 - confirm `/rooms/` shows published demo listings
 - confirm owner and tenant dashboards show demo records
+- review `docs/ui/PHASE_17C_FINAL_VISUAL_QA.md`
 
 Do not show:
 
@@ -193,15 +194,16 @@ The current project is strong for local demo and controlled testing, but it is n
 
 ## Current Demo Data Status
 
-After Phase 15F:
+After Phase 17C:
 
 - `owner_test` has scoped demo rooms, listings, contracts, invoices, payments, repairs, and viewing registrations.
 - `tenant_test` has scoped demo contract, invoice, payment, repairs, and notifications.
 - public demo listings are available.
 - the final walkthrough route smoke test passed with seeded demo data.
+- final visual QA and screenshot guidance is available.
 
 Recommended next phase:
 
 ```text
-Phase 16A: README and Final Demo Package Polish
+Phase 18A: Screenshot Capture and Demo Video Preparation
 ```
