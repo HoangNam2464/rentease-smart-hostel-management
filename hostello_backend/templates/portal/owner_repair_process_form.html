@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>Process Repair Request</h1>
-    <p>Update the status and owner note for a repair request connected to one of your rooms.</p>
+    <p>Update the status and internal owner response for a repair request connected to one of your rooms.</p>
 </section>
 
 <section class="card">
@@ -36,7 +36,7 @@
             </div>
 
             <div class="form-field">
-                {{ form.owner_note.label_tag }}
+                <label for="{{ form.owner_note.id_for_label }}">Internal owner note</label>
                 {{ form.owner_note }}
                 {{ form.owner_note.errors }}
             </div>

@@ -10,9 +10,9 @@
 
 <section class="card">
     {% if listing.image_url %}
-        <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}" style="height: 360px;">
+        <img class="listing-media hero" src="{{ listing.image_url }}" alt="{{ listing.title }}">
     {% else %}
-        <div class="listing-placeholder" style="min-height: 260px;">RentEase Room</div>
+        <div class="listing-placeholder detail">RentEase Room</div>
     {% endif %}
     <div class="card-body">
         <p class="listing-description">{{ listing.description }}</p>

@@ -156,6 +156,14 @@ docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md
 
 Phase 17A audited the complete visible RentEase UI after the polished local demo release and identified remaining low-risk polish candidates.
 
+Phase 17B remaining UI polish:
+
+```text
+docs/ui/PHASE_17B_REMAINING_UI_POLISH.md
+```
+
+Phase 17B polished reports, custom error pages, owner process form labels, login layout, and small inline-style issues without changing models, migrations, schema, business logic, production settings, or route security.
+
 ## Runtime State
 
 - Local runtime works.
@@ -273,6 +281,10 @@ Phase 17A Full UI Completeness Audit
 
 Tag: `phase17a-full-ui-completeness-audit`
 
+Phase 17B Remaining UI Polish
+
+Tag: `phase17b-remaining-ui-polish`
+
 ## Working Now
 
 - Public landing page
@@ -305,6 +317,7 @@ Tag: `phase17a-full-ui-completeness-audit`
 - Final README and local demo package documentation
 - Final polished local demo release tag
 - Full UI completeness audit document
+- Remaining UI polish pass
 
 ## Important Production Gaps
 
@@ -320,10 +333,10 @@ Tag: `phase17a-full-ui-completeness-audit`
 Current recommended next action:
 
 ```text
-Phase 17B: Remaining UI Polish
+Phase 17C: Final Visual QA and Screenshot Checklist
 ```
 
-Goal: address the remaining low-risk UI polish items found in Phase 17A.
+Goal: run final visual QA with seeded demo data and confirm screenshot checklist coverage.
 
 Alternative production track:
 

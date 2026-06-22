@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>Process Viewing Registration</h1>
-    <p>Update the processing status and internal note for this viewing request.</p>
+    <p>Update the processing status and staff note for this viewing request.</p>
 </section>
 
 <section class="card">
@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.admin_note.id_for_label }}">Admin note</label>
+                <label for="{{ form.admin_note.id_for_label }}">Staff note</label>
                 {{ form.admin_note }}
                 {{ form.admin_note.errors }}
             </div>

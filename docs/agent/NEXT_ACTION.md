@@ -188,15 +188,38 @@ docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 17B: Remaining UI Polish
 ```
 
+Summary:
+
+- polished staff reports presentation
+- added RentEase 404/500 templates
+- clarified owner process form labels
+- lightly improved portal login
+- moved small inline styles into reusable CSS classes
+- verified routes, privacy scan, report protection, and legacy route safety
+
+Report:
+
+```text
+docs/ui/PHASE_17B_REMAINING_UI_POLISH.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 17C: Final Visual QA and Screenshot Checklist
+```
+
 Goal:
 
-Address the remaining low-risk UI polish items from Phase 17A without changing models, migrations, schema, business logic, production settings, or route security.
+Run final visual QA with seeded demo data, confirm screenshot checklist coverage, and prepare a final UI-ready tag if no issues remain.
 
 ## Recommended Demo Track
 
@@ -212,7 +235,8 @@ Address the remaining low-risk UI polish items from Phase 17A without changing m
 10. Phase 16A: README and Final Demo Package Polish - completed
 11. Phase 16B: Final Local Demo Release Tag - completed
 12. Phase 17A: Full UI Completeness Audit - completed
-13. Phase 17B: Remaining UI Polish - next
+13. Phase 17B: Remaining UI Polish - completed
+14. Phase 17C: Final Visual QA and Screenshot Checklist - next
 
 ## Recommended Production Track
 

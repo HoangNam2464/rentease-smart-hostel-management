@@ -61,7 +61,8 @@
 - [x] no raw Django template tags are visible
 - [x] no private data appears on public pages
 - [x] full UI completeness audit completed
-- [ ] remaining UI polish items resolved
+- [x] remaining UI polish items resolved
+- [ ] final visual QA completed
 
 ## Documentation Readiness Checklist
 

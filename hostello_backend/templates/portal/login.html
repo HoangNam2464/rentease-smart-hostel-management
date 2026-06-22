@@ -8,26 +8,33 @@
     <p>Use your RentEase account to open the correct dashboard for your role.</p>
 </section>
 
-<section class="card" style="max-width: 460px;">
-    <div class="card-body">
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
+<section class="auth-layout">
+    <aside class="auth-panel">
+        <h2>One login, the right workspace</h2>
+        <p>RentEase sends owners, tenants, and staff to the dashboard that matches their role.</p>
+    </aside>
 
-            <div class="form-field">
-                <label for="{{ form.username.id_for_label }}">Username</label>
-                {{ form.username }}
-                {{ form.username.errors }}
-            </div>
+    <div class="card narrow">
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-            <div class="form-field">
-                <label for="{{ form.password.id_for_label }}">Password</label>
-                {{ form.password }}
-                {{ form.password.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
 
-            <button class="button primary" type="submit">Login</button>
-        </form>
+                <div class="form-field">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+
+                <button class="button primary" type="submit">Login</button>
+            </form>
+        </div>
     </div>
 </section>
 {% endblock %}

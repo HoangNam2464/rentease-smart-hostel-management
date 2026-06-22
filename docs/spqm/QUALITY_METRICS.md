@@ -23,6 +23,7 @@
 | Demo data readiness | Verified locally | Phase 15F verified seeded demo data across public, owner, and tenant flows |
 | Final local demo release | Ready | Phase 16B verified and tagged `release-rentease-polished-local-demo-v2` |
 | Full UI completeness audit | Completed | Phase 17A audited 58 routes and identified remaining low-risk polish items |
+| Remaining UI polish | Completed | Phase 17B polished reports, error pages, process labels, login, and small inline styles |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -83,6 +84,7 @@ Baseline:
 | Demo data readiness | Phase 15F verified seeded local demo data for public, owner, and tenant walkthroughs |
 | Final local demo release | Phase 16B final smoke verification completed; tag `release-rentease-polished-local-demo-v2` |
 | Full UI completeness audit | Phase 17A completed; UI is demo-ready but reports/error pages/process labels need polish |
+| Remaining UI polish | Phase 17B completed; final visual QA and screenshots remain |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

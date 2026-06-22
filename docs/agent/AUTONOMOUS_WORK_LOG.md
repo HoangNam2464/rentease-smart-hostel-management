@@ -17,6 +17,7 @@
 - Phase 16A commit in this run: `Polish RentEase README and final demo package`
 - Phase 16B commit in this run: `Mark RentEase polished local demo release ready`
 - Phase 17A commit in this run: `Add RentEase full UI completeness audit`
+- Phase 17B commit in this run: `Polish remaining RentEase UI surfaces`
 
 ### Completed
 
@@ -39,6 +40,7 @@
 - Completed Phase 16A README and Final Demo Package Polish.
 - Completed Phase 16B Final Local Demo Release Tag.
 - Completed Phase 17A Full UI Completeness Audit.
+- Completed Phase 17B Remaining UI Polish.
 
 ### Files Changed
 
@@ -57,6 +59,16 @@
 - `README.md`
 - `docs/demo/FINAL_DEMO_PACKAGE.md`
 - `docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md`
+- `docs/ui/PHASE_17B_REMAINING_UI_POLISH.md`
+- `hostello_backend/reports/templates/reports/base.html`
+- `hostello_backend/templates/404.html`
+- `hostello_backend/templates/500.html`
+- `hostello_backend/templates/listings/public_listing_detail.html`
+- `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/login.html`
+- `hostello_backend/templates/portal/owner_dashboard.html`
+- `hostello_backend/templates/portal/owner_repair_process_form.html`
+- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
 - `hostello_backend/portal/management/__init__.py`
 - `hostello_backend/portal/management/commands/__init__.py`
 - `hostello_backend/portal/management/commands/seed_rentease_demo_data.py`
@@ -127,6 +139,7 @@
 - `phase16a-readme-final-demo-package`
 - `release-rentease-polished-local-demo-v2`
 - `phase17a-full-ui-completeness-audit`
+- `phase17b-remaining-ui-polish`
 
 ### Current Blockers
 
@@ -141,20 +154,22 @@
 - Phase 16B reran the seed command successfully and confirmed demo data remains available.
 - Phase 17A audited 58 UI routes, found 0 bad status results and 0 raw template pages.
 - Remaining UI polish items: reports visual polish, custom 404/500 pages, owner process form label clarity, and minor inline style cleanup.
+- Phase 17B addressed reports polish, custom error pages, process labels, login polish, and minor inline style cleanup.
+- Phase 17B smoke test passed: 36 routes tested, 0 bad status results, 24 privacy pages scanned, 0 leaks, 0 raw template pages.
 - Screenshots still need to be captured manually if required for submission.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 17B: Remaining UI Polish
+Phase 17C: Final Visual QA and Screenshot Checklist
 ```
 
 Start with:
 
-- keep scope template/form-label/static CSS only
-- add simple RentEase 404/500 templates if safe
-- polish reports responsive presentation
-- clarify owner process form note labels
+- start local server
+- verify key pages visually in a real browser viewport
+- capture screenshots from `docs/demo/SCREENSHOT_CHECKLIST.md`
+- confirm no visual regressions after Phase 17B
 - avoid model, route, migration, and business logic changes
 - avoid model, route, migration, and business logic changes
 

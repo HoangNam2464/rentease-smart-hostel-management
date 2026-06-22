@@ -318,3 +318,18 @@ Recommended next action:
 Phase 17B: Remaining UI Polish
 ```
 
+## Phase 17B Follow-Up
+
+Phase 17B addressed the main low-risk findings from this audit:
+
+- reports received visual spacing, card, nav, and responsive table polish
+- custom `404.html` and `500.html` templates were added
+- owner process form labels were clarified
+- login page received light layout polish
+- small inline styles were moved into reusable CSS classes
+
+Remaining after Phase 17B:
+
+- reports still use the admin base template
+- visual screenshot QA remains to be performed
+- legacy HOSTELLO pages remain legacy-only under `/legacy/`
