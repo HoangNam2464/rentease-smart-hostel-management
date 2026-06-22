@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Dang ky xem phong - RentEase{% endblock %}
+{% block title %}Đăng ký xem phòng - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Dang ky xem phong</h1>
-    <p>Cac yeu cau xem phong gui den tin phong cua ban.</p>
+    <h1>Đăng ký xem phòng</h1>
+    <p>Các yêu cầu xem phòng gửi đến tin phòng của bạn.</p>
 </section>
 
 <section class="card">
@@ -15,11 +15,11 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Nguoi dang ky</th>
-                            <th>Tin phong</th>
-                            <th>Phong</th>
-                            <th>Ngay mong muon</th>
-                            <th>Trang thai</th>
+                            <th>Người đăng ký</th>
+                            <th>Tin phòng</th>
+                            <th>Phòng</th>
+                            <th>Ngày mong muốn</th>
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Chua co dang ky xem phong nao cho cac tin phong cua ban.</p>
+                <p>Chưa có đăng ký xem phòng nào cho các tin phòng của bạn.</p>
             </div>
         {% endif %}
     </div>

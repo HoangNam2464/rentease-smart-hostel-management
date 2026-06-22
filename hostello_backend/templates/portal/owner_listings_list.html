@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tin phong cua chu tro - RentEase{% endblock %}
+{% block title %}Tin phòng của chủ trọ - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Tin phong cua toi</h1>
-            <p>Quan ly tin dang cong khai cho cac phong cua ban.</p>
+            <h1>Tin phòng của tôi</h1>
+            <p>Quản lý tin đăng công khai cho các phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Dang tin phong</a>
+        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Đăng tin phòng</a>
     </div>
 </section>
 
@@ -20,12 +20,12 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Tin phong</th>
-                            <th>Phong</th>
+                            <th>Tin phòng</th>
+                            <th>Phòng</th>
                             <th>Gia</th>
-                            <th>Tien coc</th>
-                            <th>Trang thai</th>
-                            <th>Ngay vao o</th>
+                            <th>Tiền cọc</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày vào ở</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Chua co tin phong nao. Hay dang tin khi phong san sang cho thue.</p>
+                <p>Chưa có tin phòng nào. Hãy đăng tin khi phòng sẵn sàng cho thuê.</p>
             </div>
         {% endif %}
     </div>

@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tong quan khach thue - RentEase{% endblock %}
+{% block title %}Tổng quan khách thuê - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Tong quan khach thue</h1>
+    <h1>Tổng quan khách thuê</h1>
     {% if tenant %}
-        <p>Xin chao {{ tenant.full_name }}. Trang nay chi hien thi thong tin lien quan den ho so khach thue cua ban.</p>
+        <p>Xin chào {{ tenant.full_name }}. Trang này chỉ hiển thị thông tin liên quan đến hồ sơ khách thuê của bạn.</p>
     {% else %}
-        <p>Khu vuc khach thue RentEase dang cho lien ket ho so.</p>
+        <p>Khu vực khách thuê RentEase đang chờ liên kết hồ sơ.</p>
     {% endif %}
 </section>
 
@@ -17,29 +17,29 @@
 {% else %}
     <section class="grid">
         <article class="card metric">
-            <span>Ten khach thue</span>
+            <span>Tên khách thuê</span>
             <strong class="metric-label">{{ metrics.tenant_name }}</strong>
         </article>
         <article class="card metric">
-            <span>Hop dong hien tai</span>
+            <span>Hợp đồng hiện tại</span>
             <strong class="metric-label">
                 {% if metrics.current_contract %}
                     {{ metrics.current_contract.contract_code }}
                 {% else %}
-                    Chua co
+                    Chưa có
                 {% endif %}
             </strong>
         </article>
         <article class="card metric">
-            <span>Hoa don chua tat toan</span>
+            <span>Hóa đơn chưa tất toán</span>
             <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
         </article>
         <article class="card metric">
-            <span>Yeu cau sua chua dang mo</span>
+            <span>Yêu cầu sửa chữa đang mở</span>
             <strong>{{ metrics.open_repair_requests }}</strong>
         </article>
         <article class="card metric">
-            <span>Thong bao chua doc</span>
+            <span>Thông báo chưa đọc</span>
             <strong>{{ metrics.unread_notifications }}</strong>
         </article>
     </section>

@@ -274,15 +274,36 @@ docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 19B: Vietnamese Copy and Human Product UI Fixes
+```
+
+Summary:
+
+- fixed missing Vietnamese diacritics in the main RentEase UI
+- tightened the landing page hero, spacing, right-side workflow panel, and value proposition
+- made public, owner, tenant, login, and error-page copy more natural and human
+- kept models, schema, billing, routes, settings, and security scoping unchanged
+
+Report:
+
+```text
+docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 19B: Browser Visual Review and Small UI Fixes
+Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
 ```
 
 Goal:
 
-Open the redesigned UI in a real browser, compare public/owner/tenant pages, fix remaining spacing, label, overflow, mobile, or screenshot rough spots, then prepare screenshots/video.
+Open the UI in a real browser after the Vietnamese copy fixes, inspect homepage/public/owner/tenant pages, confirm the UI feels like a real product, and capture any remaining small visual issues before screenshots/video.
 
 ## Recommended Demo Track
 
@@ -302,7 +323,8 @@ Open the redesigned UI in a real browser, compare public/owner/tenant pages, fix
 14. Phase 17C: Final Visual QA and Screenshot Checklist - completed
 15. Phase 18A: Screenshot Capture and Demo Video Preparation - completed
 16. Phase 19A: Product-Grade UI Redesign - completed
-17. Phase 19B: Browser Visual Review and Small UI Fixes - next
+17. Phase 19B: Vietnamese Copy and Human Product UI Fixes - completed
+18. Phase 19C: Browser Screenshot Review After Vietnamese UI Fix - next
 
 ## Recommended Production Track
 
@@ -315,6 +337,6 @@ Open the redesigned UI in a real browser, compare public/owner/tenant pages, fix
 
 ## Current Recommendation
 
-The UI has been redesigned toward a product-grade local demo, but browser visual review is still needed before final screenshots/video.
+The UI now has proper Vietnamese copy and a more human product landing page, but browser screenshot review is still needed before final screenshots/video.
 
-Do not start production settings implementation until the product-grade UI is browser-reviewed or unless the user explicitly changes priority.
+Do not start production settings implementation until the Vietnamese UI is browser-reviewed or unless the user explicitly changes priority.

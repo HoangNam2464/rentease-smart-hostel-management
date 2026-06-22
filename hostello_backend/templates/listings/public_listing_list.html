@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tim phong tro - RentEase{% endblock %}
+{% block title %}Tìm phòng trọ - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Tim phong tro dang cho thue</h1>
-    <p>Danh sach phong dang duoc cong khai tren RentEase. Chon phong phu hop de xem chi tiet va dang ky lich xem phong.</p>
+    <h1>Tìm phòng trọ đang cho thuê</h1>
+    <p>Danh sách phòng đang được công khai trên RentEase. Chọn phòng phù hợp để xem chi tiết và đăng ký lịch xem phòng.</p>
 </section>
 
 {% if listings %}
@@ -15,7 +15,7 @@
                 {% if listing.image_url %}
                     <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}">
                 {% else %}
-                    <div class="listing-placeholder">Phong RentEase</div>
+                    <div class="listing-placeholder">Phòng RentEase</div>
                 {% endif %}
                 <div class="card-body">
                     <span class="status-badge">Dang cho thue</span>
@@ -24,21 +24,21 @@
                         {{ listing.description|truncatewords:24 }}
                     </p>
                     <ul class="meta-list">
-                        <li><strong>Phong:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
+                        <li><strong>Phòng:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
                         {% if listing.room.floor %}
-                            <li><strong>Tang:</strong> {{ listing.room.floor }}</li>
+                            <li><strong>Tầng:</strong> {{ listing.room.floor }}</li>
                         {% endif %}
                         {% if listing.room.area %}
-                            <li><strong>Dien tich:</strong> {{ listing.room.area }} m2</li>
+                            <li><strong>Diện tích:</strong> {{ listing.room.area }} m2</li>
                         {% endif %}
-                        <li><strong>So nguoi toi da:</strong> {{ listing.room.max_occupants }}</li>
-                        <li><strong>Co the vao o tu:</strong> {{ listing.available_from }}</li>
+                        <li><strong>Số người tối đa:</strong> {{ listing.room.max_occupants }}</li>
+                        <li><strong>Có thể vào ở từ:</strong> {{ listing.available_from }}</li>
                     </ul>
                     <div class="price-row">
-                        <span>Gia thue thang</span>
+                        <span>Giá thuê tháng</span>
                         <strong>{{ listing.listing_price }}</strong>
                     </div>
-                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem chi tiet</a>
+                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem chi tiết</a>
                 </div>
             </article>
         {% endfor %}
@@ -46,7 +46,7 @@
 {% else %}
     <div class="card">
         <div class="card-body empty-state">
-            <p>Hien chua co phong nao duoc cong khai. Vui long quay lai sau hoac dang nhap neu ban la chu tro.</p>
+            <p>Hiện chưa có phòng nào được công khai. Vui lòng quay lại sau hoặc đăng nhập nếu bạn là chủ trọ.</p>
         </div>
     </div>
 {% endif %}

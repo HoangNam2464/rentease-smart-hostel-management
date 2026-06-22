@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Thong bao cua khach thue - RentEase{% endblock %}
+{% block title %}Thông báo của khách thuê - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Thong bao cua toi</h1>
-    <p>Cac thong bao lien quan den hop dong, hoa don hoac phong cua ban.</p>
+    <h1>Thông báo của tôi</h1>
+    <p>Các thông báo liên quan đến hợp đồng, hóa đơn hoặc phòng của bạn.</p>
 </section>
 
 <section class="card">
@@ -15,10 +15,10 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Tieu de</th>
-                            <th>Loai</th>
-                            <th>Trang thai doc</th>
-                            <th>Ngay gui</th>
+                            <th>Tiêu đề</th>
+                            <th>Loại</th>
+                            <th>Trạng thái đọc</th>
+                            <th>Ngày gửi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,7 +26,7 @@
                             <tr>
                                 <td><a href="{% url 'portal:tenant_notification_detail' notification.pk %}">{{ notification.title }}</a></td>
                                 <td>{{ notification.get_notification_type_display }}</td>
-                                <td><span class="status-badge">{{ notification.is_read|yesno:"Da doc,Chua doc" }}</span></td>
+                                <td><span class="status-badge">{{ notification.is_read|yesno:"Đã đọc,Chưa đọc" }}</span></td>
                                 <td>{{ notification.created_at }}</td>
                             </tr>
                         {% endfor %}
@@ -35,7 +35,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Ban chua co thong bao nao.</p>
+                <p>Bạn chưa có thông báo nào.</p>
             </div>
         {% endif %}
     </div>

@@ -16,6 +16,7 @@ Current demo package status:
 - final visual QA checklist prepared
 - screenshot and video preparation guide prepared
 - product-grade UI redesign completed
+- Vietnamese copy and human landing-page fixes completed
 
 Final local demo release tag:
 
@@ -188,6 +189,7 @@ docs/demo/SCREENSHOT_CHECKLIST.md
 docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
+docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 ```
 
 ## Video Demo Outline
@@ -256,6 +258,14 @@ Product-grade UI redesign:
 - Major owner/tenant pages: Vietnamese-first polish
 - Error pages: refreshed
 
+Vietnamese copy and human UI fixes:
+
+- Phase: Phase 19B Vietnamese Copy and Human Product UI Fixes
+- Missing Vietnamese diacritics: fixed in major product templates
+- Landing page: tightened and made more natural
+- Public/owner/tenant copy: improved for local presentation
+- Security scope: unchanged
+
 Detailed report:
 
 ```text
@@ -288,12 +298,12 @@ Remaining production work:
 
 ## Final Readiness Conclusion
 
-RentEase is ready for a stronger local Python/Django course demo and presentation. The remaining demo task is browser visual review before final screenshots/video.
+RentEase is ready for a stronger local Python/Django course demo and presentation. The remaining demo task is browser screenshot review before final screenshots/video.
 
 Recommended next step:
 
 ```text
-Phase 19B: Browser Visual Review and Small UI Fixes
+Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
 ```
 
 Alternative production track:

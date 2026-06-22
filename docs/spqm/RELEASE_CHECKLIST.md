@@ -48,6 +48,8 @@
 - [x] public landing page looks like RentEase
 - [x] landing page looks like a real room-rental product
 - [x] Vietnamese wording is consistent across major public/owner/tenant paths
+- [x] major Vietnamese UI copy uses proper diacritics
+- [x] landing page copy feels human and practical
 - [x] public room list is readable
 - [x] public room pages look realistic enough for product-grade demo
 - [x] public room detail is readable

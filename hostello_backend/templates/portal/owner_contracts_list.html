@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Hop dong cua chu tro - RentEase{% endblock %}
+{% block title %}Hợp đồng của chủ trọ - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Hop dong cua toi</h1>
-            <p>Cac hop dong thue phong lien ket voi phong cua ban.</p>
+            <h1>Hợp đồng của tôi</h1>
+            <p>Các hợp đồng thuê phòng liên kết với phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_contract_create' %}">Tao hop dong</a>
+        <a class="button primary" href="{% url 'portal:owner_contract_create' %}">Tạo hợp đồng</a>
     </div>
 </section>
 
@@ -20,13 +20,13 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Hop dong</th>
-                            <th>Khach thue</th>
-                            <th>Phong</th>
-                            <th>Bat dau</th>
-                            <th>Ket thuc</th>
-                            <th>Trang thai</th>
-                            <th>Thao tac</th>
+                            <th>Hợp đồng</th>
+                            <th>Khách thuê</th>
+                            <th>Phòng</th>
+                            <th>Bắt đầu</th>
+                            <th>Kết thúc</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
                                 <td>{{ contract.start_date }}</td>
                                 <td>{{ contract.end_date }}</td>
                                 <td><span class="status-badge">{{ contract.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_contract_update' contract.pk %}">Sua</a></td>
+                                <td><a href="{% url 'portal:owner_contract_update' contract.pk %}">Sửa</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -46,7 +46,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Chua co hop dong nao. Hay tao hop dong sau khi da co phong va khach thue lien ket.</p>
+                <p>Chưa có hợp đồng nào. Hãy tạo hợp đồng sau khi đã có phòng và khách thuê liên kết.</p>
             </div>
         {% endif %}
     </div>

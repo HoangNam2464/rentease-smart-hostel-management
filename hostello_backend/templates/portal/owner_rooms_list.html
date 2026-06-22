@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Phong cua chu tro - RentEase{% endblock %}
+{% block title %}Phòng của chủ trọ - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Phong cua toi</h1>
-            <p>Quan ly cac phong thuoc ho so chu tro cua ban.</p>
+            <h1>Phòng của tôi</h1>
+            <p>Quản lý các phòng thuộc hồ sơ chủ trọ của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_room_create' %}">Tao phong</a>
+        <a class="button primary" href="{% url 'portal:owner_room_create' %}">Tạo phòng</a>
     </div>
 </section>
 
@@ -20,11 +20,11 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Phong</th>
-                            <th>Tang</th>
-                            <th>Dien tich</th>
-                            <th>So nguoi</th>
-                            <th>Trang thai</th>
+                            <th>Phòng</th>
+                            <th>Tầng</th>
+                            <th>Diện tích</th>
+                            <th>Số người</th>
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Chua co phong nao lien ket voi ho so chu tro. Hay tao phong dau tien de bat dau quy trinh quan ly.</p>
+                <p>Chưa có phòng nào liên kết với hồ sơ chủ trọ. Hãy tạo phòng đầu tiên để bắt đầu quy trình quản lý.</p>
             </div>
         {% endif %}
     </div>

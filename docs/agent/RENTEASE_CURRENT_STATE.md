@@ -188,6 +188,14 @@ docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 
 Phase 19A redesigned the public landing page, shared portal theme, public room pages, login page, owner dashboard/list pages, tenant list pages, and error pages toward a more realistic Vietnamese-first RentEase product presentation.
 
+Phase 19B Vietnamese copy and human UI fixes:
+
+```text
+docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
+```
+
+Phase 19B fixed missing Vietnamese diacritics, tightened the landing page hero and workflow panel, and made public, owner, tenant, login, and error-page copy feel more human and practical.
+
 ## Runtime State
 
 - Local runtime works.
@@ -321,6 +329,10 @@ Phase 19A Product-Grade UI Redesign
 
 Tag: `phase19a-product-grade-ui-redesign`
 
+Phase 19B Vietnamese Copy and Human Product UI Fixes
+
+Tag: `phase19b-vietnamese-human-ui-fixes`
+
 ## Working Now
 
 - Public landing page
@@ -357,6 +369,7 @@ Tag: `phase19a-product-grade-ui-redesign`
 - Final visual QA and screenshot checklist
 - Screenshot and video preparation guide
 - Product-grade UI redesign for local demo
+- Vietnamese copy and human product UI fixes
 
 ## Important Production Gaps
 
@@ -372,10 +385,10 @@ Tag: `phase19a-product-grade-ui-redesign`
 Current recommended next action:
 
 ```text
-Phase 19B: Browser Visual Review and Small UI Fixes
+Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
 ```
 
-Goal: review the redesigned UI in a real browser, fix any remaining small visual rough spots, and then prepare screenshots/video.
+Goal: open the UI in a real browser, verify the Vietnamese copy and product feel, and identify any final small screenshot/video issues.
 
 Alternative production track:
 

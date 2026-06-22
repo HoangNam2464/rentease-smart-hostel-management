@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Hoa don cua chu tro - RentEase{% endblock %}
+{% block title %}Hóa đơn của chủ trọ - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Hoa don cua toi</h1>
-            <p>Hoa don lien ket voi hop dong cua cac phong do ban quan ly.</p>
+            <h1>Hóa đơn của tôi</h1>
+            <p>Hóa đơn liên kết với hợp đồng của các phòng do bạn quản lý.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Lap hoa don</a>
+        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Lập hóa đơn</a>
     </div>
 </section>
 
@@ -20,14 +20,14 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Hoa don</th>
-                            <th>Hop dong</th>
-                            <th>Phong</th>
+                            <th>Hóa đơn</th>
+                            <th>Hợp đồng</th>
+                            <th>Phòng</th>
                             <th>Thang</th>
-                            <th>Tong tien</th>
-                            <th>Con lai</th>
-                            <th>Trang thai</th>
-                            <th>Thao tac</th>
+                            <th>Tổng tiền</th>
+                            <th>Còn lại</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,7 +42,7 @@
                                 <td>{{ invoice.total_amount }}</td>
                                 <td>{{ invoice.remaining_amount }}</td>
                                 <td><span class="status-badge">{{ invoice.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_invoice_update' invoice.pk %}">Sua</a></td>
+                                <td><a href="{% url 'portal:owner_invoice_update' invoice.pk %}">Sửa</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -50,7 +50,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Chua co hoa don nao. Hay lap hoa don sau khi phong va hop dong da san sang.</p>
+                <p>Chưa có hóa đơn nào. Hãy lập hóa đơn sau khi phòng và hợp đồng đã sẵn sàng.</p>
             </div>
         {% endif %}
     </div>

@@ -1,29 +1,29 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Sua chua cua khach thue - RentEase{% endblock %}
+{% block title %}Sửa chữa của khách thuê - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Yeu cau sua chua cua toi</h1>
-    <p>Theo doi cac yeu cau sua chua da gui tu ho so khach thue cua ban.</p>
+    <h1>Yêu cầu sửa chữa của tôi</h1>
+    <p>Theo dõi các yêu cầu sửa chữa đã gửi từ hồ sơ khách thuê của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
         <div class="toolbar">
-            <p class="help-text">Theo doi yeu cau da gui va tao yeu cau moi cho phong dang o.</p>
-            <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Gui yeu cau sua chua</a>
+            <p class="help-text">Theo dõi yêu cầu đã gửi và tạo yêu cầu mới cho phòng đang ở.</p>
+            <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Gửi yêu cầu sửa chữa</a>
         </div>
         {% if repairs %}
             <div class="table-wrap section">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Noi dung</th>
-                            <th>Phong</th>
-                            <th>Uu tien</th>
-                            <th>Trang thai</th>
-                            <th>Ngay tao</th>
+                            <th>Nội dung</th>
+                            <th>Phòng</th>
+                            <th>Ưu tiên</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>Ban chua gui yeu cau sua chua nao.</p>
+                <p>Bạn chưa gửi yêu cầu sửa chữa nào.</p>
             </div>
         {% endif %}
     </div>

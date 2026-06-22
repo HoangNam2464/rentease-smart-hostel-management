@@ -131,27 +131,27 @@ Keep transitions short. The safest flow is:
 
 ## Vietnamese Narration Script
 
-### 0:00-0:30 - Gioi thieu
+### 0:00-0:30 - Giới thiệu
 
-Xin chao thay co va cac ban. Day la RentEase, mot he thong quan ly nha tro duoc xay dung bang Django. Muc tieu cua he thong la ho tro chu tro quan ly phong, khach thue, hop dong, hoa don, thanh toan, yeu cau sua chua, tin dang phong va lich xem phong.
+Xin chào thầy cô và các bạn. Đây là RentEase, một hệ thống quản lý nhà trọ được xây dựng bằng Django. Mục tiêu của hệ thống là hỗ trợ chủ trọ quản lý phòng, khách thuê, hợp đồng, hóa đơn, thanh toán, yêu cầu sửa chữa, tin đăng phòng và lịch xem phòng.
 
-### 0:30-1:15 - Trang cong khai
+### 0:30-1:15 - Trang công khai
 
-O phan cong khai, nguoi xem co the vao danh sach phong dang cho thue. Trang chi hien thi thong tin an toan cho khach tham quan, khong hien thi du lieu rieng nhu hop dong, hoa don hay thong tin noi bo cua chu tro. Neu quan tam mot phong, khach co the mo chi tiet phong va gui dang ky xem phong.
+Ở phần công khai, người xem có thể vào danh sách phòng đang cho thuê. Trang chỉ hiển thị thông tin an toàn cho khách tham quan, không hiển thị dữ liệu riêng như hợp đồng, hóa đơn hay thông tin nội bộ của chủ trọ. Nếu quan tâm một phòng, khách có thể mở chi tiết phòng và gửi đăng ký xem phòng.
 
-### 1:15-2:30 - Cong thong tin chu tro
+### 1:15-2:30 - Cổng thông tin chủ trọ
 
-Sau khi dang nhap bang tai khoan chu tro, he thong chuyen den dashboard rieng cua chu tro. Dashboard tong hop so phong, hop dong, hoa don, thanh toan, sua chua va lich xem phong. Cac trang quan ly deu duoc gioi han theo chu tro hien tai, nen chu tro chi nhin thay du lieu cua minh.
+Sau khi đăng nhập bằng tài khoản chủ trọ, hệ thống chuyển đến dashboard riêng của chủ trọ. Dashboard tổng hợp số phòng, hợp đồng, hóa đơn, thanh toán, sửa chữa và lịch xem phòng. Các trang quản lý đều được giới hạn theo chủ trọ hiện tại, nên chủ trọ chỉ nhìn thấy dữ liệu của mình.
 
-O day co the xem danh sach phong, tin dang, khach thue da lien ket, hop dong, hoa don va lich su thanh toan. Viec ghi nhan thanh toan duoc thuc hien tu chi tiet hoa don de tranh sua truc tiep cac truong tinh tien quan trong.
+Ở đây có thể xem danh sách phòng, tin đăng, khách thuê đã liên kết, hợp đồng, hóa đơn và lịch sử thanh toán. Việc ghi nhận thanh toán được thực hiện từ chi tiết hóa đơn để tránh sửa trực tiếp các trường tính tiền quan trọng.
 
-### 2:30-3:30 - Cong thong tin khach thue
+### 2:30-3:30 - Cổng thông tin khách thuê
 
-Voi tai khoan khach thue, he thong hien thi dashboard rieng cho khach. Khach thue co the xem thong tin ca nhan, hop dong, hoa don, lich su thanh toan, yeu cau sua chua va thong bao cua minh. Cac trang nay khong hien thi du lieu cua khach thue khac, khong hien thi thong tin nhay cam nhu can cuoc cong dan hay truong quan tri noi bo.
+Với tài khoản khách thuê, hệ thống hiển thị dashboard riêng cho khách. Khách thuê có thể xem thông tin cá nhân, hợp đồng, hóa đơn, lịch sử thanh toán, yêu cầu sửa chữa và thông báo của mình. Các trang này không hiển thị dữ liệu của khách thuê khác, không hiển thị thông tin nhạy cảm như căn cước công dân hay trường quản trị nội bộ.
 
 ### 3:30-4:15 - Du lieu demo va bao mat
 
-Du lieu trong ban demo la du lieu gia lap, duoc tao bang lenh seed rieng cho demo. He thong tach ro vai tro cong khai, chu tro, khach thue va nhan vien quan tri. Trang bao cao va admin duoc bao ve, cac route legacy cu khong con mo o muc root.
+Dữ liệu trong bản demo là dữ liệu giả lập, được tạo bằng lệnh seed riêng cho demo. Hệ thống tách rõ vai trò công khai, chủ trọ, khách thuê và nhân viên quản trị. Trang báo cáo và admin được bảo vệ, các route legacy cũ không còn mở ở mức root.
 
 ### 4:15-5:00 - Ket luan
 

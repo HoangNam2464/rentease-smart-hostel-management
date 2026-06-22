@@ -1,30 +1,30 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Dang ky xem phong - RentEase{% endblock %}
+{% block title %}Đăng ký xem phòng - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Dang ky xem phong</h1>
+    <h1>Đăng ký xem phòng</h1>
     <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}</p>
 </section>
 
 <section class="card form-panel">
     <div class="card-body">
         <p class="help-text">
-            De lai thong tin lien he va thoi gian mong muon. Chu tro se xem yeu cau trong RentEase va phan hoi sau.
+            Để lại thông tin liên hệ và thời gian mong muốn. Chủ trọ sẽ xem yêu cầu trong RentEase và phản hồi sau.
         </p>
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
 
             <div class="form-field">
-                <label for="{{ form.full_name.id_for_label }}">Ho va ten</label>
+                <label for="{{ form.full_name.id_for_label }}">Họ và tên</label>
                 {{ form.full_name }}
                 {{ form.full_name.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.phone.id_for_label }}">So dien thoai</label>
+                <label for="{{ form.phone.id_for_label }}">Số điện thoại</label>
                 {{ form.phone }}
                 {{ form.phone.errors }}
             </div>
@@ -36,26 +36,26 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.preferred_date.id_for_label }}">Ngay muon xem phong</label>
+                <label for="{{ form.preferred_date.id_for_label }}">Ngày muốn xem phòng</label>
                 {{ form.preferred_date }}
                 {{ form.preferred_date.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.preferred_time.id_for_label }}">Gio mong muon</label>
+                <label for="{{ form.preferred_time.id_for_label }}">Giờ mong muốn</label>
                 {{ form.preferred_time }}
                 {{ form.preferred_time.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Ghi chu</label>
+                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
                 {{ form.note }}
                 {{ form.note.errors }}
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">Gui dang ky</button>
-                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Huy</a>
+                <button class="button primary" type="submit">Gửi đăng ký</button>
+                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Hủy</a>
             </div>
         </form>
     </div>

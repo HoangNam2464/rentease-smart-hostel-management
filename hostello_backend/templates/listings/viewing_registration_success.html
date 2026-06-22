@@ -1,21 +1,21 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Da gui dang ky - RentEase{% endblock %}
+{% block title %}Đã gửi đăng ký - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Da gui dang ky xem phong</h1>
-    <p>Yeu cau xem phong {{ listing.title }} da duoc luu tren RentEase. Chu tro se theo doi va phan hoi sau.</p>
+    <h1>Đã gửi đăng ký xem phòng</h1>
+    <p>Yêu cầu xem phòng {{ listing.title }} đã được lưu trên RentEase. Chủ trọ sẽ theo dõi và phản hồi sau.</p>
 </section>
 
 <section class="card form-panel">
     <div class="card-body">
         <p class="help-text">
-            Cam on ban da quan tam. Dang ky hien o trang thai cho xac nhan.
+            Cảm ơn bạn đã quan tâm. Đăng ký hiện ở trạng thái chờ xác nhận.
         </p>
         <div class="page-actions">
-            <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Quay lai phong vua xem</a>
-            <a class="button" href="{% url 'listings:public_listing_list' %}">Xem them phong</a>
+            <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Quay lại phòng vừa xem</a>
+            <a class="button" href="{% url 'listings:public_listing_list' %}">Xem thêm phòng</a>
         </div>
     </div>
 </section>
