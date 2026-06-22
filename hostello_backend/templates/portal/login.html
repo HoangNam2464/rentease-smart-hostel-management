@@ -1,17 +1,22 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Login - RentEase{% endblock %}
+{% block title %}Dang nhap - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Login to RentEase</h1>
-    <p>Use your RentEase account to open the correct dashboard for your role.</p>
+    <h1>Dang nhap RentEase</h1>
+    <p>Su dung tai khoan RentEase de vao dung khu vuc quan ly theo vai tro cua ban.</p>
 </section>
 
 <section class="auth-layout">
     <aside class="auth-panel">
-        <h2>One login, the right workspace</h2>
-        <p>RentEase sends owners, tenants, and staff to the dashboard that matches their role.</p>
+        <h2>Mot tai khoan, dung khong gian lam viec</h2>
+        <p>RentEase tu dong dua chu tro, khach thue va nhan vien quan tri den dashboard phu hop.</p>
+        <ul>
+            <li>Chu tro quan ly phong, hop dong, hoa don va sua chua.</li>
+            <li>Khach thue theo doi hop dong, thanh toan va thong bao.</li>
+            <li>Quan tri vien su dung admin va bao cao khi can.</li>
+        </ul>
     </aside>
 
     <div class="card narrow">
@@ -21,18 +26,18 @@
                 {{ form.non_field_errors }}
 
                 <div class="form-field">
-                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    <label for="{{ form.username.id_for_label }}">Ten dang nhap</label>
                     {{ form.username }}
                     {{ form.username.errors }}
                 </div>
 
                 <div class="form-field">
-                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <label for="{{ form.password.id_for_label }}">Mat khau</label>
                     {{ form.password }}
                     {{ form.password.errors }}
                 </div>
 
-                <button class="button primary" type="submit">Login</button>
+                <button class="button primary" type="submit">Dang nhap</button>
             </form>
         </div>
     </div>

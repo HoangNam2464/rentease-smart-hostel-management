@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Dashboard - RentEase{% endblock %}
+{% block title %}Tong quan khach thue - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Tenant Dashboard</h1>
+    <h1>Tong quan khach thue</h1>
     {% if tenant %}
-        <p>Welcome, {{ tenant.full_name }}. This dashboard only summarizes data connected to your tenant profile.</p>
+        <p>Xin chao {{ tenant.full_name }}. Trang nay chi hien thi thong tin lien quan den ho so khach thue cua ban.</p>
     {% else %}
-        <p>RentEase tenant portal foundation.</p>
+        <p>Khu vuc khach thue RentEase dang cho lien ket ho so.</p>
     {% endif %}
 </section>
 
@@ -17,29 +17,29 @@
 {% else %}
     <section class="grid">
         <article class="card metric">
-            <span>Tenant name</span>
+            <span>Ten khach thue</span>
             <strong class="metric-label">{{ metrics.tenant_name }}</strong>
         </article>
         <article class="card metric">
-            <span>Current contract</span>
+            <span>Hop dong hien tai</span>
             <strong class="metric-label">
                 {% if metrics.current_contract %}
                     {{ metrics.current_contract.contract_code }}
                 {% else %}
-                    None
+                    Chua co
                 {% endif %}
             </strong>
         </article>
         <article class="card metric">
-            <span>Unpaid or partial invoices</span>
+            <span>Hoa don chua tat toan</span>
             <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
         </article>
         <article class="card metric">
-            <span>Open repair requests</span>
+            <span>Yeu cau sua chua dang mo</span>
             <strong>{{ metrics.open_repair_requests }}</strong>
         </article>
         <article class="card metric">
-            <span>Unread notifications</span>
+            <span>Thong bao chua doc</span>
             <strong>{{ metrics.unread_notifications }}</strong>
         </article>
     </section>

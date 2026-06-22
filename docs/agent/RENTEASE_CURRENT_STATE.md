@@ -180,6 +180,14 @@ docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 
 Phase 18A prepared the final manual screenshot capture order, pre-recording setup, 3 to 5 minute demo video outline, Vietnamese narration script, visual QA checklist, and honest limitations for the local demo recording.
 
+Phase 19A product-grade UI redesign:
+
+```text
+docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
+```
+
+Phase 19A redesigned the public landing page, shared portal theme, public room pages, login page, owner dashboard/list pages, tenant list pages, and error pages toward a more realistic Vietnamese-first RentEase product presentation.
+
 ## Runtime State
 
 - Local runtime works.
@@ -309,6 +317,10 @@ Phase 18A Screenshot Capture and Demo Video Preparation
 
 Tag: `phase18a-screenshot-video-prep`
 
+Phase 19A Product-Grade UI Redesign
+
+Tag: `phase19a-product-grade-ui-redesign`
+
 ## Working Now
 
 - Public landing page
@@ -344,6 +356,7 @@ Tag: `phase18a-screenshot-video-prep`
 - Remaining UI polish pass
 - Final visual QA and screenshot checklist
 - Screenshot and video preparation guide
+- Product-grade UI redesign for local demo
 
 ## Important Production Gaps
 
@@ -359,16 +372,10 @@ Tag: `phase18a-screenshot-video-prep`
 Current recommended next action:
 
 ```text
-Manual action: capture screenshots and record the 3 to 5 minute demo video
+Phase 19B: Browser Visual Review and Small UI Fixes
 ```
 
-Goal: use the Phase 18A guide and final visual QA checklist to capture presentation screenshots and record the demo video.
-
-Optional later phase:
-
-```text
-Phase 18B: Final Submission Package Review
-```
+Goal: review the redesigned UI in a real browser, fix any remaining small visual rough spots, and then prepare screenshots/video.
 
 Alternative production track:
 

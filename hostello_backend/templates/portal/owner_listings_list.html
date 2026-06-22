@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Listings - RentEase{% endblock %}
+{% block title %}Tin phong cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>My Room Listings</h1>
-            <p>Manage listings for rooms linked to your owner profile.</p>
+            <h1>Tin phong cua toi</h1>
+            <p>Quan ly tin dang cong khai cho cac phong cua ban.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Create Listing</a>
+        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Dang tin phong</a>
     </div>
 </section>
 
@@ -20,12 +20,12 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Listing</th>
-                            <th>Room</th>
-                            <th>Price</th>
-                            <th>Deposit</th>
-                            <th>Status</th>
-                            <th>Available</th>
+                            <th>Tin phong</th>
+                            <th>Phong</th>
+                            <th>Gia</th>
+                            <th>Tien coc</th>
+                            <th>Trang thai</th>
+                            <th>Ngay vao o</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No listings are linked to your rooms yet. Create a listing after a room is available.</p>
+                <p>Chua co tin phong nao. Hay dang tin khi phong san sang cho thue.</p>
             </div>
         {% endif %}
     </div>

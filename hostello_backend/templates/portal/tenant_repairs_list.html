@@ -1,29 +1,29 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Repairs - RentEase{% endblock %}
+{% block title %}Sua chua cua khach thue - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Repair Requests</h1>
-    <p>Read-only list of repair requests connected to your tenant profile.</p>
+    <h1>Yeu cau sua chua cua toi</h1>
+    <p>Theo doi cac yeu cau sua chua da gui tu ho so khach thue cua ban.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
         <div class="toolbar">
-            <p class="help-text">Track your submitted repair requests and open a new request for your active room.</p>
-            <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Submit Repair Request</a>
+            <p class="help-text">Theo doi yeu cau da gui va tao yeu cau moi cho phong dang o.</p>
+            <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Gui yeu cau sua chua</a>
         </div>
         {% if repairs %}
             <div class="table-wrap section">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Request</th>
-                            <th>Room</th>
-                            <th>Priority</th>
-                            <th>Status</th>
-                            <th>Requested</th>
+                            <th>Noi dung</th>
+                            <th>Phong</th>
+                            <th>Uu tien</th>
+                            <th>Trang thai</th>
+                            <th>Ngay tao</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No repair requests are linked to your tenant profile yet.</p>
+                <p>Ban chua gui yeu cau sua chua nao.</p>
             </div>
         {% endif %}
     </div>

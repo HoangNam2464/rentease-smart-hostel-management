@@ -1,30 +1,30 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Register Viewing - RentEase{% endblock %}
+{% block title %}Dang ky xem phong - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Register a Viewing</h1>
+    <h1>Dang ky xem phong</h1>
     <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}</p>
 </section>
 
 <section class="card form-panel">
     <div class="card-body">
         <p class="help-text">
-            Share your contact information and preferred viewing time. The owner will review your request from RentEase.
+            De lai thong tin lien he va thoi gian mong muon. Chu tro se xem yeu cau trong RentEase va phan hoi sau.
         </p>
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
 
             <div class="form-field">
-                <label for="{{ form.full_name.id_for_label }}">Full name</label>
+                <label for="{{ form.full_name.id_for_label }}">Ho va ten</label>
                 {{ form.full_name }}
                 {{ form.full_name.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.phone.id_for_label }}">Phone</label>
+                <label for="{{ form.phone.id_for_label }}">So dien thoai</label>
                 {{ form.phone }}
                 {{ form.phone.errors }}
             </div>
@@ -36,26 +36,26 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.preferred_date.id_for_label }}">Preferred date</label>
+                <label for="{{ form.preferred_date.id_for_label }}">Ngay muon xem phong</label>
                 {{ form.preferred_date }}
                 {{ form.preferred_date.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.preferred_time.id_for_label }}">Preferred time</label>
+                <label for="{{ form.preferred_time.id_for_label }}">Gio mong muon</label>
                 {{ form.preferred_time }}
                 {{ form.preferred_time.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Note</label>
+                <label for="{{ form.note.id_for_label }}">Ghi chu</label>
                 {{ form.note }}
                 {{ form.note.errors }}
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">Submit registration</button>
-                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Cancel</a>
+                <button class="button primary" type="submit">Gui dang ky</button>
+                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Huy</a>
             </div>
         </form>
     </div>

@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Viewing Registrations - RentEase{% endblock %}
+{% block title %}Dang ky xem phong - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Viewing Registrations</h1>
-    <p>Read-only list of viewing requests for your room listings.</p>
+    <h1>Dang ky xem phong</h1>
+    <p>Cac yeu cau xem phong gui den tin phong cua ban.</p>
 </section>
 
 <section class="card">
@@ -15,11 +15,11 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Visitor</th>
-                            <th>Listing</th>
-                            <th>Room</th>
-                            <th>Preferred date</th>
-                            <th>Status</th>
+                            <th>Nguoi dang ky</th>
+                            <th>Tin phong</th>
+                            <th>Phong</th>
+                            <th>Ngay mong muon</th>
+                            <th>Trang thai</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No viewing registrations are linked to your listings yet.</p>
+                <p>Chua co dang ky xem phong nao cho cac tin phong cua ban.</p>
             </div>
         {% endif %}
     </div>

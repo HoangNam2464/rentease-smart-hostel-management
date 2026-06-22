@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Invoices - RentEase{% endblock %}
+{% block title %}Hoa don cua khach thue - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Invoices</h1>
-    <p>Read-only list of invoices connected to your contracts.</p>
+    <h1>Hoa don cua toi</h1>
+    <p>Danh sach hoa don lien ket voi hop dong thue phong cua ban.</p>
 </section>
 
 <section class="card">
@@ -15,13 +15,13 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Invoice</th>
-                            <th>Contract</th>
-                            <th>Room</th>
-                            <th>Month</th>
-                            <th>Total</th>
-                            <th>Remaining</th>
-                            <th>Status</th>
+                            <th>Hoa don</th>
+                            <th>Hop dong</th>
+                            <th>Phong</th>
+                            <th>Thang</th>
+                            <th>Tong tien</th>
+                            <th>Con lai</th>
+                            <th>Trang thai</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No invoices are linked to your contracts yet.</p>
+                <p>Chua co hoa don nao lien ket voi hop dong cua ban.</p>
             </div>
         {% endif %}
     </div>

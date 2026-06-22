@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Contracts - RentEase{% endblock %}
+{% block title %}Hop dong cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>My Contracts</h1>
-            <p>Contracts for rooms linked to your owner profile.</p>
+            <h1>Hop dong cua toi</h1>
+            <p>Cac hop dong thue phong lien ket voi phong cua ban.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_contract_create' %}">Create Contract</a>
+        <a class="button primary" href="{% url 'portal:owner_contract_create' %}">Tao hop dong</a>
     </div>
 </section>
 
@@ -20,13 +20,13 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Contract</th>
-                            <th>Tenant</th>
-                            <th>Room</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Hop dong</th>
+                            <th>Khach thue</th>
+                            <th>Phong</th>
+                            <th>Bat dau</th>
+                            <th>Ket thuc</th>
+                            <th>Trang thai</th>
+                            <th>Thao tac</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
                                 <td>{{ contract.start_date }}</td>
                                 <td>{{ contract.end_date }}</td>
                                 <td><span class="status-badge">{{ contract.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_contract_update' contract.pk %}">Edit</a></td>
+                                <td><a href="{% url 'portal:owner_contract_update' contract.pk %}">Sua</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -46,7 +46,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No contracts are linked to your rooms yet. Create a contract after a room and tenant are ready.</p>
+                <p>Chua co hop dong nao. Hay tao hop dong sau khi da co phong va khach thue lien ket.</p>
             </div>
         {% endif %}
     </div>

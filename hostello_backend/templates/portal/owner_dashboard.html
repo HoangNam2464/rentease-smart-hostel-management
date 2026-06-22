@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Dashboard - RentEase{% endblock %}
+{% block title %}Tong quan chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Owner Dashboard</h1>
+    <h1>Tong quan chu tro</h1>
     {% if profile %}
-        <p>Welcome, {{ profile.full_name }}. This dashboard only summarizes data connected to your owner profile.</p>
+        <p>Xin chao {{ profile.full_name }}. Bang dieu khien nay chi tong hop du lieu thuoc phong va hop dong cua ban.</p>
     {% else %}
-        <p>RentEase owner portal foundation.</p>
+        <p>Khu vuc chu tro RentEase dang cho lien ket ho so.</p>
     {% endif %}
 </section>
 
@@ -19,13 +19,13 @@
         <div class="card-body">
             <div class="section-heading">
                 <div>
-                    <h2>Owner workspace</h2>
-                    <p class="help-text">Jump into the most common owner workflows for the demo.</p>
+                    <h2>Khu vuc van hanh</h2>
+                    <p class="help-text">Truy cap nhanh cac cong viec quan trong: tao phong, dang tin, lap hoa don va xu ly yeu cau.</p>
                 </div>
                 <div class="section-actions">
-                    <a class="button primary" href="/owner/rooms/new/">Create room</a>
-                    <a class="button" href="/owner/listings/new/">Create listing</a>
-                    <a class="button" href="/owner/invoices/new/">Create invoice</a>
+                    <a class="button primary" href="/owner/rooms/new/">Tao phong</a>
+                    <a class="button" href="/owner/listings/new/">Dang tin</a>
+                    <a class="button" href="/owner/invoices/new/">Lap hoa don</a>
                 </div>
             </div>
         </div>
@@ -33,27 +33,27 @@
 
     <section class="grid">
         <article class="card metric">
-            <span>Total rooms</span>
+            <span>Tong so phong</span>
             <strong>{{ metrics.total_rooms }}</strong>
         </article>
         <article class="card metric">
-            <span>Available rooms</span>
+            <span>Phong dang trong</span>
             <strong>{{ metrics.available_rooms }}</strong>
         </article>
         <article class="card metric">
-            <span>Occupied rooms</span>
+            <span>Phong da co khach</span>
             <strong>{{ metrics.occupied_rooms }}</strong>
         </article>
         <article class="card metric">
-            <span>Active contracts</span>
+            <span>Hop dong hieu luc</span>
             <strong>{{ metrics.active_contracts }}</strong>
         </article>
         <article class="card metric">
-            <span>Outstanding debt</span>
+            <span>Cong no con lai</span>
             <strong>{{ metrics.outstanding_debt }}</strong>
         </article>
         <article class="card metric">
-            <span>Pending repairs</span>
+            <span>Yeu cau sua chua cho xu ly</span>
             <strong>{{ metrics.pending_repairs }}</strong>
         </article>
     </section>
@@ -61,46 +61,46 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Billing Summary</h2>
+                <h2>Tong hop hoa don</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/invoices/">Open invoices</a>
+                    <a class="button" href="/owner/invoices/">Mo hoa don</a>
                 </div>
             </div>
             <div class="grid">
                 <article class="metric">
-                    <span>Total invoices</span>
+                    <span>Tong hoa don</span>
                     <strong>{{ metrics.total_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Draft</span>
+                    <span>Nhap</span>
                     <strong>{{ metrics.draft_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Unpaid</span>
+                    <span>Chua thanh toan</span>
                     <strong>{{ metrics.unpaid_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Partial</span>
+                    <span>Thanh toan mot phan</span>
                     <strong>{{ metrics.partial_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Paid</span>
+                    <span>Da thanh toan</span>
                     <strong>{{ metrics.paid_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Overdue</span>
+                    <span>Qua han</span>
                     <strong>{{ metrics.overdue_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Total amount</span>
+                    <span>Tong tien</span>
                     <strong>{{ metrics.total_invoice_amount }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Paid amount</span>
+                    <span>Da thu</span>
                     <strong>{{ metrics.paid_amount }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Outstanding debt</span>
+                    <span>Con phai thu</span>
                     <strong>{{ metrics.outstanding_debt }}</strong>
                 </article>
             </div>
@@ -110,39 +110,39 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Rooms &amp; Contracts</h2>
+                <h2>Phong &amp; hop dong</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/rooms/">Open rooms</a>
-                    <a class="button" href="/owner/contracts/">Open contracts</a>
+                    <a class="button" href="/owner/rooms/">Mo danh sach phong</a>
+                    <a class="button" href="/owner/contracts/">Mo hop dong</a>
                 </div>
             </div>
             <div class="grid">
                 <article class="metric">
-                    <span>Maintenance rooms</span>
+                    <span>Phong bao tri</span>
                     <strong>{{ metrics.maintenance_rooms }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Inactive rooms</span>
+                    <span>Phong tam ngung</span>
                     <strong>{{ metrics.inactive_rooms }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Total contracts</span>
+                    <span>Tong hop dong</span>
                     <strong>{{ metrics.total_contracts }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Draft contracts</span>
+                    <span>Hop dong nhap</span>
                     <strong>{{ metrics.draft_contracts }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Expired contracts</span>
+                    <span>Da het han</span>
                     <strong>{{ metrics.expired_contracts }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Terminated contracts</span>
+                    <span>Da ket thuc</span>
                     <strong>{{ metrics.terminated_contracts }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Ending in {{ ending_soon_days }} days</span>
+                    <span>Sap het han trong {{ ending_soon_days }} ngay</span>
                     <strong>{{ metrics.contracts_ending_soon }}</strong>
                 </article>
             </div>
@@ -152,26 +152,26 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Repairs</h2>
+                <h2>Sua chua</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/repairs/">Open repairs</a>
+                    <a class="button" href="/owner/repairs/">Mo yeu cau sua chua</a>
                 </div>
             </div>
             <div class="grid">
                 <article class="metric">
-                    <span>Pending</span>
+                    <span>Cho xu ly</span>
                     <strong>{{ metrics.pending_repairs }}</strong>
                 </article>
                 <article class="metric">
-                    <span>In progress</span>
+                    <span>Dang xu ly</span>
                     <strong>{{ metrics.in_progress_repairs }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Completed</span>
+                    <span>Hoan thanh</span>
                     <strong>{{ metrics.completed_repairs }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Cancelled</span>
+                    <span>Da huy</span>
                     <strong>{{ metrics.cancelled_repairs }}</strong>
                 </article>
             </div>
@@ -181,35 +181,35 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Listings &amp; Viewings</h2>
+                <h2>Tin phong &amp; lich xem</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/listings/">Open listings</a>
-                    <a class="button" href="/owner/viewing-registrations/">Open viewings</a>
+                    <a class="button" href="/owner/listings/">Mo tin phong</a>
+                    <a class="button" href="/owner/viewing-registrations/">Mo lich xem</a>
                 </div>
             </div>
             <div class="grid">
                 <article class="metric">
-                    <span>Published listings</span>
+                    <span>Tin dang cong khai</span>
                     <strong>{{ metrics.published_listings }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Pending viewings</span>
+                    <span>Lich xem cho xac nhan</span>
                     <strong>{{ metrics.pending_viewing_registrations }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Confirmed viewings</span>
+                    <span>Lich xem da xac nhan</span>
                     <strong>{{ metrics.confirmed_viewing_registrations }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Completed viewings</span>
+                    <span>Da xem phong</span>
                     <strong>{{ metrics.completed_viewing_registrations }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Cancelled viewings</span>
+                    <span>Da huy</span>
                     <strong>{{ metrics.cancelled_viewing_registrations }}</strong>
                 </article>
                 <article class="metric">
-                    <span>No-show viewings</span>
+                    <span>Khong den xem</span>
                     <strong>{{ metrics.no_show_viewing_registrations }}</strong>
                 </article>
             </div>
@@ -218,29 +218,29 @@
 
     <section class="card dashboard-section">
         <div class="card-body">
-            <h2>Recent Payments</h2>
+            <h2>Thanh toan gan day</h2>
             {% if recent.payments %}
                 <div class="recent-list">
                     {% for payment in recent.payments %}
                         <article class="recent-item">
                             <strong>{{ payment.amount }}</strong>
                             <div class="recent-meta">
-                                {{ payment.get_method_display }} for {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
-                                on {{ payment.paid_at }}
+                                {{ payment.get_method_display }} cho {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
+                                vao {{ payment.paid_at }}
                                 {% if payment.transaction_code %} - {{ payment.transaction_code }}{% endif %}
                             </div>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="muted-empty">No payments have been recorded yet.</p>
+                <p class="muted-empty">Chua co thanh toan nao duoc ghi nhan.</p>
             {% endif %}
         </div>
     </section>
 
     <section class="card dashboard-section">
         <div class="card-body">
-            <h2>Recent Invoices</h2>
+            <h2>Hoa don gan day</h2>
             {% if recent.invoices %}
                 <div class="recent-list">
                     {% for invoice in recent.invoices %}
@@ -250,20 +250,20 @@
                             </strong>
                             <div class="recent-meta">
                                 {{ invoice.contract.room.room_code }} - {{ invoice.month }}/{{ invoice.year }} -
-                                {{ invoice.get_status_display }} - remaining {{ invoice.remaining_amount }}
+                                {{ invoice.get_status_display }} - con lai {{ invoice.remaining_amount }}
                             </div>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="muted-empty">No invoices are linked to your rooms yet.</p>
+                <p class="muted-empty">Chua co hoa don nao lien ket voi phong cua ban.</p>
             {% endif %}
         </div>
     </section>
 
     <section class="card dashboard-section">
         <div class="card-body">
-            <h2>Upcoming Contract Endings</h2>
+            <h2>Hop dong sap het han</h2>
             {% if recent.upcoming_contracts %}
                 <div class="recent-list">
                     {% for contract in recent.upcoming_contracts %}
@@ -272,20 +272,20 @@
                                 <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
                             </strong>
                             <div class="recent-meta">
-                                {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - ends {{ contract.end_date }}
+                                {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - het han {{ contract.end_date }}
                             </div>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="muted-empty">No active contracts are ending soon.</p>
+                <p class="muted-empty">Khong co hop dong hieu luc nao sap het han.</p>
             {% endif %}
         </div>
     </section>
 
     <section class="card dashboard-section">
         <div class="card-body">
-            <h2>Pending Repairs</h2>
+            <h2>Sua chua cho xu ly</h2>
             {% if recent.pending_repairs %}
                 <div class="recent-list">
                     {% for repair in recent.pending_repairs %}
@@ -294,20 +294,20 @@
                                 <a href="{% url 'portal:owner_repair_detail' repair.pk %}">{{ repair.title }}</a>
                             </strong>
                             <div class="recent-meta">
-                                {{ repair.room.room_code }} - {{ repair.get_priority_display }} - requested {{ repair.requested_at }}
+                                {{ repair.room.room_code }} - {{ repair.get_priority_display }} - tao luc {{ repair.requested_at }}
                             </div>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="muted-empty">No pending repair requests.</p>
+                <p class="muted-empty">Khong co yeu cau sua chua dang cho xu ly.</p>
             {% endif %}
         </div>
     </section>
 
     <section class="card dashboard-section">
         <div class="card-body">
-            <h2>Pending Viewing Registrations</h2>
+            <h2>Lich xem phong cho xac nhan</h2>
             {% if recent.pending_viewings %}
                 <div class="recent-list">
                     {% for registration in recent.pending_viewings %}
@@ -316,14 +316,14 @@
                                 <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
                             </strong>
                             <div class="recent-meta">
-                                {{ registration.listing.title }} - preferred {{ registration.preferred_date }}
-                                {% if registration.preferred_time %} at {{ registration.preferred_time }}{% endif %}
+                                {{ registration.listing.title }} - ngay mong muon {{ registration.preferred_date }}
+                                {% if registration.preferred_time %} luc {{ registration.preferred_time }}{% endif %}
                             </div>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="muted-empty">No pending viewing registrations.</p>
+                <p class="muted-empty">Khong co dang ky xem phong dang cho xac nhan.</p>
             {% endif %}
         </div>
     </section>

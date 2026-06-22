@@ -1,21 +1,21 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Viewing Registered - RentEase{% endblock %}
+{% block title %}Da gui dang ky - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Viewing request submitted</h1>
-    <p>Your request for {{ listing.title }} has been sent. The property owner or administrator can follow up from RentEase Admin.</p>
+    <h1>Da gui dang ky xem phong</h1>
+    <p>Yeu cau xem phong {{ listing.title }} da duoc luu tren RentEase. Chu tro se theo doi va phan hoi sau.</p>
 </section>
 
 <section class="card form-panel">
     <div class="card-body">
         <p class="help-text">
-            Thank you for your interest. Your registration has been saved with pending status.
+            Cam on ban da quan tam. Dang ky hien o trang thai cho xac nhan.
         </p>
         <div class="page-actions">
-            <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Back to listing</a>
-            <a class="button" href="{% url 'listings:public_listing_list' %}">Browse more rooms</a>
+            <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Quay lai phong vua xem</a>
+            <a class="button" href="{% url 'listings:public_listing_list' %}">Xem them phong</a>
         </div>
     </div>
 </section>

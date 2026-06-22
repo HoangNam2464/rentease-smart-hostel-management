@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Rooms - RentEase{% endblock %}
+{% block title %}Tim phong tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Available Rooms</h1>
-    <p>Browse published room listings and register a viewing request.</p>
+    <h1>Tim phong tro dang cho thue</h1>
+    <p>Danh sach phong dang duoc cong khai tren RentEase. Chon phong phu hop de xem chi tiet va dang ky lich xem phong.</p>
 </section>
 
 {% if listings %}
@@ -15,29 +15,30 @@
                 {% if listing.image_url %}
                     <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}">
                 {% else %}
-                    <div class="listing-placeholder">RentEase Room</div>
+                    <div class="listing-placeholder">Phong RentEase</div>
                 {% endif %}
                 <div class="card-body">
+                    <span class="status-badge">Dang cho thue</span>
                     <h2 class="listing-title">{{ listing.title }}</h2>
                     <p class="listing-description">
                         {{ listing.description|truncatewords:24 }}
                     </p>
                     <ul class="meta-list">
-                        <li><strong>Room:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
+                        <li><strong>Phong:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
                         {% if listing.room.floor %}
-                            <li><strong>Floor:</strong> {{ listing.room.floor }}</li>
+                            <li><strong>Tang:</strong> {{ listing.room.floor }}</li>
                         {% endif %}
                         {% if listing.room.area %}
-                            <li><strong>Area:</strong> {{ listing.room.area }} m2</li>
+                            <li><strong>Dien tich:</strong> {{ listing.room.area }} m2</li>
                         {% endif %}
-                        <li><strong>Max occupants:</strong> {{ listing.room.max_occupants }}</li>
-                        <li><strong>Available from:</strong> {{ listing.available_from }}</li>
+                        <li><strong>So nguoi toi da:</strong> {{ listing.room.max_occupants }}</li>
+                        <li><strong>Co the vao o tu:</strong> {{ listing.available_from }}</li>
                     </ul>
                     <div class="price-row">
-                        <span>Monthly price</span>
+                        <span>Gia thue thang</span>
                         <strong>{{ listing.listing_price }}</strong>
                     </div>
-                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">View details</a>
+                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem chi tiet</a>
                 </div>
             </article>
         {% endfor %}
@@ -45,7 +46,7 @@
 {% else %}
     <div class="card">
         <div class="card-body empty-state">
-            <p>No published room listings are available right now. Please check back later.</p>
+            <p>Hien chua co phong nao duoc cong khai. Vui long quay lai sau hoac dang nhap neu ban la chu tro.</p>
         </div>
     </div>
 {% endif %}

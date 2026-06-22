@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Notifications - RentEase{% endblock %}
+{% block title %}Thong bao cua khach thue - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Notifications</h1>
-    <p>Read-only notifications connected to your tenant profile.</p>
+    <h1>Thong bao cua toi</h1>
+    <p>Cac thong bao lien quan den hop dong, hoa don hoac phong cua ban.</p>
 </section>
 
 <section class="card">
@@ -15,10 +15,10 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Type</th>
-                            <th>Read</th>
-                            <th>Sent</th>
+                            <th>Tieu de</th>
+                            <th>Loai</th>
+                            <th>Trang thai doc</th>
+                            <th>Ngay gui</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,7 +26,7 @@
                             <tr>
                                 <td><a href="{% url 'portal:tenant_notification_detail' notification.pk %}">{{ notification.title }}</a></td>
                                 <td>{{ notification.get_notification_type_display }}</td>
-                                <td><span class="status-badge">{{ notification.is_read|yesno:"Read,Unread" }}</span></td>
+                                <td><span class="status-badge">{{ notification.is_read|yesno:"Da doc,Chua doc" }}</span></td>
                                 <td>{{ notification.created_at }}</td>
                             </tr>
                         {% endfor %}
@@ -35,7 +35,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No notifications are linked to your tenant profile yet.</p>
+                <p>Ban chua co thong bao nao.</p>
             </div>
         {% endif %}
     </div>

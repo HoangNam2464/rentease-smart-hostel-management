@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Tenants - RentEase{% endblock %}
+{% block title %}Khach thue cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Tenants</h1>
-    <p>Tenants connected to contracts for your rooms.</p>
+    <h1>Khach thue cua toi</h1>
+    <p>Khach thue duoc lien ket thong qua hop dong cua cac phong ban quan ly.</p>
 </section>
 
 <section class="card">
@@ -15,11 +15,11 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Tenant</th>
-                            <th>Phone</th>
+                            <th>Khach thue</th>
+                            <th>Dien thoai</th>
                             <th>Email</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Trang thai</th>
+                            <th>Thao tac</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                                 <td>{{ tenant.phone_number|default:"-" }}</td>
                                 <td>{{ tenant.email|default:"-" }}</td>
                                 <td><span class="status-badge">{{ tenant.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_tenant_update' tenant.pk %}">Edit</a></td>
+                                <td><a href="{% url 'portal:owner_tenant_update' tenant.pk %}">Sua</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -37,7 +37,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No tenants are linked to your room contracts yet.</p>
+                <p>Chua co khach thue nao lien ket voi hop dong phong cua ban.</p>
             </div>
         {% endif %}
     </div>

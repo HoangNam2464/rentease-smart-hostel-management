@@ -9,6 +9,7 @@ Use this checklist together with:
 ```text
 docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
+docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 ```
 
 Recommended capture setup:
@@ -94,7 +95,7 @@ Before publishing screenshots, confirm:
 
 ## Current Demo Data Status
 
-After Phase 18A, this checklist is aligned with the final visual QA plan and the manual video recording guide.
+After Phase 19A, capture screenshots from the redesigned product-grade UI, not the older plain demo UI.
 
 Recommended next step:
 

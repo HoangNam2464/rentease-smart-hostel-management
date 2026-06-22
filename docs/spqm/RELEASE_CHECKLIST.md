@@ -46,17 +46,23 @@
 
 - [x] UI/UX audit and redesign planning completed
 - [x] public landing page looks like RentEase
+- [x] landing page looks like a real room-rental product
+- [x] Vietnamese wording is consistent across major public/owner/tenant paths
 - [x] public room list is readable
+- [x] public room pages look realistic enough for product-grade demo
 - [x] public room detail is readable
 - [x] viewing registration form is understandable
-- [ ] login page is clear
+- [x] login page is clear
 - [x] owner dashboard layout is clear
+- [x] owner portal looks business-ready for local demo
 - [x] owner sidebar/navigation is consistent
 - [x] owner rooms/listings/contracts/invoices pages are readable
 - [x] owner payment recording is easy to find from invoice detail
 - [x] tenant dashboard is clear
+- [x] tenant portal looks user-ready for local demo
 - [x] tenant invoices/payments/repairs/notifications are readable
 - [x] empty states are understandable
+- [x] no demo-looking placeholder text appears in major product pages
 - [x] no HOSTELLO branding appears in RentEase demo paths
 - [x] no raw Django template tags are visible
 - [x] no private data appears on public pages

@@ -26,6 +26,9 @@
 | Remaining UI polish | Completed | Phase 17B polished reports, error pages, process labels, login, and small inline styles |
 | Final visual QA checklist | Completed | Phase 17C documented browser pages, screenshot set, video checklist, and responsive/privacy checks |
 | Screenshot/video preparation | Completed | Phase 18A documented capture setup, screenshot order, video outline, Vietnamese narration, QA checks, and limitations |
+| Product-grade UI status | Improved | Phase 19A redesigned public landing, shared portal theme, public room pages, login, owner/tenant pages, and error pages |
+| Vietnamese wording consistency | Improved | Major public, owner, tenant, navigation, CTA, table, and empty-state labels are Vietnamese-first |
+| Public/owner/tenant visual readiness | Needs browser review | Template-level redesign completed; Phase 19B should verify in a real browser |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -89,6 +92,7 @@ Baseline:
 | Remaining UI polish | Phase 17B completed; final visual QA and screenshots remain |
 | Final visual QA checklist | Phase 17C completed; manual screenshot/video capture remains |
 | Screenshot/video preparation | Phase 18A completed; screenshots and video remain manual tasks |
+| Product-grade UI status | Phase 19A completed; browser visual review remains |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

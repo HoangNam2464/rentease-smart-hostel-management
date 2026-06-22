@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Payments - RentEase{% endblock %}
+{% block title %}Thanh toan cua khach thue - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Payments</h1>
-    <p>Read-only payment history connected to your invoices.</p>
+    <h1>Lich su thanh toan</h1>
+    <p>Lich su thanh toan lien ket voi cac hoa don cua ban.</p>
 </section>
 
 <section class="card">
@@ -15,12 +15,12 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Invoice</th>
-                            <th>Room</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Reference</th>
-                            <th>Paid at</th>
+                            <th>Hoa don</th>
+                            <th>Phong</th>
+                            <th>So tien</th>
+                            <th>Phuong thuc</th>
+                            <th>Ma tham chieu</th>
+                            <th>Ngay thanh toan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No payments are linked to your invoices yet.</p>
+                <p>Chua co thanh toan nao lien ket voi hoa don cua ban.</p>
             </div>
         {% endif %}
     </div>

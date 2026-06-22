@@ -20,6 +20,7 @@ Recommended preparation:
 - confirm owner and tenant dashboards show demo records
 - review `docs/ui/PHASE_17C_FINAL_VISUAL_QA.md`
 - review `docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md`
+- review `docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md`
 
 Do not show:
 
@@ -41,7 +42,7 @@ Open:
 
 Talk track:
 
-RentEase is a Django-based boarding-house management system. The landing page gives visitors a clean entry point to browse rooms or log in.
+RentEase is a Django-based boarding-house management system. The redesigned landing page presents RentEase as a real room-rental management product for visitors, owners, and tenants.
 
 ### 2. Public Room Browsing
 
@@ -195,7 +196,7 @@ The current project is strong for local demo and controlled testing, but it is n
 
 ## Current Demo Data Status
 
-After Phase 18A:
+After Phase 19A:
 
 - `owner_test` has scoped demo rooms, listings, contracts, invoices, payments, repairs, and viewing registrations.
 - `tenant_test` has scoped demo contract, invoice, payment, repairs, and notifications.
@@ -203,9 +204,10 @@ After Phase 18A:
 - the final walkthrough route smoke test passed with seeded demo data.
 - final visual QA and screenshot guidance is available.
 - screenshot capture order and Vietnamese narration script are available.
+- the main demo UI has been redesigned toward a Vietnamese-first product-grade presentation.
 
 Recommended next phase:
 
 ```text
-Manual action: capture screenshots and record the 3 to 5 minute demo video
+Phase 19B: Browser Visual Review and Small UI Fixes
 ```

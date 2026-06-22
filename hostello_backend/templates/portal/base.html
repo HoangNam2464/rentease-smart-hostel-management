@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RentEase Portal{% endblock %}</title>
     <style>
         :root {
-            --bg: #f5f7fb;
+            color-scheme: light;
+            --bg: #f4f7fb;
+            --bg-soft: #eef6ff;
             --card: #ffffff;
-            --text: #172033;
+            --text: #102033;
             --muted: #64748b;
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --border: #dbe3ef;
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --accent: #2563eb;
+            --border: #dce6f2;
             --success: #16a34a;
             --warning: #d97706;
+            --danger: #dc2626;
+            --shadow: 0 18px 48px rgba(16, 32, 51, 0.08);
         }
 
         * {
@@ -26,7 +31,9 @@
             min-height: 100vh;
             font-family: Arial, sans-serif;
             color: var(--text);
-            background: var(--bg);
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.10), transparent 32%),
+                linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
         }
 
         a {
@@ -34,13 +41,17 @@
         }
 
         .topbar {
-            background: var(--card);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.94);
             border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
         }
 
         .topbar-inner {
-            width: min(1120px, calc(100% - 32px));
-            min-height: 64px;
+            width: min(1180px, calc(100% - 32px));
+            min-height: 68px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -53,19 +64,20 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.12rem;
+            font-weight: 900;
         }
 
         .brand-mark {
             display: inline-flex;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             align-items: center;
             justify-content: center;
-            border-radius: 9px;
+            border-radius: 12px;
             color: #ffffff;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 10px 24px rgba(15, 118, 110, 0.20);
         }
 
         .nav {
@@ -84,32 +96,34 @@
             min-height: 40px;
             padding: 0 14px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 999px;
             background: #ffffff;
             color: var(--text);
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
+            line-height: 1;
+            box-shadow: 0 8px 18px rgba(16, 32, 51, 0.04);
         }
 
         .button.primary,
         .nav a.primary {
             color: #ffffff;
             border-color: var(--primary);
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         }
 
-        .button.primary:hover,
-        .nav a.primary:hover {
-            background: var(--primary-dark);
+        .button:hover,
+        .nav a:hover {
+            transform: translateY(-1px);
         }
 
         .role-nav {
             border-top: 1px solid var(--border);
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .role-nav-inner {
-            width: min(1120px, calc(100% - 32px));
+            width: min(1180px, calc(100% - 32px));
             margin: 0 auto;
             padding: 10px 0;
             display: flex;
@@ -119,9 +133,9 @@
         }
 
         .role-label {
-            color: var(--muted);
-            font-size: 0.85rem;
-            font-weight: 800;
+            color: var(--primary-dark);
+            font-size: 0.78rem;
+            font-weight: 900;
             text-transform: uppercase;
         }
 
@@ -131,46 +145,63 @@
             justify-content: center;
             min-height: 34px;
             padding: 0 12px;
+            border: 1px solid transparent;
             border-radius: 999px;
             color: var(--text);
-            background: #f8fafc;
+            background: #f8fbff;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 0.92rem;
         }
 
         .role-nav a:hover {
-            background: #eef4ff;
+            border-color: rgba(15, 118, 110, 0.2);
+            background: rgba(15, 118, 110, 0.08);
         }
 
         .container {
-            width: min(1120px, calc(100% - 32px));
+            width: min(1180px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 36px 0;
+            padding: 38px 0 54px;
         }
 
         .page-header {
             margin-bottom: 24px;
         }
 
+        .page-header::before {
+            content: "RentEase";
+            display: inline-flex;
+            margin-bottom: 10px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            color: var(--primary-dark);
+            background: rgba(15, 118, 110, 0.10);
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
         .page-header h1 {
             margin: 0;
-            font-size: clamp(1.9rem, 4vw, 3rem);
+            font-size: clamp(1.9rem, 4vw, 3.15rem);
             letter-spacing: 0;
         }
 
         .page-header p {
-            max-width: 720px;
+            max-width: 760px;
             margin: 10px 0 0;
             color: var(--muted);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         .card {
             border: 1px solid var(--border);
-            border-radius: 10px;
-            background: var(--card);
-            box-shadow: 0 12px 32px rgba(23, 32, 51, 0.07);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: var(--shadow);
+            overflow: hidden;
         }
 
         .card-body {
@@ -189,19 +220,29 @@
         }
 
         .auth-panel {
-            padding: 24px;
-            border-radius: 10px;
+            padding: 28px;
+            border-radius: 18px;
             color: #ffffff;
-            background: linear-gradient(135deg, #2563eb, #16a34a);
+            background:
+                linear-gradient(180deg, rgba(16, 32, 51, 0.05), rgba(16, 32, 51, 0.52)),
+                linear-gradient(135deg, #0f766e, #2563eb);
+            box-shadow: var(--shadow);
         }
 
         .auth-panel h2 {
-            margin: 0 0 10px;
+            margin: 0 0 12px;
+            font-size: 1.8rem;
         }
 
         .auth-panel p {
             margin: 0;
-            line-height: 1.6;
+            line-height: 1.65;
+        }
+
+        .auth-panel ul {
+            margin: 20px 0 0;
+            padding-left: 20px;
+            line-height: 1.8;
         }
 
         .section {
@@ -211,7 +252,7 @@
         .listing-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
+            gap: 20px;
         }
 
         .listing-card {
@@ -220,14 +261,15 @@
 
         .listing-card .card-body {
             display: grid;
-            gap: 12px;
+            gap: 13px;
         }
 
         .listing-media {
             width: 100%;
-            height: 190px;
+            height: 210px;
             object-fit: cover;
             display: block;
+            background: var(--bg-soft);
         }
 
         .listing-media.detail {
@@ -235,31 +277,34 @@
         }
 
         .listing-media.hero {
-            height: 360px;
+            height: 380px;
         }
 
         .listing-placeholder {
-            min-height: 190px;
+            min-height: 210px;
             display: grid;
             place-items: center;
-            color: var(--muted);
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(22, 163, 74, 0.1));
-            font-weight: 700;
+            color: var(--primary-dark);
+            background:
+                linear-gradient(135deg, rgba(15, 118, 110, 0.15), rgba(37, 99, 235, 0.12)),
+                #f8fbff;
+            font-weight: 900;
         }
 
         .listing-placeholder.detail {
-            min-height: 260px;
+            min-height: 280px;
         }
 
         .listing-title {
             margin: 0;
             font-size: 1.25rem;
+            line-height: 1.3;
         }
 
         .listing-description {
             margin: 0;
             color: var(--muted);
-            line-height: 1.55;
+            line-height: 1.6;
         }
 
         .meta-list {
@@ -269,6 +314,7 @@
             padding: 0;
             list-style: none;
             color: var(--muted);
+            line-height: 1.5;
         }
 
         .meta-list strong {
@@ -280,12 +326,13 @@
             align-items: baseline;
             justify-content: space-between;
             gap: 12px;
-            padding-top: 10px;
+            padding-top: 12px;
             border-top: 1px solid var(--border);
         }
 
         .price-row strong {
             font-size: 1.35rem;
+            color: var(--primary-dark);
         }
 
         .details-grid {
@@ -296,6 +343,7 @@
 
         .detail-box {
             padding: 18px;
+            background: #ffffff;
         }
 
         .detail-box span {
@@ -307,6 +355,7 @@
         .detail-box strong {
             display: block;
             margin-top: 6px;
+            color: var(--primary-dark);
             font-size: 1.25rem;
         }
 
@@ -318,18 +367,21 @@
         }
 
         .form-panel {
-            max-width: 720px;
+            max-width: 760px;
         }
 
         .help-text {
             margin: 0 0 18px;
             color: var(--muted);
-            line-height: 1.55;
+            line-height: 1.6;
         }
 
         .empty-state {
-            padding: 28px;
+            padding: 30px;
             text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            background: #fbfdff;
         }
 
         .empty-state p {
@@ -360,19 +412,24 @@
         .data-table th,
         .data-table td {
             text-align: left;
-            padding: 12px;
+            padding: 14px 12px;
             border-bottom: 1px solid var(--border);
             vertical-align: top;
         }
 
         .data-table th {
             color: var(--muted);
-            font-size: 0.85rem;
+            background: #f8fbff;
+            font-size: 0.78rem;
             text-transform: uppercase;
         }
 
         .data-table tr:last-child td {
             border-bottom: 0;
+        }
+
+        .data-table tbody tr:hover {
+            background: #fbfdff;
         }
 
         .status-badge {
@@ -381,10 +438,10 @@
             align-items: center;
             padding: 0 10px;
             border-radius: 999px;
-            color: var(--text);
-            background: #eef4ff;
+            color: var(--primary-dark);
+            background: rgba(15, 118, 110, 0.10);
             font-size: 0.88rem;
-            font-weight: 800;
+            font-weight: 900;
         }
 
         .info-list {
@@ -397,9 +454,9 @@
         }
 
         .info-list li {
-            padding: 14px;
+            padding: 16px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 14px;
             background: #fbfdff;
         }
 
@@ -411,7 +468,7 @@
 
         .info-list strong {
             display: block;
-            margin-top: 5px;
+            margin-top: 6px;
             line-height: 1.4;
         }
 
@@ -422,7 +479,7 @@
         }
 
         .dashboard-section {
-            margin-top: 18px;
+            margin-top: 20px;
         }
 
         .section-heading {
@@ -450,16 +507,14 @@
         }
 
         .recent-item {
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .recent-item:last-child {
-            padding-bottom: 0;
-            border-bottom: 0;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fbfdff;
         }
 
         .recent-meta {
+            margin-top: 5px;
             color: var(--muted);
             line-height: 1.5;
         }
@@ -471,6 +526,7 @@
 
         .metric {
             padding: 20px;
+            background: #ffffff;
         }
 
         .metric span {
@@ -483,6 +539,7 @@
         .metric strong {
             display: block;
             margin-top: 8px;
+            color: var(--primary-dark);
             font-size: 2rem;
         }
 
@@ -493,11 +550,12 @@
 
         .alert {
             padding: 16px 18px;
-            border-radius: 8px;
+            border-radius: 14px;
             border: 1px solid var(--border);
             background: #ffffff;
             color: var(--text);
             margin-bottom: 16px;
+            box-shadow: 0 10px 24px rgba(16, 32, 51, 0.05);
         }
 
         .alert.warning {
@@ -512,7 +570,7 @@
         }
 
         .form-field label {
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .form-field input,
@@ -522,9 +580,17 @@
             min-height: 44px;
             padding: 0 12px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
+            background: #ffffff;
             font-size: 1rem;
             font-family: inherit;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: 3px solid rgba(15, 118, 110, 0.15);
+            border-color: var(--primary);
         }
 
         .form-field textarea {
@@ -555,12 +621,11 @@
                 flex-direction: column;
             }
 
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
+            .grid,
             .listing-grid,
-            .details-grid {
+            .details-grid,
+            .info-list,
+            .auth-layout {
                 grid-template-columns: 1fr;
             }
 
@@ -569,12 +634,8 @@
                 flex-direction: column;
             }
 
-            .auth-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .info-list {
-                grid-template-columns: 1fr;
+            .listing-media.hero {
+                height: 260px;
             }
         }
     </style>
@@ -586,48 +647,48 @@
                 <span class="brand-mark">R</span>
                 <span>RentEase</span>
             </a>
-            <nav class="nav" aria-label="Main navigation">
-                <a href="/">Home</a>
-                <a href="/rooms/">Rooms</a>
-                <a href="/dashboard/">Dashboard</a>
+            <nav class="nav" aria-label="Dieu huong chinh">
+                <a href="/">Trang chu</a>
+                <a href="/rooms/">Xem phong</a>
+                <a href="/dashboard/">Bang dieu khien</a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                        <a href="/admin/">Admin</a>
-                        <a href="/reports/">Reports</a>
+                        <a href="/admin/">Quan tri</a>
+                        <a href="/reports/">Bao cao</a>
                     {% endif %}
-                    <a class="primary" href="/logout/">Logout</a>
+                    <a class="primary" href="/logout/">Dang xuat</a>
                 {% else %}
-                    <a class="primary" href="/login/">Login</a>
+                    <a class="primary" href="/login/">Dang nhap</a>
                 {% endif %}
             </nav>
         </div>
         {% if request.user.is_authenticated %}
             {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                <nav class="role-nav" aria-label="Owner navigation">
+                <nav class="role-nav" aria-label="Dieu huong chu tro">
                     <div class="role-nav-inner">
-                        <span class="role-label">Owner</span>
-                        <a href="/owner/dashboard/">Dashboard</a>
-                        <a href="/owner/rooms/">Rooms</a>
-                        <a href="/owner/tenants/">Tenants</a>
-                        <a href="/owner/contracts/">Contracts</a>
-                        <a href="/owner/invoices/">Invoices</a>
-                        <a href="/owner/repairs/">Repairs</a>
-                        <a href="/owner/listings/">Listings</a>
-                        <a href="/owner/viewing-registrations/">Viewings</a>
+                        <span class="role-label">Khu vuc chu tro</span>
+                        <a href="/owner/dashboard/">Tong quan</a>
+                        <a href="/owner/rooms/">Phong</a>
+                        <a href="/owner/tenants/">Khach thue</a>
+                        <a href="/owner/contracts/">Hop dong</a>
+                        <a href="/owner/invoices/">Hoa don</a>
+                        <a href="/owner/repairs/">Sua chua</a>
+                        <a href="/owner/listings/">Tin phong</a>
+                        <a href="/owner/viewing-registrations/">Lich xem</a>
                     </div>
                 </nav>
             {% endif %}
             {% if request.user.is_tenant or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                <nav class="role-nav" aria-label="Tenant navigation">
+                <nav class="role-nav" aria-label="Dieu huong khach thue">
                     <div class="role-nav-inner">
-                        <span class="role-label">Tenant</span>
-                        <a href="/tenant/dashboard/">Dashboard</a>
-                        <a href="/tenant/profile/">Profile</a>
-                        <a href="/tenant/contracts/">Contracts</a>
-                        <a href="/tenant/invoices/">Invoices</a>
-                        <a href="/tenant/payments/">Payments</a>
-                        <a href="/tenant/repairs/">Repairs</a>
-                        <a href="/tenant/notifications/">Notifications</a>
+                        <span class="role-label">Khu vuc khach thue</span>
+                        <a href="/tenant/dashboard/">Tong quan</a>
+                        <a href="/tenant/profile/">Ho so</a>
+                        <a href="/tenant/contracts/">Hop dong</a>
+                        <a href="/tenant/invoices/">Hoa don</a>
+                        <a href="/tenant/payments/">Thanh toan</a>
+                        <a href="/tenant/repairs/">Sua chua</a>
+                        <a href="/tenant/notifications/">Thong bao</a>
                     </div>
                 </nav>
             {% endif %}

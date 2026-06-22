@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Rooms - RentEase{% endblock %}
+{% block title %}Phong cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>My Rooms</h1>
-            <p>Manage rooms linked to your owner profile.</p>
+            <h1>Phong cua toi</h1>
+            <p>Quan ly cac phong thuoc ho so chu tro cua ban.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_room_create' %}">Create Room</a>
+        <a class="button primary" href="{% url 'portal:owner_room_create' %}">Tao phong</a>
     </div>
 </section>
 
@@ -20,11 +20,11 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Room</th>
-                            <th>Floor</th>
-                            <th>Area</th>
-                            <th>Max occupants</th>
-                            <th>Status</th>
+                            <th>Phong</th>
+                            <th>Tang</th>
+                            <th>Dien tich</th>
+                            <th>So nguoi</th>
+                            <th>Trang thai</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No rooms are linked to your owner profile yet. Create your first room to start the owner demo flow.</p>
+                <p>Chua co phong nao lien ket voi ho so chu tro. Hay tao phong dau tien de bat dau quy trinh quan ly.</p>
             </div>
         {% endif %}
     </div>

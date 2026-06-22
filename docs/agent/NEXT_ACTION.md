@@ -252,17 +252,37 @@ docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 
 ## Immediate Next Step
 
-Manual action by user:
+Completed current step:
 
 ```text
-Run the local server, capture screenshots, and record the 3 to 5 minute demo video.
+Phase 19A: Product-Grade UI Redesign
 ```
 
-Optional later phase:
+Summary:
+
+- redesigned the public landing page toward a stronger room-rental product presentation
+- improved the shared portal visual theme
+- converted major public, owner, and tenant labels to Vietnamese-first wording
+- polished room cards, viewing registration, login, dashboard, tables, badges, forms, and error pages
+- kept models, schema, billing, routes, settings, and security scoping unchanged
+
+Report:
 
 ```text
-Phase 18B: Final Submission Package Review
+docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 ```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 19B: Browser Visual Review and Small UI Fixes
+```
+
+Goal:
+
+Open the redesigned UI in a real browser, compare public/owner/tenant pages, fix remaining spacing, label, overflow, mobile, or screenshot rough spots, then prepare screenshots/video.
 
 ## Recommended Demo Track
 
@@ -281,7 +301,8 @@ Phase 18B: Final Submission Package Review
 13. Phase 17B: Remaining UI Polish - completed
 14. Phase 17C: Final Visual QA and Screenshot Checklist - completed
 15. Phase 18A: Screenshot Capture and Demo Video Preparation - completed
-16. Manual screenshot capture and demo video recording - next
+16. Phase 19A: Product-Grade UI Redesign - completed
+17. Phase 19B: Browser Visual Review and Small UI Fixes - next
 
 ## Recommended Production Track
 
@@ -294,6 +315,6 @@ Phase 18B: Final Submission Package Review
 
 ## Current Recommendation
 
-The demo documentation track is ready for manual capture.
+The UI has been redesigned toward a product-grade local demo, but browser visual review is still needed before final screenshots/video.
 
-Do not start production settings implementation until screenshots/video are captured or unless the user explicitly changes priority.
+Do not start production settings implementation until the product-grade UI is browser-reviewed or unless the user explicitly changes priority.

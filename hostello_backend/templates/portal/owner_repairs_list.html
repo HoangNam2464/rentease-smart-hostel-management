@@ -1,11 +1,11 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Repairs - RentEase{% endblock %}
+{% block title %}Sua chua cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Repair Requests</h1>
-    <p>Read-only list of repair requests connected to your rooms.</p>
+    <h1>Yeu cau sua chua</h1>
+    <p>Danh sach yeu cau sua chua tu cac phong do ban quan ly.</p>
 </section>
 
 <section class="card">
@@ -15,12 +15,12 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Request</th>
-                            <th>Room</th>
-                            <th>Tenant</th>
-                            <th>Priority</th>
-                            <th>Status</th>
-                            <th>Requested</th>
+                            <th>Noi dung</th>
+                            <th>Phong</th>
+                            <th>Khach thue</th>
+                            <th>Uu tien</th>
+                            <th>Trang thai</th>
+                            <th>Ngay tao</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No repair requests are linked to your rooms yet.</p>
+                <p>Chua co yeu cau sua chua nao lien ket voi phong cua ban.</p>
             </div>
         {% endif %}
     </div>

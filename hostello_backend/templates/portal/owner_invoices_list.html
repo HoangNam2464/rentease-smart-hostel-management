@@ -1,15 +1,15 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Owner Invoices - RentEase{% endblock %}
+{% block title %}Hoa don cua chu tro - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>My Invoices</h1>
-            <p>Invoices connected to contracts for your rooms.</p>
+            <h1>Hoa don cua toi</h1>
+            <p>Hoa don lien ket voi hop dong cua cac phong do ban quan ly.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Create Invoice</a>
+        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Lap hoa don</a>
     </div>
 </section>
 
@@ -20,14 +20,14 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Invoice</th>
-                            <th>Contract</th>
-                            <th>Room</th>
-                            <th>Month</th>
-                            <th>Total</th>
-                            <th>Remaining</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Hoa don</th>
+                            <th>Hop dong</th>
+                            <th>Phong</th>
+                            <th>Thang</th>
+                            <th>Tong tien</th>
+                            <th>Con lai</th>
+                            <th>Trang thai</th>
+                            <th>Thao tac</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,7 +42,7 @@
                                 <td>{{ invoice.total_amount }}</td>
                                 <td>{{ invoice.remaining_amount }}</td>
                                 <td><span class="status-badge">{{ invoice.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_invoice_update' invoice.pk %}">Edit</a></td>
+                                <td><a href="{% url 'portal:owner_invoice_update' invoice.pk %}">Sua</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -50,7 +50,7 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <p>No invoices are linked to your room contracts yet. Create an invoice after a room and contract are ready.</p>
+                <p>Chua co hoa don nao. Hay lap hoa don sau khi phong va hop dong da san sang.</p>
             </div>
         {% endif %}
     </div>
