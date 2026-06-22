@@ -6,7 +6,7 @@
 <section class="page-header">
     <h1>Tổng quan chủ trọ</h1>
     {% if profile %}
-        <p>Xin chào {{ profile.full_name }}. Bảng điều khiển này chỉ tổng hợp dữ liệu thuộc phòng và hợp đồng của bạn.</p>
+        <p>Xin chào {{ profile.full_name }}. Bảng điều khiển này chỉ tổng hợp dữ liệu thuộc phòng, hợp đồng, hóa đơn và lịch xem của bạn.</p>
     {% else %}
         <p>Khu vực chủ trọ RentEase đang chờ liên kết hồ sơ.</p>
     {% endif %}
@@ -20,7 +20,7 @@
             <div class="section-heading">
                 <div>
                     <h2>Khu vực vận hành</h2>
-                    <p class="help-text">Truy cập nhanh các công việc quan trọng: tạo phòng, đăng tin, lập hóa đơn và xử lý yêu cầu.</p>
+                    <p class="help-text">Truy cập nhanh các việc thường dùng: tạo phòng, đăng tin, lập hóa đơn và xử lý yêu cầu sửa chữa.</p>
                 </div>
                 <div class="section-actions">
                     <a class="button primary" href="/owner/rooms/new/">Tạo phòng</a>
@@ -31,7 +31,7 @@
         </div>
     </section>
 
-    <section class="grid">
+    <section class="grid dashboard-section" aria-label="Chỉ số chính">
         <article class="card metric">
             <span>Tổng số phòng</span>
             <strong>{{ metrics.total_rooms }}</strong>
@@ -53,7 +53,7 @@
             <strong>{{ metrics.outstanding_debt }}</strong>
         </article>
         <article class="card metric">
-            <span>Yêu cầu sửa chữa chờ xử lý</span>
+            <span>Sửa chữa chờ xử lý</span>
             <strong>{{ metrics.pending_repairs }}</strong>
         </article>
     </section>
@@ -61,7 +61,7 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Tổng hợp hóa đơn</h2>
+                <h2>Hóa đơn và công nợ</h2>
                 <div class="section-actions">
                     <a class="button" href="/owner/invoices/">Mở hóa đơn</a>
                 </div>
@@ -70,10 +70,6 @@
                 <article class="metric">
                     <span>Tổng hóa đơn</span>
                     <strong>{{ metrics.total_invoices }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Nháp</span>
-                    <strong>{{ metrics.draft_invoices }}</strong>
                 </article>
                 <article class="metric">
                     <span>Chưa thanh toán</span>
@@ -88,16 +84,8 @@
                     <strong>{{ metrics.paid_invoices }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Quá hạn</span>
-                    <strong>{{ metrics.overdue_invoices }}</strong>
-                </article>
-                <article class="metric">
                     <span>Tổng tiền</span>
                     <strong>{{ metrics.total_invoice_amount }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Đã thu</span>
-                    <strong>{{ metrics.paid_amount }}</strong>
                 </article>
                 <article class="metric">
                     <span>Còn phải thu</span>
@@ -110,9 +98,9 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Phòng &amp; hợp đồng</h2>
+                <h2>Phòng và hợp đồng</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/rooms/">Mở danh sách phòng</a>
+                    <a class="button" href="/owner/rooms/">Mở phòng</a>
                     <a class="button" href="/owner/contracts/">Mở hợp đồng</a>
                 </div>
             </div>
@@ -138,10 +126,6 @@
                     <strong>{{ metrics.expired_contracts }}</strong>
                 </article>
                 <article class="metric">
-                    <span>Đã kết thúc</span>
-                    <strong>{{ metrics.terminated_contracts }}</strong>
-                </article>
-                <article class="metric">
                     <span>Sắp hết hạn trong {{ ending_soon_days }} ngày</span>
                     <strong>{{ metrics.contracts_ending_soon }}</strong>
                 </article>
@@ -152,42 +136,21 @@
     <section class="card dashboard-section">
         <div class="card-body">
             <div class="section-heading">
-                <h2>Sửa chữa</h2>
+                <h2>Sửa chữa và lịch xem</h2>
                 <div class="section-actions">
-                    <a class="button" href="/owner/repairs/">Mở yêu cầu sửa chữa</a>
-                </div>
-            </div>
-            <div class="grid">
-                <article class="metric">
-                    <span>Chờ xử lý</span>
-                    <strong>{{ metrics.pending_repairs }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Đang xử lý</span>
-                    <strong>{{ metrics.in_progress_repairs }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Hoàn thành</span>
-                    <strong>{{ metrics.completed_repairs }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Đã hủy</span>
-                    <strong>{{ metrics.cancelled_repairs }}</strong>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <div class="section-heading">
-                <h2>Tin phòng &amp; lịch xem</h2>
-                <div class="section-actions">
-                    <a class="button" href="/owner/listings/">Mở tin phòng</a>
+                    <a class="button" href="/owner/repairs/">Mở sửa chữa</a>
                     <a class="button" href="/owner/viewing-registrations/">Mở lịch xem</a>
                 </div>
             </div>
             <div class="grid">
+                <article class="metric">
+                    <span>Sửa chữa đang xử lý</span>
+                    <strong>{{ metrics.in_progress_repairs }}</strong>
+                </article>
+                <article class="metric">
+                    <span>Sửa chữa hoàn thành</span>
+                    <strong>{{ metrics.completed_repairs }}</strong>
+                </article>
                 <article class="metric">
                     <span>Tin đăng công khai</span>
                     <strong>{{ metrics.published_listings }}</strong>
@@ -204,128 +167,116 @@
                     <span>Đã xem phòng</span>
                     <strong>{{ metrics.completed_viewing_registrations }}</strong>
                 </article>
-                <article class="metric">
-                    <span>Đã hủy</span>
-                    <strong>{{ metrics.cancelled_viewing_registrations }}</strong>
-                </article>
-                <article class="metric">
-                    <span>Không đến xem</span>
-                    <strong>{{ metrics.no_show_viewing_registrations }}</strong>
-                </article>
             </div>
         </div>
     </section>
 
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <h2>Thanh toán gần đây</h2>
-            {% if recent.payments %}
-                <div class="recent-list">
-                    {% for payment in recent.payments %}
-                        <article class="recent-item">
-                            <strong>{{ payment.amount }}</strong>
-                            <div class="recent-meta">
-                                {{ payment.get_method_display }} cho {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
-                                vào {{ payment.paid_at }}
-                                {% if payment.transaction_code %} - {{ payment.transaction_code }}{% endif %}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="muted-empty">Chưa có thanh toán nào được ghi nhận.</p>
-            {% endif %}
-        </div>
+    <section class="grid dashboard-section" aria-label="Hoạt động gần đây">
+        <article class="card">
+            <div class="card-body">
+                <h2>Thanh toán gần đây</h2>
+                {% if recent.payments %}
+                    <div class="recent-list">
+                        {% for payment in recent.payments %}
+                            <article class="recent-item">
+                                <strong>{{ payment.amount }}</strong>
+                                <div class="recent-meta">
+                                    {{ payment.get_method_display }} cho {{ payment.invoice.invoice_code|default:payment.invoice.pk }}
+                                    vào {{ payment.paid_at }}
+                                    {% if payment.transaction_code %} - {{ payment.transaction_code }}{% endif %}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="muted-empty">Chưa có thanh toán nào được ghi nhận.</p>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-body">
+                <h2>Hóa đơn gần đây</h2>
+                {% if recent.invoices %}
+                    <div class="recent-list">
+                        {% for invoice in recent.invoices %}
+                            <article class="recent-item">
+                                <strong><a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a></strong>
+                                <div class="recent-meta">
+                                    {{ invoice.contract.room.room_code }} - {{ invoice.month }}/{{ invoice.year }} -
+                                    {{ invoice.get_status_display }} - còn lại {{ invoice.remaining_amount }}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="muted-empty">Chưa có hóa đơn nào liên kết với phòng của bạn.</p>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-body">
+                <h2>Lịch xem chờ xác nhận</h2>
+                {% if recent.pending_viewings %}
+                    <div class="recent-list">
+                        {% for registration in recent.pending_viewings %}
+                            <article class="recent-item">
+                                <strong><a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a></strong>
+                                <div class="recent-meta">
+                                    {{ registration.listing.title }} - ngày mong muốn {{ registration.preferred_date }}
+                                    {% if registration.preferred_time %} lúc {{ registration.preferred_time }}{% endif %}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="muted-empty">Không có đăng ký xem phòng đang chờ xác nhận.</p>
+                {% endif %}
+            </div>
+        </article>
     </section>
 
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <h2>Hóa đơn gần đây</h2>
-            {% if recent.invoices %}
-                <div class="recent-list">
-                    {% for invoice in recent.invoices %}
-                        <article class="recent-item">
-                            <strong>
-                                <a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
-                            </strong>
-                            <div class="recent-meta">
-                                {{ invoice.contract.room.room_code }} - {{ invoice.month }}/{{ invoice.year }} -
-                                {{ invoice.get_status_display }} - còn lại {{ invoice.remaining_amount }}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="muted-empty">Chưa có hóa đơn nào liên kết với phòng của bạn.</p>
-            {% endif %}
-        </div>
-    </section>
+    <section class="grid dashboard-section" aria-label="Cần chú ý">
+        <article class="card">
+            <div class="card-body">
+                <h2>Hợp đồng sắp hết hạn</h2>
+                {% if recent.upcoming_contracts %}
+                    <div class="recent-list">
+                        {% for contract in recent.upcoming_contracts %}
+                            <article class="recent-item">
+                                <strong><a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a></strong>
+                                <div class="recent-meta">
+                                    {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - hết hạn {{ contract.end_date }}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="muted-empty">Không có hợp đồng hiệu lực nào sắp hết hạn.</p>
+                {% endif %}
+            </div>
+        </article>
 
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <h2>Hợp đồng sắp hết hạn</h2>
-            {% if recent.upcoming_contracts %}
-                <div class="recent-list">
-                    {% for contract in recent.upcoming_contracts %}
-                        <article class="recent-item">
-                            <strong>
-                                <a href="{% url 'portal:owner_contract_detail' contract.pk %}">{{ contract.contract_code }}</a>
-                            </strong>
-                            <div class="recent-meta">
-                                {{ contract.room.room_code }} - {{ contract.tenant.full_name }} - hết hạn {{ contract.end_date }}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="muted-empty">Không có hợp đồng hiệu lực nào sắp hết hạn.</p>
-            {% endif %}
-        </div>
-    </section>
-
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <h2>Sửa chữa chờ xử lý</h2>
-            {% if recent.pending_repairs %}
-                <div class="recent-list">
-                    {% for repair in recent.pending_repairs %}
-                        <article class="recent-item">
-                            <strong>
-                                <a href="{% url 'portal:owner_repair_detail' repair.pk %}">{{ repair.title }}</a>
-                            </strong>
-                            <div class="recent-meta">
-                                {{ repair.room.room_code }} - {{ repair.get_priority_display }} - tạo lúc {{ repair.requested_at }}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="muted-empty">Không có yêu cầu sửa chữa đang chờ xử lý.</p>
-            {% endif %}
-        </div>
-    </section>
-
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <h2>Lịch xem phòng chờ xác nhận</h2>
-            {% if recent.pending_viewings %}
-                <div class="recent-list">
-                    {% for registration in recent.pending_viewings %}
-                        <article class="recent-item">
-                            <strong>
-                                <a href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">{{ registration.full_name }}</a>
-                            </strong>
-                            <div class="recent-meta">
-                                {{ registration.listing.title }} - ngày mong muốn {{ registration.preferred_date }}
-                                {% if registration.preferred_time %} lúc {{ registration.preferred_time }}{% endif %}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="muted-empty">Không có đăng ký xem phòng đang chờ xác nhận.</p>
-            {% endif %}
-        </div>
+        <article class="card">
+            <div class="card-body">
+                <h2>Sửa chữa chờ xử lý</h2>
+                {% if recent.pending_repairs %}
+                    <div class="recent-list">
+                        {% for repair in recent.pending_repairs %}
+                            <article class="recent-item">
+                                <strong><a href="{% url 'portal:owner_repair_detail' repair.pk %}">{{ repair.title }}</a></strong>
+                                <div class="recent-meta">
+                                    {{ repair.room.room_code }} - {{ repair.get_priority_display }} - tạo lúc {{ repair.requested_at }}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="muted-empty">Không có yêu cầu sửa chữa đang chờ xử lý.</p>
+                {% endif %}
+            </div>
+        </article>
     </section>
 {% endif %}
 {% endblock %}

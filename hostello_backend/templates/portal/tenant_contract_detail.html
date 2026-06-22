@@ -13,16 +13,16 @@
         <ul class="info-list">
             <li><span>Room</span><strong>{{ contract.room.room_code }} - {{ contract.room.room_name }}</strong></li>
             <li><span>Room status</span><strong><span class="status-badge">{{ contract.room.get_status_display }}</span></strong></li>
-            <li><span>Floor</span><strong>{{ contract.room.floor|default:"-" }}</strong></li>
-            <li><span>Area</span><strong>{{ contract.room.area|default:"-" }}</strong></li>
-            <li><span>Max occupants</span><strong>{{ contract.room.max_occupants }}</strong></li>
+            <li><span>Tầng</span><strong>{{ contract.room.floor|default:"-" }}</strong></li>
+            <li><span>Diện tích</span><strong>{{ contract.room.area|default:"-" }}</strong></li>
+            <li><span>Số người tối đa</span><strong>{{ contract.room.max_occupants }}</strong></li>
             <li><span>Signed date</span><strong>{{ contract.signed_date }}</strong></li>
             <li><span>Start date</span><strong>{{ contract.start_date }}</strong></li>
             <li><span>End date</span><strong>{{ contract.end_date }}</strong></li>
             <li><span>Rent amount</span><strong>{{ contract.rent_amount }}</strong></li>
             <li><span>Deposit amount</span><strong>{{ contract.deposit_amount }}</strong></li>
-            <li><span>Payment cycle</span><strong>{{ contract.get_payment_cycle_display }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ contract.get_status_display }}</span></strong></li>
+            <li><span>Chu kỳ thanh toán</span><strong>{{ contract.get_payment_cycle_display }}</strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ contract.get_status_display }}</span></strong></li>
         </ul>
         <div class="page-actions">
             <a class="button" href="{% url 'portal:tenant_contracts_list' %}">Back to contracts</a>

@@ -5,30 +5,30 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ registration.full_name }}</h1>
-    <p>Read-only viewing registration details for one of your room listings.</p>
+    <p>Thông tin đăng ký xem phòng thuộc một tin đăng của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
         <ul class="info-list">
-            <li><span>Listing</span><strong>{{ registration.listing.title }}</strong></li>
-            <li><span>Room</span><strong>{{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</strong></li>
-            <li><span>Full name</span><strong>{{ registration.full_name }}</strong></li>
-            <li><span>Phone</span><strong>{{ registration.phone }}</strong></li>
+            <li><span>Tin đăng</span><strong>{{ registration.listing.title }}</strong></li>
+            <li><span>Phòng</span><strong>{{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</strong></li>
+            <li><span>Họ và tên</span><strong>{{ registration.full_name }}</strong></li>
+            <li><span>Số điện thoại</span><strong>{{ registration.phone }}</strong></li>
             <li><span>Email</span><strong>{{ registration.email|default:"-" }}</strong></li>
-            <li><span>Preferred date</span><strong>{{ registration.preferred_date }}</strong></li>
-            <li><span>Preferred time</span><strong>{{ registration.preferred_time|default:"-" }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
+            <li><span>Ngày muốn xem</span><strong>{{ registration.preferred_date }}</strong></li>
+            <li><span>Giờ mong muốn</span><strong>{{ registration.preferred_time|default:"-" }}</strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
         </ul>
         {% if registration.note %}
             <section class="section">
-                <h2>Visitor note</h2>
+                <h2>Ghi chú của người xem</h2>
                 <p class="listing-description">{{ registration.note }}</p>
             </section>
         {% endif %}
         <div class="page-actions">
-            <a class="button primary" href="{% url 'portal:owner_viewing_registration_process' registration.pk %}">Process Viewing Registration</a>
-            <a class="button" href="{% url 'portal:owner_viewing_registrations_list' %}">Back to viewing registrations</a>
+            <a class="button primary" href="{% url 'portal:owner_viewing_registration_process' registration.pk %}">Xử lý lịch xem</a>
+            <a class="button" href="{% url 'portal:owner_viewing_registrations_list' %}">Quay lại lịch xem</a>
         </div>
     </div>
 </section>

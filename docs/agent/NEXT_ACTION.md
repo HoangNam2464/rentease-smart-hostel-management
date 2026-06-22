@@ -295,15 +295,38 @@ docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20A: Professional UI Design System and Full Visual Redesign
+```
+
+Summary:
+
+- created a shared RentEase professional design system
+- added shared CSS for public, portal, reports, and error pages
+- redesigned the homepage as a fuller SaaS-style Vietnamese product landing page
+- improved public room browsing, login, owner dashboard, tenant dashboard, detail/form labels, reports, and error pages
+- kept models, schema, billing logic, production settings, routes, and data scoping unchanged
+
+Created:
+
+```text
+docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
+docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
+Phase 20B: Browser Review and Final Professional UI Fixes
 ```
 
 Goal:
 
-Open the UI in a real browser after the Vietnamese copy fixes, inspect homepage/public/owner/tenant pages, confirm the UI feels like a real product, and capture any remaining small visual issues before screenshots/video.
+Open the redesigned UI in a real browser, compare it against the professional design system, verify desktop and mobile layouts, and make only small final visual fixes if needed.
 
 ## Recommended Demo Track
 
@@ -324,7 +347,8 @@ Open the UI in a real browser after the Vietnamese copy fixes, inspect homepage/
 15. Phase 18A: Screenshot Capture and Demo Video Preparation - completed
 16. Phase 19A: Product-Grade UI Redesign - completed
 17. Phase 19B: Vietnamese Copy and Human Product UI Fixes - completed
-18. Phase 19C: Browser Screenshot Review After Vietnamese UI Fix - next
+18. Phase 20A: Professional UI Design System and Full Visual Redesign - completed
+19. Phase 20B: Browser Review and Final Professional UI Fixes - next
 
 ## Recommended Production Track
 
@@ -337,6 +361,6 @@ Open the UI in a real browser after the Vietnamese copy fixes, inspect homepage/
 
 ## Current Recommendation
 
-The UI now has proper Vietnamese copy and a more human product landing page, but browser screenshot review is still needed before final screenshots/video.
+The UI now has a shared professional design system and a fuller product-style redesign, but browser review is still needed before final screenshots/video.
 
-Do not start production settings implementation until the Vietnamese UI is browser-reviewed or unless the user explicitly changes priority.
+Do not start production settings implementation until the professional UI is browser-reviewed or unless the user explicitly changes priority.

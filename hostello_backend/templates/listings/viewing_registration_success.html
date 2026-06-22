@@ -10,12 +10,12 @@
 
 <section class="card form-panel">
     <div class="card-body">
-        <p class="help-text">
-            Cảm ơn bạn đã quan tâm. Đăng ký hiện ở trạng thái chờ xác nhận.
-        </p>
+        <div class="empty-state">
+            <p>Cảm ơn bạn đã gửi thông tin. Bạn có thể quay lại phòng vừa xem hoặc tiếp tục xem thêm các phòng khác.</p>
+        </div>
         <div class="page-actions">
             <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Quay lại phòng vừa xem</a>
-            <a class="button" href="{% url 'listings:public_listing_list' %}">Xem thêm phòng</a>
+            <a class="button subtle" href="{% url 'listings:public_listing_list' %}">Xem thêm phòng</a>
         </div>
     </div>
 </section>

@@ -1,27 +1,27 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Process Repair Request - RentEase{% endblock %}
+{% block title %}Xử lý yêu cầu sửa chữa - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Process Repair Request</h1>
-    <p>Update the status and internal owner response for a repair request connected to one of your rooms.</p>
+    <h1>Xử lý yêu cầu sửa chữa</h1>
+    <p>Cập nhật trạng thái và phản hồi nội bộ cho yêu cầu sửa chữa thuộc phòng của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <h2>Repair summary</h2>
+        <h2>Tóm tắt yêu cầu</h2>
         <ul class="info-list">
-            <li><span>Title</span><strong>{{ repair.title }}</strong></li>
-            <li><span>Room</span><strong>{{ repair.room.room_code }} - {{ repair.room.room_name }}</strong></li>
-            <li><span>Tenant</span><strong>{{ repair.tenant.full_name|default:"-" }}</strong></li>
-            <li><span>Tenant phone</span><strong>{{ repair.tenant.phone_number|default:"-" }}</strong></li>
-            <li><span>Priority</span><strong>{{ repair.get_priority_display }}</strong></li>
-            <li><span>Current status</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
-            <li><span>Requested at</span><strong>{{ repair.requested_at }}</strong></li>
+            <li><span>Tiêu đề</span><strong>{{ repair.title }}</strong></li>
+            <li><span>Phòng</span><strong>{{ repair.room.room_code }} - {{ repair.room.room_name }}</strong></li>
+            <li><span>Khách thuê</span><strong>{{ repair.tenant.full_name|default:"-" }}</strong></li>
+            <li><span>Số điện thoại khách thuê</span><strong>{{ repair.tenant.phone_number|default:"-" }}</strong></li>
+            <li><span>Mức ưu tiên</span><strong>{{ repair.get_priority_display }}</strong></li>
+            <li><span>Trạng thái hiện tại</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
+            <li><span>Ngày gửi</span><strong>{{ repair.requested_at }}</strong></li>
         </ul>
         <section class="section">
-            <h2>Description</h2>
+            <h2>Mô tả</h2>
             <p class="listing-description">{{ repair.description }}</p>
         </section>
 
@@ -36,14 +36,14 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.owner_note.id_for_label }}">Internal owner note</label>
+                <label for="{{ form.owner_note.id_for_label }}">Ghi chú nội bộ của chủ trọ</label>
                 {{ form.owner_note }}
                 {{ form.owner_note.errors }}
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">Save Repair Status</button>
-                <a class="button" href="{% url 'portal:owner_repair_detail' repair.pk %}">Back to repair</a>
+                <button class="button primary" type="submit">Lưu trạng thái sửa chữa</button>
+                <a class="button" href="{% url 'portal:owner_repair_detail' repair.pk %}">Quay lại yêu cầu</a>
             </div>
         </form>
     </div>

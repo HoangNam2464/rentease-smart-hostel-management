@@ -17,7 +17,7 @@
 {% else %}
     <section class="grid">
         <article class="card metric">
-            <span>Tên khách thuê</span>
+            <span>Khách thuê</span>
             <strong class="metric-label">{{ metrics.tenant_name }}</strong>
         </article>
         <article class="card metric">
@@ -42,6 +42,22 @@
             <span>Thông báo chưa đọc</span>
             <strong>{{ metrics.unread_notifications }}</strong>
         </article>
+    </section>
+
+    <section class="card dashboard-section">
+        <div class="card-body">
+            <div class="section-heading">
+                <div>
+                    <h2>Việc bạn thường cần xem</h2>
+                    <p class="help-text">Các liên kết nhanh giúp kiểm tra hợp đồng, hóa đơn, thanh toán và yêu cầu sửa chữa.</p>
+                </div>
+                <div class="section-actions">
+                    <a class="button" href="/tenant/contracts/">Hợp đồng</a>
+                    <a class="button" href="/tenant/invoices/">Hóa đơn</a>
+                    <a class="button" href="/tenant/repairs/">Sửa chữa</a>
+                </div>
+            </div>
+        </div>
     </section>
 {% endif %}
 {% endblock %}

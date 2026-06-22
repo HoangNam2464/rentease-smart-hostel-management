@@ -22,6 +22,8 @@ Recommended preparation:
 - review `docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md`
 - review `docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md`
 - review `docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md`
+- review `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
+- review `docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md`
 
 Do not show:
 
@@ -43,7 +45,7 @@ Open:
 
 Talk track:
 
-RentEase is a Django-based boarding-house management system. The landing page now uses natural Vietnamese copy and presents RentEase as a practical tool for visitors, owners, and tenants.
+RentEase is a Django-based boarding-house management system. The landing page now uses natural Vietnamese copy and a shared professional design system to present RentEase as a practical tool for visitors, owners, and tenants.
 
 ### 2. Public Room Browsing
 
@@ -207,9 +209,10 @@ After Phase 19B:
 - screenshot capture order and Vietnamese narration script are available.
 - the main demo UI has been redesigned toward a Vietnamese-first product-grade presentation.
 - main Vietnamese UI copy now uses proper diacritics and feels more natural for presentation.
+- the main demo UI now uses a shared professional RentEase design system.
 
 Recommended next phase:
 
 ```text
-Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
+Phase 20B: Browser Review and Final Professional UI Fixes
 ```

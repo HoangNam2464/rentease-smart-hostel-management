@@ -1,33 +1,33 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Record Payment - RentEase{% endblock %}
+{% block title %}Ghi nhận thanh toán - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Record Payment</h1>
-    <p>Record a payment for one invoice connected to your own room contract.</p>
+    <h1>Ghi nhận thanh toán</h1>
+    <p>Ghi nhận một khoản thanh toán cho hóa đơn thuộc hợp đồng phòng của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <h2>Invoice Summary</h2>
+        <h2>Tóm tắt hóa đơn</h2>
         <ul class="info-list">
-            <li><span>Invoice</span><strong>{{ invoice.invoice_code|default:invoice.pk }}</strong></li>
-            <li><span>Contract</span><strong>{{ invoice.contract.contract_code }}</strong></li>
-            <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
-            <li><span>Tenant</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
-            <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
-            <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
-            <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
-            <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+            <li><span>Hóa đơn</span><strong>{{ invoice.invoice_code|default:invoice.pk }}</strong></li>
+            <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+            <li><span>Khách thuê</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
+            <li><span>Tháng/năm</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Tổng tiền</span><strong>{{ invoice.total_amount }}</strong></li>
+            <li><span>Đã thanh toán</span><strong>{{ invoice.paid_amount }}</strong></li>
+            <li><span>Còn lại</span><strong>{{ invoice.remaining_amount }}</strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
         </ul>
     </div>
 </section>
 
 <section class="card section">
     <div class="card-body">
-        <p class="help-text">Record one payment against this invoice. The billing logic will update paid amount, remaining amount, and invoice status.</p>
+        <p class="help-text">Ghi nhận một khoản thanh toán cho hóa đơn này. Hệ thống sẽ cập nhật số đã thanh toán, số còn lại và trạng thái hóa đơn.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -38,38 +38,38 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.amount.id_for_label }}">Amount</label>
+                <label for="{{ form.amount.id_for_label }}">Số tiền</label>
                 {{ form.amount }}
                 {{ form.amount.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.method.id_for_label }}">Method</label>
+                <label for="{{ form.method.id_for_label }}">Phương thức</label>
                 {{ form.method }}
                 {{ form.method.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.transaction_code.id_for_label }}">Reference</label>
+                <label for="{{ form.transaction_code.id_for_label }}">Mã tham chiếu</label>
                 {{ form.transaction_code }}
                 {{ form.transaction_code.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.paid_at.id_for_label }}">Paid at</label>
+                <label for="{{ form.paid_at.id_for_label }}">Ngày thanh toán</label>
                 {{ form.paid_at }}
                 {{ form.paid_at.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Note</label>
+                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
                 {{ form.note }}
                 {{ form.note.errors }}
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">Record Payment</button>
-                <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Cancel</a>
+                <button class="button primary" type="submit">Ghi nhận thanh toán</button>
+                <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>
             </div>
         </form>
     </div>

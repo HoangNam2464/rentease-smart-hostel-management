@@ -1,23 +1,23 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tenant Profile - RentEase{% endblock %}
+{% block title %}Hồ sơ khách thuê - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Profile</h1>
-    <p>Read-only tenant profile information linked to your RentEase profile.</p>
+    <h1>Hồ sơ của tôi</h1>
+    <p>Thông tin hồ sơ khách thuê liên kết với tài khoản RentEase của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
         <ul class="info-list">
-            <li><span>Full name</span><strong>{{ tenant.full_name }}</strong></li>
+            <li><span>Họ và tên</span><strong>{{ tenant.full_name }}</strong></li>
             <li><span>Email</span><strong>{{ tenant.email|default:"-" }}</strong></li>
-            <li><span>Phone</span><strong>{{ tenant.phone_number|default:"-" }}</strong></li>
-            <li><span>Address</span><strong>{{ tenant.address|default:"-" }}</strong></li>
-            <li><span>Date of birth</span><strong>{{ tenant.date_of_birth|default:"-" }}</strong></li>
-            <li><span>Gender</span><strong>{{ tenant.get_gender_display|default:"-" }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ tenant.get_status_display }}</span></strong></li>
+            <li><span>Số điện thoại</span><strong>{{ tenant.phone_number|default:"-" }}</strong></li>
+            <li><span>Địa chỉ</span><strong>{{ tenant.address|default:"-" }}</strong></li>
+            <li><span>Ngày sinh</span><strong>{{ tenant.date_of_birth|default:"-" }}</strong></li>
+            <li><span>Giới tính</span><strong>{{ tenant.get_gender_display|default:"-" }}</strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ tenant.get_status_display }}</span></strong></li>
         </ul>
     </div>
 </section>

@@ -11,7 +11,7 @@
 <section class="card">
     <div class="card-body">
         <ul class="info-list">
-            <li><span>Contract</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
             <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
             <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
             <li><span>Issued date</span><strong>{{ invoice.issued_date }}</strong></li>
@@ -19,7 +19,7 @@
             <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
             <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
             <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
         </ul>
         <div class="page-actions">
             <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Back to invoices</a>

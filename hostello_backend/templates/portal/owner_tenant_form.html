@@ -5,12 +5,12 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ form_title }}</h1>
-    <p>Update approved tenant contact and profile fields for tenants linked to your room contracts.</p>
+    <p>Cập nhật thông tin liên hệ và hồ sơ cơ bản của khách thuê đang liên kết với hợp đồng phòng của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <p class="help-text">Only contact and profile fields are editable here. Account credentials and identity documents stay protected.</p>
+        <p class="help-text">Chỉ thông tin liên hệ và hồ sơ cơ bản được chỉnh sửa tại đây. Tài khoản đăng nhập và giấy tờ định danh vẫn được bảo vệ.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -21,7 +21,7 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.full_name.id_for_label }}">Full name</label>
+                <label for="{{ form.full_name.id_for_label }}">Họ và tên</label>
                 {{ form.full_name }}
                 {{ form.full_name.errors }}
             </div>
@@ -33,38 +33,38 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.phone_number.id_for_label }}">Phone</label>
+                <label for="{{ form.phone_number.id_for_label }}">Số điện thoại</label>
                 {{ form.phone_number }}
                 {{ form.phone_number.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.address.id_for_label }}">Address</label>
+                <label for="{{ form.address.id_for_label }}">Địa chỉ</label>
                 {{ form.address }}
                 {{ form.address.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.date_of_birth.id_for_label }}">Date of birth</label>
+                <label for="{{ form.date_of_birth.id_for_label }}">Ngày sinh</label>
                 {{ form.date_of_birth }}
                 {{ form.date_of_birth.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.gender.id_for_label }}">Gender</label>
+                <label for="{{ form.gender.id_for_label }}">Giới tính</label>
                 {{ form.gender }}
                 {{ form.gender.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.status.id_for_label }}">Status</label>
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
                 {{ form.status }}
                 {{ form.status.errors }}
             </div>
 
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
-                <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Cancel</a>
+                <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Hủy</a>
             </div>
         </form>
     </div>

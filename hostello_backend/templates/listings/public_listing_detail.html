@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ listing.title }}</h1>
-    <p>{{ listing.room.room_code }} - {{ listing.room.room_name }}. Thông tin công khai cho người đang tìm phòng.</p>
+    <p>{{ listing.room.room_code }} - {{ listing.room.room_name }}. Đây là thông tin công khai dành cho người đang tìm phòng.</p>
 </section>
 
 <section class="card">
@@ -17,16 +17,16 @@
     <div class="card-body">
         <p class="listing-description">{{ listing.description }}</p>
 
-        <section class="details-grid section">
-            <article class="card detail-box">
+        <section class="details-grid section" aria-label="Thông tin giá thuê">
+            <article class="detail-box">
                 <span>Giá thuê tháng</span>
                 <strong>{{ listing.listing_price }}</strong>
             </article>
-            <article class="card detail-box">
+            <article class="detail-box">
                 <span>Tiền cọc</span>
                 <strong>{{ listing.deposit_amount }}</strong>
             </article>
-            <article class="card detail-box">
+            <article class="detail-box">
                 <span>Có thể vào ở từ</span>
                 <strong>{{ listing.available_from }}</strong>
             </article>
@@ -52,7 +52,7 @@
 
         <div class="page-actions">
             <a class="button primary" href="{% url 'listings:viewing_registration_create' listing.pk %}">Đăng ký xem phòng</a>
-            <a class="button" href="{% url 'listings:public_listing_list' %}">Quay lại danh sách</a>
+            <a class="button subtle" href="{% url 'listings:public_listing_list' %}">Quay lại danh sách</a>
         </div>
     </div>
 </section>

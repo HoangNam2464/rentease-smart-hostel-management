@@ -5,11 +5,11 @@
 {% block content %}
 <section class="page-header">
     <h1>Tìm phòng trọ đang cho thuê</h1>
-    <p>Danh sách phòng đang được công khai trên RentEase. Chọn phòng phù hợp để xem chi tiết và đăng ký lịch xem phòng.</p>
+    <p>Danh sách phòng đang được chủ trọ công khai trên RentEase. Chọn phòng phù hợp để xem giá thuê, thông tin phòng và đăng ký lịch xem.</p>
 </section>
 
 {% if listings %}
-    <section class="listing-grid">
+    <section class="listing-grid" aria-label="Danh sách phòng đang cho thuê">
         {% for listing in listings %}
             <article class="card listing-card">
                 {% if listing.image_url %}
@@ -18,11 +18,9 @@
                     <div class="listing-placeholder">Phòng RentEase</div>
                 {% endif %}
                 <div class="card-body">
-                    <span class="status-badge">Dang cho thue</span>
+                    <span class="status-badge">Đang cho thuê</span>
                     <h2 class="listing-title">{{ listing.title }}</h2>
-                    <p class="listing-description">
-                        {{ listing.description|truncatewords:24 }}
-                    </p>
+                    <p class="listing-description">{{ listing.description|truncatewords:24 }}</p>
                     <ul class="meta-list">
                         <li><strong>Phòng:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
                         {% if listing.room.floor %}

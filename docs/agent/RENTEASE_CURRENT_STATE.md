@@ -196,6 +196,16 @@ docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 
 Phase 19B fixed missing Vietnamese diacritics, tightened the landing page hero and workflow panel, and made public, owner, tenant, login, and error-page copy feel more human and practical.
 
+Phase 20A professional UI design system and full visual redesign:
+
+```text
+docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
+docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
+hostello_backend/static/css/rentease-design.css
+```
+
+Phase 20A created a shared visual design system, redesigned the homepage, improved public room pages, owner/tenant dashboards, key detail/form labels, reports, and branded error pages around a more professional Vietnamese SaaS-style product direction.
+
 ## Runtime State
 
 - Local runtime works.
@@ -333,6 +343,10 @@ Phase 19B Vietnamese Copy and Human Product UI Fixes
 
 Tag: `phase19b-vietnamese-human-ui-fixes`
 
+Phase 20A Professional UI Design System and Full Visual Redesign
+
+Tag: `phase20a-professional-ui-redesign-system`
+
 ## Working Now
 
 - Public landing page
@@ -370,6 +384,7 @@ Tag: `phase19b-vietnamese-human-ui-fixes`
 - Screenshot and video preparation guide
 - Product-grade UI redesign for local demo
 - Vietnamese copy and human product UI fixes
+- Professional UI design system and full visual redesign
 
 ## Important Production Gaps
 
@@ -385,10 +400,10 @@ Tag: `phase19b-vietnamese-human-ui-fixes`
 Current recommended next action:
 
 ```text
-Phase 19C: Browser Screenshot Review After Vietnamese UI Fix
+Phase 20B: Browser Review and Final Professional UI Fixes
 ```
 
-Goal: open the UI in a real browser, verify the Vietnamese copy and product feel, and identify any final small screenshot/video issues.
+Goal: open the redesigned UI in a real browser, compare it against the design system, and identify final small visual fixes before screenshots/video.
 
 Alternative production track:
 

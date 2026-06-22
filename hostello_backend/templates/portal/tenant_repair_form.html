@@ -1,10 +1,10 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Submit Repair Request - RentEase{% endblock %}
+{% block title %}Gửi yêu cầu sửa chữa - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Submit Repair Request</h1>
+    <h1>Gửi yêu cầu sửa chữa</h1>
     <p>Create a repair request for a room linked to your active contract.</p>
 </section>
 
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="page-actions">
-                    <button class="button primary" type="submit">Submit Repair Request</button>
+                    <button class="button primary" type="submit">Gửi yêu cầu sửa chữa</button>
                     <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
                 </div>
             </form>

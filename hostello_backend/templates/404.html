@@ -1,83 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Không tìm thấy trang - RentEase</title>
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            font-family: Arial, sans-serif;
-            color: #172033;
-            background:
-                radial-gradient(circle at 12% 12%, rgba(15, 118, 110, 0.14), transparent 30%),
-                linear-gradient(180deg, #f8fbff, #f4f7fb);
-        }
-
-        .error-card {
-            width: min(560px, calc(100% - 32px));
-            padding: 32px;
-            border: 1px solid #dbe3ef;
-            border-radius: 22px;
-            background: #ffffff;
-            box-shadow: 0 14px 36px rgba(23, 32, 51, 0.08);
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-
-        .brand-mark {
-            display: inline-flex;
-            width: 36px;
-            height: 36px;
-            align-items: center;
-            justify-content: center;
-            border-radius: 9px;
-            color: #ffffff;
-            background: linear-gradient(135deg, #0f766e, #2563eb);
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
-
-        p {
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 40px;
-            padding: 0 14px;
-            border-radius: 8px;
-            color: #ffffff;
-            background: #2563eb;
-            text-decoration: none;
-            font-weight: 700;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
 </head>
-<body>
-    <main class="error-card">
-        <div class="brand">
-            <span class="brand-mark">R</span>
-            <span>RentEase</span>
-        </div>
-        <h1>Không tìm thấy trang</h1>
-        <p>Đường dẫn này có thể đã thay đổi hoặc không còn khả dụng. Bạn có thể quay lại trang chủ RentEase và tiếp tục từ đó.</p>
-        <a href="/">Về trang chủ</a>
+<body class="re-home">
+    <main class="re-page">
+        <section class="card form-panel error-shell">
+            <div class="card-body">
+                <a class="brand" href="/">
+                    <span class="brand-mark">R</span>
+                    <span>RentEase</span>
+                </a>
+                <section class="page-header section">
+                    <h1>Không tìm thấy trang</h1>
+                    <p>Đường dẫn này có thể đã thay đổi hoặc không còn khả dụng. Bạn có thể quay lại trang chủ RentEase và tiếp tục từ đó.</p>
+                </section>
+                <a class="button primary" href="/">Về trang chủ</a>
+            </div>
+        </section>
     </main>
 </body>
 </html>

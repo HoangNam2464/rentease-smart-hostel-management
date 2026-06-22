@@ -5,12 +5,12 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ form_title }}</h1>
-    <p>Create or update a public room listing for one of your own rooms.</p>
+    <p>Tạo hoặc cập nhật tin đăng công khai cho phòng của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <p class="help-text">Listings are public-facing room posts. Use clear titles, fair prices, and publish only one active listing per room.</p>
+        <p class="help-text">Tin đăng là nội dung hiển thị cho người đang tìm phòng. Hãy dùng tiêu đề rõ ràng, giá hợp lý và chỉ công khai một tin đang hoạt động cho mỗi phòng.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -21,55 +21,55 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.room.id_for_label }}">Room</label>
+                <label for="{{ form.room.id_for_label }}">Phòng</label>
                 {{ form.room }}
                 {{ form.room.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.title.id_for_label }}">Title</label>
+                <label for="{{ form.title.id_for_label }}">Tiêu đề</label>
                 {{ form.title }}
                 {{ form.title.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.description.id_for_label }}">Description</label>
+                <label for="{{ form.description.id_for_label }}">Mô tả</label>
                 {{ form.description }}
                 {{ form.description.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.listing_price.id_for_label }}">Listing price</label>
+                <label for="{{ form.listing_price.id_for_label }}">Giá đăng</label>
                 {{ form.listing_price }}
                 {{ form.listing_price.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.deposit_amount.id_for_label }}">Deposit amount</label>
+                <label for="{{ form.deposit_amount.id_for_label }}">Tiền cọc</label>
                 {{ form.deposit_amount }}
                 {{ form.deposit_amount.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.status.id_for_label }}">Status</label>
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
                 {{ form.status }}
                 {{ form.status.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.available_from.id_for_label }}">Available from</label>
+                <label for="{{ form.available_from.id_for_label }}">Có thể vào ở từ</label>
                 {{ form.available_from }}
                 {{ form.available_from.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.expired_at.id_for_label }}">Expired at</label>
+                <label for="{{ form.expired_at.id_for_label }}">Ngày hết hạn</label>
                 {{ form.expired_at }}
                 {{ form.expired_at.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.image_url.id_for_label }}">Image URL</label>
+                <label for="{{ form.image_url.id_for_label }}">Đường dẫn ảnh</label>
                 {{ form.image_url }}
                 {{ form.image_url.errors }}
             </div>
@@ -77,9 +77,9 @@
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
                 {% if listing %}
-                    <a class="button" href="{% url 'portal:owner_listing_detail' listing.pk %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_listing_detail' listing.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_listings_list' %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_listings_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>

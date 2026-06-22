@@ -10,9 +10,8 @@
 
 <section class="card form-panel">
     <div class="card-body">
-        <p class="help-text">
-            Để lại thông tin liên hệ và thời gian mong muốn. Chủ trọ sẽ xem yêu cầu trong RentEase và phản hồi sau.
-        </p>
+        <p class="help-text">Thông tin này chỉ dùng để chủ trọ liên hệ xác nhận lịch xem phòng. RentEase không tự tạo tài khoản, khách thuê hoặc hợp đồng từ biểu mẫu này.</p>
+
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -55,7 +54,7 @@
 
             <div class="page-actions">
                 <button class="button primary" type="submit">Gửi đăng ký</button>
-                <a class="button" href="{% url 'listings:public_listing_detail' listing.pk %}">Hủy</a>
+                <a class="button subtle" href="{% url 'listings:public_listing_detail' listing.pk %}">Hủy</a>
             </div>
         </form>
     </div>

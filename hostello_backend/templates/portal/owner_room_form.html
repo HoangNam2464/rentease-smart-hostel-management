@@ -5,12 +5,12 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ form_title }}</h1>
-    <p>Create or update a room linked to your owner profile.</p>
+    <p>Tạo hoặc cập nhật phòng thuộc hồ sơ chủ trọ của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <p class="help-text">Keep room details clear for contracts, listings, invoices, and tenant-facing information.</p>
+        <p class="help-text">Giữ thông tin phòng rõ ràng để dùng cho hợp đồng, tin đăng, hóa đơn và thông tin hiển thị cho khách thuê.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -21,49 +21,49 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.room_code.id_for_label }}">Room code</label>
+                <label for="{{ form.room_code.id_for_label }}">Mã phòng</label>
                 {{ form.room_code }}
                 {{ form.room_code.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.room_name.id_for_label }}">Room name</label>
+                <label for="{{ form.room_name.id_for_label }}">Tên phòng</label>
                 {{ form.room_name }}
                 {{ form.room_name.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.floor.id_for_label }}">Floor</label>
+                <label for="{{ form.floor.id_for_label }}">Tầng</label>
                 {{ form.floor }}
                 {{ form.floor.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.area.id_for_label }}">Area</label>
+                <label for="{{ form.area.id_for_label }}">Diện tích</label>
                 {{ form.area }}
                 {{ form.area.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.max_occupants.id_for_label }}">Max occupants</label>
+                <label for="{{ form.max_occupants.id_for_label }}">Số người tối đa</label>
                 {{ form.max_occupants }}
                 {{ form.max_occupants.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.default_rent.id_for_label }}">Default rent</label>
+                <label for="{{ form.default_rent.id_for_label }}">Giá thuê mặc định</label>
                 {{ form.default_rent }}
                 {{ form.default_rent.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.status.id_for_label }}">Status</label>
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
                 {{ form.status }}
                 {{ form.status.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.description.id_for_label }}">Description</label>
+                <label for="{{ form.description.id_for_label }}">Mô tả</label>
                 {{ form.description }}
                 {{ form.description.errors }}
             </div>
@@ -71,9 +71,9 @@
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
                 {% if room %}
-                    <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_rooms_list' %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_rooms_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>

@@ -13,12 +13,12 @@
         <ul class="info-list">
             <li><span>Room</span><strong>{{ repair.room.room_code }} - {{ repair.room.room_name }}</strong></li>
             <li><span>Priority</span><strong>{{ repair.get_priority_display }}</strong></li>
-            <li><span>Status</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge">{{ repair.get_status_display }}</span></strong></li>
             <li><span>Requested at</span><strong>{{ repair.requested_at }}</strong></li>
             <li><span>Resolved at</span><strong>{{ repair.resolved_at|default:"-" }}</strong></li>
         </ul>
         <section class="section">
-            <h2>Description</h2>
+            <h2>Mô tả</h2>
             <p class="listing-description">{{ repair.description }}</p>
         </section>
         <div class="page-actions">

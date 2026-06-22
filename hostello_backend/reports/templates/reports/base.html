@@ -4,22 +4,22 @@
 {{ block.super }}
 <style>
   .rentease-report-shell { color: #172033; }
-  .rentease-report-header { padding: 18px 20px; margin: 0 0 18px; border: 1px solid #dbe3ef; border-radius: 8px; background: #fff; }
+  .rentease-report-header { padding: 20px 22px; margin: 0 0 18px; border: 1px solid #dce5e2; border-radius: 14px; background: #fff; box-shadow: 0 12px 28px rgba(15, 36, 51, 0.06); }
   .rentease-report-header h1 { margin: 0; font-size: 26px; line-height: 1.25; }
   .rentease-report-header p { margin: 6px 0 0; color: #64748b; }
   .report-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
-  .report-nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid #dbe3ef; border-radius: 999px; color: #172033; background: #f8fafc; text-decoration: none; font-weight: 600; }
-  .report-nav a:hover { background: #eef4ff; }
+  .report-nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid #dce5e2; border-radius: 999px; color: #172033; background: #f9fbfa; text-decoration: none; font-weight: 700; }
+  .report-nav a:hover { background: #dff3ef; }
   .metric-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 24px; }
-  .metric-card { border: 1px solid #dbe3ef; border-radius: 8px; padding: 16px; background: #fff; box-shadow: 0 8px 22px rgba(23, 32, 51, 0.06); }
+  .metric-card { border: 1px solid #dce5e2; border-radius: 14px; padding: 16px; background: #fff; box-shadow: 0 8px 22px rgba(23, 32, 51, 0.06); }
   .metric-card strong { display: block; font-size: 24px; margin-top: 8px; }
-  .report-table-wrap { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid #dbe3ef; border-radius: 8px; background: #fff; }
+  .report-table-wrap { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid #dce5e2; border-radius: 14px; background: #fff; }
   .report-table { display: block; width: 100%; max-width: 100%; min-width: 720px; overflow-x: auto; border-collapse: collapse; }
   .report-table th, .report-table td { border-bottom: 1px solid #dbe3ef; padding: 10px 12px; text-align: left; vertical-align: top; }
   .report-table th { color: #334155; background: #f8fafc; font-size: 12px; text-transform: uppercase; }
   .report-table tr:last-child td { border-bottom: 0; }
   .report-section { margin-bottom: 28px; }
-  .filter-form { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px; margin: 0 0 18px; border: 1px solid #dbe3ef; border-radius: 8px; background: #fff; }
+  .filter-form { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px; margin: 0 0 18px; border: 1px solid #dce5e2; border-radius: 14px; background: #fff; }
   .filter-form label { display: grid; gap: 4px; font-weight: 600; }
   .filter-form input, .filter-form select { min-height: 34px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 6px; }
   .filter-form button { min-height: 36px; padding: 0 14px; border: 1px solid #2563eb; border-radius: 6px; color: #fff; background: #2563eb; font-weight: 700; }
@@ -33,16 +33,16 @@
 {% block content %}
 <div class="rentease-report-shell">
   <div class="rentease-report-header">
-    <h1>RentEase Reports</h1>
-    <p>Staff-only operational summaries for rooms, billing, tenants, maintenance, listings, and viewings.</p>
+    <h1>Báo cáo RentEase</h1>
+    <p>Khu vực dành cho nhân viên/quản trị để xem tổng hợp phòng, hóa đơn, khách thuê, sửa chữa, tin đăng và lịch xem.</p>
   </div>
   <div class="report-nav">
-    <a href="{% url 'reports:dashboard' %}">Dashboard</a>
-    <a href="{% url 'reports:billing' %}">Billing</a>
-    <a href="{% url 'reports:rooms' %}">Rooms</a>
-    <a href="{% url 'reports:tenants_contracts' %}">Tenants & Contracts</a>
-    <a href="{% url 'reports:maintenance' %}">Maintenance</a>
-    <a href="{% url 'reports:listings' %}">Listings</a>
+    <a href="{% url 'reports:dashboard' %}">Tổng quan</a>
+    <a href="{% url 'reports:billing' %}">Hóa đơn</a>
+    <a href="{% url 'reports:rooms' %}">Phòng</a>
+    <a href="{% url 'reports:tenants_contracts' %}">Khách thuê & hợp đồng</a>
+    <a href="{% url 'reports:maintenance' %}">Sửa chữa</a>
+    <a href="{% url 'reports:listings' %}">Tin phòng</a>
   </div>
   {% block report_content %}{% endblock %}
 </div>

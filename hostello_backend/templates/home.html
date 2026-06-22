@@ -1,402 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentEase - Quản lý nhà trọ thông minh</title>
-    <style>
-        :root {
-            color-scheme: light;
-            --bg: #f5f7fb;
-            --surface: #ffffff;
-            --text: #102033;
-            --muted: #5f6f84;
-            --primary: #0f766e;
-            --primary-dark: #115e59;
-            --accent: #2563eb;
-            --border: #dce6f2;
-            --shadow: 0 20px 54px rgba(16, 32, 51, 0.10);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 10% 8%, rgba(15, 118, 110, 0.12), transparent 28%),
-                radial-gradient(circle at 90% 0%, rgba(37, 99, 235, 0.10), transparent 26%),
-                linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
-        }
-
-        a {
-            color: inherit;
-        }
-
-        .page {
-            width: min(1160px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 24px 0 44px;
-        }
-
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 26px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.18rem;
-            font-weight: 800;
-        }
-
-        .brand-mark {
-            display: inline-flex;
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            color: #ffffff;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            box-shadow: 0 10px 24px rgba(15, 118, 110, 0.18);
-        }
-
-        .nav-links,
-        .actions,
-        .demo-links {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            padding: 0 18px;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            color: var(--text);
-            background: #ffffff;
-            text-decoration: none;
-            font-weight: 800;
-            box-shadow: 0 8px 20px rgba(16, 32, 51, 0.05);
-        }
-
-        .button.primary {
-            color: #ffffff;
-            border-color: var(--primary);
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-            gap: 22px;
-            align-items: stretch;
-        }
-
-        .hero-copy,
-        .hero-panel,
-        .feature-card,
-        .role-card,
-        .demo-card {
-            border: 1px solid rgba(220, 230, 242, 0.95);
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.94);
-            box-shadow: var(--shadow);
-        }
-
-        .hero-copy {
-            padding: clamp(28px, 4vw, 52px);
-        }
-
-        .eyebrow {
-            width: fit-content;
-            margin: 0 0 16px;
-            padding: 8px 12px;
-            border-radius: 999px;
-            color: var(--primary-dark);
-            background: rgba(15, 118, 110, 0.10);
-            font-size: 0.78rem;
-            font-weight: 900;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            margin: 0;
-            max-width: 720px;
-            font-size: clamp(2.05rem, 4vw, 3.65rem);
-            line-height: 1.08;
-            letter-spacing: 0;
-        }
-
-        .description {
-            max-width: 720px;
-            margin: 20px 0 0;
-            color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.72;
-        }
-
-        .actions {
-            margin-top: 28px;
-        }
-
-        .hero-proof {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 28px;
-        }
-
-        .proof-item {
-            padding: 15px;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            background: #fbfdff;
-        }
-
-        .proof-item strong {
-            display: block;
-            font-size: 1.45rem;
-        }
-
-        .proof-item span {
-            display: block;
-            margin-top: 5px;
-            color: var(--muted);
-            line-height: 1.38;
-        }
-
-        .hero-panel {
-            padding: 22px;
-            display: grid;
-            gap: 14px;
-        }
-
-        .panel-heading {
-            padding: 20px;
-            border-radius: 20px;
-            color: #ffffff;
-            background: linear-gradient(135deg, #0f766e, #2563eb);
-        }
-
-        .panel-heading h2 {
-            margin: 0;
-            font-size: 1.45rem;
-        }
-
-        .panel-heading p {
-            margin: 10px 0 0;
-            line-height: 1.6;
-        }
-
-        .workflow {
-            display: grid;
-            gap: 10px;
-        }
-
-        .workflow-item {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            padding: 13px;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            background: #ffffff;
-        }
-
-        .workflow-number {
-            display: inline-flex;
-            width: 30px;
-            height: 30px;
-            flex: 0 0 auto;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: #ffffff;
-            background: var(--primary);
-            font-weight: 900;
-        }
-
-        .workflow-item strong {
-            display: block;
-        }
-
-        .workflow-item span {
-            display: block;
-            margin-top: 4px;
-            color: var(--muted);
-            line-height: 1.45;
-        }
-
-        .section {
-            margin-top: 24px;
-        }
-
-        .section-title {
-            margin: 0 0 14px;
-            font-size: 1.55rem;
-        }
-
-        .feature-grid,
-        .role-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 14px;
-        }
-
-        .feature-card,
-        .role-card,
-        .demo-card {
-            padding: 22px;
-        }
-
-        .feature-card h3,
-        .role-card h3,
-        .demo-card h2 {
-            margin: 0 0 10px;
-        }
-
-        .feature-card p,
-        .role-card p,
-        .demo-card p {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.62;
-        }
-
-        .role-tag {
-            display: inline-flex;
-            margin-bottom: 12px;
-            padding: 7px 10px;
-            border-radius: 999px;
-            color: var(--primary-dark);
-            background: rgba(15, 118, 110, 0.10);
-            font-size: 0.8rem;
-            font-weight: 900;
-        }
-
-        .demo-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .demo-card .demo-links {
-            justify-content: flex-end;
-        }
-
-        .footer {
-            margin-top: 28px;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 900px) {
-            .nav {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .hero,
-            .feature-grid,
-            .role-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-proof {
-                grid-template-columns: 1fr;
-            }
-
-            .demo-card {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-    </style>
+    <title>RentEase - Quản lý nhà trọ dễ dàng hơn</title>
+    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
 </head>
-<body>
-    <main class="page">
-        <nav class="nav" aria-label="Điều hướng chính">
-            <div class="brand">
-                <span class="brand-mark">R</span>
+<body class="re-home">
+    <header class="re-topbar">
+        <div class="re-topbar-inner">
+            <a class="re-brand" href="/">
+                <span class="re-brand-mark">R</span>
                 <span>RentEase</span>
-            </div>
-            <div class="nav-links">
-                <a class="button primary" href="/rooms/">Xem phòng</a>
-                <a class="button" href="/login/">Đăng nhập</a>
-            </div>
-        </nav>
+            </a>
+            <nav class="re-nav" aria-label="Điều hướng chính">
+                <a href="/rooms/">Phòng đang cho thuê</a>
+                <a href="/login/" class="primary">Đăng nhập</a>
+            </nav>
+        </div>
+    </header>
 
-        <section class="hero" aria-labelledby="page-title">
+    <main class="re-page">
+        <section class="re-hero hero" aria-labelledby="page-title">
             <div class="hero-copy">
                 <p class="eyebrow">Nền tảng quản lý nhà trọ</p>
                 <h1 id="page-title">Quản lý nhà trọ dễ dàng hơn với RentEase</h1>
                 <p class="description">
-                    Theo dõi phòng, tin đăng, hợp đồng, hóa đơn, thanh toán và yêu cầu sửa chữa
-                    trong một hệ thống gọn gàng. RentEase giúp chủ trọ vận hành rõ ràng hơn,
-                    đồng thời cho khách thuê một nơi để xem thông tin của mình.
+                    RentEase giúp chủ trọ theo dõi phòng, tin đăng, hợp đồng, hóa đơn, thanh toán
+                    và yêu cầu sửa chữa trong một hệ thống gọn gàng. Người thuê có khu vực riêng để
+                    xem hợp đồng, hóa đơn, lịch sử thanh toán và thông báo của mình.
                 </p>
                 <div class="actions">
                     <a class="button primary" href="/rooms/">Xem phòng đang cho thuê</a>
-                    <a class="button" href="/login/">Đăng nhập hệ thống</a>
+                    <a class="button subtle" href="/login/">Đăng nhập hệ thống</a>
                 </div>
                 <div class="hero-proof" aria-label="Điểm nổi bật">
                     <div class="proof-item">
                         <strong>3 vai trò</strong>
-                        <span>Người tìm phòng, chủ trọ và khách thuê có luồng riêng.</span>
+                        <span>Người tìm phòng, chủ trọ và khách thuê có luồng sử dụng riêng.</span>
                     </div>
                     <div class="proof-item">
                         <strong>1 nơi</strong>
-                        <span>Quản lý phòng, hợp đồng, hóa đơn và yêu cầu sửa chữa.</span>
+                        <span>Quản lý phòng, hợp đồng, hóa đơn, thanh toán và sửa chữa.</span>
                     </div>
                     <div class="proof-item">
-                        <strong>An toàn</strong>
-                        <span>Tách rõ dữ liệu công khai, dữ liệu chủ trọ và dữ liệu khách thuê.</span>
+                        <strong>Rõ ràng</strong>
+                        <span>Tách dữ liệu công khai, dữ liệu chủ trọ và dữ liệu khách thuê.</span>
                     </div>
                 </div>
             </div>
 
-            <aside class="hero-panel" aria-label="Quy trình RentEase">
+            <aside class="hero-panel" aria-label="Bản xem trước quy trình RentEase">
                 <div class="panel-heading">
-                    <h2>Quy trình quản lý khép kín</h2>
-                    <p>Từ đăng phòng, tạo hợp đồng, lập hóa đơn đến ghi nhận thanh toán và xử lý sửa chữa.</p>
+                    <h2>Quy trình vận hành khép kín</h2>
+                    <p>Từ đăng phòng, lập hợp đồng, tạo hóa đơn đến ghi nhận thanh toán và xử lý sửa chữa.</p>
                 </div>
                 <div class="workflow">
                     <div class="workflow-item">
                         <span class="workflow-number">1</span>
                         <div>
-                            <strong>Đăng phòng</strong>
-                            <span>Chủ trọ công khai phòng còn trống để người xem gửi lịch hẹn.</span>
+                            <strong>Đăng phòng trống</strong>
+                            <span>Công khai phòng đang cho thuê để người xem gửi lịch hẹn.</span>
                         </div>
                     </div>
                     <div class="workflow-item">
                         <span class="workflow-number">2</span>
                         <div>
                             <strong>Quản lý hợp đồng</strong>
-                            <span>Theo dõi phòng, khách thuê, thời hạn thuê và trạng thái hợp đồng.</span>
+                            <span>Theo dõi khách thuê, thời hạn thuê, tiền cọc và trạng thái hợp đồng.</span>
                         </div>
                     </div>
                     <div class="workflow-item">
                         <span class="workflow-number">3</span>
                         <div>
                             <strong>Theo dõi hóa đơn</strong>
-                            <span>Lập hóa đơn, xem công nợ và ghi nhận thanh toán theo từng phòng.</span>
+                            <span>Lập hóa đơn tháng, xem số đã thu và công nợ còn lại.</span>
                         </div>
                     </div>
                     <div class="workflow-item">
@@ -411,48 +90,48 @@
         </section>
 
         <section class="section" aria-labelledby="features-title">
-            <h2 class="section-title" id="features-title">Những việc RentEase hỗ trợ</h2>
+            <h2 class="section-title" id="features-title">Một hệ thống cho các việc thường ngày</h2>
             <div class="feature-grid">
                 <article class="feature-card">
-                    <h3>Đăng tin phòng trống</h3>
-                    <p>Trình bày giá thuê, tiền cọc, ngày có thể vào ở và thông tin phòng một cách dễ xem.</p>
+                    <span class="role-tag">Công khai</span>
+                    <h3>Tìm phòng nhanh chóng</h3>
+                    <p>Người đang tìm phòng có thể xem giá thuê, tiền cọc, ngày có thể vào ở và gửi đăng ký xem phòng.</p>
                 </article>
                 <article class="feature-card">
-                    <h3>Quản lý vận hành</h3>
-                    <p>Chủ trọ theo dõi phòng, khách thuê, hợp đồng, hóa đơn, công nợ và yêu cầu sửa chữa.</p>
+                    <span class="role-tag">Chủ trọ</span>
+                    <h3>Quản lý vận hành nhà trọ</h3>
+                    <p>Theo dõi phòng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa và lịch xem phòng trong cùng một nơi.</p>
                 </article>
                 <article class="feature-card">
+                    <span class="role-tag">Khách thuê</span>
                     <h3>Cổng thông tin khách thuê</h3>
-                    <p>Khách thuê xem hợp đồng, hóa đơn, lịch sử thanh toán, thông báo và trạng thái sửa chữa.</p>
+                    <p>Khách thuê xem thông tin thuê phòng, hóa đơn, thanh toán, sửa chữa và thông báo mà không thấy dữ liệu của người khác.</p>
                 </article>
             </div>
         </section>
 
-        <section class="section" aria-labelledby="roles-title">
-            <h2 class="section-title" id="roles-title">Thiết kế theo vai trò</h2>
+        <section class="section" aria-labelledby="workflow-title">
+            <h2 class="section-title" id="workflow-title">Thiết kế cho demo nhưng gần với quy trình thật</h2>
             <div class="role-grid">
                 <article class="role-card">
-                    <span class="role-tag">Người tìm phòng</span>
-                    <h3>Tìm phòng trọ</h3>
-                    <p>Xem danh sách phòng đang cho thuê và gửi đăng ký xem phòng bằng thông tin liên hệ an toàn.</p>
+                    <h3>Trước khi thuê</h3>
+                    <p>Chủ trọ đăng phòng, người xem gửi thông tin liên hệ và lịch hẹn xem phòng.</p>
                 </article>
                 <article class="role-card">
-                    <span class="role-tag">Chủ trọ</span>
-                    <h3>Khu vực chủ trọ</h3>
-                    <p>Quản lý danh mục phòng, tin đăng, hợp đồng, hóa đơn, thanh toán, sửa chữa và lịch xem phòng.</p>
+                    <h3>Trong thời gian thuê</h3>
+                    <p>Chủ trọ quản lý hợp đồng, lập hóa đơn; khách thuê theo dõi thông tin của mình.</p>
                 </article>
                 <article class="role-card">
-                    <span class="role-tag">Khách thuê</span>
-                    <h3>Khu vực khách thuê</h3>
-                    <p>Theo dõi thông tin thuê phòng của mình mà không nhìn thấy dữ liệu của người khác.</p>
+                    <h3>Khi phát sinh vấn đề</h3>
+                    <p>Yêu cầu sửa chữa, thanh toán và thông báo được ghi nhận để dễ kiểm tra lại.</p>
                 </article>
             </div>
         </section>
 
         <section class="section demo-card" aria-labelledby="demo-title">
             <div>
-                <h2 id="demo-title">Sẵn sàng cho demo môn học</h2>
-                <p>RentEase hiện sẵn sàng cho demo cục bộ với dữ liệu giả lập. Hệ thống vẫn chưa phải bản production.</p>
+                <h2 id="demo-title">Sẵn sàng cho buổi trình bày RentEase</h2>
+                <p>Bản hiện tại phù hợp cho demo cục bộ với dữ liệu giả lập. Các khu vực quản trị và báo cáo vẫn được bảo vệ riêng.</p>
             </div>
             <div class="demo-links">
                 <a class="button" href="/admin/">Quản trị</a>
@@ -460,7 +139,9 @@
             </div>
         </section>
 
-        <p class="footer">RentEase local demo - không công bố dữ liệu thật, mật khẩu, file database hoặc thông tin nhạy cảm.</p>
+        <footer class="re-footer">
+            RentEase local demo - không hiển thị dữ liệu thật, mật khẩu, file database hoặc thông tin nhạy cảm trong phần demo.
+        </footer>
     </main>
 </body>
 </html>

@@ -5,12 +5,12 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ form_title }}</h1>
-    <p>Create or update contract business fields for your own rooms.</p>
+    <p>Tạo hoặc cập nhật thông tin hợp đồng cho phòng thuộc quyền quản lý của bạn.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <p class="help-text">Contracts connect one of your rooms to an already linked tenant. Keep dates and amounts accurate because invoices depend on this information.</p>
+        <p class="help-text">Hợp đồng liên kết phòng của bạn với khách thuê đã có trong hệ thống. Hãy nhập đúng ngày và số tiền vì hóa đơn sẽ dựa trên thông tin này.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -30,7 +30,7 @@
 
             {% if form.tenant %}
                 <div class="form-field">
-                    <label for="{{ form.tenant.id_for_label }}">Tenant</label>
+                    <label for="{{ form.tenant.id_for_label }}">Khách thuê</label>
                     {{ form.tenant }}
                     {{ form.tenant.errors }}
                 </div>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.contract_code.id_for_label }}">Contract code</label>
+                <label for="{{ form.contract_code.id_for_label }}">Mã hợp đồng</label>
                 {{ form.contract_code }}
                 {{ form.contract_code.errors }}
             </div>
@@ -79,13 +79,13 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.payment_cycle.id_for_label }}">Payment cycle</label>
+                <label for="{{ form.payment_cycle.id_for_label }}">Chu kỳ thanh toán</label>
                 {{ form.payment_cycle }}
                 {{ form.payment_cycle.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.status.id_for_label }}">Status</label>
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
                 {{ form.status }}
                 {{ form.status.errors }}
             </div>
@@ -93,9 +93,9 @@
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
                 {% if contract %}
-                    <a class="button" href="{% url 'portal:owner_contract_detail' contract.pk %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_contract_detail' contract.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_contracts_list' %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_contracts_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>

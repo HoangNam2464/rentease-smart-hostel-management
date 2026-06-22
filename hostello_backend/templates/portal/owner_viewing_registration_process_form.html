@@ -1,29 +1,29 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Process Viewing Registration - RentEase{% endblock %}
+{% block title %}Xử lý lịch xem phòng - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Process Viewing Registration</h1>
-    <p>Update the processing status and staff note for this viewing request.</p>
+    <h1>Xử lý lịch xem phòng</h1>
+    <p>Cập nhật trạng thái xử lý và ghi chú nội bộ cho yêu cầu xem phòng này.</p>
 </section>
 
 <section class="card">
     <div class="card-body">
-        <h2>Registration summary</h2>
+        <h2>Tóm tắt đăng ký</h2>
         <ul class="info-list">
-            <li><span>Listing</span><strong>{{ registration.listing.title }}</strong></li>
-            <li><span>Room</span><strong>{{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</strong></li>
-            <li><span>Visitor</span><strong>{{ registration.full_name }}</strong></li>
-            <li><span>Phone</span><strong>{{ registration.phone }}</strong></li>
+            <li><span>Tin đăng</span><strong>{{ registration.listing.title }}</strong></li>
+            <li><span>Phòng</span><strong>{{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</strong></li>
+            <li><span>Người xem</span><strong>{{ registration.full_name }}</strong></li>
+            <li><span>Số điện thoại</span><strong>{{ registration.phone }}</strong></li>
             <li><span>Email</span><strong>{{ registration.email|default:"-" }}</strong></li>
-            <li><span>Preferred date</span><strong>{{ registration.preferred_date }}</strong></li>
-            <li><span>Preferred time</span><strong>{{ registration.preferred_time|default:"-" }}</strong></li>
-            <li><span>Current status</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
+            <li><span>Ngày muốn xem</span><strong>{{ registration.preferred_date }}</strong></li>
+            <li><span>Giờ mong muốn</span><strong>{{ registration.preferred_time|default:"-" }}</strong></li>
+            <li><span>Trạng thái hiện tại</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
         </ul>
         {% if registration.note %}
             <section class="section">
-                <h2>Visitor note</h2>
+                <h2>Ghi chú của người xem</h2>
                 <p class="listing-description">{{ registration.note }}</p>
             </section>
         {% endif %}
@@ -41,20 +41,20 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.status.id_for_label }}">Status</label>
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
                 {{ form.status }}
                 {{ form.status.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.admin_note.id_for_label }}">Staff note</label>
+                <label for="{{ form.admin_note.id_for_label }}">Ghi chú nội bộ</label>
                 {{ form.admin_note }}
                 {{ form.admin_note.errors }}
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">Save Changes</button>
-                <a class="button" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Cancel</a>
+                <button class="button primary" type="submit">Lưu thay đổi</button>
+                <a class="button" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Hủy</a>
             </div>
         </form>
     </div>

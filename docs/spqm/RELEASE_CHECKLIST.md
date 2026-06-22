@@ -50,6 +50,9 @@
 - [x] Vietnamese wording is consistent across major public/owner/tenant paths
 - [x] major Vietnamese UI copy uses proper diacritics
 - [x] landing page copy feels human and practical
+- [x] professional design system documented
+- [x] shared RentEase CSS system added
+- [x] homepage redesigned as fuller product landing page
 - [x] public room list is readable
 - [x] public room pages look realistic enough for product-grade demo
 - [x] public room detail is readable
@@ -73,6 +76,7 @@
 - [x] final visual QA checklist completed
 - [ ] manual visual QA completed
 - [x] screenshot/video preparation guide completed
+- [ ] browser review after professional redesign completed
 - [ ] screenshots prepared
 
 ## Documentation Readiness Checklist

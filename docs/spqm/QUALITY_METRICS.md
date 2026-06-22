@@ -29,7 +29,9 @@
 | Product-grade UI status | Improved | Phase 19A redesigned public landing, shared portal theme, public room pages, login, owner/tenant pages, and error pages |
 | Vietnamese wording consistency | Improved again | Phase 19B fixed missing Vietnamese diacritics in major public, owner, tenant, navigation, CTA, table, and empty-state labels |
 | Human product UI feel | Improved | Phase 19B tightened the landing page hero, workflow card, copy, spacing, and CTA presentation |
-| Public/owner/tenant visual readiness | Needs browser review | Template-level fixes completed; Phase 19C should verify in a real browser |
+| Professional design system | Created | Phase 20A added shared design documentation and `rentease-design.css` |
+| Full product UI redesign | Improved | Phase 20A redesigned homepage, public flow, portal theme, owner/tenant dashboards, reports, and error pages around one visual system |
+| Public/owner/tenant visual readiness | Needs browser review | Template-level redesign completed; Phase 20B should verify in a real browser |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -94,7 +96,8 @@ Baseline:
 | Final visual QA checklist | Phase 17C completed; manual screenshot/video capture remains |
 | Screenshot/video preparation | Phase 18A completed; screenshots and video remain manual tasks |
 | Product-grade UI status | Phase 19A completed; Phase 19B copy/human UI fixes completed |
-| Vietnamese wording consistency | Phase 19B completed; browser review remains |
+| Vietnamese wording consistency | Phase 19B completed; Phase 20A continued Vietnamese-first UI labels |
+| Professional UI system | Phase 20A completed; browser review remains |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

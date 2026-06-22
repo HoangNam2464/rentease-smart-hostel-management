@@ -11,6 +11,8 @@ docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
+docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
+docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
 ```
 
 Recommended capture setup:
@@ -96,7 +98,7 @@ Before publishing screenshots, confirm:
 
 ## Current Demo Data Status
 
-After Phase 19B, capture screenshots from the Vietnamese-accented product UI, not the older unaccented demo UI.
+After Phase 20A, capture screenshots from the professional design-system UI, not the older patched demo UI.
 
 Recommended next step:
 

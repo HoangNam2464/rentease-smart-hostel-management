@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ form_title }}</h1>
-    <p>Create or update invoice header fields for your own room contracts.</p>
+    <p>Tạo hoặc cập nhật thông tin hóa đơn cho hợp đồng phòng của bạn.</p>
 </section>
 
 <section class="card">
@@ -22,7 +22,7 @@
 
             {% if form.contract %}
                 <div class="form-field">
-                    <label for="{{ form.contract.id_for_label }}">Contract</label>
+                    <label for="{{ form.contract.id_for_label }}">Hợp đồng</label>
                     {{ form.contract }}
                     {{ form.contract.errors }}
                 </div>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Note</label>
+                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
                 {{ form.note }}
                 {{ form.note.errors }}
             </div>
@@ -61,9 +61,9 @@
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
                 {% if invoice %}
-                    <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_invoices_list' %}">Cancel</a>
+                    <a class="button" href="{% url 'portal:owner_invoices_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>
