@@ -232,15 +232,37 @@ docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 18A: Screenshot Capture and Demo Video Preparation
 ```
 
-Goal:
+Summary:
 
-Use the final visual QA checklist to manually capture screenshots and record the 3-5 minute demo video.
+- created the screenshot and video preparation guide
+- documented pre-recording setup, screenshot order, 3 to 5 minute video outline, Vietnamese narration script, manual QA checklist, and known limitations
+- updated demo script, screenshot checklist, final demo package, metrics, release checklist, and current state docs
+
+Guide:
+
+```text
+docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
+```
+
+## Immediate Next Step
+
+Manual action by user:
+
+```text
+Run the local server, capture screenshots, and record the 3 to 5 minute demo video.
+```
+
+Optional later phase:
+
+```text
+Phase 18B: Final Submission Package Review
+```
 
 ## Recommended Demo Track
 
@@ -258,7 +280,8 @@ Use the final visual QA checklist to manually capture screenshots and record the
 12. Phase 17A: Full UI Completeness Audit - completed
 13. Phase 17B: Remaining UI Polish - completed
 14. Phase 17C: Final Visual QA and Screenshot Checklist - completed
-15. Phase 18A: Screenshot Capture and Demo Video Preparation - next
+15. Phase 18A: Screenshot Capture and Demo Video Preparation - completed
+16. Manual screenshot capture and demo video recording - next
 
 ## Recommended Production Track
 
@@ -271,6 +294,6 @@ Use the final visual QA checklist to manually capture screenshots and record the
 
 ## Current Recommendation
 
-Because the current UI feels weak and less realistic than expected, prioritize the Demo Track first.
+The demo documentation track is ready for manual capture.
 
-Do not start production settings implementation until UI/demo polish has a clear plan or unless the user explicitly changes priority.
+Do not start production settings implementation until screenshots/video are captured or unless the user explicitly changes priority.

@@ -172,6 +172,14 @@ docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
 
 Phase 17C prepared the final browser visual QA checklist, screenshot checklist, video demo checklist, responsive checks, and privacy checklist for manual capture.
 
+Phase 18A screenshot and video preparation:
+
+```text
+docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
+```
+
+Phase 18A prepared the final manual screenshot capture order, pre-recording setup, 3 to 5 minute demo video outline, Vietnamese narration script, visual QA checklist, and honest limitations for the local demo recording.
+
 ## Runtime State
 
 - Local runtime works.
@@ -297,6 +305,10 @@ Phase 17C Final Visual QA and Screenshot Checklist
 
 Tag: `phase17c-final-visual-qa`
 
+Phase 18A Screenshot Capture and Demo Video Preparation
+
+Tag: `phase18a-screenshot-video-prep`
+
 ## Working Now
 
 - Public landing page
@@ -331,6 +343,7 @@ Tag: `phase17c-final-visual-qa`
 - Full UI completeness audit document
 - Remaining UI polish pass
 - Final visual QA and screenshot checklist
+- Screenshot and video preparation guide
 
 ## Important Production Gaps
 
@@ -346,10 +359,16 @@ Tag: `phase17c-final-visual-qa`
 Current recommended next action:
 
 ```text
-Phase 18A: Screenshot Capture and Demo Video Preparation
+Manual action: capture screenshots and record the 3 to 5 minute demo video
 ```
 
-Goal: use the final visual QA checklist to manually capture screenshots and record the 3-5 minute demo video.
+Goal: use the Phase 18A guide and final visual QA checklist to capture presentation screenshots and record the demo video.
+
+Optional later phase:
+
+```text
+Phase 18B: Final Submission Package Review
+```
 
 Alternative production track:
 

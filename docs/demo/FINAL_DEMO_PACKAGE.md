@@ -14,6 +14,7 @@ Current demo package status:
 - README updated for local setup and presentation
 - final polished local demo release verified
 - final visual QA checklist prepared
+- screenshot and video preparation guide prepared
 
 Final local demo release tag:
 
@@ -184,6 +185,7 @@ Full checklist:
 ```text
 docs/demo/SCREENSHOT_CHECKLIST.md
 docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
+docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 ```
 
 ## Video Demo Outline
@@ -234,6 +236,15 @@ Final visual QA planning:
 - Video demo checklist: updated
 - Security/privacy visual checklist: documented
 
+Screenshot and video preparation:
+
+- Phase: Phase 18A Screenshot Capture and Demo Video Preparation
+- Pre-recording setup: documented
+- Screenshot capture order: documented
+- 3 to 5 minute video outline: documented
+- Vietnamese narration script: documented
+- Manual visual QA checklist: documented
+
 Detailed report:
 
 ```text
@@ -266,12 +277,12 @@ Remaining production work:
 
 ## Final Readiness Conclusion
 
-RentEase is ready for a local Python/Django course demo and presentation after Phase 16A documentation polish.
+RentEase is ready for a local Python/Django course demo and presentation. The remaining demo tasks are manual screenshot capture and video recording.
 
 Recommended next step:
 
 ```text
-Phase 18A: Screenshot Capture and Demo Video Preparation
+Manual action: capture screenshots and record the 3 to 5 minute demo video
 ```
 
 Alternative production track:

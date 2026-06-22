@@ -64,6 +64,7 @@
 - [x] remaining UI polish items resolved
 - [x] final visual QA checklist completed
 - [ ] manual visual QA completed
+- [x] screenshot/video preparation guide completed
 - [ ] screenshots prepared
 
 ## Documentation Readiness Checklist
@@ -80,8 +81,9 @@
 
 ## Video Demo Checklist
 
-- [ ] video is planned before recording
+- [x] video is planned before recording
 - [x] video checklist is planned
+- [x] Vietnamese narration script is prepared
 - [ ] video length is <= 5 minutes if required
 - [ ] demo account data is fake
 - [ ] no passwords or secrets are shown

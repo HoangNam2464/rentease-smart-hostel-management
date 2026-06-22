@@ -19,6 +19,7 @@
 - Phase 17A commit in this run: `Add RentEase full UI completeness audit`
 - Phase 17B commit in this run: `Polish remaining RentEase UI surfaces`
 - Phase 17C commit in this run: `Add RentEase final visual QA checklist`
+- Phase 18A commit in this run: `Add RentEase screenshot and video preparation guide`
 
 ### Completed
 
@@ -43,6 +44,7 @@
 - Completed Phase 17A Full UI Completeness Audit.
 - Completed Phase 17B Remaining UI Polish.
 - Completed Phase 17C Final Visual QA and Screenshot Checklist.
+- Completed Phase 18A Screenshot Capture and Demo Video Preparation.
 
 ### Files Changed
 
@@ -63,6 +65,7 @@
 - `docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md`
 - `docs/ui/PHASE_17B_REMAINING_UI_POLISH.md`
 - `docs/ui/PHASE_17C_FINAL_VISUAL_QA.md`
+- `docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md`
 - `hostello_backend/reports/templates/reports/base.html`
 - `hostello_backend/templates/404.html`
 - `hostello_backend/templates/500.html`
@@ -144,6 +147,7 @@
 - `phase17a-full-ui-completeness-audit`
 - `phase17b-remaining-ui-polish`
 - `phase17c-final-visual-qa`
+- `phase18a-screenshot-video-prep`
 
 ### Current Blockers
 
@@ -161,12 +165,13 @@
 - Phase 17B addressed reports polish, custom error pages, process labels, login polish, and minor inline style cleanup.
 - Phase 17B smoke test passed: 36 routes tested, 0 bad status results, 24 privacy pages scanned, 0 leaks, 0 raw template pages.
 - Phase 17C created final visual QA, screenshot, responsive, and video demo checklist documentation.
-- Screenshots still need to be captured manually if required for submission.
+- Phase 18A created the screenshot/video preparation guide, including capture order, Vietnamese narration, and manual visual QA checklist.
+- Screenshots and the final demo video still need to be captured manually if required for submission.
 
 ### Exact Next Recommended Action
 
 ```text
-Phase 18A: Screenshot Capture and Demo Video Preparation
+Manual action: capture screenshots and record the demo video
 ```
 
 Start with:
@@ -174,6 +179,7 @@ Start with:
 - start local server
 - verify key pages visually in a real browser viewport
 - capture screenshots from `docs/demo/SCREENSHOT_CHECKLIST.md`
+- follow `docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md`
 - confirm no visual regressions after Phase 17B
 - record or prepare the 3 to 5 minute demo video
 - avoid model, route, migration, and business logic changes

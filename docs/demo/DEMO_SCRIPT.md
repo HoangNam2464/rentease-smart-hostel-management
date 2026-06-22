@@ -19,6 +19,7 @@ Recommended preparation:
 - confirm `/rooms/` shows published demo listings
 - confirm owner and tenant dashboards show demo records
 - review `docs/ui/PHASE_17C_FINAL_VISUAL_QA.md`
+- review `docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md`
 
 Do not show:
 
@@ -194,16 +195,17 @@ The current project is strong for local demo and controlled testing, but it is n
 
 ## Current Demo Data Status
 
-After Phase 17C:
+After Phase 18A:
 
 - `owner_test` has scoped demo rooms, listings, contracts, invoices, payments, repairs, and viewing registrations.
 - `tenant_test` has scoped demo contract, invoice, payment, repairs, and notifications.
 - public demo listings are available.
 - the final walkthrough route smoke test passed with seeded demo data.
 - final visual QA and screenshot guidance is available.
+- screenshot capture order and Vietnamese narration script are available.
 
 Recommended next phase:
 
 ```text
-Phase 18A: Screenshot Capture and Demo Video Preparation
+Manual action: capture screenshots and record the 3 to 5 minute demo video
 ```

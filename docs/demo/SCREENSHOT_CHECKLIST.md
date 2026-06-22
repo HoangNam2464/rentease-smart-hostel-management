@@ -8,7 +8,16 @@ Use this checklist together with:
 
 ```text
 docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
+docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
 ```
+
+Recommended capture setup:
+
+- browser zoom: 100%
+- desktop width: about 1366px
+- optional mobile width: about 390px
+- seeded fake demo data available before capture
+- terminal, passwords, `.env`, database files, and backup files hidden
 
 ## Public Screenshots
 
@@ -85,10 +94,10 @@ Before publishing screenshots, confirm:
 
 ## Current Demo Data Status
 
-After Phase 17C, this checklist is aligned with the final visual QA plan.
+After Phase 18A, this checklist is aligned with the final visual QA plan and the manual video recording guide.
 
-Recommended next phase:
+Recommended next step:
 
 ```text
-Phase 18A: Screenshot Capture and Demo Video Preparation
+Run the local server, capture screenshots, and record the demo video.
 ```
