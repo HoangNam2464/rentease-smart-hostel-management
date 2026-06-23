@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}RentEase Portal{% endblock %}</title>
+    <title>{% block title %}Cổng RentEase{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
 </head>
 <body>
@@ -17,7 +17,7 @@
             <nav class="nav" aria-label="Điều hướng chính">
                 <a href="/">Trang chủ</a>
                 <a href="/rooms/">Xem phòng</a>
-                <a href="/dashboard/">Bảng điều khiển</a>
+                <a href="/dashboard/">Dashboard</a>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
                         <a href="/admin/">Quản trị</a>
@@ -31,26 +31,26 @@
         </div>
         {% if request.user.is_authenticated %}
             {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                <nav class="role-nav" aria-label="Điều hướng chủ trọ">
+                <nav class="role-nav dashboard-sidebar owner-sidebar" aria-label="Điều hướng chủ trọ">
                     <div class="role-nav-inner">
-                        <span class="role-label">Khu vực chủ trọ</span>
-                        <a href="/owner/dashboard/">Tổng quan</a>
-                        <a href="/owner/rooms/">Phòng</a>
+                        <span class="role-label">Chủ trọ</span>
+                        <a href="/owner/dashboard/">Tổng quan vận hành</a>
+                        <a href="/owner/rooms/">Phòng trọ</a>
+                        <a href="/owner/listings/">Tin đăng</a>
                         <a href="/owner/tenants/">Khách thuê</a>
                         <a href="/owner/contracts/">Hợp đồng</a>
                         <a href="/owner/invoices/">Hóa đơn</a>
                         <a href="/owner/repairs/">Sửa chữa</a>
-                        <a href="/owner/listings/">Tin phòng</a>
-                        <a href="/owner/viewing-registrations/">Lịch xem</a>
+                        <a href="/owner/viewing-registrations/">Lịch xem phòng</a>
                     </div>
                 </nav>
             {% endif %}
             {% if request.user.is_tenant or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                <nav class="role-nav" aria-label="Điều hướng khách thuê">
+                <nav class="role-nav dashboard-sidebar tenant-sidebar" aria-label="Điều hướng khách thuê">
                     <div class="role-nav-inner">
-                        <span class="role-label">Khu vực khách thuê</span>
-                        <a href="/tenant/dashboard/">Tổng quan</a>
-                        <a href="/tenant/profile/">Hồ sơ</a>
+                        <span class="role-label">Khách thuê</span>
+                        <a href="/tenant/dashboard/">Tổng quan của tôi</a>
+                        <a href="/tenant/profile/">Hồ sơ thuê phòng</a>
                         <a href="/tenant/contracts/">Hợp đồng</a>
                         <a href="/tenant/invoices/">Hóa đơn</a>
                         <a href="/tenant/payments/">Thanh toán</a>

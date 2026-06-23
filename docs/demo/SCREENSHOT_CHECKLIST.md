@@ -13,6 +13,8 @@ docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
 docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
+docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
+docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
 ```
 
 Recommended capture setup:
@@ -98,10 +100,15 @@ Before publishing screenshots, confirm:
 
 ## Current Demo Data Status
 
-After Phase 20A, capture screenshots from the professional design-system UI, not the older patched demo UI.
+After Phase 20C, capture screenshots from the reference-based UI:
+
+- public pages should show the property-listing direction
+- owner pages should show the dashboard/sidebar direction
+- tenant pages should show the simpler readable portal direction
+- public room visuals are safe CSS panels unless real license-checked images are added later
 
 Recommended next step:
 
 ```text
-Run the local server, capture screenshots, and record the demo video.
+Run Phase 20D browser visual review, then capture screenshots and record the demo video.
 ```

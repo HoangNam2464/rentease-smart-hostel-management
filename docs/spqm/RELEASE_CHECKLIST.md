@@ -56,6 +56,11 @@
 - [x] public property-listing UI direction selected
 - [x] owner/tenant SaaS dashboard UI direction selected
 - [x] no external template package imported in Phase 20B
+- [x] reference-based UI redesign applied
+- [x] public room pages use property-listing style
+- [x] owner portal uses dashboard/sidebar visual direction
+- [x] tenant portal uses simpler readable portal direction
+- [x] no external image hotlinks added in Phase 20C
 - [x] homepage redesigned as fuller product landing page
 - [x] public room list is readable
 - [x] public room pages look realistic enough for product-grade demo
@@ -80,7 +85,6 @@
 - [x] final visual QA checklist completed
 - [ ] manual visual QA completed
 - [x] screenshot/video preparation guide completed
-- [ ] reference-based UI redesign applied
 - [ ] browser review after reference-based redesign completed
 - [ ] screenshots prepared
 

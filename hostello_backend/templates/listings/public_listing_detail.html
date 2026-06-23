@@ -5,55 +5,60 @@
 {% block content %}
 <section class="page-header">
     <h1>{{ listing.title }}</h1>
-    <p>{{ listing.room.room_code }} - {{ listing.room.room_name }}. Đây là thông tin công khai dành cho người đang tìm phòng.</p>
+    <p>{{ listing.room.room_code }} - {{ listing.room.room_name }}. Trang này chỉ hiển thị thông tin công khai dành cho người đang tìm phòng.</p>
 </section>
 
-<section class="card">
-    {% if listing.image_url %}
-        <img class="listing-media hero" src="{{ listing.image_url }}" alt="{{ listing.title }}">
-    {% else %}
-        <div class="listing-placeholder detail">Phòng RentEase</div>
-    {% endif %}
-    <div class="card-body">
-        <p class="listing-description">{{ listing.description }}</p>
+<section class="public-detail-layout">
+    <article class="card">
+        <div class="listing-placeholder detail"><span>{{ listing.room.room_code }}</span></div>
+        <div class="card-body">
+            <p class="listing-description">{{ listing.description }}</p>
 
-        <section class="details-grid section" aria-label="Thông tin giá thuê">
-            <article class="detail-box">
+            <section class="details-grid section" aria-label="Thông tin nhanh">
+                <article class="detail-box">
+                    <span>Diện tích</span>
+                    <strong>{% if listing.room.area %}{{ listing.room.area }} m2{% else %}-{% endif %}</strong>
+                </article>
+                <article class="detail-box">
+                    <span>Sức chứa</span>
+                    <strong>{{ listing.room.max_occupants }} người</strong>
+                </article>
+                <article class="detail-box">
+                    <span>Có thể vào ở từ</span>
+                    <strong>{{ listing.available_from }}</strong>
+                </article>
+            </section>
+
+            <section class="section">
+                <h2>Thông tin phòng</h2>
+                <ul class="info-list">
+                    <li><span>Mã phòng</span><strong>{{ listing.room.room_code }}</strong></li>
+                    <li><span>Tên phòng</span><strong>{{ listing.room.room_name }}</strong></li>
+                    <li><span>Tầng</span><strong>{{ listing.room.floor|default:"-" }}</strong></li>
+                    <li><span>Số người tối đa</span><strong>{{ listing.room.max_occupants }}</strong></li>
+                    {% if listing.room.description %}
+                        <li><span>Mô tả</span><strong>{{ listing.room.description }}</strong></li>
+                    {% endif %}
+                </ul>
+            </section>
+        </div>
+    </article>
+
+    <aside class="card sticky-summary">
+        <div class="card-body">
+            <span class="status-badge success">Đang cho thuê</span>
+            <div class="price-row">
                 <span>Giá thuê tháng</span>
                 <strong>{{ listing.listing_price }}</strong>
-            </article>
-            <article class="detail-box">
+            </div>
+            <div class="price-row">
                 <span>Tiền cọc</span>
                 <strong>{{ listing.deposit_amount }}</strong>
-            </article>
-            <article class="detail-box">
-                <span>Có thể vào ở từ</span>
-                <strong>{{ listing.available_from }}</strong>
-            </article>
-        </section>
-
-        <section class="section">
-            <h2>Thông tin phòng</h2>
-            <ul class="meta-list">
-                <li><strong>Mã phòng:</strong> {{ listing.room.room_code }}</li>
-                <li><strong>Tên phòng:</strong> {{ listing.room.room_name }}</li>
-                {% if listing.room.floor %}
-                    <li><strong>Tầng:</strong> {{ listing.room.floor }}</li>
-                {% endif %}
-                {% if listing.room.area %}
-                    <li><strong>Diện tích:</strong> {{ listing.room.area }} m2</li>
-                {% endif %}
-                <li><strong>Số người tối đa:</strong> {{ listing.room.max_occupants }}</li>
-                {% if listing.room.description %}
-                    <li><strong>Mô tả:</strong> {{ listing.room.description }}</li>
-                {% endif %}
-            </ul>
-        </section>
-
-        <div class="page-actions">
+            </div>
+            <p class="help-text">Gửi thông tin liên hệ để chủ trọ xác nhận lịch xem phòng. RentEase không tự tạo tài khoản hay hợp đồng từ biểu mẫu này.</p>
             <a class="button primary" href="{% url 'listings:viewing_registration_create' listing.pk %}">Đăng ký xem phòng</a>
             <a class="button subtle" href="{% url 'listings:public_listing_list' %}">Quay lại danh sách</a>
         </div>
-    </div>
+    </aside>
 </section>
 {% endblock %}

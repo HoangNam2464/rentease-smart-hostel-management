@@ -5,13 +5,13 @@
 {% block content %}
 <section class="page-header">
     <h1>Đã gửi đăng ký xem phòng</h1>
-    <p>Yêu cầu xem phòng {{ listing.title }} đã được lưu trên RentEase. Chủ trọ sẽ theo dõi và phản hồi sau.</p>
+    <p>Yêu cầu xem phòng {{ listing.title }} đã được lưu. Chủ trọ sẽ kiểm tra lịch và liên hệ lại với bạn.</p>
 </section>
 
 <section class="card form-panel">
     <div class="card-body">
         <div class="empty-state">
-            <p>Cảm ơn bạn đã gửi thông tin. Bạn có thể quay lại phòng vừa xem hoặc tiếp tục xem thêm các phòng khác.</p>
+            <p>Cảm ơn bạn đã gửi thông tin. Trong thời gian chờ phản hồi, bạn có thể quay lại phòng vừa xem hoặc tiếp tục tham khảo thêm các phòng đang cho thuê.</p>
         </div>
         <div class="page-actions">
             <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}">Quay lại phòng vừa xem</a>

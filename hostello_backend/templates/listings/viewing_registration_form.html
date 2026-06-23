@@ -5,58 +5,73 @@
 {% block content %}
 <section class="page-header">
     <h1>Đăng ký xem phòng</h1>
-    <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}</p>
+    <p>{{ listing.title }} - {{ listing.room.room_code }} {{ listing.room.room_name }}. Chủ trọ sẽ dùng thông tin này để liên hệ xác nhận lịch xem.</p>
 </section>
 
-<section class="card form-panel">
-    <div class="card-body">
-        <p class="help-text">Thông tin này chỉ dùng để chủ trọ liên hệ xác nhận lịch xem phòng. RentEase không tự tạo tài khoản, khách thuê hoặc hợp đồng từ biểu mẫu này.</p>
+<section class="public-detail-layout">
+    <aside class="card sticky-summary">
+        <div class="card-body">
+            <span class="status-badge success">Phòng đang mở lịch xem</span>
+            <h2>{{ listing.room.room_code }}</h2>
+            <p class="help-text">{{ listing.title }}</p>
+            <ul class="meta-list">
+                <li><strong>Giá thuê:</strong> {{ listing.listing_price }}</li>
+                <li><strong>Tiền cọc:</strong> {{ listing.deposit_amount }}</li>
+                <li><strong>Có thể vào ở từ:</strong> {{ listing.available_from }}</li>
+            </ul>
+        </div>
+    </aside>
 
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
+    <article class="card form-panel">
+        <div class="card-body">
+            <p class="help-text">RentEase không tự tạo tài khoản, khách thuê hoặc hợp đồng từ biểu mẫu này. Dữ liệu chỉ phục vụ việc liên hệ xem phòng.</p>
 
-            <div class="form-field">
-                <label for="{{ form.full_name.id_for_label }}">Họ và tên</label>
-                {{ form.full_name }}
-                {{ form.full_name.errors }}
-            </div>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-            <div class="form-field">
-                <label for="{{ form.phone.id_for_label }}">Số điện thoại</label>
-                {{ form.phone }}
-                {{ form.phone.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.full_name.id_for_label }}">Họ và tên</label>
+                    {{ form.full_name }}
+                    {{ form.full_name.errors }}
+                </div>
 
-            <div class="form-field">
-                <label for="{{ form.email.id_for_label }}">Email</label>
-                {{ form.email }}
-                {{ form.email.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.phone.id_for_label }}">Số điện thoại</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                </div>
 
-            <div class="form-field">
-                <label for="{{ form.preferred_date.id_for_label }}">Ngày muốn xem phòng</label>
-                {{ form.preferred_date }}
-                {{ form.preferred_date.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
 
-            <div class="form-field">
-                <label for="{{ form.preferred_time.id_for_label }}">Giờ mong muốn</label>
-                {{ form.preferred_time }}
-                {{ form.preferred_time.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.preferred_date.id_for_label }}">Ngày muốn xem phòng</label>
+                    {{ form.preferred_date }}
+                    {{ form.preferred_date.errors }}
+                </div>
 
-            <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
-                {{ form.note }}
-                {{ form.note.errors }}
-            </div>
+                <div class="form-field">
+                    <label for="{{ form.preferred_time.id_for_label }}">Giờ mong muốn</label>
+                    {{ form.preferred_time }}
+                    {{ form.preferred_time.errors }}
+                </div>
 
-            <div class="page-actions">
-                <button class="button primary" type="submit">Gửi đăng ký</button>
-                <a class="button subtle" href="{% url 'listings:public_listing_detail' listing.pk %}">Hủy</a>
-            </div>
-        </form>
-    </div>
+                <div class="form-field">
+                    <label for="{{ form.note.id_for_label }}">Ghi chú</label>
+                    {{ form.note }}
+                    {{ form.note.errors }}
+                </div>
+
+                <div class="page-actions">
+                    <button class="button primary" type="submit">Gửi đăng ký xem phòng</button>
+                    <a class="button subtle" href="{% url 'listings:public_listing_detail' listing.pk %}">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </article>
 </section>
 {% endblock %}

@@ -32,7 +32,9 @@
 | Professional design system | Created | Phase 20A added shared design documentation and `rentease-design.css` |
 | Full product UI redesign | Improved | Phase 20A redesigned homepage, public flow, portal theme, owner/tenant dashboards, reports, and error pages around one visual system |
 | Template reference direction | Selected | Phase 20B documented real-estate/property listing direction for public pages and SaaS dashboard direction for portals |
-| Public/owner/tenant visual readiness | Needs reference-based implementation/browser review | Phase 20B selected direction; Phase 20C should apply it and then browser-review the result |
+| Reference-based UI redesign | Applied | Phase 20C updated local templates and CSS for public property-style pages and dashboard-style portal pages |
+| Phase 20C route smoke test | Passed | Public, owner, tenant, admin/report protection, legacy, removed root API/fees, and custom 404 checks passed with BAD_COUNT 0 |
+| Public/owner/tenant visual readiness | Needs browser review | Phase 20C applied the direction; Phase 20D should verify actual desktop/mobile browser rendering |
 | Production blockers remaining | 7 known blockers | See production blockers section |
 | CI pass rate | Not verified | Planned |
 | Test coverage | Not verified | Planned |
@@ -100,6 +102,7 @@ Baseline:
 | Vietnamese wording consistency | Phase 19B completed; Phase 20A continued Vietnamese-first UI labels |
 | Professional UI system | Phase 20A completed; browser review remains |
 | Template reference direction | Phase 20B completed; external template code/assets are not copied |
+| Reference-based UI redesign | Phase 20C completed; browser visual review remains |
 | Production blockers remaining | 7 known blockers |
 
 ## Future Metrics

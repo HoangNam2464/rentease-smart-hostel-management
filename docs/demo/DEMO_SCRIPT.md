@@ -24,6 +24,8 @@ Recommended preparation:
 - review `docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md`
 - review `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
 - review `docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md`
+- review `docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md`
+- review `docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md`
 
 Do not show:
 
@@ -45,7 +47,7 @@ Open:
 
 Talk track:
 
-RentEase is a Django-based boarding-house management system. The landing page now uses natural Vietnamese copy and a shared professional design system to present RentEase as a practical tool for visitors, owners, and tenants.
+RentEase is a Django-based boarding-house management system. The landing page now uses a reference-based room-rental product direction, with clear public browsing and login paths for visitors, owners, and tenants.
 
 ### 2. Public Room Browsing
 
@@ -57,7 +59,7 @@ Open:
 
 Talk track:
 
-Visitors can browse published room listings without seeing private tenant, contract, invoice, or owner-internal data.
+Visitors can browse published room listings in a property-card layout without seeing private tenant, contract, invoice, or owner-internal data.
 
 ### 3. Public Room Detail
 
@@ -71,7 +73,7 @@ Example from the Phase 15F local verification:
 
 Talk track:
 
-The public detail page shows listing information and public-safe room details only.
+The public detail page shows listing information, price summary, public-safe room facts, and a clear viewing-registration action only.
 
 ### 4. Viewing Registration
 
@@ -111,7 +113,7 @@ Open:
 
 Talk track:
 
-The owner dashboard summarizes rooms, contracts, invoices, payments, repairs, listings, and viewing registrations for the current owner only.
+The owner dashboard summarizes rooms, contracts, invoices, payments, repairs, listings, and viewing registrations for the current owner only, using a cleaner dashboard/sidebar visual direction.
 
 ### 7. Owner Management Pages
 
@@ -210,9 +212,10 @@ After Phase 19B:
 - the main demo UI has been redesigned toward a Vietnamese-first product-grade presentation.
 - main Vietnamese UI copy now uses proper diacritics and feels more natural for presentation.
 - the main demo UI now uses a shared professional RentEase design system.
+- Phase 20C applied the selected reference direction to public property-style pages and dashboard-style portal pages.
 
 Recommended next phase:
 
 ```text
-Phase 20B: Browser Review and Final Professional UI Fixes
+Phase 20D: Browser Visual Review and Final UI Fixes
 ```

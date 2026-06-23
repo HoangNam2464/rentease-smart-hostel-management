@@ -214,6 +214,14 @@ docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
 
 Phase 20B reviewed property-listing and dashboard template references, selected the public/product and portal/dashboard visual direction for RentEase, and documented page mappings for the next redesign pass without copying external template assets or source code.
 
+Phase 20C reference-based RentEase UI redesign:
+
+```text
+docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
+```
+
+Phase 20C applied the selected direction to local templates and CSS: public pages now use a stronger room/property listing style, owner pages inherit a dashboard/sidebar visual system, tenant pages remain simple and readable, and no external template packages or remote image hotlinks were added.
+
 ## Runtime State
 
 - Local runtime works.
@@ -359,6 +367,10 @@ Phase 20B Template Reference Selection and UI Direction
 
 Tag: `phase20b-template-reference-ui-direction`
 
+Phase 20C Reference-Based RentEase UI Redesign
+
+Tag: `phase20c-reference-based-ui-redesign`
+
 ## Working Now
 
 - Public landing page
@@ -398,6 +410,7 @@ Tag: `phase20b-template-reference-ui-direction`
 - Vietnamese copy and human product UI fixes
 - Professional UI design system and full visual redesign
 - Template reference direction for public property-listing pages and dashboard portal pages
+- Reference-based UI redesign applied to public, owner, and tenant surfaces
 
 ## Important Production Gaps
 
@@ -413,10 +426,10 @@ Tag: `phase20b-template-reference-ui-direction`
 Current recommended next action:
 
 ```text
-Phase 20C: Apply Reference-Based UI Redesign
+Phase 20D: Browser Visual Review and Final UI Fixes
 ```
 
-Goal: apply the Phase 20B reference direction to local Django templates and CSS while preserving models, migrations, schema, routes, billing logic, role-based access, and privacy rules.
+Goal: open the Phase 20C UI in a real browser, verify desktop/mobile layouts, and make only small final template/CSS fixes if needed.
 
 Alternative production track:
 

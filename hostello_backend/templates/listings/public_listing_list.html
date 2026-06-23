@@ -4,32 +4,34 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>Tìm phòng trọ đang cho thuê</h1>
-    <p>Danh sách phòng đang được chủ trọ công khai trên RentEase. Chọn phòng phù hợp để xem giá thuê, thông tin phòng và đăng ký lịch xem.</p>
+    <h1>Phòng trọ đang cho thuê</h1>
+    <p>Chọn phòng phù hợp, xem thông tin công khai và gửi đăng ký xem phòng. RentEase chỉ hiển thị dữ liệu an toàn cho người đang tìm phòng.</p>
 </section>
 
 {% if listings %}
     <section class="listing-grid" aria-label="Danh sách phòng đang cho thuê">
         {% for listing in listings %}
             <article class="card listing-card">
-                {% if listing.image_url %}
-                    <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}">
-                {% else %}
-                    <div class="listing-placeholder">Phòng RentEase</div>
-                {% endif %}
+                <div class="listing-placeholder"><span>{{ listing.room.room_code }}</span></div>
                 <div class="card-body">
-                    <span class="status-badge">Đang cho thuê</span>
-                    <h2 class="listing-title">{{ listing.title }}</h2>
+                    <div class="section-heading">
+                        <span class="status-badge success">Đang cho thuê</span>
+                    </div>
+                    <h2 class="listing-title">
+                        <a href="{% url 'listings:public_listing_detail' listing.pk %}">{{ listing.title }}</a>
+                    </h2>
                     <p class="listing-description">{{ listing.description|truncatewords:24 }}</p>
+                    <div class="property-meta" aria-label="Thông tin nhanh">
+                        {% if listing.room.area %}
+                            <span>{{ listing.room.area }} m2</span>
+                        {% endif %}
+                        {% if listing.room.floor %}
+                            <span>Tầng {{ listing.room.floor }}</span>
+                        {% endif %}
+                        <span>Tối đa {{ listing.room.max_occupants }} người</span>
+                    </div>
                     <ul class="meta-list">
                         <li><strong>Phòng:</strong> {{ listing.room.room_code }} - {{ listing.room.room_name }}</li>
-                        {% if listing.room.floor %}
-                            <li><strong>Tầng:</strong> {{ listing.room.floor }}</li>
-                        {% endif %}
-                        {% if listing.room.area %}
-                            <li><strong>Diện tích:</strong> {{ listing.room.area }} m2</li>
-                        {% endif %}
-                        <li><strong>Số người tối đa:</strong> {{ listing.room.max_occupants }}</li>
                         <li><strong>Có thể vào ở từ:</strong> {{ listing.available_from }}</li>
                     </ul>
                     <div class="price-row">

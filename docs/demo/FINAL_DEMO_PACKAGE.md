@@ -18,6 +18,8 @@ Current demo package status:
 - product-grade UI redesign completed
 - Vietnamese copy and human landing-page fixes completed
 - professional UI design system and full visual redesign completed
+- template reference direction selected
+- reference-based UI redesign applied
 
 Final local demo release tag:
 
@@ -193,6 +195,8 @@ docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
 docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
 docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
+docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
+docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
 ```
 
 ## Video Demo Outline
@@ -276,6 +280,15 @@ Professional UI redesign:
 - Public/owner/tenant copy: improved for local presentation
 - Security scope: unchanged
 
+Reference-based UI redesign:
+
+- Phase: Phase 20C Reference-Based RentEase UI Redesign
+- Public pages: shifted toward real-estate / property-listing style
+- Owner portal: shifted toward dashboard/sidebar visual direction
+- Tenant portal: kept simple, readable, and user-focused
+- Image handling: no remote hotlinks or unverified assets were added
+- Route smoke result: public, owner, tenant, protected admin/reports, legacy, removed root API/fees, and custom 404 checks passed
+
 Detailed report:
 
 ```text
@@ -313,7 +326,7 @@ RentEase is ready for a stronger local Python/Django course demo and presentatio
 Recommended next step:
 
 ```text
-Phase 20B: Browser Review and Final Professional UI Fixes
+Phase 20D: Browser Visual Review and Final UI Fixes
 ```
 
 Alternative production track:

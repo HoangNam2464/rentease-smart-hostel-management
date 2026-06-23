@@ -259,3 +259,70 @@ Phase 20C: Apply Reference-Based UI Redesign
 ```
 
 Phase 20C should apply the selected public property-listing and dashboard portal direction through local Django templates and local CSS only.
+
+## Phase 20C: Apply Reference-Based RentEase UI Redesign
+
+### Status
+
+Completed.
+
+### Summary
+
+- Applied the Phase 20B reference direction to local CSS and templates.
+- Improved homepage into a clearer public product/property entry page.
+- Improved public room list, room detail, viewing registration form, and success page.
+- Styled owner and tenant portals toward a dashboard/sidebar direction through shared CSS and portal base updates.
+- Corrected remaining user-facing copy issues such as `Thang` to `Tháng` and English access-denied text.
+- Did not add external images; used safe local CSS room/property visual panels.
+- Did not change models, migrations, schema, billing logic, authentication, authorization, or production settings.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-design.css`
+- `hostello_backend/templates/home.html`
+- `hostello_backend/templates/listings/public_listing_list.html`
+- `hostello_backend/templates/listings/public_listing_detail.html`
+- `hostello_backend/templates/listings/viewing_registration_form.html`
+- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/login.html`
+- `hostello_backend/templates/portal/access_denied.html`
+- `hostello_backend/templates/portal/owner_invoices_list.html`
+- `hostello_backend/templates/portal/tenant_invoices_list.html`
+- `docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+- `docs/spqm/BACKLOG_AND_PRIORITIES.md`
+- `docs/spqm/QUALITY_METRICS.md`
+- `docs/spqm/RELEASE_CHECKLIST.md`
+- `docs/demo/SCREENSHOT_CHECKLIST.md`
+- `docs/demo/DEMO_SCRIPT.md`
+- `docs/demo/FINAL_DEMO_PACKAGE.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- `.\venv\Scripts\python.exe manage.py seed_rentease_demo_data --owner-username owner_test --tenant-username tenant_test`
+- Django test-client route smoke test for public, owner, tenant, protected admin/reports, legacy, removed root API/fees, and custom 404 routes
+- unaccented Vietnamese pattern scan for product templates
+- sensitive template term scan for public/listing/portal templates
+
+### Tags Created
+
+- `phase20c-reference-based-ui-redesign`
+
+### Current Blockers
+
+- No technical blocker.
+- Browser visual review is still needed because this phase used route smoke checks, template review, and CSS/template edits rather than manual browser screenshot QA.
+- Real room photos were not added because license-safe local image sources were not downloaded in this phase.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20D: Browser Visual Review and Final UI Fixes
+```
+
+Start local server, inspect the Phase 20C UI at desktop and mobile widths, and make only small final template/CSS fixes if needed.
