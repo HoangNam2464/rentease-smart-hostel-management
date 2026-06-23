@@ -318,15 +318,36 @@ docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20B: Template Reference Selection and UI Direction
+```
+
+Summary:
+
+- reviewed real-estate/property website references for public RentEase pages
+- reviewed Bootstrap dashboard/admin references for owner and tenant portal pages
+- selected a reference-led direction without copying external templates, assets, or source code
+- documented a page-by-page mapping for the next implementation phase
+
+Created:
+
+```text
+docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20B: Browser Review and Final Professional UI Fixes
+Phase 20C: Apply Reference-Based UI Redesign
 ```
 
 Goal:
 
-Open the redesigned UI in a real browser, compare it against the professional design system, verify desktop and mobile layouts, and make only small final visual fixes if needed.
+Apply the selected Phase 20B direction to RentEase templates and local CSS: public pages should follow a room/property listing style, while owner and tenant portals should follow a clean SaaS dashboard style.
 
 ## Recommended Demo Track
 
@@ -348,7 +369,8 @@ Open the redesigned UI in a real browser, compare it against the professional de
 16. Phase 19A: Product-Grade UI Redesign - completed
 17. Phase 19B: Vietnamese Copy and Human Product UI Fixes - completed
 18. Phase 20A: Professional UI Design System and Full Visual Redesign - completed
-19. Phase 20B: Browser Review and Final Professional UI Fixes - next
+19. Phase 20B: Template Reference Selection and UI Direction - completed
+20. Phase 20C: Apply Reference-Based UI Redesign - next
 
 ## Recommended Production Track
 
@@ -361,6 +383,10 @@ Open the redesigned UI in a real browser, compare it against the professional de
 
 ## Current Recommendation
 
-The UI now has a shared professional design system and a fuller product-style redesign, but browser review is still needed before final screenshots/video.
+The UI now has a shared professional design system and a selected reference-led direction.
 
-Do not start production settings implementation until the professional UI is browser-reviewed or unless the user explicitly changes priority.
+Public pages should move toward a real-estate/property listing style inspired by Colorlib, BootstrapMade, ThemeWagon, and simple Bootstrap landing-page patterns.
+
+Owner and tenant portals should move toward a clean SaaS dashboard style inspired by Tabler, AdminLTE, CoreUI, and lightweight Bootstrap admin patterns.
+
+Do not copy external template files or import external template packages at runtime. Phase 20C should adapt the direction through local Django templates and local CSS only.

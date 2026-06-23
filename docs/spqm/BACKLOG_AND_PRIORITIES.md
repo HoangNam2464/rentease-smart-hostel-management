@@ -27,6 +27,8 @@ Purpose: make the current Python/Django project look and feel more like a real u
 | P0 Critical | Product-grade UI redesign | Completed in Phase 19A | Demo quality requires RentEase to feel like a real room-rental product, not only a working admin-first app |
 | P0 Critical | Vietnamese copy and human UI fixes | Completed in Phase 19B | Browser review found unaccented Vietnamese and generic landing copy that weakened product credibility |
 | P0 Critical | Professional UI design system and full visual redesign | Completed in Phase 20A | The UI needed one coherent SaaS-style system instead of repeated small patches |
+| P0 Critical | Template reference selection and UI direction | Completed in Phase 20B | The next redesign pass needs a concrete public property-listing and dashboard portal reference direction |
+| P0 Critical | Apply reference-based UI redesign | Planned | Phase 20C should translate the selected direction into local templates and CSS without copying external template packages |
 | P0 Critical | UI/UX Audit and Redesign Planning | Planned | Demo quality depends on clear public, owner, and tenant flows |
 | P0 Critical | Public UI Polish | Planned | Public landing and room browsing are the first visible product surface |
 | P1 High | Owner Portal Layout Polish | Planned | Owner workflows need consistent navigation and page structure |
@@ -58,6 +60,8 @@ Use this view when choosing work across both tracks.
 | P0 Critical | Product-grade UI redesign | Demo/Product Polish |
 | P0 Critical | Vietnamese copy and human UI fixes | Demo/Product Polish |
 | P0 Critical | Professional UI design system and full visual redesign | Demo/Product Polish |
+| P0 Critical | Template reference selection and UI direction | Demo/Product Polish |
+| P0 Critical | Apply reference-based UI redesign | Demo/Product Polish |
 | P0 Critical | UI/UX Audit and Redesign Planning | Demo/Product Polish |
 | P0 Critical | Public UI Polish | Demo/Product Polish |
 | P0 Critical | Production Settings Split | Real Production Readiness |

@@ -206,6 +206,14 @@ hostello_backend/static/css/rentease-design.css
 
 Phase 20A created a shared visual design system, redesigned the homepage, improved public room pages, owner/tenant dashboards, key detail/form labels, reports, and branded error pages around a more professional Vietnamese SaaS-style product direction.
 
+Phase 20B template reference selection and UI direction:
+
+```text
+docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
+```
+
+Phase 20B reviewed property-listing and dashboard template references, selected the public/product and portal/dashboard visual direction for RentEase, and documented page mappings for the next redesign pass without copying external template assets or source code.
+
 ## Runtime State
 
 - Local runtime works.
@@ -347,6 +355,10 @@ Phase 20A Professional UI Design System and Full Visual Redesign
 
 Tag: `phase20a-professional-ui-redesign-system`
 
+Phase 20B Template Reference Selection and UI Direction
+
+Tag: `phase20b-template-reference-ui-direction`
+
 ## Working Now
 
 - Public landing page
@@ -385,6 +397,7 @@ Tag: `phase20a-professional-ui-redesign-system`
 - Product-grade UI redesign for local demo
 - Vietnamese copy and human product UI fixes
 - Professional UI design system and full visual redesign
+- Template reference direction for public property-listing pages and dashboard portal pages
 
 ## Important Production Gaps
 
@@ -400,10 +413,10 @@ Tag: `phase20a-professional-ui-redesign-system`
 Current recommended next action:
 
 ```text
-Phase 20B: Browser Review and Final Professional UI Fixes
+Phase 20C: Apply Reference-Based UI Redesign
 ```
 
-Goal: open the redesigned UI in a real browser, compare it against the design system, and identify final small visual fixes before screenshots/video.
+Goal: apply the Phase 20B reference direction to local Django templates and CSS while preserving models, migrations, schema, routes, billing logic, role-based access, and privacy rules.
 
 Alternative production track:
 

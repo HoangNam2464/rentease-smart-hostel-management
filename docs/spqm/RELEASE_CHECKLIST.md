@@ -52,6 +52,10 @@
 - [x] landing page copy feels human and practical
 - [x] professional design system documented
 - [x] shared RentEase CSS system added
+- [x] template reference direction documented
+- [x] public property-listing UI direction selected
+- [x] owner/tenant SaaS dashboard UI direction selected
+- [x] no external template package imported in Phase 20B
 - [x] homepage redesigned as fuller product landing page
 - [x] public room list is readable
 - [x] public room pages look realistic enough for product-grade demo
@@ -76,7 +80,8 @@
 - [x] final visual QA checklist completed
 - [ ] manual visual QA completed
 - [x] screenshot/video preparation guide completed
-- [ ] browser review after professional redesign completed
+- [ ] reference-based UI redesign applied
+- [ ] browser review after reference-based redesign completed
 - [ ] screenshots prepared
 
 ## Documentation Readiness Checklist
