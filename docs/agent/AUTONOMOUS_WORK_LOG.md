@@ -1038,3 +1038,55 @@ Phase 20N: Admin Search Privacy Hardening Planning
 ```
 
 Review admin `search_fields`, list displays, fieldsets, and read-only behavior across non-tenant admin classes to remove or reduce sensitive identity lookup surfaces without disrupting staff workflows.
+
+## Phase 20N: Admin Search Privacy Hardening
+
+### Status
+
+Completed.
+
+### Summary
+
+- Audited Django Admin search, list, filter, detail, and inline surfaces across active RentEase admin classes.
+- Removed sensitive identity lookup fields from `ContractAdmin.search_fields` and `InvoiceAdmin.search_fields`.
+- Replaced those lookups with safe tenant name/contact fields.
+- Restricted the `CoTenantInline` inside `ContractAdmin` to safe non-identity fields only.
+- Kept Tenant and CoTenant sensitive identity fields only inside collapsed `Sensitive identity data` detail fieldsets.
+- Verified active admin changelist pages do not render `citizen_id`, `Citizen id`, `CCCD`, or `CMND` markers.
+- Verified the checked contract admin detail page no longer renders sensitive co-tenant identity markers.
+- Did not change models, schema, migrations, URLs, Jazzmin structure, report calculations, billing logic, portal behavior, or legacy apps.
+
+### Files Changed
+
+- `hostello_backend/contracts/admin.py`
+- `hostello_backend/billing/admin.py`
+- `docs/security/PHASE_20N_ADMIN_SEARCH_PRIVACY_HARDENING.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Admin registry introspection for Contract, Invoice, Tenant, CoTenant, and Contract CoTenant inline configuration
+- Django Client route/privacy checks for admin homepage, Tenant, CoTenant, Room, Contract, Invoice, PaymentHistory, reports, owner dashboard, and tenant dashboard routes
+- Route alias review for generic prompt paths versus active Django app labels
+
+### Tags Created
+
+- `phase20n-admin-search-privacy-hardening`
+
+### Current Blockers
+
+- No technical blocker.
+- Browser screenshots were not captured because browser automation had previously been unstable after screenshot timeouts; this phase used Django Client checks and direct admin registry introspection.
+- Generic prompt examples such as `/admin/rooms/room/`, `/admin/invoices/invoice/`, and `/admin/payments/paymenthistory/` are not active routes because the current app labels are `properties` and `billing`; no admin alias routes were added.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20O: Admin Sensitive Detail Permission Planning
+```
+
+Plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only in a future production-hardening phase.

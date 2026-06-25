@@ -9,7 +9,7 @@ complete-product
 ## Latest Known Commit
 
 ```text
-6c6023a Remove legacy API and fees root routes
+Harden admin search privacy (Phase 20N)
 ```
 
 ## Release Tags
@@ -29,7 +29,7 @@ release-rentease-complete-product-v1
 Latest production-hardening tag:
 
 ```text
-phase14b1-remove-legacy-root-api-fees
+phase20n-admin-search-privacy-hardening
 ```
 
 Latest agent guidance docs commit:
@@ -482,6 +482,10 @@ Phase 20M Reports And Admin Visual Polish Planning
 
 Tag: `phase20m-reports-admin-visual-polish-planning`
 
+Phase 20N Admin Search Privacy Hardening
+
+Tag: `phase20n-admin-search-privacy-hardening`
+
 ## Working Now
 
 - Public landing page
@@ -572,6 +576,12 @@ Tag: `phase20m-reports-admin-visual-polish-planning`
 - Tenant/CoTenant admin list privacy and selected Room/Contract/Invoice/Payment admin changelists were rechecked
 - Sensitive tenant identity lookup references in some non-tenant admin `search_fields` were documented as a follow-up instead of changed during the visual phase
 - No schema, migration, model, view, URL, report calculation, billing, admin permission, or legacy changes were introduced in Phase 20M
+- Admin search privacy hardening was completed in Phase 20N
+- `ContractAdmin.search_fields` no longer includes `tenant__citizen_id`
+- `InvoiceAdmin.search_fields` no longer includes `contract__tenant__citizen_id`
+- `CoTenantInline` inside `ContractAdmin` now exposes only safe non-identity fields
+- Tenant and CoTenant sensitive identity fields remain only inside collapsed admin detail fieldsets
+- No schema, migration, model, route, Jazzmin redesign, report calculation, billing, portal, or legacy behavior changes were introduced in Phase 20N
 
 ## Important Production Gaps
 
@@ -587,10 +597,10 @@ Tag: `phase20m-reports-admin-visual-polish-planning`
 Current recommended next action:
 
 ```text
-Phase 20N: Admin Search Privacy Hardening Planning
+Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
-Goal: review admin search fields, list displays, fieldsets, and read-only behavior across non-tenant admin classes to reduce sensitive identity lookup surfaces safely.
+Goal: plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only in a future production-hardening phase.
 
 Alternative production track:
 

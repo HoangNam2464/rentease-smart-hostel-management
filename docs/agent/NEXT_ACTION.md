@@ -681,15 +681,40 @@ docs/ui/PHASE_20M_REPORTS_ADMIN_VISUAL_POLISH_PLANNING.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20N: Admin Search Privacy Hardening Planning
 ```
 
+Summary:
+
+- audited RentEase admin search/list/filter/detail exposure across active admin classes
+- removed `tenant__citizen_id` from `ContractAdmin.search_fields`
+- removed `contract__tenant__citizen_id` from `InvoiceAdmin.search_fields`
+- replaced those sensitive lookups with safe contact/name fields
+- limited the `CoTenantInline` inside `ContractAdmin` to safe non-identity fields only
+- kept Tenant and CoTenant sensitive identity fields only inside collapsed `Sensitive identity data` detail fieldsets
+- verified admin changelist pages and selected admin detail/product routes do not render citizen ID/CCCD/CMND markers
+- introduced no model, schema, migration, route alias, Jazzmin redesign, report calculation, billing, or portal behavior changes
+
+Created:
+
+```text
+docs/security/PHASE_20N_ADMIN_SEARCH_PRIVACY_HARDENING.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20O: Admin Sensitive Detail Permission Planning
+```
+
 Goal:
 
-Review admin `search_fields`, list displays, fieldsets, and read-only behavior across non-tenant admin classes to remove or reduce sensitive identity lookup surfaces without disrupting staff workflows.
+Plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only in a future production-hardening phase.
 
 ## Recommended Demo Track
 
@@ -726,7 +751,8 @@ Review admin `search_fields`, list displays, fieldsets, and read-only behavior a
 31. Phase 20K-B: Dashboard Interaction and Visual Polish - completed
 32. Phase 20L: Owner CRUD Form And Table Professionalization - completed
 33. Phase 20M: Reports And Admin Visual Polish Planning - completed
-34. Phase 20N: Admin Search Privacy Hardening Planning - next
+34. Phase 20N: Admin Search Privacy Hardening Planning - completed
+35. Phase 20O: Admin Sensitive Detail Permission Planning - next
 
 ## Recommended Production Track
 
@@ -741,4 +767,4 @@ Review admin `search_fields`, list displays, fieldsets, and read-only behavior a
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20M is complete. Phase 20N should plan admin search/privacy hardening next, because Phase 20M found sensitive tenant identity lookup references in some non-tenant admin `search_fields`. Plan first and avoid broad admin redesign or staff workflow disruption.
+Phase 20N is complete. Phase 20O should plan admin sensitive detail permission behavior next, because sensitive identity fields now remain only in collapsed Tenant/CoTenant admin detail fieldsets and the next decision is whether those fields should be editable/read-only/superuser-only for production hardening.

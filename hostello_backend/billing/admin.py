@@ -72,7 +72,8 @@ class InvoiceAdmin(admin.ModelAdmin):
         'invoice_code',
         'contract__contract_code',
         'contract__tenant__full_name',
-        'contract__tenant__citizen_id',
+        'contract__tenant__phone_number',
+        'contract__tenant__email',
         'contract__room__room_code',
         'contract__room__room_name',
     ]
