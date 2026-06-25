@@ -543,15 +543,37 @@ docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20I: Full Role UI/UX Audit
+```
+
+Summary:
+
+- audited 47 public, owner, tenant, admin, and reports routes after the Phase 20H fixes
+- confirmed no open P0/P1 route-rendering, privacy, raw-template, or role-shell issues
+- documented overall UI scores: Public 7/10, Owner 6/10, Tenant 6.5/10, Admin/Reports 6/10
+- recommended dashboard, owner CRUD, tenant readability, public listing, and reports/admin polish phases
+- kept this phase documentation-only
+
+Created:
+
+```text
+docs/ui/PHASE_20I_FULL_ROLE_UI_UX_AUDIT.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report
+Phase 20J: Dashboard Interaction and Visual Polish
 ```
 
 Goal:
 
-Manually review owner CRUD pages and tenant child pages under the new dashboard shell. Apply only targeted spacing, table overflow, form readability, or card alignment fixes if necessary.
+Polish owner and tenant dashboards with stronger metric hierarchy, activity sections, empty states, hover/focus effects, and role-specific visual guidance. Keep the work template/CSS-only and preserve owner/tenant scoping.
 
 ## Recommended Demo Track
 
@@ -582,7 +604,8 @@ Manually review owner CRUD pages and tenant child pages under the new dashboard 
 25. Phase 20F: Polish Tenant Portal Pages - completed
 26. Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout - completed
 27. Phase 20H: Full UI Visual QA and Regression Audit - completed
-28. Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report - next
+28. Phase 20I: Full Role UI/UX Audit - completed
+29. Phase 20J: Dashboard Interaction and Visual Polish - next
 
 ## Recommended Production Track
 
@@ -597,4 +620,4 @@ Manually review owner CRUD pages and tenant child pages under the new dashboard 
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20H is complete. Phase 20I should manually review owner CRUD pages and tenant child pages under the new dashboard shell, then apply only targeted UI fixes if necessary while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20I is complete. Phase 20J should polish owner and tenant dashboards first, because dashboards are the first authenticated impression after login. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
