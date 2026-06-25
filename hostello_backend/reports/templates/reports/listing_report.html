@@ -1,82 +1,91 @@
 {% extends "reports/base.html" %}
 
 {% block report_content %}
-<h1>Listing and Viewing Report</h1>
+<h1 class="report-page-title">Báo cáo tin phòng & lịch xem</h1>
+<p class="report-page-subtitle">Theo dõi tin phòng đang công khai, lịch xem chờ xử lý, lịch đã hoàn thành và lịch vắng mặt.</p>
 
 <div class="report-section">
-  <h2>Published listings</h2>
-  <table class="report-table">
-    <thead><tr><th>Title</th><th>Room</th><th>Price</th><th>Published at</th></tr></thead>
-    <tbody>
-      {% for listing in published_listings %}
-      <tr>
-        <td>{{ listing.title }}</td>
-        <td>{{ listing.room.room_code }}</td>
-        <td>{{ listing.listing_price }}</td>
-        <td>{{ listing.published_at }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="4">No published listings.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Tin phòng công khai</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Tiêu đề</th><th>Phòng</th><th>Giá đăng</th><th>Ngày đăng</th></tr></thead>
+      <tbody>
+        {% for listing in published_listings %}
+        <tr>
+          <td>{{ listing.title }}</td>
+          <td>{{ listing.room.room_code }}</td>
+          <td>{{ listing.listing_price }}</td>
+          <td>{{ listing.published_at }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="4">Không có tin phòng công khai.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="report-section">
-  <h2>Pending viewing registrations</h2>
-  <table class="report-table">
-    <thead><tr><th>Listing</th><th>Name</th><th>Phone</th><th>Preferred date</th><th>Preferred time</th></tr></thead>
-    <tbody>
-      {% for registration in pending_viewing_registrations %}
-      <tr>
-        <td>{{ registration.listing.title }}</td>
-        <td>{{ registration.full_name }}</td>
-        <td>{{ registration.phone }}</td>
-        <td>{{ registration.preferred_date }}</td>
-        <td>{{ registration.preferred_time|default:"-" }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5">No pending viewing registrations.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Lịch xem chờ xác nhận</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Tin phòng</th><th>Người đăng ký</th><th>Điện thoại</th><th>Ngày muốn xem</th><th>Giờ muốn xem</th></tr></thead>
+      <tbody>
+        {% for registration in pending_viewing_registrations %}
+        <tr>
+          <td>{{ registration.listing.title }}</td>
+          <td>{{ registration.full_name }}</td>
+          <td>{{ registration.phone }}</td>
+          <td>{{ registration.preferred_date }}</td>
+          <td>{{ registration.preferred_time|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="5">Không có lịch xem chờ xác nhận.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="report-section">
-  <h2>Completed viewings</h2>
-  <table class="report-table">
-    <thead><tr><th>Listing</th><th>Name</th><th>Phone</th><th>Preferred date</th></tr></thead>
-    <tbody>
-      {% for registration in completed_viewings %}
-      <tr>
-        <td>{{ registration.listing.title }}</td>
-        <td>{{ registration.full_name }}</td>
-        <td>{{ registration.phone }}</td>
-        <td>{{ registration.preferred_date }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="4">No completed viewings.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Lịch xem đã hoàn thành</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Tin phòng</th><th>Người đăng ký</th><th>Điện thoại</th><th>Ngày muốn xem</th></tr></thead>
+      <tbody>
+        {% for registration in completed_viewings %}
+        <tr>
+          <td>{{ registration.listing.title }}</td>
+          <td>{{ registration.full_name }}</td>
+          <td>{{ registration.phone }}</td>
+          <td>{{ registration.preferred_date }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="4">Không có lịch xem đã hoàn thành.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="report-section">
-  <h2>No-show viewings</h2>
-  <table class="report-table">
-    <thead><tr><th>Listing</th><th>Name</th><th>Phone</th><th>Preferred date</th></tr></thead>
-    <tbody>
-      {% for registration in no_show_viewings %}
-      <tr>
-        <td>{{ registration.listing.title }}</td>
-        <td>{{ registration.full_name }}</td>
-        <td>{{ registration.phone }}</td>
-        <td>{{ registration.preferred_date }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="4">No no-show viewings.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Lịch xem vắng mặt</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Tin phòng</th><th>Người đăng ký</th><th>Điện thoại</th><th>Ngày muốn xem</th></tr></thead>
+      <tbody>
+        {% for registration in no_show_viewings %}
+        <tr>
+          <td>{{ registration.listing.title }}</td>
+          <td>{{ registration.full_name }}</td>
+          <td>{{ registration.phone }}</td>
+          <td>{{ registration.preferred_date }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="4">Không có lịch xem vắng mặt.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

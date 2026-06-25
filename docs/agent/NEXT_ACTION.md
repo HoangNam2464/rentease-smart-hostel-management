@@ -658,15 +658,38 @@ docs/ui/PHASE_20L_OWNER_CRUD_FORM_TABLE_PROFESSIONALIZATION.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20M: Reports And Admin Visual Polish Planning
 ```
 
+Summary:
+
+- reviewed staff reports and key Django Admin/Jazzmin-facing pages
+- applied safe report-template polish only: Vietnamese copy, cleaner report header/nav, metric hierarchy, filter layout, table wrappers, empty states, and mobile wrapping
+- did not redesign the admin system or modify admin permissions/field behavior
+- verified report pages, owner/tenant routes, admin homepage, Tenant/CoTenant admin lists, and selected Room/Contract/Invoice/Payment admin changelists
+- reconfirmed no `citizen_id`, `Citizen id`, `CCCD`, or `CMND` markers appear in checked admin list/page HTML
+- documented risky admin search/field changes as deferred instead of implementing them in this visual phase
+
+Created:
+
+```text
+docs/ui/PHASE_20M_REPORTS_ADMIN_VISUAL_POLISH_PLANNING.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20N: Admin Search Privacy Hardening Planning
+```
+
 Goal:
 
-Plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin surfaces. Do not implement changes before planning because admin styling can affect broad project surfaces.
+Review admin `search_fields`, list displays, fieldsets, and read-only behavior across non-tenant admin classes to remove or reduce sensitive identity lookup surfaces without disrupting staff workflows.
 
 ## Recommended Demo Track
 
@@ -702,7 +725,8 @@ Plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin
 30. Phase 20K-A: Admin Tenant Privacy Hotfix - completed
 31. Phase 20K-B: Dashboard Interaction and Visual Polish - completed
 32. Phase 20L: Owner CRUD Form And Table Professionalization - completed
-33. Phase 20M: Reports And Admin Visual Polish Planning - next
+33. Phase 20M: Reports And Admin Visual Polish Planning - completed
+34. Phase 20N: Admin Search Privacy Hardening Planning - next
 
 ## Recommended Production Track
 
@@ -717,4 +741,4 @@ Plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20L is complete. Phase 20M should plan staff reports and admin visual polish next, because owner CRUD pages now have a consistent professional layer and admin/report surfaces remain the most visible unpolished staff-facing area. Plan first, then implement only small template/CSS/admin-safe changes after approval.
+Phase 20M is complete. Phase 20N should plan admin search/privacy hardening next, because Phase 20M found sensitive tenant identity lookup references in some non-tenant admin `search_fields`. Plan first and avoid broad admin redesign or staff workflow disruption.

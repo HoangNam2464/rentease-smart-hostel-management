@@ -1,49 +1,54 @@
 {% extends "reports/base.html" %}
 
 {% block report_content %}
-<h1>Maintenance Report</h1>
+<h1 class="report-page-title">Báo cáo sửa chữa & bảo trì</h1>
+<p class="report-page-subtitle">Theo dõi yêu cầu sửa chữa đang chờ xử lý và chi phí bảo trì đã hoàn thành.</p>
 
 <div class="metric-grid">
-  <div class="metric-card">Completed maintenance cost<strong>{{ maintenance_cost_summary }}</strong></div>
+  <div class="metric-card">Chi phí bảo trì đã hoàn thành<strong>{{ maintenance_cost_summary }}</strong></div>
 </div>
 
 <div class="report-section">
-  <h2>Pending repair requests</h2>
-  <table class="report-table">
-    <thead><tr><th>Title</th><th>Room</th><th>Tenant</th><th>Priority</th><th>Requested at</th></tr></thead>
-    <tbody>
-      {% for request in pending_repair_requests %}
-      <tr>
-        <td>{{ request.title }}</td>
-        <td>{{ request.room.room_code }}</td>
-        <td>{{ request.tenant|default:"-" }}</td>
-        <td>{{ request.get_priority_display }}</td>
-        <td>{{ request.requested_at }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5">No pending repair requests.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Yêu cầu sửa chữa chờ xử lý</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Tiêu đề</th><th>Phòng</th><th>Khách thuê</th><th>Độ ưu tiên</th><th>Ngày gửi</th></tr></thead>
+      <tbody>
+        {% for request in pending_repair_requests %}
+        <tr>
+          <td>{{ request.title }}</td>
+          <td>{{ request.room.room_code }}</td>
+          <td>{{ request.tenant|default:"-" }}</td>
+          <td>{{ request.get_priority_display }}</td>
+          <td>{{ request.requested_at }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="5">Không có yêu cầu sửa chữa đang chờ xử lý.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="report-section">
-  <h2>Completed maintenance records</h2>
-  <table class="report-table">
-    <thead><tr><th>Type</th><th>Room</th><th>Vendor</th><th>Cost</th><th>Performed date</th></tr></thead>
-    <tbody>
-      {% for record in completed_maintenance_records %}
-      <tr>
-        <td>{{ record.maintenance_type }}</td>
-        <td>{{ record.room.room_code }}</td>
-        <td>{{ record.vendor_name|default:"-" }}</td>
-        <td>{{ record.cost }}</td>
-        <td>{{ record.performed_date }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5">No completed maintenance records.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h2>Bảo trì đã hoàn thành</h2>
+  <div class="report-table-wrap">
+    <table class="report-table">
+      <thead><tr><th>Loại bảo trì</th><th>Phòng</th><th>Nhà cung cấp</th><th>Chi phí</th><th>Ngày thực hiện</th></tr></thead>
+      <tbody>
+        {% for record in completed_maintenance_records %}
+        <tr>
+          <td>{{ record.maintenance_type }}</td>
+          <td>{{ record.room.room_code }}</td>
+          <td>{{ record.vendor_name|default:"-" }}</td>
+          <td>{{ record.cost }}</td>
+          <td>{{ record.performed_date }}</td>
+        </tr>
+        {% empty %}
+        <tr><td class="empty-report-row" colspan="5">Không có bản ghi bảo trì đã hoàn thành.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

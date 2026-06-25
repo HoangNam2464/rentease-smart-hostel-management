@@ -1,8 +1,8 @@
 {% extends "reports/base.html" %}
 
 {% block report_content %}
-<h1>Tổng quan vận hành RentEase</h1>
-<p>Kỳ hóa đơn hiện tại: {{ metrics.month }}/{{ metrics.year }}</p>
+<h1 class="report-page-title">Tổng quan vận hành RentEase</h1>
+<p class="report-page-subtitle">Kỳ hóa đơn hiện tại: {{ metrics.month }}/{{ metrics.year }}</p>
 
 <div class="metric-grid">
   <div class="metric-card">Tổng số phòng<strong>{{ metrics.total_rooms }}</strong></div>

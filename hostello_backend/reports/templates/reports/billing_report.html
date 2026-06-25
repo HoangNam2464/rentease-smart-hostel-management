@@ -1,56 +1,59 @@
 {% extends "reports/base.html" %}
 
 {% block report_content %}
-<h1>Billing Report</h1>
+<h1 class="report-page-title">Báo cáo hóa đơn</h1>
+<p class="report-page-subtitle">Theo dõi tổng tiền hóa đơn, số đã thu và công nợ còn lại theo tháng/năm.</p>
 
 <form method="get" class="filter-form">
-  <label>Month <input type="number" name="month" min="1" max="12" value="{{ month }}"></label>
-  <label>Year <input type="number" name="year" min="2000" value="{{ year }}"></label>
-  <label>Status
+  <label>Tháng <input type="number" name="month" min="1" max="12" value="{{ month }}"></label>
+  <label>Năm <input type="number" name="year" min="2000" value="{{ year }}"></label>
+  <label>Trạng thái
     <select name="status">
-      <option value="">All</option>
+      <option value="">Tất cả</option>
       {% for value, label in status_choices %}
       <option value="{{ value }}"{% if status == value %} selected{% endif %}>{{ label }}</option>
       {% endfor %}
     </select>
   </label>
-  <button type="submit">Filter</button>
+  <button type="submit">Lọc báo cáo</button>
 </form>
 
 <div class="metric-grid">
-  <div class="metric-card">Total invoice amount<strong>{{ total_invoice_amount }}</strong></div>
-  <div class="metric-card">Paid amount<strong>{{ paid_amount }}</strong></div>
-  <div class="metric-card">Remaining debt<strong>{{ remaining_debt }}</strong></div>
+  <div class="metric-card">Tổng tiền hóa đơn<strong>{{ total_invoice_amount }}</strong></div>
+  <div class="metric-card">Đã thanh toán<strong>{{ paid_amount }}</strong></div>
+  <div class="metric-card">Công nợ còn lại<strong>{{ remaining_debt }}</strong></div>
 </div>
 
-<table class="report-table">
-  <thead>
-    <tr>
-      <th>Invoice</th>
-      <th>Contract</th>
-      <th>Room</th>
-      <th>Tenant</th>
-      <th>Status</th>
-      <th>Total</th>
-      <th>Paid</th>
-      <th>Remaining</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for invoice in invoices %}
-    <tr>
-      <td>{{ invoice.invoice_code }}</td>
-      <td>{{ invoice.contract.contract_code }}</td>
-      <td>{{ invoice.contract.room.room_code }}</td>
-      <td>{{ invoice.contract.tenant.full_name }}</td>
-      <td>{{ invoice.get_status_display }}</td>
-      <td>{{ invoice.total_amount }}</td>
-      <td>{{ invoice.paid_amount }}</td>
-      <td>{{ invoice.remaining_amount }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="8">No invoices found.</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="report-table-wrap">
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Hóa đơn</th>
+        <th>Hợp đồng</th>
+        <th>Phòng</th>
+        <th>Khách thuê</th>
+        <th>Trạng thái</th>
+        <th>Tổng tiền</th>
+        <th>Đã thu</th>
+        <th>Còn lại</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %}
+      <tr>
+        <td>{{ invoice.invoice_code }}</td>
+        <td>{{ invoice.contract.contract_code }}</td>
+        <td>{{ invoice.contract.room.room_code }}</td>
+        <td>{{ invoice.contract.tenant.full_name }}</td>
+        <td>{{ invoice.get_status_display }}</td>
+        <td>{{ invoice.total_amount }}</td>
+        <td>{{ invoice.paid_amount }}</td>
+        <td>{{ invoice.remaining_amount }}</td>
+      </tr>
+      {% empty %}
+      <tr><td class="empty-report-row" colspan="8">Không có hóa đơn phù hợp với bộ lọc.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

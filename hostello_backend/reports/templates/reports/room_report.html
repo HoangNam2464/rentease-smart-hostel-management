@@ -1,39 +1,42 @@
 {% extends "reports/base.html" %}
 
 {% block report_content %}
-<h1>Room Report</h1>
+<h1 class="report-page-title">Báo cáo phòng</h1>
+<p class="report-page-subtitle">Tổng hợp trạng thái phòng, giá thuê mặc định và mức độ sử dụng phòng.</p>
 
 <div class="metric-grid">
-  <div class="metric-card">Total rooms<strong>{{ total_rooms }}</strong></div>
-  <div class="metric-card">Available<strong>{{ available_rooms }}</strong></div>
-  <div class="metric-card">Occupied<strong>{{ occupied_rooms }}</strong></div>
-  <div class="metric-card">Maintenance<strong>{{ maintenance_rooms }}</strong></div>
-  <div class="metric-card">Inactive<strong>{{ inactive_rooms }}</strong></div>
-  <div class="metric-card">Rooms with active contracts<strong>{{ active_contract_room_count }}</strong></div>
+  <div class="metric-card">Tổng số phòng<strong>{{ total_rooms }}</strong></div>
+  <div class="metric-card">Đang trống<strong>{{ available_rooms }}</strong></div>
+  <div class="metric-card">Đã có khách<strong>{{ occupied_rooms }}</strong></div>
+  <div class="metric-card">Đang bảo trì<strong>{{ maintenance_rooms }}</strong></div>
+  <div class="metric-card">Ngừng sử dụng<strong>{{ inactive_rooms }}</strong></div>
+  <div class="metric-card">Có hợp đồng hiệu lực<strong>{{ active_contract_room_count }}</strong></div>
 </div>
 
-<table class="report-table">
-  <thead>
-    <tr>
-      <th>Room code</th>
-      <th>Name</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Default rent</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for room in rooms %}
-    <tr>
-      <td>{{ room.room_code }}</td>
-      <td>{{ room.room_name }}</td>
-      <td>{{ room.owner }}</td>
-      <td>{{ room.get_status_display }}</td>
-      <td>{{ room.default_rent }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="5">No rooms found.</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="report-table-wrap">
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Mã phòng</th>
+        <th>Tên phòng</th>
+        <th>Chủ trọ</th>
+        <th>Trạng thái</th>
+        <th>Giá thuê mặc định</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for room in rooms %}
+      <tr>
+        <td>{{ room.room_code }}</td>
+        <td>{{ room.room_name }}</td>
+        <td>{{ room.owner }}</td>
+        <td>{{ room.get_status_display }}</td>
+        <td>{{ room.default_rent }}</td>
+      </tr>
+      {% empty %}
+      <tr><td class="empty-report-row" colspan="5">Chưa có phòng nào.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

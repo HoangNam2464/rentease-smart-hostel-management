@@ -979,3 +979,62 @@ Phase 20M: Reports And Admin Visual Polish Planning
 ```
 
 Plan staff reports and Django Admin/Jazzmin visual polish before implementation. Admin/report polish should be planned first because these surfaces can affect broad staff-facing behavior.
+
+## Phase 20M: Reports And Admin Visual Polish Planning
+
+### Status
+
+Completed.
+
+### Summary
+
+- Reviewed staff reports and selected Django Admin/Jazzmin-facing pages.
+- Applied safe report-template polish only.
+- Cleaned report copy from mojibake/English into readable Vietnamese.
+- Improved report header, navigation chips, metric cards, filter form spacing, table wrappers, empty states, and mobile wrapping.
+- Kept report calculations, services, views, URLs, permissions, admin behavior, billing logic, owner/tenant scoping, models, migrations, schema, and legacy apps unchanged.
+- Reviewed admin-facing surfaces but did not redesign Jazzmin or change admin model behavior in this phase.
+- Reconfirmed Tenant and CoTenant admin changelist pages do not render `citizen_id`, `Citizen id`, `CCCD`, or `CMND`.
+- Documented sensitive identity lookup references in non-tenant admin `search_fields` as a follow-up for a focused admin/privacy hardening phase.
+
+### Files Changed
+
+- `hostello_backend/reports/templates/reports/base.html`
+- `hostello_backend/reports/templates/reports/dashboard.html`
+- `hostello_backend/reports/templates/reports/billing_report.html`
+- `hostello_backend/reports/templates/reports/room_report.html`
+- `hostello_backend/reports/templates/reports/tenant_contract_report.html`
+- `hostello_backend/reports/templates/reports/maintenance_report.html`
+- `hostello_backend/reports/templates/reports/listing_report.html`
+- `docs/ui/PHASE_20M_REPORTS_ADMIN_VISUAL_POLISH_PLANNING.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Client route/render checks for all staff report routes
+- Django Client route/render checks for owner dashboard/rooms/tenants/contracts/invoices
+- Django Client route/render checks for tenant dashboard/invoices
+- Django Client route/render checks for admin homepage
+- Django Client admin privacy checks for Tenant and CoTenant changelists
+- Django Client admin render checks for Room, Contract, Invoice, and PaymentHistory changelists
+
+### Tags Created
+
+- `phase20m-reports-admin-visual-polish-planning`
+
+### Current Blockers
+
+- No technical blocker.
+- Browser screenshots were not captured because browser automation was previously unstable after screenshot timeouts; Django Client verification passed.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20N: Admin Search Privacy Hardening Planning
+```
+
+Review admin `search_fields`, list displays, fieldsets, and read-only behavior across non-tenant admin classes to remove or reduce sensitive identity lookup surfaces without disrupting staff workflows.

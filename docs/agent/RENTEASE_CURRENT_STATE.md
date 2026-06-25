@@ -478,6 +478,10 @@ Phase 20L Owner CRUD Form And Table Professionalization
 
 Tag: `phase20l-owner-crud-form-table-professionalization`
 
+Phase 20M Reports And Admin Visual Polish Planning
+
+Tag: `phase20m-reports-admin-visual-polish-planning`
+
 ## Working Now
 
 - Public landing page
@@ -562,6 +566,12 @@ Tag: `phase20l-owner-crud-form-table-professionalization`
 - Owner detail pages now use clearer info-list grouping and mobile-safe wrapping
 - Owner invoice form display labels were translated from English to Vietnamese
 - No schema, migration, model, view, URL, form-class, billing, reports, admin logic, or legacy changes were introduced in Phase 20L
+- Reports/admin visual polish planning was completed in Phase 20M
+- Staff reports received safe template-only polish: readable Vietnamese copy, cleaner report shell, better metric cards, filter layout, table wrappers, empty states, and mobile wrapping
+- Admin/Jazzmin was reviewed but not redesigned
+- Tenant/CoTenant admin list privacy and selected Room/Contract/Invoice/Payment admin changelists were rechecked
+- Sensitive tenant identity lookup references in some non-tenant admin `search_fields` were documented as a follow-up instead of changed during the visual phase
+- No schema, migration, model, view, URL, report calculation, billing, admin permission, or legacy changes were introduced in Phase 20M
 
 ## Important Production Gaps
 
@@ -577,10 +587,10 @@ Tag: `phase20l-owner-crud-form-table-professionalization`
 Current recommended next action:
 
 ```text
-Phase 20M: Reports And Admin Visual Polish Planning
+Phase 20N: Admin Search Privacy Hardening Planning
 ```
 
-Goal: plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin surfaces before making changes.
+Goal: review admin search fields, list displays, fieldsets, and read-only behavior across non-tenant admin classes to reduce sensitive identity lookup surfaces safely.
 
 Alternative production track:
 
