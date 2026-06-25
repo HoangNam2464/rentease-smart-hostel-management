@@ -1,63 +1,236 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Tổng quan khách thuê - RentEase{% endblock %}
+{% block title %}Cổng khách thuê - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Tổng quan khách thuê</h1>
-    {% if tenant %}
-        <p>Xin chào {{ tenant.full_name }}. Trang này chỉ hiển thị thông tin liên quan đến hồ sơ khách thuê của bạn.</p>
-    {% else %}
-        <p>Khu vực khách thuê RentEase đang chờ liên kết hồ sơ.</p>
-    {% endif %}
+    <h1><i class="page-icon bi bi-person-circle"></i>Cổng thông tin khách thuê</h1>
+    <p>Xem hợp đồng, hóa đơn, thanh toán và gửi yêu cầu sửa chữa của bạn.</p>
 </section>
 
 {% if missing_profile %}
-    <div class="alert warning">{{ message }}</div>
+    <div class="alert warning">
+        <i class="bi bi-exclamation-triangle-fill"></i> {{ message }}
+    </div>
 {% else %}
-    <section class="grid">
-        <article class="card metric">
-            <span>Khách thuê</span>
-            <strong class="metric-label">{{ metrics.tenant_name }}</strong>
-        </article>
-        <article class="card metric">
-            <span>Hợp đồng hiện tại</span>
-            <strong class="metric-label">
-                {% if metrics.current_contract %}
-                    {{ metrics.current_contract.contract_code }}
+{% with active_contract=metrics.current_contract %}
+
+    <!-- Tenant Info Card -->
+    <div class="tenant-info-card">
+        <div class="tenant-avatar">{{ tenant.full_name|slice:":1"|upper }}</div>
+        <div style="flex:1;">
+            <div style="font-size:1.15rem;font-weight:800;color:var(--re-heading);">{{ tenant.full_name }}</div>
+            <div style="color:var(--re-muted);font-size:0.9rem;margin-top:2px;">
+                <i class="bi bi-door-closed" style="margin-right:5px;color:var(--re-primary);"></i>
+                {% if active_contract %}
+                    Phòng {{ active_contract.room.room_code }}{% if active_contract.room.room_name %} – {{ active_contract.room.room_name }}{% endif %}
                 {% else %}
-                    Chưa có
+                    Chưa có phòng đang thuê
                 {% endif %}
-            </strong>
+            </div>
+        </div>
+        {% if active_contract %}
+            <span class="status-badge success">
+                <i class="bi bi-check-circle-fill"></i> Đang thuê
+            </span>
+        {% else %}
+            <span class="status-badge">
+                <i class="bi bi-dash-circle"></i> Chưa có hợp đồng
+            </span>
+        {% endif %}
+    </div>
+
+    <!-- Summary Metrics -->
+    <section class="grid dashboard-section" style="grid-template-columns:repeat(4,minmax(0,1fr));margin-top:0;margin-bottom:20px;">
+        <article class="card metric accent-green">
+            <div class="metric-icon"><i class="bi bi-file-earmark-check-fill"></i></div>
+            <span>Hợp đồng hiệu lực</span>
+            <strong>{% if active_contract %}1{% else %}0{% endif %}</strong>
         </article>
-        <article class="card metric">
-            <span>Hóa đơn chưa tất toán</span>
+        <article class="card metric accent-red">
+            <div class="metric-icon red"><i class="bi bi-receipt"></i></div>
+            <span>Hóa đơn chưa thanh toán</span>
             <strong>{{ metrics.unpaid_or_partial_invoices }}</strong>
         </article>
-        <article class="card metric">
-            <span>Yêu cầu sửa chữa đang mở</span>
+        <article class="card metric accent-orange">
+            <div class="metric-icon orange"><i class="bi bi-tools"></i></div>
+            <span>Sửa chữa đang xử lý</span>
             <strong>{{ metrics.open_repair_requests }}</strong>
         </article>
         <article class="card metric">
+            <div class="metric-icon indigo"><i class="bi bi-bell-fill"></i></div>
             <span>Thông báo chưa đọc</span>
             <strong>{{ metrics.unread_notifications }}</strong>
         </article>
     </section>
 
-    <section class="card dashboard-section">
-        <div class="card-body">
-            <div class="section-heading">
-                <div>
-                    <h2>Việc bạn thường cần xem</h2>
-                    <p class="help-text">Các liên kết nhanh giúp kiểm tra hợp đồng, hóa đơn, thanh toán và yêu cầu sửa chữa.</p>
+    <!-- Main content: 2 columns -->
+    <section class="grid dashboard-section" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:0;">
+
+        <!-- Hợp đồng đang hiệu lực -->
+        <article class="card">
+            <div class="card-body">
+                <div class="section-heading" style="margin-bottom:14px;">
+                    <h2 style="font-size:1rem;margin:0;">
+                        <i class="bi bi-file-text" style="color:var(--re-primary);margin-right:6px;"></i>Hợp đồng hiện tại
+                    </h2>
+                    <a class="button ghost" href="/tenant/contracts/" style="font-size:0.85rem;padding:0 10px;min-height:32px;">Tất cả</a>
                 </div>
-                <div class="section-actions">
-                    <a class="button" href="/tenant/contracts/">Hợp đồng</a>
-                    <a class="button" href="/tenant/invoices/">Hóa đơn</a>
-                    <a class="button" href="/tenant/repairs/">Sửa chữa</a>
-                </div>
+                {% if active_contract %}
+                    <div class="stat-row">
+                        <i class="bi bi-hash"></i>
+                        <span class="stat-row-label">Mã hợp đồng</span>
+                        <span class="stat-row-value">{{ active_contract.contract_code }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <i class="bi bi-door-closed"></i>
+                        <span class="stat-row-label">Phòng</span>
+                        <span class="stat-row-value">{{ active_contract.room.room_code }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <i class="bi bi-calendar-event"></i>
+                        <span class="stat-row-label">Ngày bắt đầu</span>
+                        <span class="stat-row-value">{{ active_contract.start_date|date:"d/m/Y" }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <i class="bi bi-calendar-x"></i>
+                        <span class="stat-row-label">Ngày kết thúc</span>
+                        <span class="stat-row-value">{{ active_contract.end_date|date:"d/m/Y" }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <i class="bi bi-tag"></i>
+                        <span class="stat-row-label">Giá thuê / tháng</span>
+                        <span class="stat-row-value" style="color:var(--re-primary);">{{ active_contract.rent_amount }}</span>
+                    </div>
+                    <div class="stat-row" style="border:none;margin-top:6px;">
+                        <i class="bi bi-shield-lock"></i>
+                        <span class="stat-row-label">Tiền cọc</span>
+                        <span class="stat-row-value">{{ active_contract.deposit_amount }}</span>
+                    </div>
+                    <a class="button primary" href="{% url 'portal:tenant_contract_detail' active_contract.pk %}" style="width:100%;margin-top:14px;">
+                        <i class="bi bi-arrow-right-circle"></i>&nbsp; Xem chi tiết hợp đồng
+                    </a>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-file-earmark-x" style="font-size:2rem;color:var(--re-muted);display:block;margin-bottom:10px;"></i>
+                        <p>Bạn chưa có hợp đồng nào đang hiệu lực.</p>
+                    </div>
+                {% endif %}
             </div>
-        </div>
+        </article>
+
+        <!-- Hóa đơn gần đây -->
+        <article class="card">
+            <div class="card-body">
+                <div class="section-heading" style="margin-bottom:14px;">
+                    <h2 style="font-size:1rem;margin:0;">
+                        <i class="bi bi-receipt" style="color:var(--re-primary);margin-right:6px;"></i>Hóa đơn gần đây
+                    </h2>
+                    <a class="button ghost" href="/tenant/invoices/" style="font-size:0.85rem;padding:0 10px;min-height:32px;">Tất cả</a>
+                </div>
+                {% if recent.invoices %}
+                    <div class="recent-list">
+                        {% for invoice in recent.invoices %}
+                            <article class="recent-item">
+                                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
+                                    <strong>
+                                        <a href="{% url 'portal:tenant_invoice_detail' invoice.pk %}">
+                                            {{ invoice.invoice_code|default:invoice.pk }}
+                                        </a>
+                                    </strong>
+                                    <span class="status-badge {% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% else %}danger{% endif %}" style="font-size:0.72rem;">
+                                        {{ invoice.get_status_display }}
+                                    </span>
+                                </div>
+                                <div class="recent-meta">
+                                    <i class="bi bi-calendar3" style="margin-right:4px;"></i>Tháng {{ invoice.month }}/{{ invoice.year }}
+                                    · <strong>{{ invoice.total_amount }}</strong>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-inbox" style="font-size:2rem;color:var(--re-muted);display:block;margin-bottom:10px;"></i>
+                        <p>Chưa có hóa đơn nào.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
     </section>
+
+    <!-- Row 2: Sửa chữa + Thông báo -->
+    <section class="grid dashboard-section" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+
+        <!-- Yêu cầu sửa chữa -->
+        <article class="card">
+            <div class="card-body">
+                <div class="section-heading" style="margin-bottom:14px;">
+                    <h2 style="font-size:1rem;margin:0;">
+                        <i class="bi bi-tools" style="color:var(--re-primary);margin-right:6px;"></i>Yêu cầu sửa chữa
+                    </h2>
+                    <a class="button primary" href="/tenant/repairs/new/" style="font-size:0.85rem;padding:0 12px;min-height:32px;">
+                        <i class="bi bi-plus"></i>&nbsp; Gửi mới
+                    </a>
+                </div>
+                {% if recent.repairs %}
+                    <div class="recent-list">
+                        {% for repair in recent.repairs %}
+                            <article class="recent-item">
+                                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
+                                    <strong>{{ repair.title }}</strong>
+                                    <span class="status-badge {% if repair.status == 'completed' %}success{% elif repair.status == 'in_progress' %}warning{% else %}{% endif %}" style="font-size:0.72rem;">
+                                        {{ repair.get_status_display }}
+                                    </span>
+                                </div>
+                                <div class="recent-meta">
+                                    <i class="bi bi-calendar3" style="margin-right:4px;"></i>{{ repair.requested_at|date:"d/m/Y" }}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-wrench" style="font-size:2rem;color:var(--re-muted);display:block;margin-bottom:10px;"></i>
+                        <p>Chưa có yêu cầu sửa chữa nào.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+
+        <!-- Thông báo mới -->
+        <article class="card">
+            <div class="card-body">
+                <div class="section-heading" style="margin-bottom:14px;">
+                    <h2 style="font-size:1rem;margin:0;">
+                        <i class="bi bi-bell" style="color:var(--re-primary);margin-right:6px;"></i>Thông báo gần đây
+                    </h2>
+                    <a class="button ghost" href="/tenant/notifications/" style="font-size:0.85rem;padding:0 10px;min-height:32px;">Tất cả</a>
+                </div>
+                {% if recent.notifications %}
+                    <div class="recent-list">
+                        {% for notif in recent.notifications %}
+                            <article class="recent-item {% if not notif.is_read %}unread{% endif %}">
+                                <strong style="{% if not notif.is_read %}color:var(--re-heading);{% endif %}">{{ notif.title }}</strong>
+                                <div class="recent-meta">
+                                    <i class="bi bi-clock" style="margin-right:4px;"></i>{{ notif.created_at|date:"d/m/Y H:i" }}
+                                    {% if not notif.is_read %}
+                                        <span class="status-badge" style="background:var(--re-primary-soft);color:var(--re-primary);font-size:0.68rem;margin-left:6px;">Mới</span>
+                                    {% endif %}
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-bell-slash" style="font-size:2rem;color:var(--re-muted);display:block;margin-bottom:10px;"></i>
+                        <p>Chưa có thông báo nào.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+    </section>
+
+{% endwith %}
 {% endif %}
 {% endblock %}

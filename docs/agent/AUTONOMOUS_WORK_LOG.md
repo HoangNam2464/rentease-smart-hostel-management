@@ -440,3 +440,63 @@ Phase 20D: Apply reviewed RentEase UI improvement package safely
 ```
 
 Touch active RentEase templates/CSS only. Do not edit legacy HOSTELLO templates/apps unless explicitly approved.
+
+## Phase 20D: Apply Reviewed RentEase UI Improvement Package Safely
+
+### Status
+
+Completed.
+
+### Summary
+
+- Located reviewed package at `D:\Downloads\rentease_ui_improved.zip`.
+- Extracted package to a temporary folder outside tracked project files.
+- Read `HUONG_DAN_AP_DUNG.md`.
+- Verified active RentEase template/CSS targets from `docs/agent/RENTEASE_PROJECT_MAP.md`.
+- Confirmed `Room.room_image` and `RoomListing.image_url` exist.
+- Confirmed active listing URL names and portal URL names before applying templates.
+- Applied the package to active RentEase templates and shared CSS only.
+- Adapted package references from `listings:register_viewing` to `listings:viewing_registration_create`.
+- Adapted listing detail to use `listing.deposit_amount` and existing room fields.
+- Adapted tenant dashboard to use the existing `tenant` object and `metrics.current_contract` context.
+- Did not edit legacy HOSTELLO templates/apps.
+- Did not modify models, views, URLs, migrations, schema, billing, reports, or permissions.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-design.css`
+- `hostello_backend/templates/home.html`
+- `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/login.html`
+- `hostello_backend/templates/portal/owner_dashboard.html`
+- `hostello_backend/templates/portal/tenant_dashboard.html`
+- `hostello_backend/templates/listings/public_listing_list.html`
+- `hostello_backend/templates/listings/public_listing_detail.html`
+- `docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- route smoke checks for public, owner, tenant, admin, reports, legacy, and removed root legacy routes
+- rendered-page privacy scan for raw template tags and sensitive field names
+
+### Tags Created
+
+- `phase20d-reviewed-ui-package`
+
+### Current Blockers
+
+- No technical blocker.
+- External Google Fonts, Bootstrap Icons, Unsplash, and Picsum dependencies are acceptable for local demo but should be replaced before production.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20E: Polish Owner CRUD Pages
+```
+
+Polish owner list/detail/form pages only. Keep models, schema, routes, permissions, billing, repo hygiene, and legacy isolation unchanged.

@@ -409,15 +409,37 @@ docs/agent/PHASE_21C_SAFE_REPO_HYGIENE_CLEANUP.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20D: Apply reviewed RentEase UI improvement package safely
 ```
 
+Summary:
+
+- applied the reviewed UI package to active RentEase templates and shared CSS
+- adapted package references to current model fields and URL names
+- improved homepage, login, public room list/detail, owner dashboard, tenant dashboard, and portal layout
+- kept models, views, URLs, migrations, schema, permissions, billing, reports, and legacy isolation unchanged
+- documented external dev/demo asset usage and production follow-up
+
+Created:
+
+```text
+docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20E: Polish Owner CRUD Pages
+```
+
 Goal:
 
-After repo hygiene is protected, apply the reviewed UI package to active RentEase templates only. Do not touch legacy HOSTELLO templates/apps unless explicitly approved.
+Polish owner list/detail/form pages while keeping logic unchanged and applying the same design system to rooms, tenants, contracts, invoices, repairs, and viewing registrations.
 
 ## Recommended Demo Track
 
@@ -443,7 +465,8 @@ After repo hygiene is protected, apply the reviewed UI package to active RentEas
 20. Phase 20C: Apply Reference-Based UI Redesign - completed
 21. Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide - completed
 22. Phase 21C: Safe Repo Hygiene Cleanup - completed
-23. Phase 20D: Apply reviewed RentEase UI improvement package safely - next
+23. Phase 20D: Apply reviewed RentEase UI improvement package safely - completed
+24. Phase 20E: Polish Owner CRUD Pages - next
 
 ## Recommended Production Track
 
@@ -458,4 +481,4 @@ After repo hygiene is protected, apply the reviewed UI package to active RentEas
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20D should touch active RentEase templates/CSS only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20D is complete. Phase 20E should continue UI polish on owner CRUD pages only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

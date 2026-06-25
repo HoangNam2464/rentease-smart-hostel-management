@@ -241,6 +241,14 @@ docs/agent/PHASE_21C_SAFE_REPO_HYGIENE_CLEANUP.md
 
 Phase 21C hardened `.gitignore`, verified local/demo files such as `db.sqlite3`, `venv`, backup JSON files, `.env`, and `media` were not tracked, and did not delete local files or remove legacy HOSTELLO apps/templates.
 
+Phase 20D reviewed UI package application:
+
+```text
+docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md
+```
+
+Phase 20D applied the reviewed RentEase UI improvement package to active RentEase templates and shared CSS only. The homepage, login page, public room list/detail, owner dashboard, tenant dashboard, and portal layout were improved. Package references were adapted to active URL names and existing model fields. External dev/demo assets remain a production follow-up.
+
 ## Runtime State
 
 - Local runtime works.
@@ -398,6 +406,10 @@ Phase 21C Safe Repo Hygiene Cleanup
 
 Tag: `phase21c-safe-repo-hygiene-cleanup`
 
+Phase 20D Reviewed UI Package Application
+
+Tag: `phase20d-reviewed-ui-package`
+
 ## Working Now
 
 - Public landing page
@@ -444,6 +456,9 @@ Tag: `phase21c-safe-repo-hygiene-cleanup`
 - Repo hygiene rules are enforced through `.gitignore`
 - Local/demo files should not be committed
 - No legacy removal was done in Phase 21C
+- Reviewed UI package applied to active RentEase templates/CSS in Phase 20D
+- Homepage, login, public listing/detail, owner dashboard, and tenant dashboard were improved
+- External dev/demo assets remain a production follow-up
 
 ## Important Production Gaps
 
@@ -459,10 +474,10 @@ Tag: `phase21c-safe-repo-hygiene-cleanup`
 Current recommended next action:
 
 ```text
-Phase 20D: Apply reviewed RentEase UI improvement package safely
+Phase 20E: Polish Owner CRUD Pages
 ```
 
-Goal: apply reviewed UI improvements to active RentEase templates/CSS only while preserving models, migrations, schema, permissions, repo hygiene, and legacy isolation.
+Goal: polish owner list/detail/form pages while keeping logic unchanged and applying the same design system to rooms, tenants, contracts, invoices, repairs, and viewing registrations.
 
 Alternative production track:
 

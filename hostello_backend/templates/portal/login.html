@@ -1,46 +1,149 @@
-{% extends "portal/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - RentEase</title>
+    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background: var(--re-bg-soft); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .login-wrap { width: 100%; max-width: 420px; padding: 16px; }
+        .login-brand { text-align: center; margin-bottom: 28px; }
+        .login-brand-mark {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 56px; height: 56px; border-radius: 18px;
+            background: var(--re-primary); color: #fff;
+            font-size: 1.6rem; font-weight: 900; margin-bottom: 12px;
+        }
+        .login-brand h1 { font-size: 1.6rem; font-weight: 900; color: var(--re-heading); margin: 0; }
+        .login-brand p { color: var(--re-muted); margin: 4px 0 0; font-size: 0.92rem; }
+        .login-card { background: var(--re-card-bg); border: 1px solid var(--re-card-border); border-radius: 20px; padding: 32px 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 700; font-size: 0.88rem; color: var(--re-heading); margin-bottom: 7px; }
+        .form-group label .bi { margin-right: 6px; color: var(--re-primary); }
+        .form-group input { width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1.5px solid var(--re-card-border); border-radius: 10px; font-family: inherit; font-size: 0.95rem; color: var(--re-text); background: var(--re-bg); transition: border-color 0.15s; }
+        .form-group input:focus { outline: none; border-color: var(--re-primary); box-shadow: 0 0 0 3px var(--re-primary-soft); }
+        .login-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: var(--re-primary); color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.01em; transition: background 0.15s, transform 0.1s; }
+        .login-btn:hover { background: var(--re-primary-dark); transform: translateY(-1px); }
+        .login-btn:active { transform: translateY(0); }
+        .login-footer { text-align: center; margin-top: 20px; color: var(--re-muted); font-size: 0.88rem; }
+        .login-footer a { color: var(--re-primary); font-weight: 600; text-decoration: none; }
+        .login-footer a:hover { text-decoration: underline; }
+        .error-list { background: var(--re-danger-soft); border: 1px solid var(--re-danger); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; color: var(--re-danger); font-size: 0.9rem; }
+        .error-list ul { margin: 0; padding-left: 18px; }
+        .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--re-muted); font-size: 0.82rem; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--re-card-border); }
+        .role-hint { display: flex; gap: 10px; flex-wrap: wrap; }
+        .role-hint-item { flex: 1; min-width: 110px; text-align: center; background: var(--re-bg-soft); border: 1px solid var(--re-card-border); border-radius: 12px; padding: 12px 8px; font-size: 0.82rem; }
+        .role-hint-item .bi { display: block; font-size: 1.4rem; margin-bottom: 5px; color: var(--re-primary); }
+        .role-hint-item strong { display: block; color: var(--re-heading); margin-bottom: 2px; }
+        .role-hint-item span { color: var(--re-muted); }
+    </style>
+</head>
+<body>
+    <div class="login-wrap">
 
-{% block title %}Đăng nhập - RentEase{% endblock %}
+        <div class="login-brand">
+            <div class="login-brand-mark">R</div>
+            <h1>RentEase</h1>
+            <p>Hệ thống quản lý nhà trọ</p>
+        </div>
 
-{% block content %}
-<section class="page-header">
-    <h1>Đăng nhập RentEase</h1>
-    <p>Sử dụng tài khoản được cấp để vào đúng khu vực làm việc: chủ trọ, khách thuê hoặc quản trị.</p>
-</section>
+        <div class="login-card">
+            <h2 style="font-size:1.2rem;margin:0 0 20px;color:var(--re-heading);">
+                <i class="bi bi-box-arrow-in-right" style="color:var(--re-primary);margin-right:8px;"></i>Đăng nhập
+            </h2>
 
-<section class="auth-layout">
-    <aside class="auth-panel">
-        <h2>Mỗi vai trò có một không gian riêng</h2>
-        <p>RentEase tự chuyển người dùng đến khu vực phù hợp sau khi đăng nhập, giúp demo luồng chủ trọ và khách thuê rõ ràng hơn.</p>
-        <ul>
-            <li>Chủ trọ quản lý phòng, tin đăng, hợp đồng, hóa đơn, thanh toán và sửa chữa.</li>
-            <li>Khách thuê theo dõi hợp đồng, hóa đơn, thanh toán, sửa chữa và thông báo.</li>
-            <li>Quản trị viên dùng khu vực admin và báo cáo khi cần kiểm tra dữ liệu tổng hợp.</li>
-        </ul>
-    </aside>
+            {% if form.non_field_errors %}
+                <div class="error-list">
+                    <i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i>
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
 
-    <div class="card narrow">
-        <div class="card-body">
-            <form method="post" novalidate>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-list" style="{% if 'success' in message.tags %}background:var(--re-success-soft);border-color:var(--re-success);color:var(--re-success);{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" action="{% url 'portal:login' %}">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
 
-                <div class="form-field">
-                    <label for="{{ form.username.id_for_label }}">Tên đăng nhập</label>
-                    {{ form.username }}
-                    {{ form.username.errors }}
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="bi bi-person"></i>Tên đăng nhập
+                    </label>
+                    <input
+                        type="text"
+                        id="{{ form.username.id_for_label }}"
+                        name="{{ form.username.html_name }}"
+                        value="{{ form.username.value|default:'' }}"
+                        placeholder="Nhập tên đăng nhập"
+                        autocomplete="username"
+                        autofocus>
+                    {% if form.username.errors %}
+                        <div style="color:var(--re-danger);font-size:0.82rem;margin-top:5px;">
+                            {{ form.username.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
 
-                <div class="form-field">
-                    <label for="{{ form.password.id_for_label }}">Mật khẩu</label>
-                    {{ form.password }}
-                    {{ form.password.errors }}
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">
+                        <i class="bi bi-lock"></i>Mật khẩu
+                    </label>
+                    <input
+                        type="password"
+                        id="{{ form.password.id_for_label }}"
+                        name="{{ form.password.html_name }}"
+                        placeholder="Nhập mật khẩu"
+                        autocomplete="current-password">
+                    {% if form.password.errors %}
+                        <div style="color:var(--re-danger);font-size:0.82rem;margin-top:5px;">
+                            {{ form.password.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
 
-                <button class="button primary" type="submit">Đăng nhập</button>
+                <button type="submit" class="login-btn">
+                    <i class="bi bi-arrow-right-circle" style="margin-right:8px;"></i>Đăng nhập
+                </button>
             </form>
-            <p class="help-text">Tài khoản demo cục bộ được mô tả trong tài liệu demo. Không hiển thị mật khẩu thật khi quay video hoặc chụp màn hình.</p>
+
+            <div class="divider">Phân loại người dùng</div>
+
+            <div class="role-hint">
+                <div class="role-hint-item">
+                    <i class="bi bi-person-badge"></i>
+                    <strong>Chủ trọ</strong>
+                    <span>Quản lý phòng</span>
+                </div>
+                <div class="role-hint-item">
+                    <i class="bi bi-person-circle"></i>
+                    <strong>Khách thuê</strong>
+                    <span>Xem hóa đơn</span>
+                </div>
+                <div class="role-hint-item">
+                    <i class="bi bi-shield-lock"></i>
+                    <strong>Quản trị</strong>
+                    <span>Toàn quyền</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            <a href="/"><i class="bi bi-arrow-left"></i> Quay về trang chủ</a>
+            &nbsp;·&nbsp;
+            <a href="/rooms/"><i class="bi bi-search"></i> Xem phòng trống</a>
         </div>
     </div>
-</section>
-{% endblock %}
+</body>
+</html>

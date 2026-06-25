@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentEase - Quản lý nhà trọ dễ dàng hơn</title>
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body class="re-home">
     <header class="re-topbar">
@@ -15,52 +16,65 @@
                 <span>RentEase</span>
             </a>
             <nav class="re-nav" aria-label="Điều hướng chính">
-                <a href="/rooms/">Xem phòng</a>
-                <a href="/login/" class="primary">Đăng nhập</a>
+                <a href="/rooms/"><i class="bi bi-door-open"></i> Xem phòng</a>
+                <a href="/login/" class="primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</a>
             </nav>
         </div>
     </header>
 
     <main class="re-page">
+
+        <!-- HERO -->
         <section class="re-hero hero home-hero" aria-labelledby="page-title">
             <div class="hero-copy">
-                <p class="eyebrow">Web quản lý nhà trọ</p>
+                <p class="eyebrow">Nền tảng quản lý nhà trọ</p>
                 <h1 id="page-title">Tìm phòng, quản lý thuê trọ và theo dõi thanh toán trong một nơi</h1>
                 <p class="description">
                     RentEase giúp người tìm phòng xem tin đăng rõ ràng, giúp chủ trọ quản lý phòng,
-                    hợp đồng, hóa đơn, thanh toán và sửa chữa, đồng thời cho khách thuê một cổng
-                    thông tin riêng để theo dõi việc thuê phòng của mình.
+                    hợp đồng, hóa đơn và sửa chữa — đồng thời cho khách thuê một cổng thông tin
+                    riêng để theo dõi việc thuê phòng của mình.
                 </p>
                 <div class="actions">
-                    <a class="button primary" href="/rooms/">Xem phòng đang cho thuê</a>
-                    <a class="button subtle" href="/login/">Đăng nhập hệ thống</a>
+                    <a class="button primary" href="/rooms/">
+                        <i class="bi bi-search"></i>&nbsp; Xem phòng đang cho thuê
+                    </a>
+                    <a class="button subtle" href="/login/">
+                        <i class="bi bi-box-arrow-in-right"></i>&nbsp; Đăng nhập hệ thống
+                    </a>
                 </div>
 
                 <div class="quick-search" aria-label="Thông tin nhanh">
                     <div>
-                        <span>Luồng công khai</span>
-                        <strong>Xem phòng và đăng ký lịch hẹn</strong>
+                        <span><i class="bi bi-globe"></i> Công khai</span>
+                        <strong>Xem phòng và đặt lịch hẹn</strong>
                     </div>
                     <div>
-                        <span>Chủ trọ</span>
-                        <strong>Quản lý phòng, hợp đồng, hóa đơn</strong>
+                        <span><i class="bi bi-person-badge"></i> Chủ trọ</span>
+                        <strong>Quản lý phòng & hóa đơn</strong>
                     </div>
                     <div>
-                        <span>Khách thuê</span>
-                        <strong>Xem hợp đồng, thanh toán, sửa chữa</strong>
+                        <span><i class="bi bi-person-circle"></i> Khách thuê</span>
+                        <strong>Xem hợp đồng & thanh toán</strong>
                     </div>
                     <div>
-                        <span>Dữ liệu</span>
-                        <strong>Tách theo vai trò, dễ demo</strong>
+                        <span><i class="bi bi-shield-check"></i> Bảo mật</span>
+                        <strong>Dữ liệu tách theo vai trò</strong>
                     </div>
                 </div>
             </div>
 
-            <aside class="property-visual" aria-label="Minh họa phòng cho thuê RentEase">
+            <!-- Hero image panel -->
+            <aside class="property-visual" aria-label="Ảnh minh họa phòng trọ">
+                <img
+                    class="property-visual-img"
+                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=900&q=80&auto=format&fit=crop"
+                    alt="Phòng trọ hiện đại sáng sạch"
+                    loading="eager">
+                <div class="property-visual-overlay"></div>
                 <div class="property-card-float">
-                    <span class="status-badge success">Đang cho thuê</span>
+                    <span class="status-badge success"><i class="bi bi-check-circle-fill"></i> Đang cho thuê</span>
                     <strong>Phòng trọ sáng, gọn, dễ quản lý</strong>
-                    <span>Hiển thị giá, tiền cọc, sức chứa và lịch xem phòng theo cách dễ hiểu.</span>
+                    <span>Xem giá, tiền cọc, sức chứa và đặt lịch xem phòng trực tiếp.</span>
                     <div class="price-row">
                         <span>Giá tham khảo</span>
                         <strong>2.500.000đ/tháng</strong>
@@ -69,68 +83,84 @@
             </aside>
         </section>
 
+        <!-- FEATURES -->
         <section class="section" aria-labelledby="features-title">
             <div class="section-heading">
                 <div>
                     <h2 class="section-title" id="features-title">Thiết kế cho quy trình thuê trọ thật</h2>
-                    <p class="help-text">Tập trung vào những việc cần demo và cũng gần với nhu cầu vận hành hằng ngày của nhà trọ nhỏ.</p>
+                    <p class="help-text">Tập trung vào những việc cần thiết trong vận hành hằng ngày của nhà trọ nhỏ và vừa.</p>
                 </div>
             </div>
             <div class="feature-grid">
                 <article class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-globe2"></i></div>
                     <span class="role-tag">Công khai</span>
                     <h3>Người thuê xem phòng trước</h3>
-                    <p>Xem danh sách phòng đang cho thuê, đọc thông tin phòng, giá, tiền cọc và gửi đăng ký xem phòng.</p>
+                    <p>Xem danh sách phòng đang cho thuê, đọc thông tin phòng, giá, tiền cọc và gửi đăng ký xem phòng — không cần tài khoản.</p>
                 </article>
                 <article class="feature-card">
-                    <span class="role-tag">Chủ trọ</span>
+                    <div class="feature-icon" style="background:var(--re-blue-soft);color:var(--re-blue);"><i class="bi bi-person-badge"></i></div>
+                    <span class="role-tag" style="background:var(--re-blue-soft);color:var(--re-blue);">Chủ trọ</span>
                     <h3>Quản lý vận hành gọn hơn</h3>
-                    <p>Theo dõi phòng, tin đăng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa và lịch xem phòng.</p>
+                    <p>Theo dõi phòng, tin đăng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa và lịch xem phòng từ một nơi.</p>
                 </article>
                 <article class="feature-card">
-                    <span class="role-tag">Khách thuê</span>
+                    <div class="feature-icon" style="background:var(--re-indigo-soft);color:var(--re-indigo);"><i class="bi bi-person-circle"></i></div>
+                    <span class="role-tag" style="background:var(--re-indigo-soft);color:var(--re-indigo);">Khách thuê</span>
                     <h3>Cổng thông tin riêng</h3>
-                    <p>Khách thuê xem hợp đồng, hóa đơn, lịch sử thanh toán, yêu cầu sửa chữa và thông báo của chính mình.</p>
+                    <p>Xem hợp đồng, hóa đơn, lịch sử thanh toán, yêu cầu sửa chữa và thông báo — chỉ thấy dữ liệu của chính mình.</p>
                 </article>
             </div>
         </section>
 
+        <!-- WORKFLOW -->
         <section class="section" aria-labelledby="workflow-title">
             <div class="section-heading">
                 <div>
-                    <h2 class="section-title" id="workflow-title">Luồng demo dễ theo dõi</h2>
+                    <h2 class="section-title" id="workflow-title">Luồng hoạt động từ đầu đến cuối</h2>
                     <p class="help-text">Từ công khai phòng trống đến xử lý thanh toán và sửa chữa, mỗi bước đều có trang riêng.</p>
                 </div>
             </div>
             <div class="role-grid">
                 <article class="role-card">
-                    <h3>1. Đăng phòng</h3>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                        <span class="workflow-number">1</span>
+                        <h3 style="margin:0;">Đăng phòng</h3>
+                    </div>
                     <p>Chủ trọ tạo phòng, đăng tin công khai và nhận đăng ký xem phòng từ khách quan tâm.</p>
                 </article>
                 <article class="role-card">
-                    <h3>2. Quản lý thuê</h3>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                        <span class="workflow-number">2</span>
+                        <h3 style="margin:0;">Quản lý thuê</h3>
+                    </div>
                     <p>Chủ trọ theo dõi khách thuê, hợp đồng, hóa đơn tháng và trạng thái thanh toán.</p>
                 </article>
                 <article class="role-card">
-                    <h3>3. Theo dõi sau thuê</h3>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                        <span class="workflow-number">3</span>
+                        <h3 style="margin:0;">Theo dõi sau thuê</h3>
+                    </div>
                     <p>Khách thuê gửi yêu cầu sửa chữa, xem thông báo và kiểm tra các khoản thanh toán của mình.</p>
                 </article>
             </div>
         </section>
 
+        <!-- CTA -->
         <section class="section demo-card" aria-labelledby="demo-title">
             <div>
-                <h2 id="demo-title">Sẵn sàng cho trình bày local demo</h2>
-                <p>RentEase hiện phù hợp cho demo cục bộ với dữ liệu giả lập. Khu vực quản trị và báo cáo vẫn được bảo vệ riêng.</p>
+                <h2 id="demo-title"><i class="bi bi-rocket-takeoff" style="margin-right:8px;"></i>Bắt đầu ngay hôm nay</h2>
+                <p>Đăng nhập để quản lý phòng trọ, hoặc xem danh sách phòng đang cho thuê.</p>
             </div>
             <div class="demo-links">
-                <a class="button primary" href="/rooms/">Xem phòng</a>
-                <a class="button secondary" href="/login/">Vào hệ thống</a>
+                <a class="button primary" href="/rooms/"><i class="bi bi-search"></i>&nbsp; Xem phòng</a>
+                <a class="button secondary" href="/login/"><i class="bi bi-box-arrow-in-right"></i>&nbsp; Vào hệ thống</a>
             </div>
         </section>
 
         <footer class="re-footer">
-            RentEase local demo - không hiển thị dữ liệu thật, mật khẩu, file database hoặc thông tin nhạy cảm trong phần demo.
+            <i class="bi bi-shield-check" style="margin-right:6px;color:var(--re-primary);"></i>
+            RentEase — Hệ thống quản lý nhà trọ. Dữ liệu được bảo vệ theo vai trò người dùng.
         </footer>
     </main>
 </body>
