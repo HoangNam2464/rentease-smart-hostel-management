@@ -588,10 +588,33 @@ docs/ui/screenshots/phase20j-browser-qa/
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20K-A: Admin Tenant Privacy Hotfix
+```
+
+Summary:
+
+- fixed the Phase 20J admin privacy issue where tenant admin list pages exposed `citizen_id`
+- confirmed `Tenant.__str__` already returns `full_name`
+- removed citizen ID from Tenant and CoTenant admin list/search surfaces
+- moved sensitive identity fields into collapsed admin detail sections
+- verified Tenant and CoTenant admin list pages no longer render existing citizen ID values
+- introduced no schema or migration changes
+
+Created:
+
+```text
+docs/security/PHASE_20K_A_ADMIN_TENANT_PRIVACY_HOTFIX.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20K: Dashboard Interaction Polish
+Phase 20K-B: Dashboard Interaction and Visual Polish
 ```
 
 Goal:
@@ -629,7 +652,8 @@ Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hi
 27. Phase 20H: Full UI Visual QA and Regression Audit - completed
 28. Phase 20I: Full Role UI/UX Audit - completed
 29. Phase 20J: Browser-Based Visual QA - completed
-30. Phase 20K: Dashboard Interaction Polish - next
+30. Phase 20K-A: Admin Tenant Privacy Hotfix - completed
+31. Phase 20K-B: Dashboard Interaction and Visual Polish - next
 
 ## Recommended Production Track
 
@@ -644,4 +668,4 @@ Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hi
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20J is complete. Phase 20K should polish owner and tenant dashboards first, because browser QA found the owner dashboard has slight mobile overflow and dashboard interactions/hierarchy are the safest next visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20K-A is complete. Phase 20K-B should polish owner and tenant dashboards first, because browser QA found the owner dashboard has slight mobile overflow and dashboard interactions/hierarchy are the safest next visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

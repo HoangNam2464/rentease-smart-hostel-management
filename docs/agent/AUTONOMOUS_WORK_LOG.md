@@ -832,3 +832,51 @@ Phase 20K: Dashboard Interaction Polish
 ```
 
 Fix owner dashboard mobile overflow and improve dashboard card/action hierarchy first, then continue with owner CRUD professionalization.
+
+## Phase 20K-A: Admin Tenant Privacy Hotfix
+
+### Status
+
+Completed.
+
+### Summary
+
+- Addressed the Phase 20J finding that tenant admin list pages exposed `citizen_id`.
+- Verified `Tenant.__str__` already returns `full_name`, so model string labels do not expose citizen ID.
+- Removed `citizen_id` from Tenant and CoTenant admin list displays.
+- Removed `citizen_id` from Tenant and CoTenant admin search fields.
+- Added explicit admin fieldsets and moved sensitive identity fields into collapsed `Sensitive identity data` sections on admin detail forms.
+- Verified admin Tenant and CoTenant changelist pages no longer render existing citizen ID values.
+- Did not change models, schema, migrations, views, URLs, forms, settings, templates, CSS, permissions, ownership logic, legacy apps, or runtime files.
+
+### Files Changed
+
+- `hostello_backend/tenants/admin.py`
+- `docs/security/PHASE_20K_A_ADMIN_TENANT_PRIVACY_HOTFIX.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Client admin changelist privacy checks for Tenant and CoTenant
+- Django Client admin detail check for the `Sensitive identity data` fieldset
+
+### Tags Created
+
+- `phase20k-a-admin-tenant-privacy-hotfix`
+
+### Current Blockers
+
+- No technical blocker.
+- A later admin-hardening phase should decide whether tenant identity fields should become readonly or hidden from non-superuser staff.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20K-B: Dashboard Interaction and Visual Polish
+```
+
+Continue the visual polish roadmap using Phase 20J findings, starting with owner/tenant dashboard mobile overflow, card hierarchy, and interactions.

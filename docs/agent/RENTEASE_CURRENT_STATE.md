@@ -466,6 +466,10 @@ Phase 20J Browser-Based Visual QA
 
 Tag: `phase20j-browser-visual-qa`
 
+Phase 20K-A Admin Tenant Privacy Hotfix
+
+Tag: `phase20k-a-admin-tenant-privacy-hotfix`
+
 ## Working Now
 
 - Public landing page
@@ -535,6 +539,10 @@ Tag: `phase20j-browser-visual-qa`
 - Screenshot evidence saved under `docs/ui/screenshots/phase20j-browser-qa/`
 - Key visual QA findings: owner dashboard has slight mobile overflow, owner forms need consistent styled fields, tenant financial tables are cramped on mobile, reports/admin pages need staff UI polish, and admin tenant list exposes `Citizen id`
 - No application code changed in Phase 20J
+- Admin tenant citizen ID exposure from Phase 20J was addressed
+- Tenant and co-tenant sensitive identity fields are no longer shown in default admin list views or admin search fields
+- Sensitive identity fields remain only in collapsed admin detail sections for staff/superuser review
+- No schema or migration changes were introduced in Phase 20K-A
 
 ## Important Production Gaps
 
@@ -550,7 +558,7 @@ Tag: `phase20j-browser-visual-qa`
 Current recommended next action:
 
 ```text
-Phase 20K: Dashboard Interaction Polish
+Phase 20K-B: Dashboard Interaction and Visual Polish
 ```
 
 Goal: fix dashboard mobile overflow and improve owner/tenant dashboard metric hierarchy, action cards, hover/focus states, and role-specific visual guidance.
