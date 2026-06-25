@@ -634,3 +634,55 @@ Phase 20G: Reports, Error Pages, and Final UI Consistency Review
 ```
 
 Review reports, error pages, and any remaining UI consistency edges. Keep models, schema, billing, permissions, repo hygiene, and legacy isolation unchanged.
+
+## Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout
+
+### Status
+
+Completed.
+
+### Summary
+
+- Extracted the uploaded `rentease_ui_v2.zip` package.
+- Located the actual extracted package folder at `rentease_v2/`.
+- Copied the prepared UI v2 files exactly into the active RentEase portal targets.
+- Added the new dashboard-only CSS file `hostello_backend/static/css/rentease-layout.css`.
+- Replaced `portal/base.html`, `portal/owner_dashboard.html`, and `portal/tenant_dashboard.html` from the provided package.
+- Did not modify `rentease-design.css`.
+- Did not modify models, views, URLs, forms, settings, migrations, legacy apps, public pages, owner CRUD child pages, or tenant child pages.
+- Removed the temporary extracted package folder after copying so it would not be committed.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-layout.css`
+- `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/owner_dashboard.html`
+- `hostello_backend/templates/portal/tenant_dashboard.html`
+- `docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Client route smoke checks for public pages, owner dashboard, and tenant dashboard
+- short runserver HTTP check for public `/` and `/rooms/`
+
+### Tags Created
+
+- `phase20g-rentease-ui-v2-dark-sidebar`
+
+### Current Blockers
+
+- No technical blocker.
+- Owner CRUD and tenant child pages should receive a follow-up visual regression pass because they now inherit the new dark-sidebar portal base.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20H: Final UI Consistency Review and CRUD Layout Regression
+```
+
+Check owner CRUD pages and tenant child pages under the new dashboard shell. Polish only if necessary and keep models, schema, billing, permissions, repo hygiene, and legacy isolation unchanged.

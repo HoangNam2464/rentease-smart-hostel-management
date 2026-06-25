@@ -265,6 +265,14 @@ docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md
 
 Phase 20F fixed shared portal role navigation separation, cleaned tenant portal Vietnamese copy, removed the dashboard dependency on missing `recent.*` context, and polished tenant profile, contracts, invoices, payments, repairs, and notifications. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, or legacy files were changed.
 
+Phase 20G RentEase UI v2 dark sidebar layout:
+
+```text
+docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md
+```
+
+Phase 20G applied the uploaded UI v2 package to the active portal shell and dashboards. The dashboard portal layout now uses a dark sidebar plus white topbar, owner and tenant dashboards follow a more professional admin-panel structure, and public pages remain on the existing RentEase design system. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, public templates, legacy files, or `rentease-design.css` were changed.
+
 ## Runtime State
 
 - Local runtime works.
@@ -434,6 +442,10 @@ Phase 20F Tenant Portal Bugfix and Polish
 
 Tag: `phase20f-tenant-portal-bugfix-polish`
 
+Phase 20G RentEase UI V2 Dark Sidebar Layout
+
+Tag: `phase20g-rentease-ui-v2-dark-sidebar`
+
 ## Working Now
 
 - Public landing page
@@ -487,6 +499,10 @@ Tag: `phase20f-tenant-portal-bugfix-polish`
 - Tenant portal pages are visually aligned with the Phase 20D/20E design system
 - Shared portal navigation now separates tenant and owner sidebars more clearly
 - No backend logic changed in Phase 20F
+- Dashboard portal layout upgraded to dark sidebar plus white topbar
+- Owner/Tenant dashboard layout now follows a professional admin-panel structure
+- Public pages remain on the existing RentEase design system
+- No backend logic changed in Phase 20G
 
 ## Important Production Gaps
 
@@ -502,10 +518,10 @@ Tag: `phase20f-tenant-portal-bugfix-polish`
 Current recommended next action:
 
 ```text
-Phase 20G: Reports, Error Pages, and Final UI Consistency Review
+Phase 20H: Final UI Consistency Review and CRUD Layout Regression
 ```
 
-Goal: review staff reports, custom error pages, and remaining UI consistency edges while keeping logic unchanged and applying the current RentEase design system.
+Goal: check owner CRUD pages after the new dark sidebar base, check tenant child pages after the new dark sidebar base, verify no route/template regression, and polish only if necessary.
 
 Alternative production track:
 

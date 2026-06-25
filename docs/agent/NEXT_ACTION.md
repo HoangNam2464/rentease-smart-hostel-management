@@ -486,15 +486,37 @@ docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout
+```
+
+Summary:
+
+- extracted the uploaded UI v2 ZIP package
+- copied the prepared dark-sidebar dashboard layout files into the active portal targets
+- added `hostello_backend/static/css/rentease-layout.css`
+- replaced `portal/base.html`, `portal/owner_dashboard.html`, and `portal/tenant_dashboard.html`
+- kept `rentease-design.css`, backend logic, routes, forms, models, migrations, public pages, and legacy files unchanged
+
+Created:
+
+```text
+docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20G: Reports, Error Pages, and Final UI Consistency Review
+Phase 20H: Final UI Consistency Review and CRUD Layout Regression
 ```
 
 Goal:
 
-Review staff reports, custom error pages, and any remaining visual consistency edges after the tenant portal polish. Keep this template/CSS/documentation-focused unless a real issue is found.
+Check owner CRUD pages after the new dark sidebar base, check tenant child pages after the new dark sidebar base, verify no route/template regression, and polish only if necessary.
 
 ## Recommended Demo Track
 
@@ -523,7 +545,8 @@ Review staff reports, custom error pages, and any remaining visual consistency e
 23. Phase 20D: Apply reviewed RentEase UI improvement package safely - completed
 24. Phase 20E: Polish Owner CRUD Pages - completed
 25. Phase 20F: Polish Tenant Portal Pages - completed
-26. Phase 20G: Reports, Error Pages, and Final UI Consistency Review - next
+26. Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout - completed
+27. Phase 20H: Final UI Consistency Review and CRUD Layout Regression - next
 
 ## Recommended Production Track
 
@@ -538,4 +561,4 @@ Review staff reports, custom error pages, and any remaining visual consistency e
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20F is complete. Phase 20G should review reports, custom error pages, and remaining UI consistency edges while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20G is complete. Phase 20H should verify owner CRUD pages and tenant child pages under the new dark-sidebar portal base while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

@@ -4,107 +4,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Cổng RentEase{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
+    <title>{% block title %}RentEase{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/rentease-layout.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    {% block extra_head %}{% endblock %}
 </head>
-<body class="{% if request.user.is_authenticated and request.user.is_tenant %}tenant-portal{% elif request.user.is_authenticated and request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}owner-portal{% else %}public-portal{% endif %}">
-    <header class="topbar">
-        <div class="topbar-inner">
-            <a class="brand" href="/">
-                <span class="brand-mark">R</span>
-                <span>RentEase</span>
-            </a>
-            <nav class="nav" aria-label="Điều hướng chính">
-                <a href="/"><i class="bi bi-house"></i> Trang chủ</a>
-                <a href="/rooms/"><i class="bi bi-door-open"></i> Xem phòng</a>
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-                        <a href="/admin/"><i class="bi bi-shield-lock"></i> Quản trị</a>
-                        <a href="/reports/"><i class="bi bi-bar-chart-line"></i> Báo cáo</a>
-                    {% endif %}
-                    <a class="primary" href="/logout/"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a>
-                {% else %}
-                    <a class="primary" href="/login/"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</a>
-                {% endif %}
-            </nav>
-        </div>
-    </header>
+<body class="app-body">
+<div class="app-wrapper">
 
-    {% if request.user.is_authenticated %}
-        {% if request.user.is_tenant %}
-            <nav class="role-nav dashboard-sidebar tenant-sidebar" aria-label="Điều hướng khách thuê">
-                <div class="role-nav-inner">
-                    <span class="role-label"><i class="bi bi-person-circle"></i> Khách thuê</span>
-                    <a href="/tenant/dashboard/" {% if request.path == '/tenant/dashboard/' %}class="active"{% endif %}>
-                        <i class="bi bi-grid"></i> Tổng quan
+    <!-- ═══════════════════════════════════════════════════════════
+         SIDEBAR
+    ════════════════════════════════════════════════════════════ -->
+    <aside class="app-sidebar" id="appSidebar">
+
+        <!-- Logo -->
+        <a class="sidebar-logo" href="/">
+            <div class="sidebar-logo-mark">R</div>
+            <div>
+                <div class="sidebar-logo-name">RentEase</div>
+                <div class="sidebar-logo-sub">Quản lý nhà trọ</div>
+            </div>
+        </a>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+
+            {% if request.user.is_authenticated %}
+
+                {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                <!-- ── OWNER NAV ── -->
+                <div class="nav-group">
+                    <span class="nav-group-title">Chính</span>
+                    <a class="nav-item {% if request.path == '/owner/dashboard/' %}active{% endif %}"
+                       href="/owner/dashboard/">
+                        <i class="bi bi-grid-1x2-fill"></i> Tổng quan
                     </a>
-                    <a href="/tenant/profile/" {% if '/tenant/profile' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-person-lines-fill"></i> Hồ sơ
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Quản lý</span>
+                    <a class="nav-item {% if '/owner/rooms' in request.path %}active{% endif %}"
+                       href="/owner/rooms/">
+                        <i class="bi bi-door-closed-fill"></i> Phòng trọ
                     </a>
-                    <a href="/tenant/contracts/" {% if '/tenant/contracts' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-file-text"></i> Hợp đồng
+                    <a class="nav-item {% if '/owner/listings' in request.path %}active{% endif %}"
+                       href="/owner/listings/">
+                        <i class="bi bi-megaphone-fill"></i> Tin đăng
                     </a>
-                    <a href="/tenant/invoices/" {% if '/tenant/invoices' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-receipt"></i> Hóa đơn
+                    <a class="nav-item {% if '/owner/tenants' in request.path %}active{% endif %}"
+                       href="/owner/tenants/">
+                        <i class="bi bi-people-fill"></i> Khách thuê
                     </a>
-                    <a href="/tenant/payments/" {% if '/tenant/payments' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-credit-card"></i> Thanh toán
+                    <a class="nav-item {% if '/owner/contracts' in request.path %}active{% endif %}"
+                       href="/owner/contracts/">
+                        <i class="bi bi-file-text-fill"></i> Hợp đồng
                     </a>
-                    <a href="/tenant/repairs/" {% if '/tenant/repairs' in request.path %}class="active"{% endif %}>
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Vận hành</span>
+                    <a class="nav-item {% if '/owner/invoices' in request.path %}active{% endif %}"
+                       href="/owner/invoices/">
+                        <i class="bi bi-receipt-cutoff"></i> Hóa đơn
+                    </a>
+                    <a class="nav-item {% if '/owner/repairs' in request.path %}active{% endif %}"
+                       href="/owner/repairs/">
                         <i class="bi bi-tools"></i> Sửa chữa
+                        {% if pending_repairs_count and pending_repairs_count > 0 %}
+                            <span class="nav-badge">{{ pending_repairs_count }}</span>
+                        {% endif %}
                     </a>
-                    <a href="/tenant/notifications/" {% if '/tenant/notifications' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-bell"></i> Thông báo
-                        {% if unread_notification_count %}
-                            <span class="nav-count">{{ unread_notification_count }}</span>
+                    <a class="nav-item {% if '/owner/viewing-registrations' in request.path %}active{% endif %}"
+                       href="/owner/viewing-registrations/">
+                        <i class="bi bi-calendar-check-fill"></i> Lịch xem phòng
+                        {% if pending_viewing_count and pending_viewing_count > 0 %}
+                            <span class="nav-badge">{{ pending_viewing_count }}</span>
                         {% endif %}
                     </a>
                 </div>
-            </nav>
-        {% elif request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
-            <nav class="role-nav dashboard-sidebar owner-sidebar" aria-label="Điều hướng chủ trọ">
-                <div class="role-nav-inner">
-                    <span class="role-label"><i class="bi bi-person-badge"></i> Chủ trọ</span>
-                    <a href="/owner/dashboard/" {% if request.path == '/owner/dashboard/' %}class="active"{% endif %}>
-                        <i class="bi bi-grid-1x2"></i> Tổng quan
+
+                {% if request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+                <div class="nav-group">
+                    <span class="nav-group-title">Quản trị</span>
+                    <a class="nav-item {% if '/reports' in request.path %}active{% endif %}"
+                       href="/reports/">
+                        <i class="bi bi-bar-chart-line-fill"></i> Báo cáo
                     </a>
-                    <a href="/owner/rooms/" {% if '/owner/rooms' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-door-closed"></i> Phòng trọ
+                    <a class="nav-item" href="/admin/">
+                        <i class="bi bi-shield-lock-fill"></i> Django Admin
                     </a>
-                    <a href="/owner/listings/" {% if '/owner/listings' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-megaphone"></i> Tin đăng
+                </div>
+                {% endif %}
+                {% endif %}
+
+                {% if request.user.is_tenant %}
+                <!-- ── TENANT NAV ── -->
+                <div class="nav-group">
+                    <span class="nav-group-title">Chính</span>
+                    <a class="nav-item {% if request.path == '/tenant/dashboard/' %}active{% endif %}"
+                       href="/tenant/dashboard/">
+                        <i class="bi bi-grid-fill"></i> Tổng quan
                     </a>
-                    <a href="/owner/tenants/" {% if '/owner/tenants' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-people"></i> Khách thuê
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Thông tin</span>
+                    <a class="nav-item {% if '/tenant/profile' in request.path %}active{% endif %}"
+                       href="/tenant/profile/">
+                        <i class="bi bi-person-lines-fill"></i> Hồ sơ
                     </a>
-                    <a href="/owner/contracts/" {% if '/owner/contracts' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-file-text"></i> Hợp đồng
+                    <a class="nav-item {% if '/tenant/contracts' in request.path %}active{% endif %}"
+                       href="/tenant/contracts/">
+                        <i class="bi bi-file-text-fill"></i> Hợp đồng
                     </a>
-                    <a href="/owner/invoices/" {% if '/owner/invoices' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-receipt"></i> Hóa đơn
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Tài chính</span>
+                    <a class="nav-item {% if '/tenant/invoices' in request.path %}active{% endif %}"
+                       href="/tenant/invoices/">
+                        <i class="bi bi-receipt-cutoff"></i> Hóa đơn
                     </a>
-                    <a href="/owner/repairs/" {% if '/owner/repairs' in request.path %}class="active"{% endif %}>
+                    <a class="nav-item {% if '/tenant/payments' in request.path %}active{% endif %}"
+                       href="/tenant/payments/">
+                        <i class="bi bi-credit-card-fill"></i> Thanh toán
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Hỗ trợ</span>
+                    <a class="nav-item {% if '/tenant/repairs' in request.path %}active{% endif %}"
+                       href="/tenant/repairs/">
                         <i class="bi bi-tools"></i> Sửa chữa
                     </a>
-                    <a href="/owner/viewing-registrations/" {% if '/owner/viewing-registrations' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-calendar-check"></i> Lịch xem phòng
+                    <a class="nav-item {% if '/tenant/notifications' in request.path %}active{% endif %}"
+                       href="/tenant/notifications/">
+                        <i class="bi bi-bell-fill"></i> Thông báo
+                        {% if unread_notification_count and unread_notification_count > 0 %}
+                            <span class="nav-badge">{{ unread_notification_count }}</span>
+                        {% endif %}
                     </a>
                 </div>
-            </nav>
-        {% endif %}
-    {% endif %}
+                {% endif %}
 
-    <main class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
-                    <i class="bi bi-info-circle"></i> {{ message }}
+            {% else %}
+                <div class="nav-group">
+                    <span class="nav-group-title">Truy cập nhanh</span>
+                    <a class="nav-item {% if request.path == '/' %}active{% endif %}" href="/">
+                        <i class="bi bi-house-fill"></i> Trang chủ
+                    </a>
+                    <a class="nav-item {% if '/rooms' in request.path %}active{% endif %}" href="/rooms/">
+                        <i class="bi bi-search"></i> Tìm phòng
+                    </a>
+                    <a class="nav-item" href="/login/">
+                        <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                    </a>
                 </div>
-            {% endfor %}
+            {% endif %}
+
+        </nav>
+
+        <!-- Footer: user info + logout -->
+        {% if request.user.is_authenticated %}
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-user" title="Đăng xuất" onclick="document.getElementById('logoutForm').submit();" style="cursor:pointer;">
+                <div class="sidebar-footer-avatar">
+                    {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div class="sidebar-footer-name">{{ request.user.get_full_name|default:request.user.username }}</div>
+                    <div class="sidebar-footer-role">
+                        {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Quản trị viên{% else %}Người dùng{% endif %}
+                    </div>
+                </div>
+                <i class="bi bi-box-arrow-right" style="color:#4d6380;font-size:0.95rem;"></i>
+            </div>
+            <form id="logoutForm" action="/logout/" method="post" style="display:none;">
+                {% csrf_token %}
+            </form>
+        </div>
         {% endif %}
 
-        {% block content %}{% endblock %}
-    </main>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MAIN AREA
+    ════════════════════════════════════════════════════════════ -->
+    <div class="app-main">
+
+        <!-- Topbar -->
+        <header class="app-topbar">
+            <div class="topbar-left">
+                <!-- Mobile menu toggle -->
+                <button class="topbar-btn" id="sidebarToggle" style="display:none;" aria-label="Mở menu">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- Breadcrumb -->
+                <nav class="topbar-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/"><i class="bi bi-house"></i></a>
+                    <span class="sep">/</span>
+                    {% if request.user.is_owner %}
+                        <a href="/owner/dashboard/">Chủ trọ</a>
+                    {% elif request.user.is_tenant %}
+                        <a href="/tenant/dashboard/">Khách thuê</a>
+                    {% endif %}
+                    {% block breadcrumb %}{% endblock %}
+                </nav>
+            </div>
+
+            <div class="topbar-right">
+                <a class="topbar-btn" href="/rooms/" title="Xem phòng trống">
+                    <i class="bi bi-search"></i>
+                </a>
+
+                {% if request.user.is_authenticated %}
+                <a class="topbar-btn" href="
+                    {% if request.user.is_tenant %}/tenant/notifications/{% else %}/owner/dashboard/{% endif %}"
+                   title="Thông báo">
+                    <i class="bi bi-bell"></i>
+                    {% if unread_notification_count and unread_notification_count > 0 %}
+                        <span class="topbar-notif-dot"></span>
+                    {% endif %}
+                </a>
+
+                <div class="topbar-divider"></div>
+
+                <div class="topbar-user" onclick="document.getElementById('logoutForm').submit();" title="Đăng xuất">
+                    <div class="topbar-user-avatar">
+                        {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
+                    </div>
+                    <div>
+                        <div class="topbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</div>
+                        <div class="topbar-user-role">
+                            {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Admin{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <a class="btn btn-primary btn-sm" href="/login/">
+                    <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                </a>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="app-content" id="appContent">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if 'error' in message.tags or 'danger' in message.tags %}danger{% elif 'warning' in message.tags %}warning{% elif 'success' in message.tags %}success{% else %}info{% endif %}">
+                        <i class="bi bi-{% if 'error' in message.tags or 'danger' in message.tags %}exclamation-triangle-fill{% elif 'success' in message.tags %}check-circle-fill{% else %}info-circle-fill{% endif %}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+    </div><!-- /.app-main -->
+</div><!-- /.app-wrapper -->
+
+<script>
+// Mobile sidebar toggle
+const sidebar = document.getElementById('appSidebar');
+const toggleBtn = document.getElementById('sidebarToggle');
+if (toggleBtn) {
+    toggleBtn.style.display = 'flex';
+    toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+}
+</script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>
