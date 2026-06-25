@@ -1,4 +1,4 @@
-{% extends "portal/base.html" %}
+{% extends "listings/public_base.html" %}
 
 {% block title %}{{ listing.title }} - RentEase{% endblock %}
 
@@ -12,31 +12,22 @@
 </nav>
 
 <div class="grid" style="grid-template-columns:1fr 380px;align-items:start;gap:24px;">
-
-    <!-- Left: Image + Info -->
     <div>
-        <!-- Room image -->
         <div style="border-radius:20px;overflow:hidden;margin-bottom:20px;aspect-ratio:16/9;background:var(--re-bg-soft);">
             {% if listing.room.room_image %}
-                <img src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}"
-                     style="width:100%;height:100%;object-fit:cover;display:block;">
+                <img src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
             {% elif listing.image_url %}
-                <img src="{{ listing.image_url }}" alt="{{ listing.title }}"
-                     style="width:100%;height:100%;object-fit:cover;display:block;">
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
             {% else %}
-                <img src="https://picsum.photos/seed/room{{ listing.pk }}/1200/675"
-                     alt="{{ listing.title }}"
-                     style="width:100%;height:100%;object-fit:cover;display:block;">
+                <img src="https://picsum.photos/seed/room{{ listing.pk }}/1200/675" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
             {% endif %}
         </div>
 
-        <!-- Title + status -->
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
             <h1 style="margin:0;font-size:1.7rem;flex:1;">{{ listing.title }}</h1>
             <span class="status-badge success"><i class="bi bi-check-circle-fill"></i> Đang cho thuê</span>
         </div>
 
-        <!-- Meta badges -->
         <div class="property-meta" style="margin-bottom:20px;">
             {% if listing.room.area %}
                 <span><i class="bi bi-crop"></i> {{ listing.room.area }} m²</span>
@@ -48,7 +39,6 @@
             <span><i class="bi bi-door-closed"></i> Phòng {{ listing.room.room_code }}</span>
         </div>
 
-        <!-- Description -->
         <div class="card" style="margin-bottom:16px;">
             <div class="card-body">
                 <h2 style="font-size:1.05rem;margin:0 0 12px;">
@@ -58,7 +48,6 @@
             </div>
         </div>
 
-        <!-- Room note -->
         {% if listing.room.description %}
             <div class="card">
                 <div class="card-body">
@@ -71,10 +60,7 @@
         {% endif %}
     </div>
 
-    <!-- Right: Price card + Registration form -->
     <div style="position:sticky;top:24px;">
-
-        <!-- Price card -->
         <div class="card" style="margin-bottom:16px;border-top:3px solid var(--re-primary);">
             <div class="card-body">
                 <div class="price-row" style="margin-bottom:14px;">
@@ -99,7 +85,6 @@
             </div>
         </div>
 
-        <!-- Registration form -->
         <div class="card" style="border-top:3px solid var(--re-blue);">
             <div class="card-body">
                 <h2 style="font-size:1.05rem;margin:0 0 16px;">
@@ -124,7 +109,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

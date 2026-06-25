@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RentEase{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="re-home">
+    <header class="re-topbar">
+        <div class="re-topbar-inner">
+            <a class="re-brand" href="/">
+                <span class="re-brand-mark">R</span>
+                <span>RentEase</span>
+            </a>
+            <nav class="re-nav" aria-label="Điều hướng công khai">
+                <a href="/"><i class="bi bi-house"></i> Trang chủ</a>
+                <a href="/rooms/"><i class="bi bi-door-open"></i> Xem phòng</a>
+                <a href="/login/" class="primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="re-page">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

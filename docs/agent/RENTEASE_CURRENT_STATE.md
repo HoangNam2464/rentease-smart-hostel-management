@@ -273,6 +273,14 @@ docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md
 
 Phase 20G applied the uploaded UI v2 package to the active portal shell and dashboards. The dashboard portal layout now uses a dark sidebar plus white topbar, owner and tenant dashboards follow a more professional admin-panel structure, and public pages remain on the existing RentEase design system. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, public templates, legacy files, or `rentease-design.css` were changed.
 
+Phase 20H full UI visual QA and regression audit:
+
+```text
+docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md
+```
+
+Phase 20H audited public, owner, tenant, admin, and reports routes after the dark-sidebar layout. A P1 regression was found and fixed: public listing pages had inherited the dashboard shell from `portal/base.html`. A dedicated public listing base template now keeps public listing pages on `rentease-design.css`. Major/minor UI issues and remaining manual review recommendations were documented. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, runtime files, or legacy files were changed.
+
 ## Runtime State
 
 - Local runtime works.
@@ -446,6 +454,10 @@ Phase 20G RentEase UI V2 Dark Sidebar Layout
 
 Tag: `phase20g-rentease-ui-v2-dark-sidebar`
 
+Phase 20H Full UI Visual QA and Regression Audit
+
+Tag: `phase20h-full-ui-visual-qa`
+
 ## Working Now
 
 - Public landing page
@@ -503,6 +515,10 @@ Tag: `phase20g-rentease-ui-v2-dark-sidebar`
 - Owner/Tenant dashboard layout now follows a professional admin-panel structure
 - Public pages remain on the existing RentEase design system
 - No backend logic changed in Phase 20G
+- Full UI visual QA completed after dark sidebar layout
+- Major/minor UI issues documented in the Phase 20H report
+- Public listing dashboard-shell regression fixed with a dedicated public listing base template
+- No backend logic changed in Phase 20H
 
 ## Important Production Gaps
 
@@ -518,10 +534,10 @@ Tag: `phase20g-rentease-ui-v2-dark-sidebar`
 Current recommended next action:
 
 ```text
-Phase 20H: Final UI Consistency Review and CRUD Layout Regression
+Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report
 ```
 
-Goal: check owner CRUD pages after the new dark sidebar base, check tenant child pages after the new dark sidebar base, verify no route/template regression, and polish only if necessary.
+Goal: manually review owner CRUD pages and tenant child pages under the new dashboard shell, then apply only targeted UI fixes if necessary.
 
 Alternative production track:
 

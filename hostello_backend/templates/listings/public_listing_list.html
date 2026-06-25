@@ -1,4 +1,4 @@
-{% extends "portal/base.html" %}
+{% extends "listings/public_base.html" %}
 
 {% block title %}Tìm phòng trọ - RentEase{% endblock %}
 
@@ -12,22 +12,12 @@
     <section class="listing-grid" aria-label="Danh sách phòng đang cho thuê">
         {% for listing in listings %}
             <article class="card listing-card">
-                <!-- Room image: dùng ảnh thật nếu có, fallback về picsum -->
                 {% if listing.room.room_image %}
-                    <img class="listing-media"
-                         src="{{ listing.room.room_image.url }}"
-                         alt="{{ listing.title }}"
-                         loading="lazy">
+                    <img class="listing-media" src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}" loading="lazy">
                 {% elif listing.image_url %}
-                    <img class="listing-media"
-                         src="{{ listing.image_url }}"
-                         alt="{{ listing.title }}"
-                         loading="lazy">
+                    <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}" loading="lazy">
                 {% else %}
-                    <img class="listing-media"
-                         src="https://picsum.photos/seed/room{{ listing.pk }}/800/500"
-                         alt="{{ listing.title }}"
-                         loading="lazy">
+                    <img class="listing-media" src="https://picsum.photos/seed/room{{ listing.pk }}/800/500" alt="{{ listing.title }}" loading="lazy">
                 {% endif %}
 
                 <div class="card-body">
@@ -56,7 +46,7 @@
                     <ul class="meta-list">
                         <li>
                             <i class="bi bi-door-closed" style="color:var(--re-primary);margin-right:5px;"></i>
-                            <strong>Phòng:</strong> {{ listing.room.room_code }}{% if listing.room.room_name %} – {{ listing.room.room_name }}{% endif %}
+                            <strong>Phòng:</strong> {{ listing.room.room_code }}{% if listing.room.room_name %} - {{ listing.room.room_name }}{% endif %}
                         </li>
                         <li>
                             <i class="bi bi-calendar-event" style="color:var(--re-primary);margin-right:5px;"></i>
@@ -69,8 +59,7 @@
                         <strong>{{ listing.listing_price }}</strong>
                     </div>
 
-                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}"
-                       style="width:100%;margin-top:4px;">
+                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}" style="width:100%;margin-top:4px;">
                         <i class="bi bi-arrow-right-circle"></i>&nbsp; Xem chi tiết
                     </a>
                 </div>

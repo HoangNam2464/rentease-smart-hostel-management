@@ -518,6 +518,41 @@ Goal:
 
 Check owner CRUD pages after the new dark sidebar base, check tenant child pages after the new dark sidebar base, verify no route/template regression, and polish only if necessary.
 
+## Immediate Next Step
+
+Completed current step:
+
+```text
+Phase 20H: Full UI Visual QA and Regression Audit
+```
+
+Summary:
+
+- audited 47 public, owner, tenant, admin, and reports routes after the UI v2 dark-sidebar layout
+- found and fixed the P1 public listing regression caused by public listing templates extending `portal/base.html`
+- added a dedicated public listing base template using `rentease-design.css`
+- cleaned public listing Vietnamese copy
+- verified owner/tenant menu separation and privacy markers
+- no P0/P1 issues remain from the automated route/render audit
+
+Created:
+
+```text
+docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report
+```
+
+Goal:
+
+Manually review owner CRUD pages and tenant child pages under the new dashboard shell. Apply only targeted spacing, table overflow, form readability, or card alignment fixes if necessary.
+
 ## Recommended Demo Track
 
 1. Phase 15A: UI/UX Audit and Redesign Planning - completed
@@ -546,7 +581,8 @@ Check owner CRUD pages after the new dark sidebar base, check tenant child pages
 24. Phase 20E: Polish Owner CRUD Pages - completed
 25. Phase 20F: Polish Tenant Portal Pages - completed
 26. Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout - completed
-27. Phase 20H: Final UI Consistency Review and CRUD Layout Regression - next
+27. Phase 20H: Full UI Visual QA and Regression Audit - completed
+28. Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report - next
 
 ## Recommended Production Track
 
@@ -561,4 +597,4 @@ Check owner CRUD pages after the new dark sidebar base, check tenant child pages
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20G is complete. Phase 20H should verify owner CRUD pages and tenant child pages under the new dark-sidebar portal base while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20H is complete. Phase 20I should manually review owner CRUD pages and tenant child pages under the new dashboard shell, then apply only targeted UI fixes if necessary while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

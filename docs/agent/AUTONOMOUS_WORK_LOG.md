@@ -686,3 +686,56 @@ Phase 20H: Final UI Consistency Review and CRUD Layout Regression
 ```
 
 Check owner CRUD pages and tenant child pages under the new dashboard shell. Polish only if necessary and keep models, schema, billing, permissions, repo hygiene, and legacy isolation unchanged.
+
+## Phase 20H: Full UI Visual QA and Regression Audit
+
+### Status
+
+Completed.
+
+### Summary
+
+- Audited 47 public, owner, tenant, admin, and reports routes after the Phase 20G dark-sidebar layout.
+- Found a P1 public-page regression: public listing pages inherited the dashboard shell because they extended `portal/base.html`.
+- Fixed the P1 regression by adding a dedicated public listing base template and switching public listing templates to it.
+- Cleaned mojibake Vietnamese copy in public listing list/detail/form/success templates.
+- Verified owner and tenant menu separation under the new dashboard shell.
+- Verified no P0 route, template, or privacy issue remained after fixes.
+- Did not modify backend logic, models, forms, URLs, settings, migrations, legacy files, billing, permissions, or runtime files.
+
+### Files Changed
+
+- `hostello_backend/templates/listings/public_base.html`
+- `hostello_backend/templates/listings/public_listing_list.html`
+- `hostello_backend/templates/listings/public_listing_detail.html`
+- `hostello_backend/templates/listings/viewing_registration_form.html`
+- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Client route/render audit across 47 pages/routes
+- privacy marker scan for public and tenant pages
+- owner/tenant menu separation scan
+
+### Tags Created
+
+- `phase20h-full-ui-visual-qa`
+
+### Current Blockers
+
+- Automated screenshot capture was not saved because the browser could not maintain a stable connection to the temporary local runserver.
+- Manual browser review is still recommended for exact desktop/mobile visual spacing.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20I: Targeted UI Fixes Based on Phase 20H QA Report
+```
+
+Review owner CRUD pages and tenant child pages manually under the new dashboard shell. Apply only targeted spacing/table/form fixes if necessary.
