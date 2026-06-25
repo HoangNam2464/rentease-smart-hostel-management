@@ -6,10 +6,10 @@
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Hóa đơn của tôi</h1>
+            <h1><i class="page-icon bi bi-receipt"></i>Hóa đơn của tôi</h1>
             <p>Hóa đơn liên kết với hợp đồng của các phòng do bạn quản lý.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Lập hóa đơn</a>
+        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}"><i class="bi bi-plus-circle"></i> Lập hóa đơn</a>
     </div>
 </section>
 
@@ -50,6 +50,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-receipt-cutoff"></i>
                 <p>Chưa có hóa đơn nào. Hãy lập hóa đơn sau khi phòng và hợp đồng đã sẵn sàng.</p>
             </div>
         {% endif %}

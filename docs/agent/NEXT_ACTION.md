@@ -431,15 +431,36 @@ docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20E: Polish Owner CRUD Pages
 ```
 
+Summary:
+
+- polished active owner list, detail, form, payment, repair process, and viewing registration process templates
+- added reusable CSS for owner tables, detail cards, form cards, action rows, and responsive owner CRUD layouts
+- kept models, views, URLs, forms, migrations, schema, permissions, billing, and legacy isolation unchanged
+- route-smoke-tested owner CRUD pages with `owner_test`
+
+Created:
+
+```text
+docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20F: Polish Tenant Portal Pages
+```
+
 Goal:
 
-Polish owner list/detail/form pages while keeping logic unchanged and applying the same design system to rooms, tenants, contracts, invoices, repairs, and viewing registrations.
+Polish tenant profile, contracts, invoices, payments, repairs, and notifications while keeping logic unchanged and applying the same Phase 20D/20E design system.
 
 ## Recommended Demo Track
 
@@ -466,7 +487,8 @@ Polish owner list/detail/form pages while keeping logic unchanged and applying t
 21. Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide - completed
 22. Phase 21C: Safe Repo Hygiene Cleanup - completed
 23. Phase 20D: Apply reviewed RentEase UI improvement package safely - completed
-24. Phase 20E: Polish Owner CRUD Pages - next
+24. Phase 20E: Polish Owner CRUD Pages - completed
+25. Phase 20F: Polish Tenant Portal Pages - next
 
 ## Recommended Production Track
 
@@ -481,4 +503,4 @@ Polish owner list/detail/form pages while keeping logic unchanged and applying t
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20D is complete. Phase 20E should continue UI polish on owner CRUD pages only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20E is complete. Phase 20F should polish tenant portal pages only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

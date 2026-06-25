@@ -500,3 +500,74 @@ Phase 20E: Polish Owner CRUD Pages
 ```
 
 Polish owner list/detail/form pages only. Keep models, schema, routes, permissions, billing, repo hygiene, and legacy isolation unchanged.
+
+## Phase 20E: Polish Owner CRUD Pages
+
+### Status
+
+Completed.
+
+### Summary
+
+- Inventoried active owner templates under `hostello_backend/templates/portal/owner_*.html`.
+- Grouped owner templates into list, detail, form, payment, repair process, and viewing registration process pages.
+- Added reusable owner CRUD polish CSS to `hostello_backend/static/css/rentease-design.css`.
+- Polished owner page headers with Bootstrap Icons.
+- Improved action buttons, empty states, form containers, table presentation, detail information grids, and responsive behavior.
+- Converted remaining English owner labels to Vietnamese.
+- Kept all existing template variables, URL names, form fields, loops, and backend behavior.
+- Did not edit tenant pages, public pages, legacy HOSTELLO templates, models, views, URLs, forms, migrations, schema, permissions, billing logic, or reports logic.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-design.css`
+- `hostello_backend/templates/portal/owner_rooms_list.html`
+- `hostello_backend/templates/portal/owner_room_detail.html`
+- `hostello_backend/templates/portal/owner_room_form.html`
+- `hostello_backend/templates/portal/owner_listings_list.html`
+- `hostello_backend/templates/portal/owner_listing_detail.html`
+- `hostello_backend/templates/portal/owner_listing_form.html`
+- `hostello_backend/templates/portal/owner_tenants_list.html`
+- `hostello_backend/templates/portal/owner_tenant_detail.html`
+- `hostello_backend/templates/portal/owner_tenant_form.html`
+- `hostello_backend/templates/portal/owner_contracts_list.html`
+- `hostello_backend/templates/portal/owner_contract_detail.html`
+- `hostello_backend/templates/portal/owner_contract_form.html`
+- `hostello_backend/templates/portal/owner_invoices_list.html`
+- `hostello_backend/templates/portal/owner_invoice_detail.html`
+- `hostello_backend/templates/portal/owner_invoice_form.html`
+- `hostello_backend/templates/portal/owner_payment_form.html`
+- `hostello_backend/templates/portal/owner_repairs_list.html`
+- `hostello_backend/templates/portal/owner_repair_detail.html`
+- `hostello_backend/templates/portal/owner_repair_process_form.html`
+- `hostello_backend/templates/portal/owner_viewing_registrations_list.html`
+- `hostello_backend/templates/portal/owner_viewing_registration_detail.html`
+- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
+- `docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- owner CRUD route smoke tests with `owner_test`
+- rendered owner page privacy/raw-template scan
+
+### Tags Created
+
+- `phase20e-owner-crud-polish`
+
+### Current Blockers
+
+- No technical blocker.
+- Final browser screenshot review is still useful for mobile table overflow.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20F: Polish Tenant Portal Pages
+```
+
+Polish tenant profile, contracts, invoices, payments, repairs, and notifications only. Keep logic, schema, routes, permissions, billing, repo hygiene, and legacy isolation unchanged.

@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ room.room_code }} - {{ room.room_name }}</h1>
+    <h1><i class="page-icon bi bi-door-closed"></i>{{ room.room_code }} - {{ room.room_name }}</h1>
     <p>Thông tin phòng thuộc hồ sơ chủ trọ của bạn.</p>
 </section>
 
@@ -26,7 +26,7 @@
             </section>
         {% endif %}
         <div class="page-actions">
-            <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}">Sửa phòng</a>
+            <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}"><i class="bi bi-pencil-square"></i> Sửa phòng</a>
             <a class="button" href="{% url 'portal:owner_rooms_list' %}">Quay lại danh sách phòng</a>
         </div>
     </div>

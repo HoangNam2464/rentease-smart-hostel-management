@@ -4,11 +4,11 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ form_title }}</h1>
+    <h1><i class="page-icon bi bi-file-text"></i>{{ form_title }}</h1>
     <p>Tạo hoặc cập nhật thông tin hợp đồng cho phòng thuộc quyền quản lý của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card form-card">
     <div class="card-body">
         <p class="help-text">Hợp đồng liên kết phòng của bạn với khách thuê đã có trong hệ thống. Hãy nhập đúng ngày và số tiền vì hóa đơn sẽ dựa trên thông tin này.</p>
         <form method="post" novalidate>
@@ -22,7 +22,7 @@
 
             {% if form.room %}
                 <div class="form-field">
-                    <label for="{{ form.room.id_for_label }}">Room</label>
+                    <label for="{{ form.room.id_for_label }}">Phòng</label>
                     {{ form.room }}
                     {{ form.room.errors }}
                 </div>
@@ -37,7 +37,7 @@
             {% endif %}
 
             <div class="form-field">
-                <label for="{{ form.previous_contract.id_for_label }}">Previous contract</label>
+                <label for="{{ form.previous_contract.id_for_label }}">Hợp đồng trước</label>
                 {{ form.previous_contract }}
                 {{ form.previous_contract.errors }}
             </div>
@@ -49,31 +49,31 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.signed_date.id_for_label }}">Signed date</label>
+                <label for="{{ form.signed_date.id_for_label }}">Ngày ký</label>
                 {{ form.signed_date }}
                 {{ form.signed_date.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.start_date.id_for_label }}">Start date</label>
+                <label for="{{ form.start_date.id_for_label }}">Ngày bắt đầu</label>
                 {{ form.start_date }}
                 {{ form.start_date.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.end_date.id_for_label }}">End date</label>
+                <label for="{{ form.end_date.id_for_label }}">Ngày kết thúc</label>
                 {{ form.end_date }}
                 {{ form.end_date.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.rent_amount.id_for_label }}">Rent amount</label>
+                <label for="{{ form.rent_amount.id_for_label }}">Tiền thuê</label>
                 {{ form.rent_amount }}
                 {{ form.rent_amount.errors }}
             </div>
 
             <div class="form-field">
-                <label for="{{ form.deposit_amount.id_for_label }}">Deposit amount</label>
+                <label for="{{ form.deposit_amount.id_for_label }}">Tiền cọc</label>
                 {{ form.deposit_amount }}
                 {{ form.deposit_amount.errors }}
             </div>

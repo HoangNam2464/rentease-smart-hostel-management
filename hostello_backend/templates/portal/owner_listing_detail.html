@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ listing.title }}</h1>
+    <h1><i class="page-icon bi bi-megaphone"></i>{{ listing.title }}</h1>
     <p>Thông tin tin đăng cho một phòng thuộc quyền quản lý của bạn.</p>
 </section>
 
@@ -27,7 +27,7 @@
             <p class="listing-description">{{ listing.description }}</p>
         </section>
         <div class="page-actions">
-            <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}">Sửa tin đăng</a>
+            <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}"><i class="bi bi-pencil-square"></i> Sửa tin đăng</a>
             <a class="button" href="{% url 'portal:owner_listings_list' %}">Quay lại danh sách tin</a>
         </div>
     </div>

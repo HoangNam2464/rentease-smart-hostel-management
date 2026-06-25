@@ -6,10 +6,10 @@
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Phòng của tôi</h1>
+            <h1><i class="page-icon bi bi-door-closed"></i>Phòng của tôi</h1>
             <p>Quản lý các phòng thuộc hồ sơ chủ trọ của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_room_create' %}">Tạo phòng</a>
+        <a class="button primary" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-circle"></i> Tạo phòng</a>
     </div>
 </section>
 
@@ -44,6 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-door-open"></i>
                 <p>Chưa có phòng nào liên kết với hồ sơ chủ trọ. Hãy tạo phòng đầu tiên để bắt đầu quy trình quản lý.</p>
             </div>
         {% endif %}

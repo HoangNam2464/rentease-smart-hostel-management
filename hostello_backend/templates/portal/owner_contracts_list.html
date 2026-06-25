@@ -6,10 +6,10 @@
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Hợp đồng của tôi</h1>
+            <h1><i class="page-icon bi bi-file-text"></i>Hợp đồng của tôi</h1>
             <p>Các hợp đồng thuê phòng liên kết với phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_contract_create' %}">Tạo hợp đồng</a>
+        <a class="button primary" href="{% url 'portal:owner_contract_create' %}"><i class="bi bi-plus-circle"></i> Tạo hợp đồng</a>
     </div>
 </section>
 
@@ -46,6 +46,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-file-earmark-plus"></i>
                 <p>Chưa có hợp đồng nào. Hãy tạo hợp đồng sau khi đã có phòng và khách thuê liên kết.</p>
             </div>
         {% endif %}

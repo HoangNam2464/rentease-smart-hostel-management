@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ repair.title }}</h1>
+    <h1><i class="page-icon bi bi-tools"></i>{{ repair.title }}</h1>
     <p>Thông tin yêu cầu sửa chữa liên kết với một phòng của bạn.</p>
 </section>
 
@@ -26,7 +26,7 @@
             <p class="help-text">Yêu cầu này có ảnh đính kèm và chỉ được xử lý trong khu vực quản trị phù hợp.</p>
         {% endif %}
         <div class="page-actions">
-            <a class="button primary" href="{% url 'portal:owner_repair_process' repair.pk %}">Xử lý yêu cầu</a>
+            <a class="button primary" href="{% url 'portal:owner_repair_process' repair.pk %}"><i class="bi bi-pencil-square"></i> Xử lý yêu cầu</a>
             <a class="button" href="{% url 'portal:owner_repairs_list' %}">Quay lại sửa chữa</a>
         </div>
     </div>

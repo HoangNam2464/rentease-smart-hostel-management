@@ -249,6 +249,14 @@ docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md
 
 Phase 20D applied the reviewed RentEase UI improvement package to active RentEase templates and shared CSS only. The homepage, login page, public room list/detail, owner dashboard, tenant dashboard, and portal layout were improved. Package references were adapted to active URL names and existing model fields. External dev/demo assets remain a production follow-up.
 
+Phase 20E owner CRUD polish:
+
+```text
+docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md
+```
+
+Phase 20E aligned active owner list, detail, form, payment, repair process, and viewing registration process pages with the Phase 20D visual system. The phase added reusable CSS for owner CRUD tables, detail cards, form cards, action rows, and responsive layouts. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, or legacy files were changed.
+
 ## Runtime State
 
 - Local runtime works.
@@ -410,6 +418,10 @@ Phase 20D Reviewed UI Package Application
 
 Tag: `phase20d-reviewed-ui-package`
 
+Phase 20E Owner CRUD Polish
+
+Tag: `phase20e-owner-crud-polish`
+
 ## Working Now
 
 - Public landing page
@@ -459,6 +471,8 @@ Tag: `phase20d-reviewed-ui-package`
 - Reviewed UI package applied to active RentEase templates/CSS in Phase 20D
 - Homepage, login, public listing/detail, owner dashboard, and tenant dashboard were improved
 - External dev/demo assets remain a production follow-up
+- Owner CRUD pages are visually aligned with the Phase 20D design system
+- No backend logic changed in Phase 20E
 
 ## Important Production Gaps
 
@@ -474,10 +488,10 @@ Tag: `phase20d-reviewed-ui-package`
 Current recommended next action:
 
 ```text
-Phase 20E: Polish Owner CRUD Pages
+Phase 20F: Polish Tenant Portal Pages
 ```
 
-Goal: polish owner list/detail/form pages while keeping logic unchanged and applying the same design system to rooms, tenants, contracts, invoices, repairs, and viewing registrations.
+Goal: polish tenant profile, contracts, invoices, payments, repairs, and notifications while keeping logic unchanged and applying the same Phase 20D/20E design system.
 
 Alternative production track:
 

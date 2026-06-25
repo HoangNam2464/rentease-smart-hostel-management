@@ -4,13 +4,13 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ form_title }}</h1>
+    <h1><i class="page-icon bi bi-receipt"></i>{{ form_title }}</h1>
     <p>Tạo hoặc cập nhật thông tin hóa đơn cho hợp đồng phòng của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card form-card">
     <div class="card-body">
-        <p class="help-text">This form edits invoice header information only. Totals, paid amount, remaining amount, and status are managed by billing logic.</p>
+        <p class="help-text">Biểu mẫu này chỉ chỉnh thông tin đầu hóa đơn. Tổng tiền, đã thanh toán, còn lại và trạng thái do logic thanh toán quản lý.</p>
         <form method="post" novalidate>
             {% csrf_token %}
 

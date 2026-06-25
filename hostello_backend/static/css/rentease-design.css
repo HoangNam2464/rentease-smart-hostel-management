@@ -1532,3 +1532,176 @@ body.re-public {
     color: var(--re-primary-dark);
     vertical-align: middle;
 }
+
+/* =========================================================
+   PHASE 20E — Owner CRUD polish
+   ========================================================= */
+
+.page-header .toolbar {
+    align-items: center;
+}
+
+.page-header .toolbar h1,
+.page-header h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-actions,
+.action-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.data-card,
+.form-card,
+.detail-section {
+    border: 1px solid var(--re-card-border);
+    border-radius: 22px;
+    background: var(--re-card);
+    box-shadow: 0 16px 36px rgba(15, 36, 51, 0.06);
+}
+
+.table-wrap {
+    border-radius: 18px;
+    border: 1px solid var(--re-card-border);
+    overflow-x: auto;
+    background: var(--re-card);
+}
+
+.data-table {
+    min-width: 760px;
+}
+
+.data-table th {
+    background: var(--re-bg-soft);
+    color: var(--re-muted);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.data-table td {
+    vertical-align: middle;
+}
+
+.data-table td:first-child a {
+    font-weight: 800;
+}
+
+.data-table td:last-child a:not(.button) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--re-primary-soft);
+    color: var(--re-primary-dark);
+    font-size: 0.84rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.info-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.info-list li {
+    display: block;
+    padding: 14px 16px;
+    border: 1px solid var(--re-card-border);
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, var(--re-bg-soft));
+}
+
+.info-list span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--re-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.info-list strong {
+    display: block;
+    color: var(--re-heading);
+    font-size: 0.98rem;
+}
+
+.form-card .card-body,
+.card.form-card .card-body {
+    max-width: 860px;
+}
+
+.form-field {
+    margin-bottom: 16px;
+}
+
+.form-field ul,
+.form-field .errorlist,
+.form-errors,
+.form-field > .error {
+    margin: 7px 0 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--re-danger-soft);
+    color: var(--re-danger);
+    font-size: 0.84rem;
+    list-style: none;
+}
+
+.section {
+    margin-top: 24px;
+}
+
+.section h2 {
+    font-size: 1rem;
+}
+
+.muted-meta {
+    color: var(--re-muted);
+    font-size: 0.9rem;
+}
+
+.owner-summary-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 18px;
+}
+
+.owner-summary-strip .metric {
+    box-shadow: none;
+}
+
+.empty-state {
+    border: 1px dashed var(--re-card-border);
+    border-radius: 18px;
+    background: var(--re-bg-soft);
+}
+
+@media (max-width: 760px) {
+    .info-list,
+    .owner-summary-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .page-actions,
+    .action-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .page-actions .button,
+    .action-row .button {
+        width: 100%;
+    }
+}

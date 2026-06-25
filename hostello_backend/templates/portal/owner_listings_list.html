@@ -6,10 +6,10 @@
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1>Tin phòng của tôi</h1>
+            <h1><i class="page-icon bi bi-megaphone"></i>Tin phòng của tôi</h1>
             <p>Quản lý tin đăng công khai cho các phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_listing_create' %}">Đăng tin phòng</a>
+        <a class="button primary" href="{% url 'portal:owner_listing_create' %}"><i class="bi bi-plus-circle"></i> Đăng tin phòng</a>
     </div>
 </section>
 
@@ -22,7 +22,7 @@
                         <tr>
                             <th>Tin phòng</th>
                             <th>Phòng</th>
-                            <th>Gia</th>
+                            <th>Giá</th>
                             <th>Tiền cọc</th>
                             <th>Trạng thái</th>
                             <th>Ngày vào ở</th>
@@ -44,6 +44,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-megaphone"></i>
                 <p>Chưa có tin phòng nào. Hãy đăng tin khi phòng sẵn sàng cho thuê.</p>
             </div>
         {% endif %}

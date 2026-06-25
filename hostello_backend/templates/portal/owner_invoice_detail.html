@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ invoice.invoice_code|default:invoice.pk }}</h1>
+    <h1><i class="page-icon bi bi-receipt"></i>{{ invoice.invoice_code|default:invoice.pk }}</h1>
     <p>Thông tin hóa đơn liên kết với một hợp đồng phòng của bạn.</p>
 </section>
 
@@ -30,9 +30,9 @@
         {% endif %}
         <div class="page-actions">
             {% if invoice.remaining_amount %}
-                <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}">Ghi nhận thanh toán</a>
+                <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}"><i class="bi bi-credit-card"></i> Ghi nhận thanh toán</a>
             {% endif %}
-            <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}">Sửa hóa đơn</a>
+            <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}"><i class="bi bi-pencil-square"></i> Sửa hóa đơn</a>
             <a class="button" href="{% url 'portal:owner_invoices_list' %}">Quay lại danh sách hóa đơn</a>
         </div>
     </div>
