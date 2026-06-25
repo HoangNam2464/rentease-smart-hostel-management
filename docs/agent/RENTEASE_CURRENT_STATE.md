@@ -462,6 +462,10 @@ Phase 20I Full Role UI/UX Audit
 
 Tag: `phase20i-full-role-ui-ux-audit`
 
+Phase 20J Browser-Based Visual QA
+
+Tag: `phase20j-browser-visual-qa`
+
 ## Working Now
 
 - Public landing page
@@ -527,6 +531,10 @@ Tag: `phase20i-full-role-ui-ux-audit`
 - No P0/P1 UI, route-rendering, role-shell, or privacy issue remains from the Phase 20I audit
 - Remaining UI work is P2/P3 polish around dashboards, owner CRUD pages, tenant readability, public listing polish, and reports/admin presentation
 - No backend logic changed in Phase 20I
+- Browser-based visual QA completed for admin/Jazzmin, reports, responsive/mobile, forms, empty states, and interactions
+- Screenshot evidence saved under `docs/ui/screenshots/phase20j-browser-qa/`
+- Key visual QA findings: owner dashboard has slight mobile overflow, owner forms need consistent styled fields, tenant financial tables are cramped on mobile, reports/admin pages need staff UI polish, and admin tenant list exposes `Citizen id`
+- No application code changed in Phase 20J
 
 ## Important Production Gaps
 
@@ -542,10 +550,10 @@ Tag: `phase20i-full-role-ui-ux-audit`
 Current recommended next action:
 
 ```text
-Phase 20J: Dashboard Interaction and Visual Polish
+Phase 20K: Dashboard Interaction Polish
 ```
 
-Goal: polish owner and tenant dashboards with stronger metric hierarchy, activity sections, empty states, hover/focus effects, and role-specific visual guidance.
+Goal: fix dashboard mobile overflow and improve owner/tenant dashboard metric hierarchy, action cards, hover/focus states, and role-specific visual guidance.
 
 Alternative production track:
 

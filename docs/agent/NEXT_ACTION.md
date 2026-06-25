@@ -565,15 +565,38 @@ docs/ui/PHASE_20I_FULL_ROLE_UI_UX_AUDIT.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 20J: Browser-Based Visual QA
+```
+
+Summary:
+
+- used a real browser against `http://127.0.0.1:8000/`
+- captured 44 PNG screenshots under `docs/ui/screenshots/phase20j-browser-qa/`
+- reviewed admin/Jazzmin after login, staff reports, responsive/mobile pages, safe form error states, empty-state templates, and interaction/effect CSS
+- found no browser route blocker
+- documented remaining UI risks: admin tenant `Citizen id` column, owner default-looking form widgets, owner dashboard mobile overflow, cramped tenant invoice mobile table, and staff reports/admin polish needs
+
+Created:
+
+```text
+docs/ui/PHASE_20J_BROWSER_VISUAL_QA.md
+docs/ui/screenshots/phase20j-browser-qa/
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20J: Dashboard Interaction and Visual Polish
+Phase 20K: Dashboard Interaction Polish
 ```
 
 Goal:
 
-Polish owner and tenant dashboards with stronger metric hierarchy, activity sections, empty states, hover/focus effects, and role-specific visual guidance. Keep the work template/CSS-only and preserve owner/tenant scoping.
+Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hierarchy, action cards, hover/focus states, and role-specific visual guidance. Keep the work template/CSS-only and preserve owner/tenant scoping.
 
 ## Recommended Demo Track
 
@@ -605,7 +628,8 @@ Polish owner and tenant dashboards with stronger metric hierarchy, activity sect
 26. Phase 20G: Apply RentEase UI V2 Dark Sidebar Layout - completed
 27. Phase 20H: Full UI Visual QA and Regression Audit - completed
 28. Phase 20I: Full Role UI/UX Audit - completed
-29. Phase 20J: Dashboard Interaction and Visual Polish - next
+29. Phase 20J: Browser-Based Visual QA - completed
+30. Phase 20K: Dashboard Interaction Polish - next
 
 ## Recommended Production Track
 
@@ -620,4 +644,4 @@ Polish owner and tenant dashboards with stronger metric hierarchy, activity sect
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20I is complete. Phase 20J should polish owner and tenant dashboards first, because dashboards are the first authenticated impression after login. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20J is complete. Phase 20K should polish owner and tenant dashboards first, because browser QA found the owner dashboard has slight mobile overflow and dashboard interactions/hierarchy are the safest next visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

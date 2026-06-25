@@ -783,3 +783,52 @@ Phase 20J: Dashboard Interaction and Visual Polish
 ```
 
 Polish owner and tenant dashboards with stronger metric hierarchy, activity sections, empty states, hover/focus effects, and role-specific visual guidance. Keep the work template/CSS-only and preserve all security scoping.
+
+## Phase 20J: Browser-Based Visual QA
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran browser-based visual QA against the local server at `http://127.0.0.1:8000/`.
+- Reviewed public, owner, tenant, admin/Jazzmin, reports, desktop, mobile, form error, empty-state, and interaction/effect surfaces.
+- Captured 44 PNG screenshots under `docs/ui/screenshots/phase20j-browser-qa/`.
+- Found no route-blocking browser failure.
+- Found targeted UI issues: admin tenant list exposes `Citizen id`, owner forms still render browser-default fields, owner dashboard has slight mobile overflow, tenant invoice mobile table is cramped, and reports/admin screens need later staff UI polish.
+- Did not modify application code, templates, CSS, views, forms, models, URLs, settings, migrations, legacy apps, runtime files, or database files.
+
+### Files Changed
+
+- `docs/ui/PHASE_20J_BROWSER_VISUAL_QA.md`
+- `docs/ui/screenshots/phase20j-browser-qa/*.png`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Browser screenshot pass for public, owner, tenant, admin, reports, desktop, and mobile pages
+- Safe invalid-submit form checks for validation display
+- Empty-state template scan
+- Interaction/effect CSS scan
+
+### Tags Created
+
+- `phase20j-browser-visual-qa`
+
+### Current Blockers
+
+- No technical blocker.
+- Admin/Jazzmin tenant list exposes `Citizen id` and should be handled in a later approved admin-hardening/polish phase.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20K: Dashboard Interaction Polish
+```
+
+Fix owner dashboard mobile overflow and improve dashboard card/action hierarchy first, then continue with owner CRUD professionalization.
