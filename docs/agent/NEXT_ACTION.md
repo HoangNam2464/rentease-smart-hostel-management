@@ -611,15 +611,38 @@ docs/security/PHASE_20K_A_ADMIN_TENANT_PRIVACY_HOTFIX.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20K-B: Dashboard Interaction and Visual Polish
 ```
 
+Summary:
+
+- improved dashboard responsive guards for the dark-sidebar portal layout
+- reduced mobile overflow risk around 390px by tightening topbar, quick actions, debt cards, feed rows, and tenant header wrapping
+- improved card, metric, activity feed, quick action, and empty-state polish
+- verified owner, tenant, reports, and admin routes with Django Client checks
+- reconfirmed Tenant and CoTenant admin list pages do not render `citizen_id`/CCCD/CMND markers
+- introduced no model, schema, migration, route, view, form, billing, reports, admin logic, or legacy changes
+
+Created:
+
+```text
+docs/ui/PHASE_20K_B_DASHBOARD_INTERACTION_VISUAL_POLISH.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20L: Owner CRUD Form And Table Professionalization
+```
+
 Goal:
 
-Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hierarchy, action cards, hover/focus states, and role-specific visual guidance. Keep the work template/CSS-only and preserve owner/tenant scoping.
+Polish owner CRUD forms and data tables that still look default or cramped, especially form fields, invoice/payment table readability, and small-screen table behavior. Keep the phase template/CSS-only unless explicitly approved otherwise.
 
 ## Recommended Demo Track
 
@@ -653,7 +676,8 @@ Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hi
 28. Phase 20I: Full Role UI/UX Audit - completed
 29. Phase 20J: Browser-Based Visual QA - completed
 30. Phase 20K-A: Admin Tenant Privacy Hotfix - completed
-31. Phase 20K-B: Dashboard Interaction and Visual Polish - next
+31. Phase 20K-B: Dashboard Interaction and Visual Polish - completed
+32. Phase 20L: Owner CRUD Form And Table Professionalization - next
 
 ## Recommended Production Track
 
@@ -668,4 +692,4 @@ Fix owner dashboard mobile overflow and improve owner/tenant dashboard metric hi
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20K-A is complete. Phase 20K-B should polish owner and tenant dashboards first, because browser QA found the owner dashboard has slight mobile overflow and dashboard interactions/hierarchy are the safest next visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20K-B is complete. Phase 20L should polish owner CRUD forms and data tables next, because browser QA and dashboard polish left owner form/table consistency as the safest remaining visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
