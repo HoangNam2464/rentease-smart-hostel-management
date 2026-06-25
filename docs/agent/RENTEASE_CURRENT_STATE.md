@@ -233,6 +233,14 @@ docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md
 
 Phase 21B verified the docs structure, linked the project map from `AGENTS.md`, fixed `Tenant.__str__` so it no longer exposes `citizen_id`, created teammate local setup/demo data guidance, created a team member work guide, and documented repo hygiene risks without deleting local files.
 
+Phase 21C safe repo hygiene cleanup:
+
+```text
+docs/agent/PHASE_21C_SAFE_REPO_HYGIENE_CLEANUP.md
+```
+
+Phase 21C hardened `.gitignore`, verified local/demo files such as `db.sqlite3`, `venv`, backup JSON files, `.env`, and `media` were not tracked, and did not delete local files or remove legacy HOSTELLO apps/templates.
+
 ## Runtime State
 
 - Local runtime works.
@@ -386,6 +394,10 @@ Phase 21B Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide
 
 Tag: `phase21b-docs-privacy-local-setup`
 
+Phase 21C Safe Repo Hygiene Cleanup
+
+Tag: `phase21c-safe-repo-hygiene-cleanup`
+
 ## Working Now
 
 - Public landing page
@@ -429,6 +441,9 @@ Tag: `phase21b-docs-privacy-local-setup`
 - Docs structure verified and RentEase project map linked from `AGENTS.md`
 - Tenant string representation no longer exposes `citizen_id`
 - Local setup/demo data guide and repo hygiene audit available
+- Repo hygiene rules are enforced through `.gitignore`
+- Local/demo files should not be committed
+- No legacy removal was done in Phase 21C
 
 ## Important Production Gaps
 
@@ -444,10 +459,10 @@ Tag: `phase21b-docs-privacy-local-setup`
 Current recommended next action:
 
 ```text
-Phase 21C: Safe Repo Hygiene Cleanup
+Phase 20D: Apply reviewed RentEase UI improvement package safely
 ```
 
-Goal: update `.gitignore` if needed, untrack local-only files if any are tracked, and avoid deleting local files blindly.
+Goal: apply reviewed UI improvements to active RentEase templates/CSS only while preserving models, migrations, schema, permissions, repo hygiene, and legacy isolation.
 
 Alternative production track:
 

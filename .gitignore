@@ -1,6 +1,9 @@
 # Python / Django
 __pycache__/
+**/__pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *$py.class
 *.sqlite3
 db.sqlite3
@@ -9,6 +12,7 @@ backup_phase*.json
 # Virtual Environments
 hostello_env/
 venv/
+.venv/
 env/
 ENV/
 env.bak/
@@ -18,11 +22,26 @@ venv.bak/
 .env
 .env.local
 .env.*
+!.env.example
 
 # Media Files
 media/
 media/*
 /hostello_backend/media/
+hostello_backend/media/
+
+# Static build output
+staticfiles/
+hostello_backend/staticfiles/
+
+# Logs
+*.log
+logs/
+
+# Backups / local dumps
+backup_*.json
+*.bak
+*.phase*.bak
 
 # IDE / OS Files
 .vscode/

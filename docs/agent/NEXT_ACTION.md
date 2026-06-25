@@ -387,18 +387,37 @@ docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 21C: Safe Repo Hygiene Cleanup
 ```
 
+Summary:
+
+- hardened `.gitignore` for local demo files, virtual environments, backups, logs, static build output, media, and environment files
+- verified no tracked `db.sqlite3`, `venv`, `backup_phase`, `.env`, or `media` paths were found
+- did not run `git rm --cached` because no forbidden local/demo files were tracked
+- did not delete any local files
+- did not remove legacy HOSTELLO apps/templates
+
+Created:
+
+```text
+docs/agent/PHASE_21C_SAFE_REPO_HYGIENE_CLEANUP.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20D: Apply reviewed RentEase UI improvement package safely
+```
+
 Goal:
 
-- update `.gitignore` if gaps remain
-- untrack `db.sqlite3`, `venv`, backup JSON, `.env`, or media files only if they are tracked
-- do not delete local files blindly
-- do not touch migrations/schema
+After repo hygiene is protected, apply the reviewed UI package to active RentEase templates only. Do not touch legacy HOSTELLO templates/apps unless explicitly approved.
 
 ## Recommended Demo Track
 
@@ -423,8 +442,8 @@ Goal:
 19. Phase 20B: Template Reference Selection and UI Direction - completed
 20. Phase 20C: Apply Reference-Based UI Redesign - completed
 21. Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide - completed
-22. Phase 21C: Safe Repo Hygiene Cleanup - next
-23. Phase 20D: Browser Visual Review and Final UI Fixes - optional next demo-polish step
+22. Phase 21C: Safe Repo Hygiene Cleanup - completed
+23. Phase 20D: Apply reviewed RentEase UI improvement package safely - next
 
 ## Recommended Production Track
 
@@ -437,6 +456,6 @@ Goal:
 
 ## Current Recommendation
 
-The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, and a repo hygiene audit.
+The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 21C should be a small cleanup phase. It should not delete local files blindly and should not touch models, migrations, schema, billing, permissions, or legacy apps.
+Phase 20D should touch active RentEase templates/CSS only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
