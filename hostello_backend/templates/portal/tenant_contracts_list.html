@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Hợp đồng của khách thuê - RentEase{% endblock %}
+{% block title %}Hợp đồng của tôi - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Hợp đồng của tôi</h1>
+    <h1><i class="page-icon bi bi-file-text"></i>Hợp đồng của tôi</h1>
     <p>Danh sách hợp đồng liên kết với hồ sơ khách thuê của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card data-card">
     <div class="card-body">
         {% if contracts %}
             <div class="table-wrap">
@@ -21,17 +21,19 @@
                             <th>Kết thúc</th>
                             <th>Tiền thuê</th>
                             <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for contract in contracts %}
                             <tr>
-                                <td><a href="{% url 'portal:tenant_contract_detail' contract.pk %}">{{ contract.contract_code }}</a></td>
-                                <td>{{ contract.room.room_code }} - {{ contract.room.room_name }}</td>
-                                <td>{{ contract.start_date }}</td>
-                                <td>{{ contract.end_date }}</td>
+                                <td>{{ contract.contract_code }}</td>
+                                <td>{{ contract.room.room_code }}{% if contract.room.room_name %} - {{ contract.room.room_name }}{% endif %}</td>
+                                <td>{{ contract.start_date|date:"d/m/Y" }}</td>
+                                <td>{{ contract.end_date|date:"d/m/Y" }}</td>
                                 <td>{{ contract.rent_amount }}</td>
                                 <td><span class="status-badge">{{ contract.get_status_display }}</span></td>
+                                <td><a href="{% url 'portal:tenant_contract_detail' contract.pk %}">Chi tiết</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -39,6 +41,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-file-earmark-x"></i>
                 <p>Chưa có hợp đồng nào liên kết với hồ sơ khách thuê của bạn.</p>
             </div>
         {% endif %}

@@ -257,6 +257,14 @@ docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md
 
 Phase 20E aligned active owner list, detail, form, payment, repair process, and viewing registration process pages with the Phase 20D visual system. The phase added reusable CSS for owner CRUD tables, detail cards, form cards, action rows, and responsive layouts. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, or legacy files were changed.
 
+Phase 20F tenant portal bugfix and polish:
+
+```text
+docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md
+```
+
+Phase 20F fixed shared portal role navigation separation, cleaned tenant portal Vietnamese copy, removed the dashboard dependency on missing `recent.*` context, and polished tenant profile, contracts, invoices, payments, repairs, and notifications. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, or legacy files were changed.
+
 ## Runtime State
 
 - Local runtime works.
@@ -422,6 +430,10 @@ Phase 20E Owner CRUD Polish
 
 Tag: `phase20e-owner-crud-polish`
 
+Phase 20F Tenant Portal Bugfix and Polish
+
+Tag: `phase20f-tenant-portal-bugfix-polish`
+
 ## Working Now
 
 - Public landing page
@@ -472,7 +484,9 @@ Tag: `phase20e-owner-crud-polish`
 - Homepage, login, public listing/detail, owner dashboard, and tenant dashboard were improved
 - External dev/demo assets remain a production follow-up
 - Owner CRUD pages are visually aligned with the Phase 20D design system
-- No backend logic changed in Phase 20E
+- Tenant portal pages are visually aligned with the Phase 20D/20E design system
+- Shared portal navigation now separates tenant and owner sidebars more clearly
+- No backend logic changed in Phase 20F
 
 ## Important Production Gaps
 
@@ -488,10 +502,10 @@ Tag: `phase20e-owner-crud-polish`
 Current recommended next action:
 
 ```text
-Phase 20F: Polish Tenant Portal Pages
+Phase 20G: Reports, Error Pages, and Final UI Consistency Review
 ```
 
-Goal: polish tenant profile, contracts, invoices, payments, repairs, and notifications while keeping logic unchanged and applying the same Phase 20D/20E design system.
+Goal: review staff reports, custom error pages, and remaining UI consistency edges while keeping logic unchanged and applying the current RentEase design system.
 
 Alternative production track:
 

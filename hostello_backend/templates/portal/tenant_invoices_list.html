@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Hóa đơn của khách thuê - RentEase{% endblock %}
+{% block title %}Hóa đơn của tôi - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Hóa đơn của tôi</h1>
+    <h1><i class="page-icon bi bi-receipt"></i>Hóa đơn của tôi</h1>
     <p>Danh sách hóa đơn liên kết với hợp đồng thuê phòng của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card data-card">
     <div class="card-body">
         {% if invoices %}
             <div class="table-wrap">
@@ -22,18 +22,20 @@
                             <th>Tổng tiền</th>
                             <th>Còn lại</th>
                             <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for invoice in invoices %}
                             <tr>
-                                <td><a href="{% url 'portal:tenant_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a></td>
+                                <td>{{ invoice.invoice_code|default:invoice.pk }}</td>
                                 <td>{{ invoice.contract.contract_code }}</td>
                                 <td>{{ invoice.contract.room.room_code }}</td>
                                 <td>{{ invoice.month }}/{{ invoice.year }}</td>
                                 <td>{{ invoice.total_amount }}</td>
                                 <td>{{ invoice.remaining_amount }}</td>
-                                <td><span class="status-badge">{{ invoice.get_status_display }}</span></td>
+                                <td><span class="status-badge {% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% endif %}">{{ invoice.get_status_display }}</span></td>
+                                <td><a href="{% url 'portal:tenant_invoice_detail' invoice.pk %}">Chi tiết</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -41,6 +43,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-inbox"></i>
                 <p>Chưa có hóa đơn nào liên kết với hợp đồng của bạn.</p>
             </div>
         {% endif %}

@@ -571,3 +571,66 @@ Phase 20F: Polish Tenant Portal Pages
 ```
 
 Polish tenant profile, contracts, invoices, payments, repairs, and notifications only. Keep logic, schema, routes, permissions, billing, repo hygiene, and legacy isolation unchanged.
+
+## Phase 20F: Tenant Portal Bugfix, Layout Separation, and Polish
+
+### Status
+
+Completed.
+
+### Summary
+
+- Inventoried active tenant routes and tenant templates.
+- Fixed shared `portal/base.html` role navigation so tenant users do not receive owner sidebar links.
+- Cleaned mojibake Vietnamese copy in the shared portal base and tenant templates.
+- Reworked tenant dashboard to stop referencing missing `recent.*` context.
+- Polished tenant profile, contracts, invoices, payments, repairs, and notifications using the Phase 20D/20E visual system.
+- Added tenant-specific CSS for hero cards, metrics, quick actions, nav count badge, and responsive behavior.
+- Kept models, views, URLs, forms, migrations, schema, billing, permissions, reports, and legacy isolation unchanged.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-design.css`
+- `hostello_backend/templates/portal/base.html`
+- `hostello_backend/templates/portal/tenant_dashboard.html`
+- `hostello_backend/templates/portal/tenant_profile.html`
+- `hostello_backend/templates/portal/tenant_contracts_list.html`
+- `hostello_backend/templates/portal/tenant_contract_detail.html`
+- `hostello_backend/templates/portal/tenant_invoices_list.html`
+- `hostello_backend/templates/portal/tenant_invoice_detail.html`
+- `hostello_backend/templates/portal/tenant_payments_list.html`
+- `hostello_backend/templates/portal/tenant_repairs_list.html`
+- `hostello_backend/templates/portal/tenant_repair_form.html`
+- `hostello_backend/templates/portal/tenant_repair_detail.html`
+- `hostello_backend/templates/portal/tenant_notifications_list.html`
+- `hostello_backend/templates/portal/tenant_notification_detail.html`
+- `docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- tenant route smoke tests with `tenant_test`
+- owner regression smoke tests with `owner_test`
+- rendered tenant page privacy/raw-template scan
+- tenant owner-sidebar overlap scan
+
+### Tags Created
+
+- `phase20f-tenant-portal-bugfix-polish`
+
+### Current Blockers
+
+- No technical blocker.
+- A final manual browser pass is still recommended for mobile screenshots.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20G: Reports, Error Pages, and Final UI Consistency Review
+```
+
+Review reports, error pages, and any remaining UI consistency edges. Keep models, schema, billing, permissions, repo hygiene, and legacy isolation unchanged.

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
+<body class="{% if request.user.is_authenticated and request.user.is_tenant %}tenant-portal{% elif request.user.is_authenticated and request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}owner-portal{% else %}public-portal{% endif %}">
     <header class="topbar">
         <div class="topbar-inner">
             <a class="brand" href="/">
@@ -32,7 +32,37 @@
     </header>
 
     {% if request.user.is_authenticated %}
-        {% if request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
+        {% if request.user.is_tenant %}
+            <nav class="role-nav dashboard-sidebar tenant-sidebar" aria-label="Điều hướng khách thuê">
+                <div class="role-nav-inner">
+                    <span class="role-label"><i class="bi bi-person-circle"></i> Khách thuê</span>
+                    <a href="/tenant/dashboard/" {% if request.path == '/tenant/dashboard/' %}class="active"{% endif %}>
+                        <i class="bi bi-grid"></i> Tổng quan
+                    </a>
+                    <a href="/tenant/profile/" {% if '/tenant/profile' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-person-lines-fill"></i> Hồ sơ
+                    </a>
+                    <a href="/tenant/contracts/" {% if '/tenant/contracts' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-file-text"></i> Hợp đồng
+                    </a>
+                    <a href="/tenant/invoices/" {% if '/tenant/invoices' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-receipt"></i> Hóa đơn
+                    </a>
+                    <a href="/tenant/payments/" {% if '/tenant/payments' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-credit-card"></i> Thanh toán
+                    </a>
+                    <a href="/tenant/repairs/" {% if '/tenant/repairs' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-tools"></i> Sửa chữa
+                    </a>
+                    <a href="/tenant/notifications/" {% if '/tenant/notifications' in request.path %}class="active"{% endif %}>
+                        <i class="bi bi-bell"></i> Thông báo
+                        {% if unread_notification_count %}
+                            <span class="nav-count">{{ unread_notification_count }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </nav>
+        {% elif request.user.is_owner or request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}
             <nav class="role-nav dashboard-sidebar owner-sidebar" aria-label="Điều hướng chủ trọ">
                 <div class="role-nav-inner">
                     <span class="role-label"><i class="bi bi-person-badge"></i> Chủ trọ</span>
@@ -59,37 +89,6 @@
                     </a>
                     <a href="/owner/viewing-registrations/" {% if '/owner/viewing-registrations' in request.path %}class="active"{% endif %}>
                         <i class="bi bi-calendar-check"></i> Lịch xem phòng
-                    </a>
-                </div>
-            </nav>
-        {% endif %}
-        {% if request.user.is_tenant %}
-            <nav class="role-nav dashboard-sidebar tenant-sidebar" aria-label="Điều hướng khách thuê">
-                <div class="role-nav-inner">
-                    <span class="role-label"><i class="bi bi-person-circle"></i> Khách thuê</span>
-                    <a href="/tenant/dashboard/" {% if request.path == '/tenant/dashboard/' %}class="active"{% endif %}>
-                        <i class="bi bi-grid"></i> Tổng quan
-                    </a>
-                    <a href="/tenant/profile/" {% if '/tenant/profile' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-person-lines-fill"></i> Hồ sơ
-                    </a>
-                    <a href="/tenant/contracts/" {% if '/tenant/contracts' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-file-text"></i> Hợp đồng
-                    </a>
-                    <a href="/tenant/invoices/" {% if '/tenant/invoices' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-receipt"></i> Hóa đơn
-                    </a>
-                    <a href="/tenant/payments/" {% if '/tenant/payments' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-credit-card"></i> Thanh toán
-                    </a>
-                    <a href="/tenant/repairs/" {% if '/tenant/repairs' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-tools"></i> Sửa chữa
-                    </a>
-                    <a href="/tenant/notifications/" {% if '/tenant/notifications' in request.path %}class="active"{% endif %}>
-                        <i class="bi bi-bell"></i> Thông báo
-                        {% if unread_notification_count %}
-                            <span style="margin-left:4px;padding:2px 7px;border-radius:999px;background:var(--re-danger);color:#fff;font-size:0.75rem;">{{ unread_notification_count }}</span>
-                        {% endif %}
                     </a>
                 </div>
             </nav>

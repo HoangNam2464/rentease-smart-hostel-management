@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Thanh toán của khách thuê - RentEase{% endblock %}
+{% block title %}Thanh toán của tôi - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Lịch sử thanh toán</h1>
-    <p>Lịch sử thanh toán liên kết với các hóa đơn của bạn.</p>
+    <h1><i class="page-icon bi bi-credit-card"></i>Lịch sử thanh toán</h1>
+    <p>Theo dõi các khoản thanh toán đã ghi nhận cho hóa đơn của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card data-card">
     <div class="card-body">
         {% if payments %}
             <div class="table-wrap">
@@ -31,7 +31,7 @@
                                 <td>{{ payment.amount }}</td>
                                 <td>{{ payment.get_method_display }}</td>
                                 <td>{{ payment.transaction_code|default:"-" }}</td>
-                                <td>{{ payment.paid_at }}</td>
+                                <td>{{ payment.paid_at|date:"d/m/Y H:i" }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -39,6 +39,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-wallet2"></i>
                 <p>Chưa có thanh toán nào liên kết với hóa đơn của bạn.</p>
             </div>
         {% endif %}

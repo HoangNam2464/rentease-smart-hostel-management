@@ -1,14 +1,14 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Thông báo của khách thuê - RentEase{% endblock %}
+{% block title %}Thông báo của tôi - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Thông báo của tôi</h1>
+    <h1><i class="page-icon bi bi-bell"></i>Thông báo của tôi</h1>
     <p>Các thông báo liên quan đến hợp đồng, hóa đơn hoặc phòng của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card data-card">
     <div class="card-body">
         {% if notifications %}
             <div class="table-wrap">
@@ -19,15 +19,17 @@
                             <th>Loại</th>
                             <th>Trạng thái đọc</th>
                             <th>Ngày gửi</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for notification in notifications %}
                             <tr>
-                                <td><a href="{% url 'portal:tenant_notification_detail' notification.pk %}">{{ notification.title }}</a></td>
+                                <td>{{ notification.title }}</td>
                                 <td>{{ notification.get_notification_type_display }}</td>
-                                <td><span class="status-badge">{{ notification.is_read|yesno:"Đã đọc,Chưa đọc" }}</span></td>
-                                <td>{{ notification.created_at }}</td>
+                                <td><span class="status-badge {% if not notification.is_read %}warning{% else %}success{% endif %}">{{ notification.is_read|yesno:"Đã đọc,Chưa đọc" }}</span></td>
+                                <td>{{ notification.created_at|date:"d/m/Y H:i" }}</td>
+                                <td><a href="{% url 'portal:tenant_notification_detail' notification.pk %}">Chi tiết</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -35,6 +37,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-bell-slash"></i>
                 <p>Bạn chưa có thông báo nào.</p>
             </div>
         {% endif %}

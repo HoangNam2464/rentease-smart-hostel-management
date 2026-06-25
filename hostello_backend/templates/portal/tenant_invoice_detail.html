@@ -4,25 +4,26 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>{{ invoice.invoice_code|default:invoice.pk }}</h1>
-    <p>Read-only invoice details connected to your contract.</p>
+    <h1><i class="page-icon bi bi-receipt"></i>{{ invoice.invoice_code|default:invoice.pk }}</h1>
+    <p>Chi tiết hóa đơn đọc-only theo hợp đồng thuê phòng của bạn.</p>
 </section>
 
-<section class="card">
+<section class="card detail-section">
     <div class="card-body">
         <ul class="info-list">
             <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
-            <li><span>Room</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
-            <li><span>Month/year</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
-            <li><span>Issued date</span><strong>{{ invoice.issued_date }}</strong></li>
-            <li><span>Due date</span><strong>{{ invoice.due_date|default:"-" }}</strong></li>
-            <li><span>Total amount</span><strong>{{ invoice.total_amount }}</strong></li>
-            <li><span>Paid amount</span><strong>{{ invoice.paid_amount }}</strong></li>
-            <li><span>Remaining amount</span><strong>{{ invoice.remaining_amount }}</strong></li>
-            <li><span>Trạng thái</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
+            <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }}{% if invoice.contract.room.room_name %} - {{ invoice.contract.room.room_name }}{% endif %}</strong></li>
+            <li><span>Tháng/Năm</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Ngày phát hành</span><strong>{{ invoice.issued_date|date:"d/m/Y" }}</strong></li>
+            <li><span>Hạn thanh toán</span><strong>{{ invoice.due_date|date:"d/m/Y"|default:"-" }}</strong></li>
+            <li><span>Tổng tiền</span><strong>{{ invoice.total_amount }}</strong></li>
+            <li><span>Đã thanh toán</span><strong>{{ invoice.paid_amount }}</strong></li>
+            <li><span>Còn lại</span><strong>{{ invoice.remaining_amount }}</strong></li>
+            <li><span>Trạng thái</span><strong><span class="status-badge {% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% endif %}">{{ invoice.get_status_display }}</span></strong></li>
         </ul>
         <div class="page-actions">
-            <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Back to invoices</a>
+            <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Quay lại hóa đơn</a>
+            <a class="button ghost" href="{% url 'portal:tenant_payments_list' %}">Xem lịch sử thanh toán</a>
         </div>
     </div>
 </section>

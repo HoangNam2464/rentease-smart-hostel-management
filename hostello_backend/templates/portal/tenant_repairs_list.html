@@ -1,21 +1,24 @@
 {% extends "portal/base.html" %}
 
-{% block title %}Sửa chữa của khách thuê - RentEase{% endblock %}
+{% block title %}Yêu cầu sửa chữa - RentEase{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>Yêu cầu sửa chữa của tôi</h1>
-    <p>Theo dõi các yêu cầu sửa chữa đã gửi từ hồ sơ khách thuê của bạn.</p>
+    <div>
+        <h1><i class="page-icon bi bi-tools"></i>Yêu cầu sửa chữa của tôi</h1>
+        <p>Theo dõi các yêu cầu sửa chữa đã gửi từ hồ sơ khách thuê của bạn.</p>
+    </div>
+    <div class="page-actions compact-actions">
+        <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">
+            <i class="bi bi-plus-circle"></i> Gửi yêu cầu
+        </a>
+    </div>
 </section>
 
-<section class="card">
+<section class="card data-card">
     <div class="card-body">
-        <div class="toolbar">
-            <p class="help-text">Theo dõi yêu cầu đã gửi và tạo yêu cầu mới cho phòng đang ở.</p>
-            <a class="button primary" href="{% url 'portal:tenant_repair_create' %}">Gửi yêu cầu sửa chữa</a>
-        </div>
         {% if repairs %}
-            <div class="table-wrap section">
+            <div class="table-wrap">
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -24,16 +27,18 @@
                             <th>Ưu tiên</th>
                             <th>Trạng thái</th>
                             <th>Ngày tạo</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for repair in repairs %}
                             <tr>
-                                <td><a href="{% url 'portal:tenant_repair_detail' repair.pk %}">{{ repair.title }}</a></td>
+                                <td>{{ repair.title }}</td>
                                 <td>{{ repair.room.room_code }}</td>
                                 <td>{{ repair.get_priority_display }}</td>
-                                <td><span class="status-badge">{{ repair.get_status_display }}</span></td>
-                                <td>{{ repair.requested_at }}</td>
+                                <td><span class="status-badge {% if repair.status == 'completed' %}success{% elif repair.status == 'in_progress' %}warning{% endif %}">{{ repair.get_status_display }}</span></td>
+                                <td>{{ repair.requested_at|date:"d/m/Y H:i" }}</td>
+                                <td><a href="{% url 'portal:tenant_repair_detail' repair.pk %}">Chi tiết</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -41,6 +46,7 @@
             </div>
         {% else %}
             <div class="empty-state">
+                <i class="bi bi-wrench"></i>
                 <p>Bạn chưa gửi yêu cầu sửa chữa nào.</p>
             </div>
         {% endif %}

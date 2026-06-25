@@ -462,6 +462,40 @@ Goal:
 
 Polish tenant profile, contracts, invoices, payments, repairs, and notifications while keeping logic unchanged and applying the same Phase 20D/20E design system.
 
+## Immediate Next Step
+
+Completed current step:
+
+```text
+Phase 20F: Tenant Portal Bugfix, Layout Separation, and Polish
+```
+
+Summary:
+
+- fixed shared portal role navigation so tenant users do not see owner sidebar links
+- cleaned tenant portal Vietnamese copy and removed mojibake text
+- replaced missing `recent.*` dashboard references with quick action cards based on existing routes
+- polished tenant profile, contracts, invoices, payments, repairs, and notifications
+- kept models, schema, routes, permissions, billing, reports, and legacy isolation unchanged
+
+Created:
+
+```text
+docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20G: Reports, Error Pages, and Final UI Consistency Review
+```
+
+Goal:
+
+Review staff reports, custom error pages, and any remaining visual consistency edges after the tenant portal polish. Keep this template/CSS/documentation-focused unless a real issue is found.
+
 ## Recommended Demo Track
 
 1. Phase 15A: UI/UX Audit and Redesign Planning - completed
@@ -488,7 +522,8 @@ Polish tenant profile, contracts, invoices, payments, repairs, and notifications
 22. Phase 21C: Safe Repo Hygiene Cleanup - completed
 23. Phase 20D: Apply reviewed RentEase UI improvement package safely - completed
 24. Phase 20E: Polish Owner CRUD Pages - completed
-25. Phase 20F: Polish Tenant Portal Pages - next
+25. Phase 20F: Polish Tenant Portal Pages - completed
+26. Phase 20G: Reports, Error Pages, and Final UI Consistency Review - next
 
 ## Recommended Production Track
 
@@ -503,4 +538,4 @@ Polish tenant profile, contracts, invoices, payments, repairs, and notifications
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20E is complete. Phase 20F should polish tenant portal pages only and must preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20F is complete. Phase 20G should review reports, custom error pages, and remaining UI consistency edges while preserving models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.

@@ -4,19 +4,20 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>Gửi yêu cầu sửa chữa</h1>
-    <p>Create a repair request for a room linked to your active contract.</p>
+    <h1><i class="page-icon bi bi-plus-circle"></i>Gửi yêu cầu sửa chữa</h1>
+    <p>Gửi sự cố cho phòng đang có hợp đồng hiệu lực. Chủ trọ sẽ tiếp nhận và cập nhật trạng thái xử lý.</p>
 </section>
 
-<section class="card">
+<section class="card form-card">
     <div class="card-body">
         {% if not has_allowed_rooms %}
             <div class="alert warning">
-                No active room is linked to your tenant profile. Please contact the property manager before submitting a repair request.
+                <i class="bi bi-exclamation-triangle"></i>
+                Hiện chưa có phòng đang thuê liên kết với hồ sơ của bạn. Vui lòng liên hệ chủ trọ trước khi gửi yêu cầu.
             </div>
-            <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+            <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Quay lại sửa chữa</a>
         {% else %}
-            <p class="help-text">Submit only the issue details. The owner will manage repair status and follow-up notes.</p>
+            <p class="help-text">Biểu mẫu này chỉ ghi nhận thông tin sự cố. Trạng thái xử lý và ghi chú nội bộ sẽ do chủ trọ quản lý.</p>
             <form method="post" novalidate>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -47,7 +48,7 @@
 
                 <div class="page-actions">
                     <button class="button primary" type="submit">Gửi yêu cầu sửa chữa</button>
-                    <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Back to repairs</a>
+                    <a class="button" href="{% url 'portal:tenant_repairs_list' %}">Quay lại sửa chữa</a>
                 </div>
             </form>
         {% endif %}

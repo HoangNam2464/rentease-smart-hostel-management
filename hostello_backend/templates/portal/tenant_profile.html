@@ -4,21 +4,22 @@
 
 {% block content %}
 <section class="page-header">
-    <h1>Hồ sơ của tôi</h1>
-    <p>Thông tin hồ sơ khách thuê liên kết với tài khoản RentEase của bạn.</p>
+    <h1><i class="page-icon bi bi-person-lines-fill"></i>Hồ sơ của tôi</h1>
+    <p>Thông tin liên hệ cơ bản của hồ sơ khách thuê đang liên kết với tài khoản RentEase.</p>
 </section>
 
-<section class="card">
+<section class="card detail-section">
     <div class="card-body">
         <ul class="info-list">
             <li><span>Họ và tên</span><strong>{{ tenant.full_name }}</strong></li>
             <li><span>Email</span><strong>{{ tenant.email|default:"-" }}</strong></li>
             <li><span>Số điện thoại</span><strong>{{ tenant.phone_number|default:"-" }}</strong></li>
             <li><span>Địa chỉ</span><strong>{{ tenant.address|default:"-" }}</strong></li>
-            <li><span>Ngày sinh</span><strong>{{ tenant.date_of_birth|default:"-" }}</strong></li>
+            <li><span>Ngày sinh</span><strong>{{ tenant.date_of_birth|date:"d/m/Y"|default:"-" }}</strong></li>
             <li><span>Giới tính</span><strong>{{ tenant.get_gender_display|default:"-" }}</strong></li>
             <li><span>Trạng thái</span><strong><span class="status-badge">{{ tenant.get_status_display }}</span></strong></li>
         </ul>
+        <p class="help-text section">Nếu thông tin cá nhân cần chỉnh sửa, vui lòng liên hệ chủ trọ hoặc quản trị viên.</p>
     </div>
 </section>
 {% endblock %}
