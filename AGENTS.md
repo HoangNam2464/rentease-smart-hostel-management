@@ -136,6 +136,31 @@ Future agents must not assume the project state from memory. They must:
 - run migration dry-run
 - inspect related files before editing
 
+## RentEase Project Map
+
+Before editing templates, CSS, UI, legacy cleanup, production settings, or productization tasks, always read:
+
+```text
+docs/agent/RENTEASE_PROJECT_MAP.md
+```
+
+This file defines:
+
+- active RentEase files
+- legacy HOSTELLO files
+- active apps
+- legacy apps
+- safe editing rules
+- UI rules
+- image handling rules
+- privacy/security rules
+
+Do not edit legacy HOSTELLO templates for RentEase UI unless explicitly approved.
+
+Do not delete legacy HOSTELLO apps without a separate dependency audit.
+
+Do not expose `citizen_id` or citizen ID files/images.
+
 ## Definition of Done
 
 A phase is only considered done when:

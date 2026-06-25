@@ -361,15 +361,44 @@ docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
 
 ## Immediate Next Step
 
+Completed current step:
+
+```text
+Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide
+```
+
+Summary:
+
+- integrated clean RentEase project docs
+- linked `docs/agent/RENTEASE_PROJECT_MAP.md` from `AGENTS.md`
+- fixed `Tenant.__str__` so it no longer exposes `citizen_id`
+- created local setup and demo data guide for teammates
+- created teammate work guide
+- created repo hygiene audit without deleting or untracking files
+
+Created:
+
+```text
+docs/agent/RENTEASE_PROJECT_MAP.md
+docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md
+docs/PHAN-CONG-THANH-VIEN.md
+docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md
+```
+
+## Immediate Next Step
+
 Start:
 
 ```text
-Phase 20D: Browser Visual Review and Final UI Fixes
+Phase 21C: Safe Repo Hygiene Cleanup
 ```
 
 Goal:
 
-Open the Phase 20C UI in a real browser, verify desktop and mobile layouts, and make only small final template/CSS fixes if needed.
+- update `.gitignore` if gaps remain
+- untrack `db.sqlite3`, `venv`, backup JSON, `.env`, or media files only if they are tracked
+- do not delete local files blindly
+- do not touch migrations/schema
 
 ## Recommended Demo Track
 
@@ -393,7 +422,9 @@ Open the Phase 20C UI in a real browser, verify desktop and mobile layouts, and 
 18. Phase 20A: Professional UI Design System and Full Visual Redesign - completed
 19. Phase 20B: Template Reference Selection and UI Direction - completed
 20. Phase 20C: Apply Reference-Based UI Redesign - completed
-21. Phase 20D: Browser Visual Review and Final UI Fixes - next
+21. Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide - completed
+22. Phase 21C: Safe Repo Hygiene Cleanup - next
+23. Phase 20D: Browser Visual Review and Final UI Fixes - optional next demo-polish step
 
 ## Recommended Production Track
 
@@ -406,10 +437,6 @@ Open the Phase 20C UI in a real browser, verify desktop and mobile layouts, and 
 
 ## Current Recommendation
 
-The UI now has a shared professional design system, a selected reference-led direction, and an applied reference-based redesign.
+The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, and a repo hygiene audit.
 
-Public pages should move toward a real-estate/property listing style inspired by Colorlib, BootstrapMade, ThemeWagon, and simple Bootstrap landing-page patterns.
-
-Owner and tenant portals should move toward a clean SaaS dashboard style inspired by Tabler, AdminLTE, CoreUI, and lightweight Bootstrap admin patterns.
-
-Do not copy external template files or import external template packages at runtime. Phase 20D should be browser-review focused and should avoid model, migration, route, billing, permission, or production-settings changes.
+Phase 21C should be a small cleanup phase. It should not delete local files blindly and should not touch models, migrations, schema, billing, permissions, or legacy apps.

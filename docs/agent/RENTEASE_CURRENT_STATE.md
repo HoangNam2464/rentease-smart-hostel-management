@@ -222,6 +222,17 @@ docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
 
 Phase 20C applied the selected direction to local templates and CSS: public pages now use a stronger room/property listing style, owner pages inherit a dashboard/sidebar visual system, tenant pages remain simple and readable, and no external template packages or remote image hotlinks were added.
 
+Phase 21B project docs integration, tenant privacy hotfix, and local setup guide:
+
+```text
+docs/agent/RENTEASE_PROJECT_MAP.md
+docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md
+docs/PHAN-CONG-THANH-VIEN.md
+docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md
+```
+
+Phase 21B verified the docs structure, linked the project map from `AGENTS.md`, fixed `Tenant.__str__` so it no longer exposes `citizen_id`, created teammate local setup/demo data guidance, created a team member work guide, and documented repo hygiene risks without deleting local files.
+
 ## Runtime State
 
 - Local runtime works.
@@ -371,6 +382,10 @@ Phase 20C Reference-Based RentEase UI Redesign
 
 Tag: `phase20c-reference-based-ui-redesign`
 
+Phase 21B Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide
+
+Tag: `phase21b-docs-privacy-local-setup`
+
 ## Working Now
 
 - Public landing page
@@ -411,6 +426,9 @@ Tag: `phase20c-reference-based-ui-redesign`
 - Professional UI design system and full visual redesign
 - Template reference direction for public property-listing pages and dashboard portal pages
 - Reference-based UI redesign applied to public, owner, and tenant surfaces
+- Docs structure verified and RentEase project map linked from `AGENTS.md`
+- Tenant string representation no longer exposes `citizen_id`
+- Local setup/demo data guide and repo hygiene audit available
 
 ## Important Production Gaps
 
@@ -426,10 +444,10 @@ Tag: `phase20c-reference-based-ui-redesign`
 Current recommended next action:
 
 ```text
-Phase 20D: Browser Visual Review and Final UI Fixes
+Phase 21C: Safe Repo Hygiene Cleanup
 ```
 
-Goal: open the Phase 20C UI in a real browser, verify desktop/mobile layouts, and make only small final template/CSS fixes if needed.
+Goal: update `.gitignore` if needed, untrack local-only files if any are tracked, and avoid deleting local files blindly.
 
 Alternative production track:
 

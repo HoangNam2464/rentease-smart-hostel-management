@@ -326,3 +326,66 @@ Phase 20D: Browser Visual Review and Final UI Fixes
 ```
 
 Start local server, inspect the Phase 20C UI at desktop and mobile widths, and make only small final template/CSS fixes if needed.
+
+## Phase 21B: Project Docs Integration, Tenant Privacy Hotfix, And Local Setup Guide
+
+### Status
+
+Completed.
+
+### Summary
+
+- Verified that the requested top-level RentEase docs were missing and created clean RentEase-only documentation.
+- Created `docs/agent/RENTEASE_PROJECT_MAP.md` to separate active RentEase files from legacy HOSTELLO files.
+- Updated `AGENTS.md` to require reading the project map before UI/template/CSS/cleanup/productization work.
+- Fixed `Tenant.__str__` to return `full_name` only and stop exposing `citizen_id`.
+- Created local setup/demo data instructions for teammates downloading from GitHub ZIP.
+- Created a human teammate work guide.
+- Created a repo hygiene audit without deleting or untracking local files.
+
+### Files Changed
+
+- `AGENTS.md`
+- `hostello_backend/tenants/models.py`
+- `docs/agent/RENTEASE_PROJECT_MAP.md`
+- `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md`
+- `docs/PHAN-CONG-THANH-VIEN.md`
+- `docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md`
+- `docs/README.md`
+- `docs/RENTEASE-MASTER-TASKS.md`
+- `docs/CHI-TIET-TASK-RENTEASE.md`
+- `docs/KE-HOACH-CHI-TIET-RENTEASE.md`
+- `docs/CHECKLIST-TIEN-DO.md`
+- `docs/SPRINT-PLANNING.md`
+- `docs/MO-TA-CHUC-NANG-HIEN-TAI.md`
+- `docs/DE-XUAT-NANG-CAP-RENTEASE.md`
+- `docs/SPQM-REPORT.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- docs existence audit
+- seed command search
+- repo hygiene read-only audit
+
+### Tags Created
+
+- `phase21b-docs-privacy-local-setup`
+
+### Current Blockers
+
+- No technical blocker.
+- Local-only files exist on disk (`db.sqlite3`, `venv`, backup JSON files, media files), but the tracked-file audit did not show them as Git-tracked at the time of Phase 21B.
+- Phase 21C should verify `.gitignore` and untrack any local-only files only if they are tracked.
+
+### Exact Next Recommended Action
+
+```text
+Phase 21C: Safe Repo Hygiene Cleanup
+```
+
+Do not delete local files blindly. Do not touch migrations/schema.

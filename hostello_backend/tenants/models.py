@@ -46,7 +46,7 @@ class Tenant(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.full_name} ({self.citizen_id})'
+        return self.full_name
 
 
 class CoTenant(models.Model):
