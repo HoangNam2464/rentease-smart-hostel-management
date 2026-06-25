@@ -474,6 +474,10 @@ Phase 20K-B Dashboard Interaction and Visual Polish
 
 Tag: `phase20k-b-dashboard-interaction-visual-polish`
 
+Phase 20L Owner CRUD Form And Table Professionalization
+
+Tag: `phase20l-owner-crud-form-table-professionalization`
+
 ## Working Now
 
 - Public landing page
@@ -552,6 +556,12 @@ Tag: `phase20k-b-dashboard-interaction-visual-polish`
 - Tenant dashboard header and summary sections now have safer mobile wrapping
 - Tenant and CoTenant admin list privacy was reconfirmed after dashboard polish
 - No schema, migration, model, view, form, URL, billing, reports, admin logic, or legacy changes were introduced in Phase 20K-B
+- Owner CRUD form and table presentation was professionalized in Phase 20L
+- Owner tables now have bordered scroll containers, clearer action links, and safer mobile table behavior
+- Owner forms now have consistent field, label, help text, error, focus, and action-row styling
+- Owner detail pages now use clearer info-list grouping and mobile-safe wrapping
+- Owner invoice form display labels were translated from English to Vietnamese
+- No schema, migration, model, view, URL, form-class, billing, reports, admin logic, or legacy changes were introduced in Phase 20L
 
 ## Important Production Gaps
 
@@ -567,10 +577,10 @@ Tag: `phase20k-b-dashboard-interaction-visual-polish`
 Current recommended next action:
 
 ```text
-Phase 20L: Owner CRUD Form And Table Professionalization
+Phase 20M: Reports And Admin Visual Polish Planning
 ```
 
-Goal: polish owner CRUD forms and data tables that still look default or cramped, especially form fields, invoice/payment table readability, and small-screen table behavior.
+Goal: plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin surfaces before making changes.
 
 Alternative production track:
 

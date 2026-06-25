@@ -634,15 +634,39 @@ docs/ui/PHASE_20K_B_DASHBOARD_INTERACTION_VISUAL_POLISH.md
 
 ## Immediate Next Step
 
-Start:
+Completed current step:
 
 ```text
 Phase 20L: Owner CRUD Form And Table Professionalization
 ```
 
+Summary:
+
+- improved owner CRUD table containers, table links, and action-chip styling
+- improved owner form cards, fields, labels, focus states, help text, validation error blocks, and action rows
+- improved owner detail information grouping with reusable card-style info lists
+- improved responsive behavior for tables, forms, detail cards, and action buttons around narrow mobile widths
+- translated visible owner invoice form labels from English to Vietnamese
+- verified owner, tenant, reports, admin, and tenant admin privacy routes with Django Client checks
+- introduced no model, schema, migration, view, URL, form-class, billing, reports, admin logic, or legacy changes
+
+Created:
+
+```text
+docs/ui/PHASE_20L_OWNER_CRUD_FORM_TABLE_PROFESSIONALIZATION.md
+```
+
+## Immediate Next Step
+
+Start:
+
+```text
+Phase 20M: Reports And Admin Visual Polish Planning
+```
+
 Goal:
 
-Polish owner CRUD forms and data tables that still look default or cramped, especially form fields, invoice/payment table readability, and small-screen table behavior. Keep the phase template/CSS-only unless explicitly approved otherwise.
+Plan the next safe visual polish pass for staff reports and Django Admin/Jazzmin surfaces. Do not implement changes before planning because admin styling can affect broad project surfaces.
 
 ## Recommended Demo Track
 
@@ -677,7 +701,8 @@ Polish owner CRUD forms and data tables that still look default or cramped, espe
 29. Phase 20J: Browser-Based Visual QA - completed
 30. Phase 20K-A: Admin Tenant Privacy Hotfix - completed
 31. Phase 20K-B: Dashboard Interaction and Visual Polish - completed
-32. Phase 20L: Owner CRUD Form And Table Professionalization - next
+32. Phase 20L: Owner CRUD Form And Table Professionalization - completed
+33. Phase 20M: Reports And Admin Visual Polish Planning - next
 
 ## Recommended Production Track
 
@@ -692,4 +717,4 @@ Polish owner CRUD forms and data tables that still look default or cramped, espe
 
 The project now has a RentEase project map, teammate setup guidance, local demo-data explanation, repo hygiene audit, and hardened `.gitignore` rules for local/demo files.
 
-Phase 20K-B is complete. Phase 20L should polish owner CRUD forms and data tables next, because browser QA and dashboard polish left owner form/table consistency as the safest remaining visible improvement. Keep the phase template/CSS-only and preserve models, migrations, schema, billing, permissions, repo hygiene, and legacy isolation.
+Phase 20L is complete. Phase 20M should plan staff reports and admin visual polish next, because owner CRUD pages now have a consistent professional layer and admin/report surfaces remain the most visible unpolished staff-facing area. Plan first, then implement only small template/CSS/admin-safe changes after approval.

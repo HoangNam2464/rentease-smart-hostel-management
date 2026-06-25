@@ -928,3 +928,54 @@ Phase 20L: Owner CRUD Form And Table Professionalization
 ```
 
 Polish owner CRUD forms and data tables that still look default or cramped, especially form fields, invoice/payment table readability, and small-screen table behavior. Keep the phase template/CSS-only unless explicitly approved otherwise.
+
+## Phase 20L: Owner CRUD Form And Table Professionalization
+
+### Status
+
+Completed.
+
+### Summary
+
+- Added a professional CSS layer for owner CRUD tables, forms, detail information cards, action rows, validation errors, and responsive behavior.
+- Improved `.button`, `.table-wrap`, `.data-table`, `.form-card`, `.form-field`, `.help-text`, `.page-actions`, `.info-list`, `.recent-list`, and `.recent-item` styles in the active portal layout CSS.
+- Kept all existing owner form fields, validation behavior, routes, views, permissions, owner scoping, tenant privacy, billing calculations, reports behavior, and legacy isolation unchanged.
+- Translated four visible owner invoice form labels from English to Vietnamese.
+- Verified owner CRUD list/detail/create/edit/payment routes return HTTP 200 for `owner_test`.
+- Verified tenant dashboard/invoice, reports, admin homepage, and tenant/co-tenant admin privacy routes.
+- Confirmed no migration files, model changes, schema changes, or database files were created.
+
+### Files Changed
+
+- `hostello_backend/static/css/rentease-layout.css`
+- `hostello_backend/templates/portal/owner_invoice_form.html`
+- `docs/ui/PHASE_20L_OWNER_CRUD_FORM_TABLE_PROFESSIONALIZATION.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check`
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run`
+- Django Client owner route checks for dashboard, rooms, tenants, contracts, invoices, create forms, edit forms, detail pages, and payment form
+- Django Client tenant route checks for dashboard and invoices
+- Django Client staff route checks for reports and admin homepage
+- Django Client admin changelist privacy checks for Tenant and CoTenant
+
+### Tags Created
+
+- `phase20l-owner-crud-form-table-professionalization`
+
+### Current Blockers
+
+- No technical blocker.
+- Manual visual browser inspection was not captured as screenshots in this phase; route/render/privacy verification passed through Django Client checks.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20M: Reports And Admin Visual Polish Planning
+```
+
+Plan staff reports and Django Admin/Jazzmin visual polish before implementation. Admin/report polish should be planned first because these surfaces can affect broad staff-facing behavior.
