@@ -13,6 +13,8 @@ The project now uses:
 
 This cleanup phase only removed generated Python cache files from project code. It did not delete legacy apps, templates, static files, docs, local databases, media uploads, migrations, or business logic.
 
+For detailed legacy dependency findings, see `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`.
+
 ## 2. Cleaned Now
 
 Deleted generated Python cache folders from project code only:
