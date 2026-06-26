@@ -44,9 +44,9 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 
 - `manage.py` hiá»‡n náº±m táº¡i: `backend/manage.py`
 - Django settings module váº«n lÃ : `hostello_backend.settings`
-- File settings hiá»‡n táº¡i: `backend/backend/settings.py`
+- File settings hiá»‡n táº¡i: `backend/hostello_backend/settings.py`
 - Root URLConf váº«n lÃ : `hostello_backend.urls`
-- File URL chÃ­nh: `backend/backend/urls.py`
+- File URL chÃ­nh: `backend/hostello_backend/urls.py`
 
 Äiá»ƒm quan trá»ng: chá»‰ Ä‘á»•i tÃªn thÆ° má»¥c ngoÃ i. Package cáº¥u hÃ¬nh Django bÃªn trong váº«n lÃ  `hostello_backend`, khÃ´ng Ä‘á»•i thÃ nh `backend`.
 
@@ -55,7 +55,7 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 ### Django config
 
 ```text
-backend/backend/
+backend/hostello_backend/
 â”œâ”€â”€ settings.py
 â”œâ”€â”€ urls.py
 â”œâ”€â”€ wsgi.py
@@ -116,10 +116,10 @@ frontend/templates/base/
 frontend/templates/reports/
 ```
 
-Reports app templates váº«n cÃ²n trong app vÃ  váº«n hoáº¡t Ä‘á»™ng nhá» `APP_DIRS=True`:
+Reports templates Ä‘Ã£ Ä‘Æ°á»£c chuyá»ƒn ra frontend vÃ  váº«n resolve theo cÃ¹ng relative path:
 
 ```text
-backend/reports/templates/reports/
+frontend/templates/reports/
 ```
 
 Legacy templates váº«n cÃ²n nhÆ°ng Ä‘Ã£ náº±m trong frontend:
@@ -265,9 +265,10 @@ KhÃ´ng xÃ³a cÃ¡c file nÃ y trong phase hiá»‡n táº¡i. Má»™t s�
 ÄÃ£ thá»±c hiá»‡n:
 
 - Äá»•i tÃªn thÆ° má»¥c Django ngoÃ i `backend/` thÃ nh `backend/`.
-- Giá»¯ nguyÃªn inner Django config package `backend/backend/`.
+- Giá»¯ nguyÃªn inner Django config package `backend/hostello_backend/`.
 - Di chuyá»ƒn `backend/templates/` sang `frontend/templates/`.
 - Di chuyá»ƒn `backend/static/` sang `frontend/static/`.
+- Di chuyá»ƒn reports app templates sang `frontend/templates/reports/` vÃ  giá»¯ nguyÃªn template relative paths nhÆ° `reports/dashboard.html`.
 - Giá»¯ nguyÃªn relative paths bÃªn trong template/static.
 - KhÃ´ng Ä‘á»•i tÃªn template files.
 - KhÃ´ng Ä‘á»•i tÃªn CSS/JS files.
@@ -281,7 +282,7 @@ CÃ³ thá»ƒ di chuyá»ƒn/tá»• chá»©c láº¡i dáº§n trong cÃ¡c 
 - `frontend/templates/listings/` thÃ nh nhÃ³m public rÃµ hÆ¡n.
 - `frontend/templates/portal/` thÃ nh nhÃ³m owner/tenant rÃµ hÆ¡n.
 - `frontend/templates/home.html`, `404.html`, `500.html` vÃ o nhÃ³m public/base náº¿u cáº­p nháº­t render path.
-- `backend/reports/templates/reports/` sang `frontend/templates/reports/` náº¿u tháº­t sá»± cáº§n.
+- Reports templates Ä‘Ã£ Ä‘Æ°á»£c chuyá»ƒn sang `frontend/templates/reports/`.
 - `frontend/static/css/rentease-design.css` vÃ o `frontend/static/rentease/css/`.
 - `frontend/static/css/rentease-layout.css` vÃ o `frontend/static/rentease/css/`.
 
@@ -292,8 +293,8 @@ Má»—i nhÃ³m di chuyá»ƒn pháº£i cháº¡y route smoke test ngay sau �
 KhÃ´ng nÃªn di chuyá»ƒn trong cÃ¡c phase tiáº¿p theo náº¿u chÆ°a cÃ³ plan riÃªng:
 
 - `backend/manage.py`
-- `backend/backend/settings.py`
-- `backend/backend/urls.py`
+- `backend/hostello_backend/settings.py`
+- `backend/hostello_backend/urls.py`
 - Django app folders nhÆ° `accounts`, `properties`, `tenants`, `contracts`, `billing`, `maintenance`, `listings`, `portal`, `reports`
 - Migration folders
 - Model files
