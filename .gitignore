@@ -12,6 +12,7 @@ backup_phase*.json
 # Virtual Environments
 hostello_env/
 venv/
+backend/venv/
 .venv/
 env/
 ENV/

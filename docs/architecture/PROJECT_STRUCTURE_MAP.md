@@ -17,9 +17,10 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 â”œâ”€â”€ backend/
 â”‚   â”œâ”€â”€ manage.py
 â”‚   â”œâ”€â”€ requirements.txt
+â”‚   â”œâ”€â”€ venv/                       # official local virtual environment, khong commit
 â”‚   â”œâ”€â”€ db.sqlite3                  # local database, khÃ´ng nÃªn commit
 â”‚   â”œâ”€â”€ media/                      # local uploaded/demo media
-â”‚   â”œâ”€â”€ backend/           # inner Django config package, giá»¯ nguyÃªn tÃªn
+â”‚   â”œâ”€â”€ hostello_backend/           # inner Django config package, giá»¯ nguyÃªn tÃªn
 â”‚   â”œâ”€â”€ accounts/
 â”‚   â”œâ”€â”€ properties/
 â”‚   â”œâ”€â”€ tenants/
@@ -37,7 +38,6 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 â”œâ”€â”€ frontend/
 â”‚   â”œâ”€â”€ templates/
 â”‚   â””â”€â”€ static/
-â””â”€â”€ venv/                           # local virtual environment, khÃ´ng nÃªn commit
 ```
 
 ## Manage.py VÃ  Settings Module
@@ -49,6 +49,13 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 - File URL chÃ­nh: `backend/hostello_backend/urls.py`
 
 Äiá»ƒm quan trá»ng: chá»‰ Ä‘á»•i tÃªn thÆ° má»¥c ngoÃ i. Package cáº¥u hÃ¬nh Django bÃªn trong váº«n lÃ  `hostello_backend`, khÃ´ng Ä‘á»•i thÃ nh `backend`.
+
+## Virtual Environment
+
+- Virtual environment chinh thuc cho local development la `backend/venv/`.
+- Chay Django command tu thu muc `backend/` bang `.\venv\Scripts\python.exe`.
+- Khong dung root-level `venv/` sau khi du an da tach `backend/` va `frontend/`.
+- Ca `venv/` va `backend/venv/` deu phai duoc ignore, khong commit vao Git.
 
 ## Current Backend Files/Folders
 

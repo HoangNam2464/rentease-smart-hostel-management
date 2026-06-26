@@ -109,6 +109,8 @@ Từ thư mục gốc repository:
 cd backend
 ```
 
+Virtual environment chinh thuc cua du an nam tai `backend/venv/`. Sau khi da `cd backend`, hay dung `.\venv\Scripts\python.exe`. Khong dung root-level `venv/` sau khi du an da tach `backend/` va `frontend/`.
+
 Cài thư viện nếu cần:
 
 ```powershell
