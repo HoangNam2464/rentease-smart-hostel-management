@@ -1,4 +1,4 @@
-﻿# RentEase Current State
+# RentEase Current State
 
 ## Branch
 
@@ -6,610 +6,106 @@
 complete-product
 ```
 
-## Latest Known Commit
+Do not rely on this file alone for the latest commit. Always verify with:
 
-```text
-Harden admin search privacy (Phase 20N)
+```powershell
+git log --oneline -15
 ```
 
-## Release Tags
+## Current Status
 
-Final local demo release tag:
+RentEase is **local-demo ready**.
 
-```text
-release-rentease-polished-local-demo-v2
-```
+RentEase is **not production-ready yet**.
 
-Previous local demo release tag:
+## Current Structure
 
 ```text
-release-rentease-complete-product-v1
+RentEase/
+├── backend/   # Django backend, apps, manage.py, settings
+├── frontend/  # Django Templates and static assets
+└── docs/      # Documentation
 ```
 
-Latest production-hardening tag:
+Important paths:
 
-```text
-phase20n-admin-search-privacy-hardening
-```
+- Django project folder: `backend/`
+- Django config package: `backend/hostello_backend/`
+- Settings module: `hostello_backend.settings`
+- Template root: `frontend/templates/`
+- Static root: `frontend/static/`
+- Official local virtual environment: `backend/venv/`
 
-Latest agent guidance docs commit:
+The old root-level `venv/` was removed safely. Use only `backend/venv/` for local Django commands.
 
-```text
-7da10ec Add RentEase agent guidance docs
-```
+## Current Verification Status
 
-SPQM documentation baseline:
+Latest verified state during documentation consolidation:
 
-```text
-docs/spqm/
-```
+- `manage.py check` passed.
+- `makemigrations --check --dry-run` reported `No changes detected`.
+- Final route smoke test passed.
+- Public routes returned 200.
+- Anonymous protected routes redirected to login/admin login.
+- `admin_test` could access `/admin/` and `/reports/`.
+- `owner_test` could access owner dashboard, rooms, tenants, contracts, and invoices.
+- `tenant_test` could access tenant dashboard, invoices, and payments.
 
-The SPQM documentation baseline has been created to support process, quality, backlog, metrics, release readiness, and continuous improvement.
+## Current Demo Documentation
 
-Autonomous execution docs:
+Primary demo docs:
 
-```text
-docs/agent/AUTONOMOUS_EXECUTION_PLAN.md
-docs/agent/NEXT_ACTION.md
-```
+- `docs/demo/FINAL_DEMO_CHECKLIST.md`
+- `docs/demo/DEMO_DATA_SEED_USAGE.md`
+- `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md`
+- `docs/demo/FINAL_DEMO_PACKAGE.md`
 
-These files allow future agent sessions to start from a short prompt, read the current next action, and continue safely through approved documentation, UI, and planning work.
-
-Phase 15A UI/UX audit plan:
-
-```text
-docs/agent/PHASE_15A_UI_UX_AUDIT_PLAN.md
-```
-
-Phase 15A identified public landing encoding, crowded portal navigation, inline-style-heavy templates, table-heavy owner/tenant pages, and basic public listing visuals as demo polish targets.
-
-Phase 15B-1 public UI polish:
-
-```text
-docs/agent/PHASE_15B1_PUBLIC_UI_POLISH.md
-```
-
-Phase 15B-1 improved the public landing/listing/viewing-registration flow without changing models, routes, schema, or business logic.
-
-Phase 15B-2 owner layout/dashboard polish:
-
-```text
-docs/agent/PHASE_15B2_OWNER_LAYOUT_DASHBOARD_POLISH.md
-```
-
-Phase 15B-2 simplified role navigation and improved owner dashboard hierarchy without changing owner-scoped query behavior.
-
-Phase 15B-3 owner CRUD page polish:
-
-```text
-docs/agent/PHASE_15B3_OWNER_CRUD_POLISH.md
-```
-
-Phase 15B-3 improved owner list/detail/form pages for rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations without changing models, routes, schema, or business logic.
-
-Phase 15B-4 tenant portal polish:
-
-```text
-docs/agent/PHASE_15B4_TENANT_PORTAL_POLISH.md
-```
-
-Phase 15B-4 improved tenant dashboard, profile, contracts, invoices, payments, repairs, and notifications pages without changing models, routes, schema, or business logic.
-
-Phase 15C UI regression and demo package:
-
-```text
-docs/ui/RENTEASE_UI_REGRESSION_REPORT.md
-docs/demo/DEMO_SCRIPT.md
-docs/demo/SCREENSHOT_CHECKLIST.md
-```
-
-Phase 15C verified polished public, owner, tenant, reports, admin, and legacy safety routes, then documented the demo script, screenshot checklist, known sample-data limitation, and next recommended phase.
-
-Phase 15D demo data readiness plan:
-
-```text
-docs/demo/DEMO_DATA_READINESS_PLAN.md
-```
-
-Phase 15D audited the current local demo accounts, model relationships, sample-data gaps, and recommended a guarded local-only management command for safe fake demo data.
-
-Phase 15E safe demo data seed implementation:
+The demo data seed command exists at:
 
 ```text
 backend/portal/management/commands/seed_rentease_demo_data.py
-docs/demo/DEMO_DATA_SEED_IMPLEMENTATION_NOTES.md
-docs/demo/DEMO_DATA_SEED_USAGE.md
 ```
 
-Phase 15E implemented and verified a guarded local-only demo data seed command with dry-run support, idempotent seed behavior, and demo-prefixed data.
+## Current Architecture Documentation
 
-Phase 15F final demo walkthrough verification:
+Primary architecture docs:
+
+- `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
+- `docs/architecture/HELPER_FILE_CLEANUP.md`
+- `docs/architecture/CLEANUP_AUDIT.md`
+
+## Legacy Status
+
+Legacy HOSTELLO apps remain in the repository:
+
+- `students`
+- `attendance`
+- `fees`
+- `requests`
+- `notices`
+
+They are still installed and have models, migrations, admin registrations, and cross-imports. Do not delete or move them without a dedicated legacy removal plan.
+
+## Current Known Gaps
+
+- Production settings are not hardened.
+- Production database/static/media/email/logging are not fully configured.
+- Some legacy HOSTELLO surfaces still exist under `/legacy/` or admin-related legacy templates.
+- Demo data is technically complete but should be polished to feel more realistic for presentation.
+- Manual browser walkthrough is still recommended before final submission.
+
+## Recommended Next Action
 
 ```text
-docs/demo/FINAL_DEMO_WALKTHROUGH_REPORT.md
+Realistic Demo Data Polish
 ```
 
-Phase 15F reran the demo seed command and verified public, owner, tenant, admin, reports, and legacy-safety routes with seeded local demo data.
+Focus:
 
-Phase 16A README and final demo package polish:
+- Replace technical-looking demo labels where safe.
+- Use Vietnamese, realistic but fake rental-room data.
+- Keep privacy-safe fake data only.
+- Keep seed command idempotent.
+- Do not change schema or migrations unless explicitly approved.
 
-```text
-README.md
-docs/demo/FINAL_DEMO_PACKAGE.md
-```
-
-Phase 16A updated the project README and final demo package around the verified local demo flow, setup commands, seed usage, demo accounts, safety notes, and production limitations.
-
-Phase 16B final local demo release verification:
-
-```text
-release-rentease-polished-local-demo-v2
-```
-
-Phase 16B reran Django checks, migration dry-run, demo seed command, final route smoke tests, privacy scan, and raw template scan before locking the polished local demo release.
-
-Phase 17A full UI completeness audit:
-
-```text
-docs/ui/PHASE_17A_FULL_UI_COMPLETENESS_AUDIT.md
-```
-
-Phase 17A audited the complete visible RentEase UI after the polished local demo release and identified remaining low-risk polish candidates.
-
-Phase 17B remaining UI polish:
-
-```text
-docs/ui/PHASE_17B_REMAINING_UI_POLISH.md
-```
-
-Phase 17B polished reports, custom error pages, owner process form labels, login layout, and small inline-style issues without changing models, migrations, schema, business logic, production settings, or route security.
-
-Phase 17C final visual QA and screenshot checklist:
-
-```text
-docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
-```
-
-Phase 17C prepared the final browser visual QA checklist, screenshot checklist, video demo checklist, responsive checks, and privacy checklist for manual capture.
-
-Phase 18A screenshot and video preparation:
-
-```text
-docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
-```
-
-Phase 18A prepared the final manual screenshot capture order, pre-recording setup, 3 to 5 minute demo video outline, Vietnamese narration script, visual QA checklist, and honest limitations for the local demo recording.
-
-Phase 19A product-grade UI redesign:
-
-```text
-docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
-```
-
-Phase 19A redesigned the public landing page, shared portal theme, public room pages, login page, owner dashboard/list pages, tenant list pages, and error pages toward a more realistic Vietnamese-first RentEase product presentation.
-
-Phase 19B Vietnamese copy and human UI fixes:
-
-```text
-docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
-```
-
-Phase 19B fixed missing Vietnamese diacritics, tightened the landing page hero and workflow panel, and made public, owner, tenant, login, and error-page copy feel more human and practical.
-
-Phase 20A professional UI design system and full visual redesign:
-
-```text
-docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
-docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
-frontend/static/css/rentease-design.css
-```
-
-Phase 20A created a shared visual design system, redesigned the homepage, improved public room pages, owner/tenant dashboards, key detail/form labels, reports, and branded error pages around a more professional Vietnamese SaaS-style product direction.
-
-Phase 20B template reference selection and UI direction:
-
-```text
-docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
-```
-
-Phase 20B reviewed property-listing and dashboard template references, selected the public/product and portal/dashboard visual direction for RentEase, and documented page mappings for the next redesign pass without copying external template assets or source code.
-
-Phase 20C reference-based RentEase UI redesign:
-
-```text
-docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
-```
-
-Phase 20C applied the selected direction to local templates and CSS: public pages now use a stronger room/property listing style, owner pages inherit a dashboard/sidebar visual system, tenant pages remain simple and readable, and no external template packages or remote image hotlinks were added.
-
-Phase 21B project docs integration, tenant privacy hotfix, and local setup guide:
-
-```text
-docs/agent/RENTEASE_PROJECT_MAP.md
-docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md
-docs/PHAN-CONG-THANH-VIEN.md
-docs/agent/PHASE_21B_REPO_HYGIENE_AUDIT.md
-```
-
-Phase 21B verified the docs structure, linked the project map from `AGENTS.md`, fixed `Tenant.__str__` so it no longer exposes `citizen_id`, created teammate local setup/demo data guidance, created a team member work guide, and documented repo hygiene risks without deleting local files.
-
-Phase 21C safe repo hygiene cleanup:
-
-```text
-docs/agent/PHASE_21C_SAFE_REPO_HYGIENE_CLEANUP.md
-```
-
-Phase 21C hardened `.gitignore`, verified local/demo files such as `db.sqlite3`, `venv`, backup JSON files, `.env`, and `media` were not tracked, and did not delete local files or remove legacy HOSTELLO apps/templates.
-
-Phase 20D reviewed UI package application:
-
-```text
-docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md
-```
-
-Phase 20D applied the reviewed RentEase UI improvement package to active RentEase templates and shared CSS only. The homepage, login page, public room list/detail, owner dashboard, tenant dashboard, and portal layout were improved. Package references were adapted to active URL names and existing model fields. External dev/demo assets remain a production follow-up.
-
-Phase 20E owner CRUD polish:
-
-```text
-docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md
-```
-
-Phase 20E aligned active owner list, detail, form, payment, repair process, and viewing registration process pages with the Phase 20D visual system. The phase added reusable CSS for owner CRUD tables, detail cards, form cards, action rows, and responsive layouts. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, or legacy files were changed.
-
-Phase 20F tenant portal bugfix and polish:
-
-```text
-docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md
-```
-
-Phase 20F fixed shared portal role navigation separation, cleaned tenant portal Vietnamese copy, removed the dashboard dependency on missing `recent.*` context, and polished tenant profile, contracts, invoices, payments, repairs, and notifications. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, or legacy files were changed.
-
-Phase 20G RentEase UI v2 dark sidebar layout:
-
-```text
-docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md
-```
-
-Phase 20G applied the uploaded UI v2 package to the active portal shell and dashboards. The dashboard portal layout now uses a dark sidebar plus white topbar, owner and tenant dashboards follow a more professional admin-panel structure, and public pages remain on the existing RentEase design system. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, public templates, legacy files, or `rentease-design.css` were changed.
-
-Phase 20H full UI visual QA and regression audit:
-
-```text
-docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md
-```
-
-Phase 20H audited public, owner, tenant, admin, and reports routes after the dark-sidebar layout. A P1 regression was found and fixed: public listing pages had inherited the dashboard shell from `portal/base.html`. A dedicated public listing base template now keeps public listing pages on `rentease-design.css`. Major/minor UI issues and remaining manual review recommendations were documented. No backend logic, URLs, forms, models, migrations, schema, permissions, billing logic, reports logic, runtime files, or legacy files were changed.
-
-## Runtime State
-
-- Local runtime works.
-- Django check passes.
-- Migration dry-run says `No changes detected`.
-- RentEase is ready for local demo and controlled testing.
-- RentEase is not production-ready yet.
-
-## Documentation Layers
-
-RentEase now has two documentation layers:
-
-- `docs/agent/` for coding-agent project memory, safety rules, current state, security rules, roadmap, and workflow.
-- `docs/spqm/` for process model, quality gates, backlog, metrics, release checklist, and continuous improvement.
-
-These documents support future work, but they do not make RentEase production-ready by themselves.
-
-`docs/agent/NEXT_ACTION.md` controls the immediate next recommended phase. Agents must read it before choosing new work.
-
-## Completed Locked Phases
-
-Phase 8B-2 Owner Room Create/Update
-
-Tag: `phase8b2-owner-room-create-update`
-
-Phase 8C-1 Owner Tenant Update
-
-Tag: `phase8c1-owner-tenant-update`
-
-Phase 8D-1 Owner Contract Create/Update
-
-Tag: `phase8d1-owner-contract-create-update`
-
-Phase 8E-1 Owner Invoice Create/Update
-
-Tag: `phase8e1-owner-invoice-create-update`
-
-Phase 8F-1 Owner Payment Recording
-
-Tag: `phase8f1-owner-payment-recording`
-
-Phase 8G-1 Owner Dashboard / Reports Polish
-
-Tag: `phase8g1-owner-dashboard-polish`
-
-Phase 12A-1 Legacy Root URL Cleanup
-
-Tag: `phase12a1-legacy-root-url-cleanup`
-
-Phase 12A-2 Shared Tenant Edit Hardening
-
-Tag: `phase12a2-shared-tenant-readonly`
-
-Phase 12B-1 Public Root Landing Route Fix
-
-Tag: `phase12b1-public-root-landing`
-
-Phase 12B Full Regression Clean
-
-Tag: `phase12b-full-regression-clean`
-
-Phase 12C Home Landing Polish
-
-Tag: `phase12c-home-landing-polish`
-
-Phase 14B-1 Remove Legacy Root API / Fees Routes
-
-Tag: `phase14b1-remove-legacy-root-api-fees`
-
-Phase 15A UI/UX Audit and Redesign Planning
-
-Tag: `phase15a-ui-ux-audit-plan`
-
-Phase 15B-1 Public UI Polish
-
-Tag: `phase15b1-public-ui-polish`
-
-Phase 15B-2 Owner Layout and Dashboard Polish
-
-Tag: `phase15b2-owner-layout-dashboard-polish`
-
-Phase 15B-3 Owner CRUD Page Polish
-
-Tag: `phase15b3-owner-crud-polish`
-
-Phase 15B-4 Tenant Portal Polish
-
-Tag: `phase15b4-tenant-portal-polish`
-
-Phase 15C UI Regression and Demo Package
-
-Tag: `phase15c-ui-demo-readiness`
-
-Phase 15D Demo Data Readiness Plan
-
-Tag: `phase15d-demo-data-readiness-plan`
-
-Phase 15E Safe Demo Data Seed Implementation
-
-Tag: `phase15e-demo-data-seed`
-
-Phase 15F Final Demo Walkthrough Verification
-
-Tag: `phase15f-final-demo-walkthrough`
-
-Phase 16A README and Final Demo Package Polish
-
-Tag: `phase16a-readme-final-demo-package`
-
-Phase 16B Final Local Demo Release
-
-Tag: `release-rentease-polished-local-demo-v2`
-
-Phase 17A Full UI Completeness Audit
-
-Tag: `phase17a-full-ui-completeness-audit`
-
-Phase 17B Remaining UI Polish
-
-Tag: `phase17b-remaining-ui-polish`
-
-Phase 17C Final Visual QA and Screenshot Checklist
-
-Tag: `phase17c-final-visual-qa`
-
-Phase 18A Screenshot Capture and Demo Video Preparation
-
-Tag: `phase18a-screenshot-video-prep`
-
-Phase 19A Product-Grade UI Redesign
-
-Tag: `phase19a-product-grade-ui-redesign`
-
-Phase 19B Vietnamese Copy and Human Product UI Fixes
-
-Tag: `phase19b-vietnamese-human-ui-fixes`
-
-Phase 20A Professional UI Design System and Full Visual Redesign
-
-Tag: `phase20a-professional-ui-redesign-system`
-
-Phase 20B Template Reference Selection and UI Direction
-
-Tag: `phase20b-template-reference-ui-direction`
-
-Phase 20C Reference-Based RentEase UI Redesign
-
-Tag: `phase20c-reference-based-ui-redesign`
-
-Phase 21B Project Docs Integration, Tenant Privacy Hotfix, and Local Setup Guide
-
-Tag: `phase21b-docs-privacy-local-setup`
-
-Phase 21C Safe Repo Hygiene Cleanup
-
-Tag: `phase21c-safe-repo-hygiene-cleanup`
-
-Phase 20D Reviewed UI Package Application
-
-Tag: `phase20d-reviewed-ui-package`
-
-Phase 20E Owner CRUD Polish
-
-Tag: `phase20e-owner-crud-polish`
-
-Phase 20F Tenant Portal Bugfix and Polish
-
-Tag: `phase20f-tenant-portal-bugfix-polish`
-
-Phase 20G RentEase UI V2 Dark Sidebar Layout
-
-Tag: `phase20g-rentease-ui-v2-dark-sidebar`
-
-Phase 20H Full UI Visual QA and Regression Audit
-
-Tag: `phase20h-full-ui-visual-qa`
-
-Phase 20I Full Role UI/UX Audit
-
-Tag: `phase20i-full-role-ui-ux-audit`
-
-Phase 20J Browser-Based Visual QA
-
-Tag: `phase20j-browser-visual-qa`
-
-Phase 20K-A Admin Tenant Privacy Hotfix
-
-Tag: `phase20k-a-admin-tenant-privacy-hotfix`
-
-Phase 20K-B Dashboard Interaction and Visual Polish
-
-Tag: `phase20k-b-dashboard-interaction-visual-polish`
-
-Phase 20L Owner CRUD Form And Table Professionalization
-
-Tag: `phase20l-owner-crud-form-table-professionalization`
-
-Phase 20M Reports And Admin Visual Polish Planning
-
-Tag: `phase20m-reports-admin-visual-polish-planning`
-
-Phase 20N Admin Search Privacy Hardening
-
-Tag: `phase20n-admin-search-privacy-hardening`
-
-## Working Now
-
-- Public landing page
-- Public rooms
-- Public room detail
-- Viewing registration
-- Login/logout
-- Role-based routing
-- Owner dashboard
-- Owner rooms
-- Owner listings
-- Owner linked tenants
-- Shared tenant readonly protection
-- Owner contracts
-- Owner invoices
-- Owner payment recording
-- Owner repairs
-- Owner viewing registrations
-- Tenant dashboard
-- Tenant profile
-- Tenant contracts
-- Tenant invoices
-- Tenant payments
-- Tenant repairs
-- Tenant notifications
-- Admin site
-- Staff-only reports
-- Legacy available only under `/legacy/` and `/legacy/login/`
-- Seeded local demo walkthrough across public, owner, tenant, admin, reports, and legacy safety routes
-- Final README and local demo package documentation
-- Final polished local demo release tag
-- Full UI completeness audit document
-- Remaining UI polish pass
-- Final visual QA and screenshot checklist
-- Screenshot and video preparation guide
-- Product-grade UI redesign for local demo
-- Vietnamese copy and human product UI fixes
-- Professional UI design system and full visual redesign
-- Template reference direction for public property-listing pages and dashboard portal pages
-- Reference-based UI redesign applied to public, owner, and tenant surfaces
-- Docs structure verified and RentEase project map linked from `AGENTS.md`
-- Tenant string representation no longer exposes `citizen_id`
-- Local setup/demo data guide and repo hygiene audit available
-- Repo hygiene rules are enforced through `.gitignore`
-- Local/demo files should not be committed
-- No legacy removal was done in Phase 21C
-- Reviewed UI package applied to active RentEase templates/CSS in Phase 20D
-- Homepage, login, public listing/detail, owner dashboard, and tenant dashboard were improved
-- External dev/demo assets remain a production follow-up
-- Owner CRUD pages are visually aligned with the Phase 20D design system
-- Tenant portal pages are visually aligned with the Phase 20D/20E design system
-- Shared portal navigation now separates tenant and owner sidebars more clearly
-- No backend logic changed in Phase 20F
-- Dashboard portal layout upgraded to dark sidebar plus white topbar
-- Owner/Tenant dashboard layout now follows a professional admin-panel structure
-- Public pages remain on the existing RentEase design system
-- No backend logic changed in Phase 20G
-- Full UI visual QA completed after dark sidebar layout
-- Major/minor UI issues documented in the Phase 20H report
-- Public listing dashboard-shell regression fixed with a dedicated public listing base template
-- No backend logic changed in Phase 20H
-- Full role UI/UX audit completed across 47 public, owner, tenant, admin, and reports routes
-- No P0/P1 UI, route-rendering, role-shell, or privacy issue remains from the Phase 20I audit
-- Remaining UI work is P2/P3 polish around dashboards, owner CRUD pages, tenant readability, public listing polish, and reports/admin presentation
-- No backend logic changed in Phase 20I
-- Browser-based visual QA completed for admin/Jazzmin, reports, responsive/mobile, forms, empty states, and interactions
-- Screenshot evidence saved under `docs/ui/screenshots/phase20j-browser-qa/`
-- Key visual QA findings: owner dashboard has slight mobile overflow, owner forms need consistent styled fields, tenant financial tables are cramped on mobile, reports/admin pages need staff UI polish, and admin tenant list exposes `Citizen id`
-- No application code changed in Phase 20J
-- Admin tenant citizen ID exposure from Phase 20J was addressed
-- Tenant and co-tenant sensitive identity fields are no longer shown in default admin list views or admin search fields
-- Sensitive identity fields remain only in collapsed admin detail sections for staff/superuser review
-- No schema or migration changes were introduced in Phase 20K-A
-- Dashboard interaction and responsive polish was applied in Phase 20K-B
-- Owner dashboard mobile overflow risk around 390px was reduced through safer topbar, quick action, debt card, feed, metric card, and layout wrapping rules
-- Tenant dashboard header and summary sections now have safer mobile wrapping
-- Tenant and CoTenant admin list privacy was reconfirmed after dashboard polish
-- No schema, migration, model, view, form, URL, billing, reports, admin logic, or legacy changes were introduced in Phase 20K-B
-- Owner CRUD form and table presentation was professionalized in Phase 20L
-- Owner tables now have bordered scroll containers, clearer action links, and safer mobile table behavior
-- Owner forms now have consistent field, label, help text, error, focus, and action-row styling
-- Owner detail pages now use clearer info-list grouping and mobile-safe wrapping
-- Owner invoice form display labels were translated from English to Vietnamese
-- No schema, migration, model, view, URL, form-class, billing, reports, admin logic, or legacy changes were introduced in Phase 20L
-- Reports/admin visual polish planning was completed in Phase 20M
-- Staff reports received safe template-only polish: readable Vietnamese copy, cleaner report shell, better metric cards, filter layout, table wrappers, empty states, and mobile wrapping
-- Admin/Jazzmin was reviewed but not redesigned
-- Tenant/CoTenant admin list privacy and selected Room/Contract/Invoice/Payment admin changelists were rechecked
-- Sensitive tenant identity lookup references in some non-tenant admin `search_fields` were documented as a follow-up instead of changed during the visual phase
-- No schema, migration, model, view, URL, report calculation, billing, admin permission, or legacy changes were introduced in Phase 20M
-- Admin search privacy hardening was completed in Phase 20N
-- `ContractAdmin.search_fields` no longer includes `tenant__citizen_id`
-- `InvoiceAdmin.search_fields` no longer includes `contract__tenant__citizen_id`
-- `CoTenantInline` inside `ContractAdmin` now exposes only safe non-identity fields
-- Tenant and CoTenant sensitive identity fields remain only inside collapsed admin detail fieldsets
-- No schema, migration, model, route, Jazzmin redesign, report calculation, billing, portal, or legacy behavior changes were introduced in Phase 20N
-
-## Important Production Gaps
-
-- Production settings not hardened
-- SQLite/local setup still active
-- Owner-facing invoice detail/utility billing incomplete
-- Account lifecycle incomplete
-- Owner cannot create brand-new independent tenant yet
-- Deployment/static/media/email/logging not production-ready
-
-## Next Action
-
-Current recommended next action:
-
-```text
-Phase 20O: Admin Sensitive Detail Permission Planning
-```
-
-Goal: plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only in a future production-hardening phase.
-
-Alternative production track:
-
-```text
-Phase 14B-2: Production Settings Split Planning
-```
-
-Do not change models, migrations, schema, routes, settings, or business logic.
-
-## Do Not Assume
-
-Future agents must verify this state locally. Do not trust this file alone if git history has moved.
