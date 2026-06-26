@@ -1,293 +1,253 @@
-# RentEase - Python/Django Boarding House Management System
+# RentEase - Web Quản Lý Nhà Trọ Bằng Django
 
-RentEase is a Django web application for managing boarding-house rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations.
+RentEase là hệ thống quản lý nhà trọ/phòng trọ được phát triển bằng Django. Dự án được kế thừa từ mã nguồn HOSTELLO cũ và đã được mở rộng thành một ứng dụng có phân quyền theo vai trò: khách truy cập, chủ trọ, khách thuê và quản trị viên.
 
-The project started from the original HOSTELLO codebase and has been reshaped into a role-based RentEase application for a Python/Django course demo. It is local-demo ready, with polished public, owner, tenant, admin, and report surfaces.
+RentEase hiện phù hợp cho demo cục bộ, kiểm thử luồng nghiệp vụ và tiếp tục phát triển thành sản phẩm thực tế. Dự án chưa được đánh dấu production-ready.
 
-## Current Status
+## Kiến Trúc Dự Án
 
-- Local demo ready.
-- UI polished for public, owner, and tenant flows.
-- Safe local demo data seed command available.
-- Final demo walkthrough verified in Phase 15F.
-- Final polished local demo release verified in Phase 16B.
-- Not production-ready yet.
-
-Final local demo release tag:
+RentEase hiện vẫn giữ cấu trúc Django gốc:
 
 ```text
-release-rentease-polished-local-demo-v2
+HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
+├── hostello_backend/
+│   ├── manage.py
+│   ├── hostello_backend/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   ├── accounts/
+│   ├── properties/
+│   ├── tenants/
+│   ├── contracts/
+│   ├── billing/
+│   ├── maintenance/
+│   ├── listings/
+│   ├── portal/
+│   ├── reports/
+│   ├── templates/
+│   ├── static/
+│   └── media/
+├── docs/
+├── AGENTS.md
+└── README.md
 ```
 
-Known production gaps:
-
-- production settings are not hardened
-- production database is not configured
-- deployment/static/media/email/logging are not production-ready
-- owner-facing billing detail and utility workflows need more work for real deployment
-- account lifecycle and onboarding are incomplete
-- legacy HOSTELLO apps still exist, though root legacy API/fees routes are removed
-
-## User Roles
-
-| Role | Purpose |
-| --- | --- |
-| Public visitor | Browse published rooms and submit viewing registrations |
-| Owner | Manage owned rooms, listings, tenants, contracts, invoices, payments, repairs, and viewing registrations |
-| Tenant | View own profile, contracts, invoices, payments, repairs, and notifications |
-| Admin/Staff | Use Django Admin and staff-only reports |
-
-## Main Features
-
-### Public
-
-- Landing page
-- Room browsing
-- Room detail page
-- Viewing registration form
-
-### Owner
-
-- Owner dashboard
-- Room management
-- Listing management
-- Linked tenant views and safe updates
-- Contract create/update
-- Invoice create/update
-- Payment recording
-- Repair request processing
-- Viewing registration processing
-
-### Tenant
-
-- Tenant dashboard
-- Tenant profile
-- Contract views
-- Invoice views
-- Payment history
-- Repair request views and submission
-- Notifications
-
-### Admin And Reports
-
-- Django Admin with RentEase branding
-- Staff-only reports dashboard
-- Billing, room, tenant/contract, maintenance, and listing reports
-
-## Tech Stack
-
-- Python
-- Django
-- SQLite for local development
-- Django templates and Bootstrap-style UI
-- Django Admin and Jazzmin
-- Django management command for safe demo data
-
-Do not assume PostgreSQL, CI, SonarQube, or automated coverage exists unless those items are later implemented and verified.
-
-## Project Structure
+Định hướng tương lai là tách rõ hơn theo kiểu:
 
 ```text
-hostello_backend/
-  accounts/       User and owner profile models
-  properties/     Room management
-  tenants/        Tenant and co-tenant management
-  contracts/      Rental contracts
-  billing/        Price config, invoices, invoice details, payments
-  maintenance/    Repair requests, maintenance records, notifications
-  listings/       Public listings and viewing registrations
-  portal/         Public login and owner/tenant portal pages
-  reports/        Staff-only report pages
-  hostello_backend/
-    settings.py
-    urls.py
+RentEase/
+├── backend/   # Django settings, apps, views, forms, models, admin
+├── frontend/  # Django templates, static CSS/JS/images, UI assets
+└── docs/
 ```
 
-Legacy HOSTELLO apps remain in the repository but are not the main RentEase demo path:
+Hiện tại chưa di chuyển thư mục backend/frontend để tránh rủi ro làm hỏng import, migration, URL, template path và static path. Xem bản đồ chi tiết tại:
 
 ```text
-students/
-attendance/
-fees/
-requests/
-notices/
+docs/architecture/PROJECT_STRUCTURE_MAP.md
 ```
 
-Legacy routes are isolated under `/legacy/`. Root legacy API and fees routes such as `/api/requests/` and `/fees/` have been removed.
+## Yêu Cầu Hệ Thống
 
-## Setup For Local Development
+- Windows hoặc môi trường có thể chạy Python/Django
+- Python 3.12 trong virtual environment hiện có
+- SQLite cho môi trường local demo
+- Trình duyệt để kiểm thử giao diện
 
-From the repository root:
+## Hướng Dẫn Chạy Nhanh
+
+Từ thư mục gốc repository:
 
 ```powershell
 cd hostello_backend
 ```
 
-Create and activate a virtual environment if one is not already available:
-
-```powershell
-py -m venv venv
-.\venv\Scripts\activate
-```
-
-Install dependencies:
+Cài thư viện nếu cần:
 
 ```powershell
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Run migrations if needed:
-
-```powershell
-.\venv\Scripts\python.exe manage.py migrate
-```
-
-Run project checks:
+Kiểm tra Django:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
 
-Start the local development server:
+Chạy server local:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py runserver
 ```
 
-Open:
+Mở trình duyệt:
 
 ```text
 http://127.0.0.1:8000/
 ```
 
-## Main Local URLs
+## Vai Trò Người Dùng
 
-| Area | URL |
+| Vai trò | Chức năng chính |
 | --- | --- |
-| Public landing | `http://127.0.0.1:8000/` |
-| Public rooms | `http://127.0.0.1:8000/rooms/` |
-| Login | `http://127.0.0.1:8000/login/` |
-| Owner dashboard | `http://127.0.0.1:8000/owner/dashboard/` |
-| Tenant dashboard | `http://127.0.0.1:8000/tenant/dashboard/` |
-| Django Admin | `http://127.0.0.1:8000/admin/` |
-| Staff reports | `http://127.0.0.1:8000/reports/` |
-| Legacy prefix | `http://127.0.0.1:8000/legacy/` |
+| Visitor | Xem phòng đang đăng, xem chi tiết phòng, gửi yêu cầu xem phòng |
+| Owner | Quản lý phòng, tin đăng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa, lịch xem phòng |
+| Tenant | Xem hồ sơ, hợp đồng, hóa đơn, lịch sử thanh toán, yêu cầu sửa chữa và thông báo |
+| Admin/Staff | Quản trị dữ liệu qua Django Admin/Jazzmin và xem báo cáo staff-only |
 
-## Demo Data
+## Tính Năng Chính
 
-RentEase includes a local-only seed command for fake demo records.
+### Public
 
-Dry run first:
+- Trang giới thiệu RentEase
+- Danh sách phòng đang đăng
+- Chi tiết phòng
+- Form đăng ký xem phòng
 
-```powershell
-.\venv\Scripts\python.exe manage.py seed_rentease_demo_data --dry-run --owner-username owner_test --tenant-username tenant_test
-```
+### Owner
 
-Seed data:
+- Dashboard chủ trọ
+- Quản lý phòng
+- Quản lý tin đăng
+- Xem và cập nhật khách thuê đã liên kết
+- Tạo/cập nhật hợp đồng
+- Tạo/cập nhật hóa đơn
+- Ghi nhận thanh toán
+- Xử lý yêu cầu sửa chữa
+- Xử lý đăng ký xem phòng
+
+### Tenant
+
+- Dashboard khách thuê
+- Hồ sơ cá nhân
+- Hợp đồng đang liên quan
+- Hóa đơn và trạng thái thanh toán
+- Lịch sử thanh toán
+- Yêu cầu sửa chữa
+- Thông báo
+
+### Admin Và Reports
+
+- Django Admin/Jazzmin đã đổi nhận diện RentEase
+- Báo cáo staff-only
+- Báo cáo hóa đơn, phòng, khách thuê/hợp đồng, bảo trì và tin đăng
+- Admin search privacy hardening: không dùng `citizen_id` trong các bề mặt search/list chính
+
+## Công Nghệ Sử Dụng
+
+- Python
+- Django
+- Django Templates
+- Django Admin
+- Jazzmin
+- Django REST Framework trong phần legacy/API cũ còn tồn tại
+- SQLite cho local demo
+- HTML/CSS/JavaScript tĩnh
+
+Không sử dụng React trong phiên bản hiện tại.
+
+## Màn Hình Chính
+
+| Khu vực | URL |
+| --- | --- |
+| Trang chủ | `/` |
+| Danh sách phòng | `/rooms/` |
+| Đăng nhập | `/login/` |
+| Owner dashboard | `/owner/dashboard/` |
+| Tenant dashboard | `/tenant/dashboard/` |
+| Admin | `/admin/` |
+| Reports | `/reports/` |
+| Legacy HOSTELLO | `/legacy/` |
+
+## Quy Tắc Bảo Mật Và Dữ Liệu
+
+- Không hiển thị `citizen_id`, CCCD/CMND hoặc ảnh giấy tờ ở list view thông thường.
+- Không hiển thị mật khẩu, quyền hệ thống hoặc thông tin xác thực nội bộ.
+- Owner chỉ được xem dữ liệu thuộc phòng của mình.
+- Tenant chỉ được xem dữ liệu của chính mình.
+- Public user không được xem hợp đồng, hóa đơn, thanh toán, bảo trì nội bộ hoặc dữ liệu riêng.
+- Không commit `db.sqlite3`, file backup JSON, `.env`, media upload thật hoặc dữ liệu cá nhân thật.
+- Legacy HOSTELLO không được đưa lại ra root route nếu không có kiểm duyệt riêng.
+
+## Tính Năng Đã Hoàn Thành Quan Trọng
+
+- Owner Room Create/Update
+- Owner Tenant Update
+- Owner Contract Create/Update
+- Owner Invoice Create/Update
+- Owner Payment Recording
+- Tenant Invoice/Payment Visibility
+- Tenant Repair Request Submission
+- Owner Repair Processing
+- Owner Viewing Registration Processing
+- Reports Dashboard
+- Public Room Listing UI
+- Demo data seed command
+- Admin Search Privacy Hardening
+- UI polish nhiều vòng cho public, owner, tenant, reports và admin
+
+## Demo Data Local
+
+Tạo dữ liệu demo an toàn:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py seed_rentease_demo_data --owner-username owner_test --tenant-username tenant_test
 ```
 
-The seed command is intended for local demo databases only. It is idempotent, creates fake `DEMO-` records, and should not create migrations or schema changes.
+Lệnh này dùng dữ liệu giả, có tiền tố demo và được thiết kế để chạy lặp lại an toàn trong môi trường local. Không commit database sau khi seed.
 
-A reset option exists, but use it carefully because it deletes command-created demo records before recreating them:
+Tài khoản local demo thường dùng:
 
-```powershell
-.\venv\Scripts\python.exe manage.py seed_rentease_demo_data --reset-demo-data --owner-username owner_test --tenant-username tenant_test
-```
-
-Do not commit database files after seeding.
-
-## Local Demo Accounts
-
-These accounts are for local demo only:
-
-| Role | Username | Password |
+| Vai trò | Username | Password |
 | --- | --- | --- |
 | Admin | `admin_test` | `Test@12345` |
 | Owner | `owner_test` | `Test@12345` |
 | Tenant | `tenant_test` | `Test@12345` |
 
-Do not use these credentials in production. Do not show passwords in screenshots or recorded videos.
+## Hướng Dẫn Phát Triển
 
-## 3 To 5 Minute Demo Flow
+Trước khi sửa code:
 
-1. Open `/` and introduce RentEase.
-2. Open `/rooms/` and show published room listings.
-3. Open one room detail page and the viewing registration form.
-4. Log in as `owner_test`.
-5. Show owner dashboard metrics.
-6. Open owner rooms, contracts, invoices, payment recording, repairs, and viewing registrations.
-7. Log out and log in as `tenant_test`.
-8. Show tenant dashboard, profile, contracts, invoices, payments, repairs, and notifications.
-9. Mention that `/reports/` is staff-only and legacy pages are isolated under `/legacy/`.
-
-Full script:
-
-```text
-docs/demo/DEMO_SCRIPT.md
+```powershell
+git branch --show-current
+git status --short
+.\venv\Scripts\python.exe manage.py check
+.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
 
-## Phase 15F Verification Summary
+Quy tắc quan trọng:
 
-The final demo walkthrough verification passed with seeded local data:
+- Không đổi schema nếu chưa được duyệt.
+- Không tạo migration nếu chưa được duyệt.
+- Không đổi model khi chỉ làm UI/tài liệu.
+- Không di chuyển app/template/static hàng loạt trong một bước.
+- Không đổi quyền truy cập hoặc owner-scoped queryset nếu không có phase bảo mật riêng.
+- Nếu đổi đường dẫn template, phải cập nhật `render()` tương ứng và kiểm tra route.
+- Nếu đổi đường dẫn static, phải cập nhật `{% static %}` và cấu hình liên quan một cách an toàn.
 
-- Django check passed.
-- Migration dry-run reported `No changes detected`.
-- 53 route smoke tests passed.
-- 28 public/owner/tenant privacy scan pages passed.
-- No sensitive leaks were detected on tested public, owner, or tenant product pages.
-- No raw Django template tags were detected.
-- Local demo is ready.
+## Cải Tiến Tương Lai
 
-Final local demo release verification in Phase 16B also passed:
+- Tách production settings khỏi local settings.
+- Chuẩn hóa cấu trúc `backend/` và `frontend/` theo từng phase nhỏ.
+- Tổ chức lại templates thành nhóm public/owner/tenant/reports rõ hơn.
+- Tổ chức lại static thành nhóm CSS/JS/images cho RentEase và vendor.
+- Hoàn thiện billing detail, utility/service charges và quy trình công nợ.
+- Hoàn thiện onboarding tài khoản owner/tenant.
+- Chuẩn bị deployment, static/media, email, logging và production database.
+- Kiểm thử tự động và CI.
 
-- Django check passed.
-- Migration dry-run reported `No changes detected`.
-- Demo seed command reran successfully.
-- 42 final route smoke tests passed.
-- 32 public/owner/tenant product pages passed privacy scanning.
-- Root legacy `/api/requests/` and `/fees/` remained unavailable.
+## Thành Viên Nhóm
 
-## Documentation Map
+- HoangNam2464
+- Thành viên 2: cập nhật theo nhóm đồ án
 
-| Path | Purpose |
-| --- | --- |
-| `AGENTS.md` | Agent rules and project safety instructions |
-| `docs/agent/` | Current state, next action, workflow, security rules, and autonomous work notes |
-| `docs/spqm/` | Process, quality, backlog, metrics, and release checklists |
-| `docs/demo/` | Demo script, seed usage, walkthrough report, screenshot checklist, final demo package |
-| `docs/ui/` | UI regression and demo readiness notes |
+## Phiên Bản Và Ngày Cập Nhật
 
-## Safety Notes
-
-- Use fake local demo data only.
-- Do not use or publish real personal data.
-- Do not show citizen ID values.
-- Do not show citizen ID images/files.
-- Do not show `.env`, `SECRET_KEY`, database paths, or backup files.
-- Do not commit `db.sqlite3`, `*.sqlite3`, backup JSON files, `.env`, or uploaded local media.
-- Do not expose auth/password/permission fields.
-- Do not expose owner-only or tenant-only private data to public pages.
-
-## Final Demo Package
-
-See:
-
-```text
-docs/demo/FINAL_DEMO_PACKAGE.md
-```
-
-Recommended next step after this polished local demo release:
-
-```text
-Track A: Capture screenshots and record demo video
-```
-
-Alternative production track:
-
-```text
-Phase 14B-2: Production Settings Split Planning
-```
+- Nhánh chính hiện tại: `complete-product`
+- Trạng thái: local-demo ready, chưa production-ready
+- Tag demo mới nhất: `release-rentease-polished-local-demo-v2`
+- Tag hardening mới nhất: `phase20n-admin-search-privacy-hardening`
+- Ngày cập nhật: 26/06/2026
