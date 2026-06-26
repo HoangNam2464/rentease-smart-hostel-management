@@ -12,12 +12,16 @@ Create safe local-only fake demo data for RentEase public, owner, and tenant wal
 
 The command is intended for local demo databases only.
 
+The current seed data uses Vietnamese, presentation-friendly fake records such as owner `Nguyễn Minh Anh`, tenants `Trần Hoàng Nam` and `Lê Thảo Vy`, realistic room names, Vietnamese listing copy, realistic invoices, payment states, repair requests, and viewing registrations.
+
 ## Safety Notes
 
 - Requires `DEBUG=True`.
 - Uses existing `owner_test` and `tenant_test` accounts by default.
 - Fails if required users or linked profiles are missing.
-- Creates fake `DEMO-` records only.
+- Uses fake local-only records.
+- Keeps internal safe fake identifiers where needed.
+- Avoids real citizen IDs and real private personal data.
 - Does not upload or reference citizen ID image/file fields.
 - Does not create migrations.
 - Does not change schema.
@@ -74,8 +78,8 @@ Expected:
 
 The command creates or updates:
 
-- 5 demo rooms for `owner_test`
-- 3 published demo room listings
+- 5 realistic Vietnamese demo rooms for `owner_test`
+- 3 published room listings with Vietnamese descriptions
 - 2 internal demo listings
 - 2 demo contracts
 - 2 demo invoices
@@ -85,6 +89,20 @@ The command creates or updates:
 - 2 tenant notifications
 - 3 viewing registrations
 - 1 demo-only second tenant
+
+Expected display examples:
+
+- Owner: `Nguyễn Minh Anh`
+- Tenants: `Trần Hoàng Nam`, `Lê Thảo Vy`
+- Rooms:
+  - `Phòng 101 - Studio có ban công`
+  - `Phòng 102 - Studio tiêu chuẩn`
+  - `Phòng 201 - Phòng gác lửng`
+  - `Phòng 202 - Gác lửng đầy đủ nội thất`
+  - `Phòng 301 - Phòng rộng cho 2 người`
+- Repairs:
+  - `Máy lạnh không lạnh`
+  - `Vòi nước bị rò`
 
 ## What Not To Commit
 

@@ -36,6 +36,8 @@ Seed local demo data:
 .\venv\Scripts\python.exe manage.py seed_rentease_demo_data
 ```
 
+The seed command creates fake but realistic Vietnamese demo data for the local walkthrough, including owner `Nguyễn Minh Anh`, tenants `Trần Hoàng Nam` and `Lê Thảo Vy`, Vietnamese room names, public listing descriptions, invoices, payments, repair requests, notifications, and viewing registrations.
+
 Start the server:
 
 ```powershell
@@ -77,7 +79,7 @@ So `/rooms/` may still be empty after `createsuperuser`.
 
 ### `seed_rentease_demo_data`
 
-Creates fake local demo data for RentEase, including demo rooms, listings, contracts, billing, repairs, notifications, and viewings.
+Creates fake local demo data for RentEase, including realistic Vietnamese rooms, listings, contracts, billing, repairs, notifications, and viewings.
 
 This command exists in:
 
@@ -175,6 +177,7 @@ Important:
 - [ ] `manage.py migrate` completed
 - [ ] demo data exists
 - [ ] `/rooms/` shows published rooms
+- [ ] room/listing/repair names look realistic enough for presentation
 - [ ] `owner_test` can log in
 - [ ] `tenant_test` can log in
 - [ ] no real citizen ID or real personal data is used

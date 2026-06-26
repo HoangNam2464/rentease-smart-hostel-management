@@ -21,6 +21,7 @@ Run commands from the repository root:
 cd backend
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
+.\venv\Scripts\python.exe manage.py seed_rentease_demo_data
 .\venv\Scripts\python.exe manage.py runserver
 ```
 
@@ -34,10 +35,10 @@ http://127.0.0.1:8000/
 
 1. Open the home page: `/`
 2. Open the room listing page: `/rooms/`
-3. Open a published room detail page, for example `/rooms/17/` if the demo data is present.
-4. Open the viewing registration form, for example `/rooms/17/register/`.
+3. Open one published Vietnamese demo room detail page from the `/rooms/` list.
+4. Open that room's viewing registration form.
 5. Submit a viewing registration only if safe in the local demo database.
-6. Confirm the success page, for example `/rooms/17/register/success/`.
+6. Confirm the viewing registration success page.
 
 ## Owner Demo Flow
 
@@ -74,9 +75,9 @@ http://127.0.0.1:8000/
 |---|---|---|---|---|---|
 | `/` | 200 | N/A | 200 | Passed | Public landing page loads. |
 | `/rooms/` | 200 | N/A | 200 | Passed | Public listings page loads. |
-| `/rooms/17/` | 200 if published demo listing exists | N/A | 200 | Passed | Published demo listing was available during smoke test. |
-| `/rooms/17/register/` | 200 if published demo listing exists | N/A | 200 | Passed | Viewing registration form loads. |
-| `/rooms/17/register/success/` | 200 if published demo listing exists | N/A | 200 | Passed | Success page loads. |
+| Published room detail | 200 if published demo listing exists | N/A | 200 | Passed | Use a published room from `/rooms/` instead of a hard-coded ID. |
+| Published room registration form | 200 if published demo listing exists | N/A | 200 | Passed | Viewing registration form loads for the selected room. |
+| Published room registration success | 200 if published demo listing exists | N/A | 200 | Passed | Success page loads for the selected room. |
 | `/login/` | 200 | N/A | 200 | Passed | Portal login page loads. |
 | `/legacy/login/` | 200 | N/A | 200 | Passed | Legacy route remains isolated under `/legacy/`. |
 | `/admin/` | Redirect to login | 200 as `admin_test` | 302 anonymous, 200 admin | Passed | Admin remains protected. |
@@ -111,4 +112,3 @@ The project is ready for local demo based on this smoke test:
 - No runtime route failure was found in this checklist.
 
 Before recording or presenting, run the pre-demo setup commands again and confirm the local database still contains the expected demo data.
-
