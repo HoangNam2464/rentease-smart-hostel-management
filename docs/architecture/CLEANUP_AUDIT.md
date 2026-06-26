@@ -1,180 +1,179 @@
-﻿# Cleanup Audit
+# Cleanup Audit
 
 ## 1. Purpose
 
-This document is an audit-only cleanup report for RentEase before any real file cleanup, template migration, static migration, or backend/frontend reorganization.
+This report documents a safe cleanup audit after the RentEase backend/frontend restructure.
 
-No files were deleted, moved, renamed, or refactored in this audit phase. The goal is to identify old, unclear, duplicated, legacy, or temporary files so future cleanup can happen safely in small reviewed phases.
+The project now uses:
 
-## 2. Safe To Delete Immediately
+- `backend/` for Django backend code, apps, `manage.py`, and settings.
+- `frontend/templates/` for Django templates.
+- `frontend/static/` for CSS, JavaScript, images, and UI assets.
+- `docs/` for documentation.
 
-These items are usually safe to delete later because they are generated cache or temporary files. They were not deleted in this phase.
+This cleanup phase only removed generated Python cache files from project code. It did not delete legacy apps, templates, static files, docs, local databases, media uploads, migrations, or business logic.
 
-- `__pycache__/` folders under project apps.
-- `*.pyc` files under project apps.
+## 2. Cleaned Now
+
+Deleted generated Python cache folders from project code only:
+
+- `backend/accounts/__pycache__/`
+- `backend/accounts/migrations/__pycache__/`
+- `backend/attendance/__pycache__/`
+- `backend/attendance/migrations/__pycache__/`
+- `backend/billing/__pycache__/`
+- `backend/billing/migrations/__pycache__/`
+- `backend/contracts/__pycache__/`
+- `backend/contracts/migrations/__pycache__/`
+- `backend/fees/__pycache__/`
+- `backend/fees/migrations/__pycache__/`
+- `backend/hostello_backend/__pycache__/`
+- `backend/listings/__pycache__/`
+- `backend/listings/migrations/__pycache__/`
+- `backend/maintenance/__pycache__/`
+- `backend/maintenance/migrations/__pycache__/`
+- `backend/notices/__pycache__/`
+- `backend/notices/migrations/__pycache__/`
+- `backend/portal/__pycache__/`
+- `backend/portal/management/__pycache__/`
+- `backend/portal/management/commands/__pycache__/`
+- `backend/properties/__pycache__/`
+- `backend/properties/migrations/__pycache__/`
+- `backend/reports/__pycache__/`
+- `backend/requests/__pycache__/`
+- `backend/requests/migrations/__pycache__/`
+- `backend/students/__pycache__/`
+- `backend/students/migrations/__pycache__/`
+- `backend/tenants/__pycache__/`
+- `backend/tenants/migrations/__pycache__/`
+
+These folders contained generated `.pyc` files only.
+
+Virtual environment cache folders under `venv/` and `backend/venv/` were not cleaned because virtual environments should be ignored/recreated rather than edited as project cleanup.
+
+## 3. Safe To Delete Later
+
+Only generated files are safe to delete without functional review:
+
+- `__pycache__/` folders if they appear again outside virtual environments.
+- `*.pyc` files if they appear again outside virtual environments.
 - `.pytest_cache/` if it appears later.
 - `.coverage` if it appears later.
-- Local log files such as `*.log` if they appear later and are not needed for debugging.
+- Clearly generated temporary logs such as `*.log` or `*.tmp`, if they are not needed for debugging.
 
-Notes:
+No non-cache runtime files should be deleted without a separate review.
 
-- Cache/temp files also exist under local virtual environments such as `venv/` and `backend/venv/`. The better cleanup action is usually to keep virtual environments ignored by Git rather than manually cleaning package internals.
-- Do not delete migration files even if they are Python files.
+## 4. Needs Manual Review
 
-## 3. Needs Manual Review
-
-These files or folders may be unused, old, duplicated, or local-only, but they need human confirmation before cleanup.
+These files or folders may be old, local-only, duplicated, or legacy, but were not deleted:
 
 - `assets/`
-  - Contains original HOSTELLO screenshots and `Hostello_Project_Working_Demo.mp4`.
-  - May be useful for historical documentation, but not part of the active RentEase UI.
+  - Contains HOSTELLO screenshots and a demo video. Likely historical/demo material.
 - `run_backend.bat`
-  - Could be a helper script, but should be reviewed against the current `backend/manage.py` flow.
+  - Local helper script. Currently points to `backend/` and may still be useful.
 - `run_frontend.bat`
-  - The project currently uses Django Templates, not React. This may be old or misleading.
+  - Opens the local site but still has old wording. Needs review before removal or rename.
 - `Working.py`
-  - Unclear root-level Python file. Needs review before removal.
+  - Small root-level helper/debug file with unclear purpose.
 - `backup_phase2.json`, `backup_phase3.json`, `backup_phase4.json`, `backup_phase5.json`
-  - Local backup/demo data files. Should not be committed if they contain account or demo data.
+  - Local backup/demo data files. They should not be committed if they contain user/demo data.
 - `backend/phase8b2_wip.patch`
-  - Old work-in-progress patch file. Needs confirmation before deletion.
-- `frontend/static/css/styles.css`
-  - Appears related to old HOSTELLO public UI.
-- `frontend/static/js/script.js`
-  - Appears related to old HOSTELLO public/login UI.
-- `frontend/templates/payments/success.html`
-  - Referenced by legacy `fees/views.py`, so do not delete without reviewing legacy behavior.
-
-## 4. Do Not Delete
-
-These files/folders are important and must not be deleted during cleanup.
-
-- `backend/manage.py`
-- `backend/backend/settings.py`
-- `backend/backend/urls.py`
-- `backend/accounts/`
-- `backend/properties/`
-- `backend/tenants/`
-- `backend/contracts/`
-- `backend/billing/`
-- `backend/maintenance/`
-- `backend/listings/`
-- `backend/portal/`
-- `backend/reports/`
-- All `migrations/` folders and migration files.
-- All `models.py` files.
-- `frontend/templates/portal/`
-- `frontend/templates/listings/`
-- `backend/reports/templates/reports/`
-- `frontend/static/css/rentease-design.css`
-- `frontend/static/css/rentease-layout.css`
-- `frontend/static/admin/css/custom_admin.css`
-- `backend/media/`
-- `backend/db.sqlite3`
-  - Do not commit it, but do not delete local databases without explicit approval.
-- `docs/`
-- `AGENTS.md`
-- `README.md`
-- `frontend/`
-  - New prepared folder structure for future templates/static organization.
-
-Do not delete or modify permission checks, owner-scoped querysets, tenant-scoped querysets, billing calculations, or privacy hardening behavior during cleanup.
-
-## 5. Possibly Unused Templates
-
-These templates appear to be legacy, old, or unclear. They must be reviewed before deletion because some are still referenced by legacy views/admin.
-
+  - Old WIP patch mentioned in prior repo hygiene docs, if still present locally.
 - `frontend/templates/index.html`
-  - Referenced by `students/views.py` for legacy registration.
+  - Legacy student registration template.
 - `frontend/templates/login.html`
-  - Referenced by `students/views.py` for legacy student login.
+  - Legacy student login template. Do not confuse with `frontend/templates/portal/login.html`.
 - `frontend/templates/dashboard.html`
-  - Referenced by `students/views.py` for legacy student dashboard.
-- `frontend/templates/admin/attendance_management.html`
-  - Legacy attendance admin template.
-- `frontend/templates/admin/assign_room.html`
-  - Referenced by `students/admin.py`.
-- `frontend/templates/admin/request_management.html`
-  - Legacy request admin template.
-- `frontend/templates/admin/fees/board.html`
-  - Referenced by `fees/views.py` and fee admin templates.
-- `frontend/templates/admin/fees/feemonth/change_list.html`
-  - Legacy/admin fee template.
+  - Legacy student dashboard template.
+- `frontend/templates/admin/`
+  - Legacy custom admin templates for attendance, room assignment, requests, and fees.
 - `frontend/templates/payments/success.html`
-  - Referenced by legacy `fees/views.py`.
-
-Active templates that should not be treated as unused:
-
-- `frontend/templates/home.html`
-- `frontend/templates/404.html`
-- `frontend/templates/500.html`
-- `frontend/templates/listings/*`
-- `frontend/templates/portal/*`
-- `backend/reports/templates/reports/*`
-
-## 6. Possibly Unused Static Files
-
-These static files may be legacy or unclear:
-
+  - Legacy fees/payment success template.
 - `frontend/static/css/styles.css`
-  - HOSTELLO-era styling.
+  - HOSTELLO-era public CSS.
 - `frontend/static/css/student-dashboard.css`
-  - Used by legacy `templates/dashboard.html`.
+  - Legacy student dashboard CSS.
 - `frontend/static/js/script.js`
   - HOSTELLO-era JavaScript.
 - `frontend/static/js/student-dashboard.js`
-  - Student dashboard JavaScript.
-- `assets/*.png`
-  - HOSTELLO screenshots and documentation images.
-- `assets/Hostello_Project_Working_Demo.mp4`
-  - HOSTELLO demo video.
+  - Legacy student dashboard JavaScript.
+- Older phase/audit docs under `docs/`
+  - Useful for traceability, but could later be archived.
 
-Active/static files that should not be removed:
+## 5. Do Not Delete
+
+Do not delete or move these without explicit approval and a separate plan:
+
+- `backend/manage.py`
+- `backend/hostello_backend/`
+- `backend/hostello_backend/settings.py`
+- `backend/hostello_backend/urls.py`
+- Active RentEase apps:
+  - `backend/accounts/`
+  - `backend/properties/`
+  - `backend/tenants/`
+  - `backend/contracts/`
+  - `backend/billing/`
+  - `backend/maintenance/`
+  - `backend/listings/`
+  - `backend/portal/`
+  - `backend/reports/`
+- Legacy apps still in `INSTALLED_APPS`:
+  - `backend/students/`
+  - `backend/attendance/`
+  - `backend/fees/`
+  - `backend/requests/`
+  - `backend/notices/`
+- All `models.py` files.
+- All migration folders and migration files.
+- `backend/db.sqlite3`
+- `backend/media/`
+- `frontend/templates/`
+- `frontend/static/`
+- `docs/`
+- `README.md`
+- `AGENTS.md`
+
+Also do not remove permission checks, owner-scoped querysets, tenant-scoped querysets, billing calculations, privacy hardening, admin protections, or legacy route isolation.
+
+## 6. Legacy Areas Found
+
+Legacy HOSTELLO apps are still present and still registered in `INSTALLED_APPS`:
+
+- `students`
+- `attendance`
+- `fees`
+- `requests`
+- `notices`
+
+Current usage status:
+
+- `students.urls` is still included under `/legacy/`.
+- `attendance`, `fees`, `requests`, and `notices` are still installed apps and have model/admin/template dependencies.
+- Legacy root `/api/requests/` and `/fees/` routes remain removed from root routing.
+- Legacy templates and static files still support old HOSTELLO surfaces and admin custom pages.
+
+Conclusion: legacy apps are high-risk cleanup targets and should not be deleted in this phase.
+
+## 7. Static/Template Usage Review
+
+Active RentEase templates:
+
+- `frontend/templates/home.html`
+- `frontend/templates/listings/`
+- `frontend/templates/portal/`
+- `frontend/templates/reports/`
+- `frontend/templates/404.html`
+- `frontend/templates/500.html`
+
+Active RentEase static files:
 
 - `frontend/static/css/rentease-design.css`
 - `frontend/static/css/rentease-layout.css`
 - `frontend/static/admin/css/custom_admin.css`
-- `frontend/static/**/.gitkeep`
 
-Potential static issue to review later:
+Legacy or unclear templates/static that need review:
 
-- `frontend/templates/payments/success.html` references `{% static 'css/site.css' %}`, but `site.css` was not found in the current static listing. This belongs to the legacy fees/payment area and should be reviewed before any cleanup.
-
-## 7. Possibly Unused Python Code / Imports
-
-These are suspicious or legacy code areas. They were not edited.
-
-- `backend/backend/urls.py`
-  - Contains commented `# from fees.admin import FeesAdminSite`.
-  - Contains `from fees import admin as fees_admin`, which appears unused in the current URL file.
-- `backend/students/views.py`
-  - Contains many `print()` debug statements and HOSTELLO-era messages.
-- `backend/attendance/admin.py`
-  - Contains many debug `print()` statements and HOSTELLO email content.
-- `backend/requests/views.py`
-  - Contains debug `print()` statements, including old request handling logs.
-- `backend/requests/admin.py`
-  - Contains debug/notification `print()` statements.
-- `backend/requests/models.py`
-  - Contains print-based notification logging.
-- `backend/fees/views.py`
-  - Contains TODO around real attendance write behavior.
-- `backend/attendance/utils.py`
-  - Uses `HOSTELLO_EMAIL_SETTINGS`.
-- `backend/attendance/signals.py`
-  - Uses legacy HOSTELLO absence notification settings.
-
-These areas may still be needed for legacy `/legacy/` behavior. Do not edit or delete without a separate legacy dependency audit.
-
-## 8. Legacy HOSTELLO Areas
-
-These apps and files appear to belong mostly to the original HOSTELLO project:
-
-- `backend/students/`
-- `backend/attendance/`
-- `backend/fees/`
-- `backend/requests/`
-- `backend/notices/`
 - `frontend/templates/index.html`
 - `frontend/templates/login.html`
 - `frontend/templates/dashboard.html`
@@ -184,98 +183,81 @@ These apps and files appear to belong mostly to the original HOSTELLO project:
 - `frontend/static/css/student-dashboard.css`
 - `frontend/static/js/script.js`
 - `frontend/static/js/student-dashboard.js`
-- `assets/`
-- `HOSTELLO_EMAIL_SETTINGS` in `backend/backend/settings.py`
 
-Legacy areas are currently isolated from the main RentEase product path. They should not be removed until their URL usage, model dependencies, admin dependencies, template references, and data dependencies are reviewed.
+These were not deleted because they are referenced by legacy views/admin/templates or may still be useful for `/legacy/`.
 
-## 9. Old Docs / Phase Files
+## 8. Python Code Review
 
-The `docs/` folder contains many phase documents. These are useful for traceability, but some may later be moved to `docs/archive/` if the project needs a cleaner documentation surface.
+Suspicious or legacy code areas found:
 
-Root-level docs that may need archive review later:
+- `backend/hostello_backend/urls.py`
+  - Contains commented `# from fees.admin import FeesAdminSite`.
+  - Contains `from fees import admin as fees_admin`, which appears unused in the URL file.
+- `backend/hostello_backend/settings.py`
+  - Still contains `HOSTELLO_EMAIL_SETTINGS` and legacy email text for attendance notifications.
+- `backend/students/views.py`
+  - Contains many legacy print/debug statements and HOSTELLO-era messages.
+- `backend/attendance/admin.py`
+  - Contains many debug `print()` calls and legacy attendance management behavior.
+- `backend/requests/views.py`
+  - Contains legacy API/view code and debug `print()` calls.
+- `backend/requests/admin.py`
+  - Contains print-based notification/debug logging.
+- `backend/requests/models.py`
+  - Contains print-based notification logging.
+- `backend/fees/`
+  - Contains legacy fees logic tied to legacy student/attendance models.
 
-- `docs/CHECKLIST-TIEN-DO.md`
-- `docs/CHI-TIET-TASK-RENTEASE.md`
-- `docs/DE-XUAT-NANG-CAP-RENTEASE.md`
-- `docs/demo-checklist.md`
-- `docs/KE-HOACH-CHI-TIET-RENTEASE.md`
-- `docs/MO-TA-CHUC-NANG-HIEN-TAI.md`
-- `docs/RENTEASE-MASTER-TASKS.md`
-- `docs/screenshots-checklist.md`
-- `docs/security-notes.md`
-- `docs/SPQM-REPORT.md`
-- `docs/SPRINT-PLANNING.md`
+These areas may still be connected to legacy routes, admin behavior, installed apps, migrations, or documentation. They were not edited.
 
-Do not delete docs. If cleanup is approved later, archive old docs instead of removing them.
-
-## 10. Cleanup Risk Levels
+## 9. Risk Level
 
 Low risk:
 
-- `__pycache__/`
-- `*.pyc`
-- `.pytest_cache/`
-- `.coverage`
-- temporary logs
+- Project `__pycache__/` folders.
+- Project `*.pyc` files.
+- `.pytest_cache/`, `.coverage`, and clearly generated temporary logs.
 
 Medium risk:
 
-- old screenshots under `assets/`
-- old demo video under `assets/`
-- old root docs that may be moved to `docs/archive/`
-- local helper scripts such as `run_backend.bat`, `run_frontend.bat`, and `Working.py`
-- old backup JSON files, after confirming they are not needed and contain no sensitive data
+- Old screenshots or demo media under `assets/`.
+- Old docs that could be moved to `docs/archive/`.
+- Local helper files such as `.bat` scripts or unclear root-level scripts.
+- Backup JSON files after confirming they are not needed and contain no sensitive data.
 
 High risk:
 
-- templates
-- static files referenced by templates
-- views
-- urls
-- settings
-- admin files
-- legacy app code
-- report templates
-- portal templates
+- Templates.
+- Static files referenced by templates.
+- Views, URLs, settings, admin files, and forms.
+- Legacy app code.
+- Active reports, portal, listings, billing, maintenance, tenants, contracts, properties, and accounts code.
 
-Do not touch:
+Do not touch without explicit approval:
 
-- models
-- migrations
-- database files
-- media uploads
-- permission checks
-- owner-scoped querysets
-- tenant-scoped querysets
-- billing calculations
-- privacy hardening behavior
+- Models.
+- Migrations.
+- Database files.
+- Media uploads.
+- Permission checks.
+- Owner-scoped querysets.
+- Tenant-scoped querysets.
+- Billing/payment calculations.
+- Privacy hardening behavior.
 
-## 11. Recommended Cleanup Plan
+## 10. Recommended Next Cleanup Phase
 
-1. Commit this audit report.
-2. Delete only cache/temp files in a separate cleanup phase.
-3. Archive old docs into `docs/archive/` after review.
-4. Review unused templates one group at a time.
-5. Review unused static files one group at a time.
-6. Only then move templates gradually into `frontend/templates/`.
-7. Move static files gradually into `frontend/static/`.
-8. Keep old template/static paths active until all references are updated and route-smoke-tested.
-9. Run `manage.py check` and `makemigrations --check --dry-run` after every cleanup phase.
-10. Do not move Django apps or backend config until a separate high-risk backend migration plan is approved.
-
-## 12. Next Safe Phase
-
-The next safe phase is:
+Recommended next cleanup phase:
 
 ```text
-Commit Cleanup Audit Report
+Archive or review old documentation and helper files
 ```
 
-After that, the safest technical cleanup phase is:
+Suggested scope:
 
-```text
-Delete cache/temp files only
-```
+1. Review `run_frontend.bat`, `Working.py`, `assets/`, and backup JSON files.
+2. Decide whether to archive old docs into `docs/archive/` rather than deleting them.
+3. Keep legacy apps and templates untouched until a dedicated legacy dependency audit is approved.
+4. Keep active RentEase templates/static untouched.
 
-Do not start template movement until cache cleanup and documentation archiving are handled or explicitly skipped.
+Do not start legacy app removal until there is a full dependency audit covering `INSTALLED_APPS`, migrations, admin registrations, URL routing, templates, imports, and local demo behavior.
