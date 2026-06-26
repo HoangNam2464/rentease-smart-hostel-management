@@ -1,130 +1,96 @@
-# RentEase - Web Quản Lý Nhà Trọ Bằng Django
+# RentEase - Hệ Thống Quản Lý Phòng Trọ Thông Minh
 
-RentEase là hệ thống quản lý nhà trọ/phòng trọ được phát triển bằng Django. Dự án được kế thừa từ mã nguồn HOSTELLO cũ và đã được mở rộng thành ứng dụng có phân quyền theo vai trò: khách truy cập, chủ trọ, khách thuê và quản trị viên.
+RentEase là một ứng dụng web Django dùng để quản lý nhà trọ/phòng trọ. Hệ thống hỗ trợ quản lý phòng, khách thuê, hợp đồng, hóa đơn, thanh toán, yêu cầu sửa chữa, bảo trì, tin đăng phòng trống, đăng ký xem phòng, báo cáo và vận hành qua Django Admin.
 
-RentEase hiện phù hợp cho demo cục bộ, kiểm thử luồng nghiệp vụ và tiếp tục phát triển thành sản phẩm thực tế. Dự án chưa được đánh dấu production-ready.
+Dự án hiện dùng cấu trúc monorepo theo phong cách FoodieGo với `backend/`, `frontend/` và `docs/`. Khác với FoodieGo, RentEase không dùng React/Vite. Frontend của RentEase là Django Templates kết hợp HTML, CSS và JavaScript tĩnh.
 
-## Kien Truc Du An
-
-RentEase hien dung cau truc monorepo ro rang hon, lay cam hung tu cach to chuc cua FoodieGo:
+## Project Architecture
 
 ```text
 RentEase/
-|-- backend/                 # Django backend
-|   |-- hostello_backend/    # Django config package: settings.py, urls.py, wsgi.py, asgi.py
-|   |-- accounts/
-|   |-- properties/
-|   |-- tenants/
-|   |-- contracts/
-|   |-- billing/
-|   |-- maintenance/
-|   |-- listings/
-|   |-- portal/
-|   |-- reports/
-|   |-- manage.py
-|   `-- requirements.txt
-|
-|-- frontend/                # Django Template frontend
-|   |-- templates/
-|   |   |-- portal/
-|   |   |-- listings/
-|   |   |-- reports/
-|   |   |-- admin/
-|   |   `-- ...
-|   `-- static/
-|       |-- css/
-|       |-- js/
-|       `-- admin/
-|
-|-- docs/
-|-- README.md
-`-- run_backend.bat
+├── backend/                     # Django backend
+│   ├── hostello_backend/        # Main Django config package
+│   ├── accounts/                # User accounts and profiles
+│   ├── properties/              # Properties and rooms
+│   ├── tenants/                 # Tenant management
+│   ├── contracts/               # Rental contracts
+│   ├── billing/                 # Invoices and payments
+│   ├── maintenance/             # Maintenance requests
+│   ├── listings/                # Public room listings
+│   ├── portal/                  # Owner/Tenant portal views
+│   ├── reports/                 # Reports
+│   ├── manage.py
+│   └── requirements.txt
+├── frontend/                    # Django Templates + static assets
+│   ├── templates/
+│   └── static/
+├── docs/                        # Project documentation
+└── README.md
 ```
 
-Ghi chu quan trong:
+Important:
 
-- RentEase di theo phong cach monorepo giong FoodieGo: tach ro `backend/`, `frontend/`, va `docs/`.
-- Khac FoodieGo, RentEase khong dung React/Vite.
-- `frontend/` trong RentEase co nghia la Django Templates + static CSS/JS, khong phai frontend SPA rieng.
-- `backend/hostello_backend/` van la Django config package va chua nen doi ten thanh `config`.
-- `DJANGO_SETTINGS_MODULE` van la `hostello_backend.settings`.
-- Cac Django apps van nam truc tiep trong `backend/`; chua di chuyen vao `backend/apps/`.
+- `backend/hostello_backend/` là package cấu hình Django chính, vẫn giữ module path `hostello_backend.settings`.
+- `frontend/templates/` chứa Django templates.
+- `frontend/static/` chứa CSS, JavaScript và static assets.
+- Không có frontend React/Vite riêng.
 
-So do tong quan:
+## System Requirements
 
-```mermaid
-flowchart TD
-    A[RentEase Project] --> B[backend]
-    A --> C[frontend]
-    A --> D[docs]
+- Python 3.12+
+- Django 5.2+
+- SQLite cho local demo
+- PostgreSQL-ready nếu triển khai production sau này
+- Windows PowerShell commands được dùng trong README này
+- Không cần Node.js/npm cho frontend hiện tại
 
-    B --> B1[hostello_backend config]
-    B --> B2[Django apps]
-    B2 --> B21[accounts]
-    B2 --> B22[properties]
-    B2 --> B23[tenants]
-    B2 --> B24[contracts]
-    B2 --> B25[billing]
-    B2 --> B26[maintenance]
-    B2 --> B27[listings]
-    B2 --> B28[portal]
-    B2 --> B29[reports]
+## Quick Start
 
-    C --> C1[templates]
-    C --> C2[static]
-    C1 --> C11[portal templates]
-    C1 --> C12[listings templates]
-    C1 --> C13[reports templates]
-    C2 --> C21[CSS]
-    C2 --> C22[JavaScript]
-    C2 --> C23[admin assets]
-
-    D --> D1[architecture]
-    D --> D2[ui]
-    D --> D3[security]
-```
-
-`backend/` la noi chua Django project logic, apps, settings, urls, forms, views, models va admin.
-
-`frontend/` la noi chua Django Templates, CSS, JavaScript va UI assets. Du an van dung Django Templates, khong dung React.
-
-Xem ban do chi tiet tai:
-
-```text
-docs/architecture/PROJECT_STRUCTURE_MAP.md
-```
-
-## Yêu Cầu Hệ Thống
-
-- Windows hoặc môi trường có thể chạy Python/Django
-- Python 3.12 trong virtual environment hiện có
-- SQLite cho môi trường local demo
-- Trình duyệt để kiểm thử giao diện
-
-## Hướng Dẫn Chạy Nhanh
-
-Từ thư mục gốc repository:
+Mở terminal tại thư mục gốc repository, sau đó vào Django backend:
 
 ```powershell
 cd backend
 ```
 
-Virtual environment chinh thuc cua du an nam tai `backend/venv/`. Sau khi da `cd backend`, hay dung `.\venv\Scripts\python.exe`. Khong dung root-level `venv/` sau khi du an da tach `backend/` va `frontend/`.
-
-Cài thư viện nếu cần:
+Nếu `backend/venv/` đã tồn tại:
 
 ```powershell
-.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\activate
 ```
 
-Kiểm tra Django:
+Nếu cần tạo virtual environment mới:
+
+```powershell
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+Cài dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Chạy kiểm tra Django:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
 
-Chạy server local:
+Chạy migrations:
+
+```powershell
+.\venv\Scripts\python.exe manage.py migrate
+```
+
+Tạo superuser:
+
+```powershell
+.\venv\Scripts\python.exe manage.py createsuperuser
+```
+
+Chạy server:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py runserver
@@ -136,165 +102,166 @@ Mở trình duyệt:
 http://127.0.0.1:8000/
 ```
 
-## Vai Trò Người Dùng
+## Frontend Note
 
-| Vai trò | Chức năng chính |
-| --- | --- |
-| Visitor | Xem phòng đang đăng, xem chi tiết phòng, gửi yêu cầu xem phòng |
-| Owner | Quản lý phòng, tin đăng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa, lịch xem phòng |
-| Tenant | Xem hồ sơ, hợp đồng, hóa đơn, lịch sử thanh toán, yêu cầu sửa chữa và thông báo |
-| Admin/Staff | Quản trị dữ liệu qua Django Admin/Jazzmin và xem báo cáo staff-only |
+RentEase không có React/Vite frontend và không cần chạy `npm run dev`.
 
-## Tính Năng Chính
+Frontend hiện tại được render bằng Django Templates:
 
-### Public
+- Templates: `frontend/templates/`
+- Static assets: `frontend/static/`
+- CSS/JS được phục vụ qua Django static files
 
-- Trang giới thiệu RentEase
-- Danh sách phòng đang đăng
-- Chi tiết phòng
-- Form đăng ký xem phòng
+## Main Features
 
-### Owner
+- ✅ User/account management
+- ✅ Owner dashboard
+- ✅ Tenant dashboard
+- ✅ Room management
+- ✅ Tenant management
+- ✅ Contract management
+- ✅ Invoice management
+- ✅ Payment recording
+- ✅ Payment history
+- ✅ Maintenance request management
+- ✅ Public room listings
+- ✅ Viewing registration
+- ✅ Reports
+- ✅ Django Admin/Jazzmin
+- ✅ Role-based data access
 
-- Dashboard chủ trọ
-- Quản lý phòng
-- Quản lý tin đăng
-- Xem và cập nhật khách thuê đã liên kết
-- Tạo/cập nhật hợp đồng
-- Tạo/cập nhật hóa đơn
-- Ghi nhận thanh toán
-- Xử lý yêu cầu sửa chữa
-- Xử lý đăng ký xem phòng
+## Main User Roles
 
-### Tenant
+| Role | Description |
+|---|---|
+| Visitor | Xem danh sách phòng công khai và đăng ký xem phòng. |
+| Owner | Quản lý phòng, khách thuê, hợp đồng, hóa đơn, thanh toán, sửa chữa, tin đăng và báo cáo của chính mình. |
+| Tenant | Xem thông tin thuê phòng, hợp đồng, hóa đơn, thanh toán, yêu cầu sửa chữa và thông báo của chính mình. |
+| Admin/Staff | Quản trị hệ thống qua Django Admin/Jazzmin và xem báo cáo nội bộ. |
 
-- Dashboard khách thuê
-- Hồ sơ cá nhân
-- Hợp đồng đang liên quan
-- Hóa đơn và trạng thái thanh toán
-- Lịch sử thanh toán
-- Yêu cầu sửa chữa
-- Thông báo
+## Important URLs
 
-### Admin Và Reports
+| URL | Purpose |
+|---|---|
+| `/` | Public landing page |
+| `/rooms/` | Public room listings |
+| `/login/` | Portal login |
+| `/admin/` | Django Admin/Jazzmin |
+| `/reports/` | Staff reports |
+| `/owner/dashboard/` | Owner dashboard |
+| `/owner/rooms/` | Owner room management |
+| `/owner/tenants/` | Owner tenant management |
+| `/owner/contracts/` | Owner contract management |
+| `/owner/invoices/` | Owner invoice management |
+| `/tenant/dashboard/` | Tenant dashboard |
+| `/tenant/invoices/` | Tenant invoices |
+| `/tenant/payments/` | Tenant payment history |
+| `/legacy/login/` | Legacy HOSTELLO login route, kept isolated |
 
-- Django Admin/Jazzmin đã đổi nhận diện RentEase
-- Báo cáo staff-only
-- Báo cáo hóa đơn, phòng, khách thuê/hợp đồng, bảo trì và tin đăng
-- Admin search privacy hardening: không dùng `citizen_id` trong các bề mặt search/list chính
+## Technology Stack
 
-## Công Nghệ Sử Dụng
+### Backend
 
 - Python
 - Django
-- Django Templates
+- Django ORM
+- Django Forms
 - Django Admin
 - Jazzmin
-- Django REST Framework trong phần legacy/API cũ còn tồn tại
-- SQLite cho local demo
-- HTML/CSS/JavaScript tĩnh
+- SQLite local demo
+- PostgreSQL-ready
 
-Không sử dụng React trong phiên bản hiện tại.
+### Frontend
 
-## Màn Hình Chính
+- Django Templates
+- HTML5
+- CSS3
+- JavaScript
+- Static files
 
-| Khu vực | URL |
-| --- | --- |
-| Trang chủ | `/` |
-| Danh sách phòng | `/rooms/` |
-| Đăng nhập | `/login/` |
-| Owner dashboard | `/owner/dashboard/` |
-| Tenant dashboard | `/tenant/dashboard/` |
-| Admin | `/admin/` |
-| Reports | `/reports/` |
-| Legacy HOSTELLO | `/legacy/` |
+### Documentation
 
-## Quy Tắc Bảo Mật Và Dữ Liệu
+- Markdown
+- Mermaid
+- Architecture docs
+- Demo docs
+- Security docs
 
-- Không hiển thị `citizen_id`, CCCD/CMND hoặc ảnh giấy tờ ở list view thông thường.
-- Không hiển thị mật khẩu, quyền hệ thống hoặc thông tin xác thực nội bộ.
-- Owner chỉ được xem dữ liệu thuộc phòng của mình.
-- Tenant chỉ được xem dữ liệu của chính mình.
-- Public user không được xem hợp đồng, hóa đơn, thanh toán, bảo trì nội bộ hoặc dữ liệu riêng.
-- Không commit `db.sqlite3`, file backup JSON, `.env`, media upload thật hoặc dữ liệu cá nhân thật.
-- Legacy HOSTELLO không được đưa lại ra root route nếu không có kiểm duyệt riêng.
+## Development Guide
 
-## Tính Năng Đã Hoàn Thành Quan Trọng
+Recommended workflow:
 
-- Owner Room Create/Update
-- Owner Tenant Update
-- Owner Contract Create/Update
-- Owner Invoice Create/Update
-- Owner Payment Recording
-- Tenant Invoice/Payment Visibility
-- Tenant Repair Request Submission
-- Owner Repair Processing
-- Owner Viewing Registration Processing
-- Reports Dashboard
-- Public Room Listing UI
-- Demo data seed command
-- Admin Search Privacy Hardening
-- UI polish nhiều vòng cho public, owner, tenant, reports và admin
-
-## Demo Data Local
-
-Tạo dữ liệu demo an toàn:
+1. Work on branch `complete-product`.
+2. Run Django commands from `backend/`.
+3. Use the official virtual environment at `backend/venv/`.
+4. After changes, run:
 
 ```powershell
-.\venv\Scripts\python.exe manage.py seed_rentease_demo_data --owner-username owner_test --tenant-username tenant_test
+.\venv\Scripts\python.exe manage.py check
+.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
 
-Lệnh này dùng dữ liệu giả, có tiền tố demo và được thiết kế để chạy lặp lại an toàn trong môi trường local. Không commit database sau khi seed.
+5. Commit only after checks pass.
+6. Do not push unless explicitly approved.
 
-Tài khoản local demo thường dùng:
+## Safety Notes
 
-| Vai trò | Username | Password |
-| --- | --- | --- |
-| Admin | `admin_test` | `Test@12345` |
-| Owner | `owner_test` | `Test@12345` |
-| Tenant | `tenant_test` | `Test@12345` |
+- Do not rename `backend/hostello_backend/` casually.
+- Do not move apps into `backend/apps/` without a dedicated phase.
+- Do not delete legacy apps yet: `students`, `attendance`, `fees`, `requests`, `notices`.
+- Do not delete templates/static/media without dependency review.
+- Do not use a root-level `venv/`.
+- Official local virtual environment is `backend/venv/`.
+- Do not create migrations unless explicitly required.
+- Do not change database schema unless explicitly required.
 
-## Hướng Dẫn Phát Triển
+## Project Status
 
-Trước khi sửa code:
+Completed milestones:
+
+- Backend/frontend restructure completed.
+- Django templates moved to `frontend/templates/`.
+- Static assets moved to `frontend/static/`.
+- Reports templates moved to `frontend/templates/reports/`.
+- Root `venv/` removed safely.
+- Legacy dependency audit completed.
+- Helper files archived.
+- Django checks pass.
+- No pending migrations detected.
+
+Current status:
+
+- Version: `1.0.0`
+- Updated: June 2026
+- Branch: `complete-product`
+- Status: Local demo ready
+- Production readiness: Not production-ready yet
+
+## Related Documentation
+
+- `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- `docs/architecture/FOODIEGO_STRUCTURE_REFERENCE.md`
+- `docs/architecture/CLEANUP_AUDIT.md`
+- `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
+- `docs/architecture/HELPER_FILE_CLEANUP.md`
+- `docs/demo/`
+- `docs/security/`
+- `docs/ui/`
+
+## Contact / Support
+
+This is a student/project development repository. For setup or maintenance, start with:
+
+1. `README.md`
+2. `AGENTS.md`
+3. `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+4. `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
+
+When in doubt, run Django checks before changing code:
 
 ```powershell
-git branch --show-current
-git status --short
 cd backend
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
 
-Quy tắc quan trọng:
-
-- Không đổi schema nếu chưa được duyệt.
-- Không tạo migration nếu chưa được duyệt.
-- Không đổi model khi chỉ làm UI/tài liệu.
-- Không di chuyển app/template/static hàng loạt trong một bước.
-- Không đổi quyền truy cập hoặc owner-scoped queryset nếu không có phase bảo mật riêng.
-- Nếu đổi đường dẫn template, phải cập nhật `render()` tương ứng và kiểm tra route.
-- Nếu đổi đường dẫn static, phải cập nhật `{% static %}` và cấu hình liên quan một cách an toàn.
-
-## Cải Tiến Tương Lai
-
-- Tách production settings khỏi local settings.
-- Tổ chức lại templates thành nhóm public/owner/tenant/reports rõ hơn.
-- Tổ chức lại static thành nhóm CSS/JS/images cho RentEase và vendor.
-- Hoàn thiện billing detail, utility/service charges và quy trình công nợ.
-- Hoàn thiện onboarding tài khoản owner/tenant.
-- Chuẩn bị deployment, static/media, email, logging và production database.
-- Kiểm thử tự động và CI.
-
-## Thành Viên Nhóm
-
-- HoangNam2464
-- Thành viên 2: cập nhật theo nhóm đồ án
-
-## Phiên Bản Và Ngày Cập Nhật
-
-- Nhánh chính hiện tại: `complete-product`
-- Trạng thái: local-demo ready, chưa production-ready
-- Tag demo mới nhất: `release-rentease-polished-local-demo-v2`
-- Tag hardening mới nhất: `phase20n-admin-search-privacy-hardening`
-- Ngày cập nhật: 26/06/2026
