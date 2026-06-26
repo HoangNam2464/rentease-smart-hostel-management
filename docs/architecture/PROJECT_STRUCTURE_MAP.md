@@ -387,6 +387,42 @@ Không xóa static cũ cho đến khi mọi reference đã được cập nhật
 
 ## Step-By-Step Migration Plan For Later Phases
 
+## Phase 2 Frontend Folder Preparation
+
+Phase 2 đã chuẩn bị thư mục `frontend/` ở root repository để làm nơi tổ chức Django templates và static assets trong các phase sau.
+
+Thư mục mới:
+
+```text
+frontend/
+├── templates/
+│   ├── base/
+│   ├── portal/
+│   │   ├── owner/
+│   │   ├── tenant/
+│   │   └── public/
+│   └── reports/
+└── static/
+    ├── rentease/
+    │   ├── css/
+    │   ├── js/
+    │   └── img/
+    └── vendor/
+```
+
+Ghi chú an toàn:
+
+- Chưa di chuyển template nào.
+- Chưa di chuyển static file nào.
+- Đường dẫn template cũ `hostello_backend/templates/` vẫn hoạt động.
+- App templates như `reports/templates/reports/` vẫn hoạt động qua `APP_DIRS=True`.
+- Đường dẫn static cũ `hostello_backend/static/` vẫn hoạt động.
+- `frontend/templates/` đã được thêm vào `TEMPLATES["DIRS"]` để Django có thể nhận template mới trong tương lai.
+- `frontend/static/` đã được thêm vào `STATICFILES_DIRS` để Django có thể nhận static mới trong tương lai.
+- Các thư mục rỗng có `.gitkeep` để Git theo dõi.
+
+Phase này chỉ là bước chuẩn bị. Các phase sau mới xem xét di chuyển template/static theo từng nhóm nhỏ, sau khi review `render()`, `{% extends %}`, `{% include %}`, `{% static %}` và route smoke test.
+
 ### Phase 2: Prepare Frontend Folder
 
 1. Tạo `frontend/templates/`.
