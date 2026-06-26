@@ -15,6 +15,8 @@ This cleanup phase only removed generated Python cache files from project code. 
 
 For detailed legacy dependency findings, see `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`.
 
+For the follow-up helper-file archive decision, see `docs/architecture/HELPER_FILE_CLEANUP.md`.
+
 ## 2. Cleaned Now
 
 Deleted generated Python cache folders from project code only:
