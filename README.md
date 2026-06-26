@@ -4,44 +4,91 @@ RentEase là hệ thống quản lý nhà trọ/phòng trọ được phát tri�
 
 RentEase hiện phù hợp cho demo cục bộ, kiểm thử luồng nghiệp vụ và tiếp tục phát triển thành sản phẩm thực tế. Dự án chưa được đánh dấu production-ready.
 
-## Kiến Trúc Dự Án
+## Kien Truc Du An
 
-RentEase hiện đã được tách rõ hơn thành hai vùng chính:
+RentEase hien dung cau truc monorepo ro rang hon, lay cam hung tu cach to chuc cua FoodieGo:
 
 ```text
-HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
-├── backend/
-│   ├── manage.py
-│   ├── hostello_backend/
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   ├── wsgi.py
-│   │   └── asgi.py
-│   ├── accounts/
-│   ├── properties/
-│   ├── tenants/
-│   ├── contracts/
-│   ├── billing/
-│   ├── maintenance/
-│   ├── listings/
-│   ├── portal/
-│   ├── reports/
-│   └── media/
-├── frontend/
-│   ├── templates/
-│   └── static/
-├── docs/
-├── AGENTS.md
-└── README.md
+RentEase/
+|-- backend/                 # Django backend
+|   |-- hostello_backend/    # Django config package: settings.py, urls.py, wsgi.py, asgi.py
+|   |-- accounts/
+|   |-- properties/
+|   |-- tenants/
+|   |-- contracts/
+|   |-- billing/
+|   |-- maintenance/
+|   |-- listings/
+|   |-- portal/
+|   |-- reports/
+|   |-- manage.py
+|   `-- requirements.txt
+|
+|-- frontend/                # Django Template frontend
+|   |-- templates/
+|   |   |-- portal/
+|   |   |-- listings/
+|   |   |-- reports/
+|   |   |-- admin/
+|   |   `-- ...
+|   `-- static/
+|       |-- css/
+|       |-- js/
+|       `-- admin/
+|
+|-- docs/
+|-- README.md
+`-- run_backend.bat
 ```
 
-`backend/` là nơi chứa Django project logic, apps, settings, urls, forms, views, models và admin.
+Ghi chu quan trong:
 
-`frontend/` là nơi chứa Django Templates, CSS, JavaScript và UI assets. Dự án vẫn dùng Django Templates, không dùng React.
+- RentEase di theo phong cach monorepo giong FoodieGo: tach ro `backend/`, `frontend/`, va `docs/`.
+- Khac FoodieGo, RentEase khong dung React/Vite.
+- `frontend/` trong RentEase co nghia la Django Templates + static CSS/JS, khong phai frontend SPA rieng.
+- `backend/hostello_backend/` van la Django config package va chua nen doi ten thanh `config`.
+- `DJANGO_SETTINGS_MODULE` van la `hostello_backend.settings`.
+- Cac Django apps van nam truc tiep trong `backend/`; chua di chuyen vao `backend/apps/`.
 
-Lưu ý quan trọng: chỉ đổi tên thư mục ngoài từ `hostello_backend/` thành `backend/`. Package cấu hình Django bên trong vẫn giữ tên `hostello_backend`, tức là `backend/hostello_backend/`.
+So do tong quan:
 
-Xem bản đồ chi tiết tại:
+```mermaid
+flowchart TD
+    A[RentEase Project] --> B[backend]
+    A --> C[frontend]
+    A --> D[docs]
+
+    B --> B1[hostello_backend config]
+    B --> B2[Django apps]
+    B2 --> B21[accounts]
+    B2 --> B22[properties]
+    B2 --> B23[tenants]
+    B2 --> B24[contracts]
+    B2 --> B25[billing]
+    B2 --> B26[maintenance]
+    B2 --> B27[listings]
+    B2 --> B28[portal]
+    B2 --> B29[reports]
+
+    C --> C1[templates]
+    C --> C2[static]
+    C1 --> C11[portal templates]
+    C1 --> C12[listings templates]
+    C1 --> C13[reports templates]
+    C2 --> C21[CSS]
+    C2 --> C22[JavaScript]
+    C2 --> C23[admin assets]
+
+    D --> D1[architecture]
+    D --> D2[ui]
+    D --> D3[security]
+```
+
+`backend/` la noi chua Django project logic, apps, settings, urls, forms, views, models va admin.
+
+`frontend/` la noi chua Django Templates, CSS, JavaScript va UI assets. Du an van dung Django Templates, khong dung React.
+
+Xem ban do chi tiet tai:
 
 ```text
 docs/architecture/PROJECT_STRUCTURE_MAP.md

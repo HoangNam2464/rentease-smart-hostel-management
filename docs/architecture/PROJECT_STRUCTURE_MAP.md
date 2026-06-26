@@ -342,6 +342,28 @@ Di chuyá»ƒn static cÃ³ thá»ƒ gÃ¢y lá»—i:
 
 KhÃ´ng xÃ³a static cÅ© cho Ä‘áº¿n khi má»i reference Ä‘Ã£ Ä‘Æ°á»£c cáº­p nháº­t vÃ  kiá»ƒm tra.
 
+## FoodieGo Reference Comparison
+
+FoodieGo is a useful reference for a clean monorepo layout, but RentEase should only copy the organizational idea, not the exact frontend/runtime stack.
+
+| FoodieGo | RentEase |
+|---|---|
+| `backend/config/` | `backend/hostello_backend/` |
+| `backend/apps/` | backend apps currently live directly under `backend/` |
+| `frontend/src/` React | `frontend/templates/` Django Templates |
+| `frontend/public/` | `frontend/static/` |
+| DRF API frontend separation | Django server-rendered templates |
+
+## Why RentEase Does Not Fully Copy FoodieGo Yet
+
+RentEase should not fully copy the FoodieGo structure in the current phase.
+
+- Moving Django apps into `backend/apps/` is possible but risky because it affects import paths, `AppConfig.name`, migrations, admin registrations, and historical app labels.
+- Renaming `backend/hostello_backend/` to `backend/config/` is possible but risky because `DJANGO_SETTINGS_MODULE`, `ROOT_URLCONF`, WSGI/ASGI imports, deployment scripts, and documentation all depend on the current module path.
+- The current structure is already understandable: backend logic is in `backend/`, Django templates/static assets are in `frontend/`, and documentation is in `docs/`.
+- A future migration to `backend/apps/` or `backend/config/` should be handled only in a dedicated phase with route smoke tests, import audits, rollback notes, and migration safety checks.
+- The current priority is stability, clear documentation, and safe incremental refactoring.
+
 ## Recommended Next Phases
 
 ### Phase A: Route Smoke Test After Folder Rename
