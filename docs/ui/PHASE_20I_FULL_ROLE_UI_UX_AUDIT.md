@@ -1,4 +1,4 @@
-# Phase 20I - Full Role UI/UX Audit
+﻿# Phase 20I - Full Role UI/UX Audit
 
 ## 1. Scope
 
@@ -102,7 +102,7 @@ Gaps:
 |---|---|---|---|---|---|---|
 | P0 | None | No route-breaking, privacy, or role-shell issue found. | No blocker. | No immediate fix. | None | Low |
 | P1 | None | No critical UI/security issue found in automated audit. | No blocker. | No immediate fix. | None | Low |
-| P2 | Owner CRUD pages | Lists, details, and forms are still generic and table-heavy. | Owner users need faster scanning and confidence during demo and real usage. | Add professional list toolbars, status chips, compact cards, better empty states, and form sections. | `hostello_backend/templates/portal/owner_*.html`, `hostello_backend/static/css/rentease-layout.css` | Medium |
+| P2 | Owner CRUD pages | Lists, details, and forms are still generic and table-heavy. | Owner users need faster scanning and confidence during demo and real usage. | Add professional list toolbars, status chips, compact cards, better empty states, and form sections. | `frontend/templates/portal/owner_*.html`, `frontend/static/css/rentease-layout.css` | Medium |
 | P2 | Invoice/payment pages | Financial hierarchy is not strong enough. | Billing is a core workflow; total, paid, remaining, and status must be instantly readable. | Add summary strips and stronger badges on invoice detail, invoice list, tenant invoice, and payment pages. | Owner/tenant invoice and payment templates, shared CSS | Medium |
 | P2 | Tenant portal pages | Tenant UI still feels admin-like. | Tenant users need a simpler resident experience. | Convert key lists into readable cards on mobile and add friendlier help/empty-state copy. | Tenant portal templates, shared CSS | Medium |
 | P2 | Public listing pages | Media and CTA treatment are good but still demo-level. | Public conversion depends on room trust and clear registration flow. | Add stronger room cards, detail section hierarchy, and local image strategy later. | Listing templates, public CSS, media/static strategy | Medium |

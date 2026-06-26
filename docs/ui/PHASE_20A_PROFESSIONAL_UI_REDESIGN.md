@@ -1,4 +1,4 @@
-# Phase 20A: Professional UI Redesign System
+﻿# Phase 20A: Professional UI Redesign System
 
 ## Why Phase 20A Was Needed
 
@@ -28,7 +28,7 @@ Created:
 
 ```text
 docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
-hostello_backend/static/css/rentease-design.css
+frontend/static/css/rentease-design.css
 ```
 
 The CSS system defines shared tokens and components for:

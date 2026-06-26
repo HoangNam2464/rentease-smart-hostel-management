@@ -1,4 +1,4 @@
-# Phase 15B-2: Owner Layout And Dashboard Polish
+﻿# Phase 15B-2: Owner Layout And Dashboard Polish
 
 ## Goal
 
@@ -8,8 +8,8 @@ Improve owner portal navigation and dashboard readability while preserving exist
 
 Changed templates:
 
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/owner_dashboard.html`
 
 ## Changes Made
 

@@ -1,4 +1,4 @@
-# Phase 20N: Admin Search Privacy Hardening
+﻿# Phase 20N: Admin Search Privacy Hardening
 
 ## Status
 
@@ -12,21 +12,21 @@ Audit Django Admin search/list/detail exposure for sensitive tenant identity dat
 
 Reviewed RentEase/admin files:
 
-- `hostello_backend/accounts/admin.py`
-- `hostello_backend/properties/admin.py`
-- `hostello_backend/tenants/admin.py`
-- `hostello_backend/contracts/admin.py`
-- `hostello_backend/billing/admin.py`
-- `hostello_backend/maintenance/admin.py`
-- `hostello_backend/listings/admin.py`
+- `backend/accounts/admin.py`
+- `backend/properties/admin.py`
+- `backend/tenants/admin.py`
+- `backend/contracts/admin.py`
+- `backend/billing/admin.py`
+- `backend/maintenance/admin.py`
+- `backend/listings/admin.py`
 
 Legacy admin files were also scanned for context but not changed:
 
-- `hostello_backend/students/admin.py`
-- `hostello_backend/attendance/admin.py`
-- `hostello_backend/fees/admin.py`
-- `hostello_backend/notices/admin.py`
-- `hostello_backend/requests/admin.py`
+- `backend/students/admin.py`
+- `backend/attendance/admin.py`
+- `backend/fees/admin.py`
+- `backend/notices/admin.py`
+- `backend/requests/admin.py`
 
 ## ModelAdmin Classes Reviewed
 

@@ -1,4 +1,4 @@
-# Phase 20K-A - Admin Tenant Privacy Hotfix
+﻿# Phase 20K-A - Admin Tenant Privacy Hotfix
 
 ## 1. Issue Found
 
@@ -8,8 +8,8 @@ This was treated as a privacy issue because tenant identity numbers should not a
 
 ## 2. Files Inspected
 
-- `hostello_backend/tenants/models.py`
-- `hostello_backend/tenants/admin.py`
+- `backend/tenants/models.py`
+- `backend/tenants/admin.py`
 - `docs/ui/PHASE_20J_BROWSER_VISUAL_QA.md`
 
 Read-only context was also taken from the project security rules and project map.
@@ -26,7 +26,7 @@ Related rule: these fields must not be exposed to public, tenant, owner, or rout
 
 File changed:
 
-- `hostello_backend/tenants/admin.py`
+- `backend/tenants/admin.py`
 
 Tenant admin changes:
 

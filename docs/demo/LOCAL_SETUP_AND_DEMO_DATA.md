@@ -15,7 +15,7 @@ RentEase code and RentEase database data are different things:
 Open PowerShell in the repository root, then go to the Django project folder:
 
 ```powershell
-cd hostello_backend
+cd backend
 ```
 
 Use the local virtual environment Python:
@@ -82,7 +82,7 @@ Creates fake local demo data for RentEase, including demo rooms, listings, contr
 This command exists in:
 
 ```text
-hostello_backend/portal/management/commands/seed_rentease_demo_data.py
+backend/portal/management/commands/seed_rentease_demo_data.py
 ```
 
 Default demo accounts:

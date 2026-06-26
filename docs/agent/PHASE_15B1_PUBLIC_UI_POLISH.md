@@ -1,4 +1,4 @@
-# Phase 15B-1: Public UI Polish
+﻿# Phase 15B-1: Public UI Polish
 
 ## Goal
 
@@ -8,12 +8,12 @@ Improve the public RentEase UI before login while preserving routes, data access
 
 Changed public UI templates:
 
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
-- `hostello_backend/templates/portal/base.html`
+- `frontend/templates/home.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/portal/base.html`
 
 ## Changes Made
 

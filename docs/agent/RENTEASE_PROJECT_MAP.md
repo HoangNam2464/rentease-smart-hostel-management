@@ -10,24 +10,24 @@ Read this before editing UI, templates, CSS, production settings, cleanup tasks,
 
 Use these for current RentEase product UI work:
 
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/owner_*.html`
-- `hostello_backend/templates/portal/tenant_*.html`
-- `hostello_backend/templates/404.html`
-- `hostello_backend/templates/500.html`
+- `frontend/templates/home.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/owner_*.html`
+- `frontend/templates/portal/tenant_*.html`
+- `frontend/templates/404.html`
+- `frontend/templates/500.html`
 
 ## Active CSS
 
 Use this CSS for current RentEase UI work:
 
-- `hostello_backend/static/css/rentease-design.css`
+- `frontend/static/css/rentease-design.css`
 
 Avoid editing old student dashboard CSS for RentEase UI.
 
@@ -49,13 +49,13 @@ Current product apps:
 
 These files are old HOSTELLO surfaces. Do not edit them for RentEase UI unless explicitly approved:
 
-- `hostello_backend/templates/dashboard.html`
-- `hostello_backend/templates/index.html`
-- `hostello_backend/templates/login.html`
-- `hostello_backend/templates/admin/`
-- `hostello_backend/templates/payments/success.html`
-- `hostello_backend/static/css/student-dashboard.css`
-- `hostello_backend/static/js/student-dashboard.js`
+- `frontend/templates/dashboard.html`
+- `frontend/templates/index.html`
+- `frontend/templates/login.html`
+- `frontend/templates/admin/`
+- `frontend/templates/payments/success.html`
+- `frontend/static/css/student-dashboard.css`
+- `frontend/static/js/student-dashboard.js`
 - `assets/`
 
 ## Legacy Apps
@@ -73,7 +73,7 @@ Do not delete them without a separate dependency audit.
 ## Safe Editing Rules
 
 - Prefer active RentEase templates and `rentease-design.css`.
-- Do not rename `hostello_backend`.
+- Do not rename the inner Django config package `backend/hostello_backend` or the Python module path `hostello_backend`.
 - Do not rename Django apps.
 - Do not delete legacy apps in normal UI/product work.
 - Do not create migrations unless explicitly approved.

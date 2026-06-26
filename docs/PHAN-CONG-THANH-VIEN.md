@@ -1,37 +1,37 @@
-# Phân Công Thành Viên RentEase
+﻿# PhÃ¢n CÃ´ng ThÃ nh ViÃªn RentEase
 
-## Vai Trò Thành Viên
+## Vai TrÃ² ThÃ nh ViÃªn
 
-Thành viên hỗ trợ nên tập trung vào các việc an toàn cho demo:
+ThÃ nh viÃªn há»— trá»£ nÃªn táº­p trung vÃ o cÃ¡c viá»‡c an toÃ n cho demo:
 
-- kiểm thử UI
-- chụp màn hình
-- ghi chú lỗi giao diện
-- cập nhật tài liệu hướng dẫn
-- nhập dữ liệu demo giả trong admin nếu được phân công
+- kiá»ƒm thá»­ UI
+- chá»¥p mÃ n hÃ¬nh
+- ghi chÃº lá»—i giao diá»‡n
+- cáº­p nháº­t tÃ i liá»‡u hÆ°á»›ng dáº«n
+- nháº­p dá»¯ liá»‡u demo giáº£ trong admin náº¿u Ä‘Æ°á»£c phÃ¢n cÃ´ng
 
-## Task Có Thể Làm
+## Task CÃ³ Thá»ƒ LÃ m
 
-- Mở `/`, `/rooms/`, `/login/`, owner portal, tenant portal và ghi lại lỗi hiển thị.
-- Kiểm tra trang có chữ tiếng Việt rõ ràng hay không.
-- Kiểm tra bảng có bị tràn ngang quá mức hay không.
-- Kiểm tra nút/link có dễ hiểu hay không.
-- Chụp screenshot theo `docs/demo/SCREENSHOT_CHECKLIST.md`.
-- Làm theo `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md` để chạy local demo.
+- Má»Ÿ `/`, `/rooms/`, `/login/`, owner portal, tenant portal vÃ  ghi láº¡i lá»—i hiá»ƒn thá»‹.
+- Kiá»ƒm tra trang cÃ³ chá»¯ tiáº¿ng Viá»‡t rÃµ rÃ ng hay khÃ´ng.
+- Kiá»ƒm tra báº£ng cÃ³ bá»‹ trÃ n ngang quÃ¡ má»©c hay khÃ´ng.
+- Kiá»ƒm tra nÃºt/link cÃ³ dá»… hiá»ƒu hay khÃ´ng.
+- Chá»¥p screenshot theo `docs/demo/SCREENSHOT_CHECKLIST.md`.
+- LÃ m theo `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md` Ä‘á»ƒ cháº¡y local demo.
 
-## File Có Thể Sửa Khi Được Giao
+## File CÃ³ Thá»ƒ Sá»­a Khi ÄÆ°á»£c Giao
 
 - `docs/`
 - `README.md`
 - file checklist/demo script
-- template RentEase active nếu được giao rõ:
-  - `hostello_backend/templates/home.html`
-  - `hostello_backend/templates/listings/`
-  - `hostello_backend/templates/portal/`
-- CSS chính nếu được giao rõ:
-  - `hostello_backend/static/css/rentease-design.css`
+- template RentEase active náº¿u Ä‘Æ°á»£c giao rÃµ:
+  - `frontend/templates/home.html`
+  - `frontend/templates/listings/`
+  - `frontend/templates/portal/`
+- CSS chÃ­nh náº¿u Ä‘Æ°á»£c giao rÃµ:
+  - `frontend/static/css/rentease-design.css`
 
-## File Không Được Sửa Nếu Chưa Hỏi Hoàng Nam
+## File KhÃ´ng ÄÆ°á»£c Sá»­a Náº¿u ChÆ°a Há»i HoÃ ng Nam
 
 - `models.py`
 - migration files
@@ -56,48 +56,48 @@ Thành viên hỗ trợ nên tập trung vào các việc an toàn cho demo:
 - `.env`
 - `venv`
 
-## Cách Test UI
+## CÃ¡ch Test UI
 
-1. Chạy server local.
-2. Mở trang public:
+1. Cháº¡y server local.
+2. Má»Ÿ trang public:
    - `/`
    - `/rooms/`
    - `/login/`
-3. Đăng nhập owner và kiểm tra:
+3. ÄÄƒng nháº­p owner vÃ  kiá»ƒm tra:
    - `/owner/dashboard/`
    - `/owner/rooms/`
    - `/owner/invoices/`
    - `/owner/repairs/`
-4. Đăng nhập tenant và kiểm tra:
+4. ÄÄƒng nháº­p tenant vÃ  kiá»ƒm tra:
    - `/tenant/dashboard/`
    - `/tenant/invoices/`
    - `/tenant/repairs/`
-5. Ghi lại:
+5. Ghi láº¡i:
    - URL
-   - lỗi nhìn thấy
-   - ảnh chụp màn hình nếu có
-   - bước để lặp lại lỗi
+   - lá»—i nhÃ¬n tháº¥y
+   - áº£nh chá»¥p mÃ n hÃ¬nh náº¿u cÃ³
+   - bÆ°á»›c Ä‘á»ƒ láº·p láº¡i lá»—i
 
-## Cách Báo Cáo Khi Hoàn Thành
+## CÃ¡ch BÃ¡o CÃ¡o Khi HoÃ n ThÃ nh
 
-Gửi cho Hoàng Nam:
+Gá»­i cho HoÃ ng Nam:
 
-- task đã làm
-- file đã sửa
-- trang đã test
-- lỗi còn lại
-- ảnh chụp nếu có
-- có đụng database hay không
+- task Ä‘Ã£ lÃ m
+- file Ä‘Ã£ sá»­a
+- trang Ä‘Ã£ test
+- lá»—i cÃ²n láº¡i
+- áº£nh chá»¥p náº¿u cÃ³
+- cÃ³ Ä‘á»¥ng database hay khÃ´ng
 
-## Khi Nào Phải Hỏi Hoàng Nam Trước
+## Khi NÃ o Pháº£i Há»i HoÃ ng Nam TrÆ°á»›c
 
-Hỏi trước khi:
+Há»i trÆ°á»›c khi:
 
-- sửa model hoặc migration
-- sửa quyền đăng nhập/phân quyền
-- sửa billing logic
-- xóa file/app cũ
+- sá»­a model hoáº·c migration
+- sá»­a quyá»n Ä‘Äƒng nháº­p/phÃ¢n quyá»n
+- sá»­a billing logic
+- xÃ³a file/app cÅ©
 - commit database
-- thêm ảnh từ internet
-- dùng dữ liệu cá nhân thật
-- đổi cấu trúc URL
+- thÃªm áº£nh tá»« internet
+- dÃ¹ng dá»¯ liá»‡u cÃ¡ nhÃ¢n tháº­t
+- Ä‘á»•i cáº¥u trÃºc URL

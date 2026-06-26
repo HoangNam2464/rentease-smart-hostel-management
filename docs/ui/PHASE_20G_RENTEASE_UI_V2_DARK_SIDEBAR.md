@@ -1,4 +1,4 @@
-# Phase 20G: RentEase UI V2 Dark Sidebar Layout
+﻿# Phase 20G: RentEase UI V2 Dark Sidebar Layout
 
 ## Purpose
 
@@ -34,10 +34,10 @@ rentease_v2/templates/portal/tenant_dashboard.html
 Copied into active RentEase locations:
 
 ```text
-hostello_backend/static/css/rentease-layout.css
-hostello_backend/templates/portal/base.html
-hostello_backend/templates/portal/owner_dashboard.html
-hostello_backend/templates/portal/tenant_dashboard.html
+frontend/static/css/rentease-layout.css
+frontend/templates/portal/base.html
+frontend/templates/portal/owner_dashboard.html
+frontend/templates/portal/tenant_dashboard.html
 ```
 
 The extracted source folder was removed after copying so it would not be committed.
@@ -100,8 +100,8 @@ Public pages remained on the existing RentEase public/general design system:
 
 ## Production Note
 
-- `hostello_backend/static/css/rentease-layout.css` is now the dashboard layout CSS used by `portal/base.html`.
-- `hostello_backend/static/css/rentease-design.css` remains untouched and continues to serve public/general RentEase styling and existing non-dashboard surfaces.
+- `frontend/static/css/rentease-layout.css` is now the dashboard layout CSS used by `portal/base.html`.
+- `frontend/static/css/rentease-design.css` remains untouched and continues to serve public/general RentEase styling and existing non-dashboard surfaces.
 
 ## Remaining Issues
 

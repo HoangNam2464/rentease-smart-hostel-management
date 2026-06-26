@@ -1,4 +1,4 @@
-# Phase 17B Remaining UI Polish
+﻿# Phase 17B Remaining UI Polish
 
 ## Purpose
 
@@ -31,7 +31,7 @@ phase17a-full-ui-completeness-audit
 Updated:
 
 ```text
-hostello_backend/reports/templates/reports/base.html
+backend/reports/templates/reports/base.html
 ```
 
 Changes:
@@ -50,8 +50,8 @@ Staff-only report protection was not changed.
 Created:
 
 ```text
-hostello_backend/templates/404.html
-hostello_backend/templates/500.html
+frontend/templates/404.html
+frontend/templates/500.html
 ```
 
 Changes:
@@ -67,8 +67,8 @@ Settings were not changed. `DEBUG` behavior remains unchanged.
 Updated:
 
 ```text
-hostello_backend/templates/portal/owner_repair_process_form.html
-hostello_backend/templates/portal/owner_viewing_registration_process_form.html
+frontend/templates/portal/owner_repair_process_form.html
+frontend/templates/portal/owner_viewing_registration_process_form.html
 ```
 
 Changes:
@@ -84,8 +84,8 @@ Model field names and form behavior were not changed.
 Updated:
 
 ```text
-hostello_backend/templates/portal/login.html
-hostello_backend/templates/portal/base.html
+frontend/templates/portal/login.html
+frontend/templates/portal/base.html
 ```
 
 Changes:
@@ -101,9 +101,9 @@ No demo credentials were added to the login page.
 Updated:
 
 ```text
-hostello_backend/templates/portal/base.html
-hostello_backend/templates/listings/public_listing_detail.html
-hostello_backend/templates/portal/owner_dashboard.html
+frontend/templates/portal/base.html
+frontend/templates/listings/public_listing_detail.html
+frontend/templates/portal/owner_dashboard.html
 ```
 
 Changes:
@@ -116,15 +116,15 @@ Changes:
 
 Templates:
 
-- `hostello_backend/reports/templates/reports/base.html`
-- `hostello_backend/templates/404.html`
-- `hostello_backend/templates/500.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/owner_repair_process_form.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
+- `backend/reports/templates/reports/base.html`
+- `frontend/templates/404.html`
+- `frontend/templates/500.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/owner_repair_process_form.html`
+- `frontend/templates/portal/owner_viewing_registration_process_form.html`
 
 Documentation:
 

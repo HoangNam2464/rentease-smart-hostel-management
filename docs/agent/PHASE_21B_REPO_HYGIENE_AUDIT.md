@@ -1,4 +1,4 @@
-# Phase 21B Repo Hygiene Audit
+﻿# Phase 21B Repo Hygiene Audit
 
 ## Scope
 
@@ -24,14 +24,14 @@ Repository root contains:
 - `backup_phase4.json`
 - `backup_phase5.json`
 
-`hostello_backend/` contains:
+`backend/` contains:
 
 - `db.sqlite3`
 - `venv/`
 - `media/`
 - `phase8b2_wip.patch`
 
-`hostello_backend/media/` contains legacy media files such as:
+`backend/media/` contains legacy media files such as:
 
 - `about-bg.jpg`
 - `bed*.jpg/png`
@@ -78,7 +78,7 @@ Existing `.gitignore` already includes:
 - `.env`
 - `.env.*`
 - `media/`
-- `/hostello_backend/media/`
+- `/backend/media/`
 
 ## Suggested Phase 21C Cleanup
 

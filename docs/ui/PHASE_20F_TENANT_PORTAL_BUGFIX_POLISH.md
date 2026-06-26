@@ -1,4 +1,4 @@
-# Phase 20F: Tenant Portal Bugfix, Layout Separation, and Polish
+﻿# Phase 20F: Tenant Portal Bugfix, Layout Separation, and Polish
 
 ## Purpose
 
@@ -49,7 +49,7 @@ Audited active tenant routes:
 
 ## CSS Updated
 
-Added tenant-specific polish to `hostello_backend/static/css/rentease-design.css`:
+Added tenant-specific polish to `frontend/static/css/rentease-design.css`:
 
 - tenant hero card
 - tenant metric grid
@@ -100,20 +100,20 @@ No tenant template was changed to expose:
 
 ## Files Changed
 
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
-- `hostello_backend/templates/portal/tenant_profile.html`
-- `hostello_backend/templates/portal/tenant_contracts_list.html`
-- `hostello_backend/templates/portal/tenant_contract_detail.html`
-- `hostello_backend/templates/portal/tenant_invoices_list.html`
-- `hostello_backend/templates/portal/tenant_invoice_detail.html`
-- `hostello_backend/templates/portal/tenant_payments_list.html`
-- `hostello_backend/templates/portal/tenant_repairs_list.html`
-- `hostello_backend/templates/portal/tenant_repair_form.html`
-- `hostello_backend/templates/portal/tenant_repair_detail.html`
-- `hostello_backend/templates/portal/tenant_notifications_list.html`
-- `hostello_backend/templates/portal/tenant_notification_detail.html`
-- `hostello_backend/static/css/rentease-design.css`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/tenant_dashboard.html`
+- `frontend/templates/portal/tenant_profile.html`
+- `frontend/templates/portal/tenant_contracts_list.html`
+- `frontend/templates/portal/tenant_contract_detail.html`
+- `frontend/templates/portal/tenant_invoices_list.html`
+- `frontend/templates/portal/tenant_invoice_detail.html`
+- `frontend/templates/portal/tenant_payments_list.html`
+- `frontend/templates/portal/tenant_repairs_list.html`
+- `frontend/templates/portal/tenant_repair_form.html`
+- `frontend/templates/portal/tenant_repair_detail.html`
+- `frontend/templates/portal/tenant_notifications_list.html`
+- `frontend/templates/portal/tenant_notification_detail.html`
+- `frontend/static/css/rentease-design.css`
 
 ## Remaining Notes
 

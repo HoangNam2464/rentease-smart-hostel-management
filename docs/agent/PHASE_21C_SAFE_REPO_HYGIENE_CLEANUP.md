@@ -1,4 +1,4 @@
-# Phase 21C: Safe Repo Hygiene Cleanup
+﻿# Phase 21C: Safe Repo Hygiene Cleanup
 
 ## Scope
 
@@ -26,7 +26,7 @@ Confirmed existing ignore rules:
 - `.env.local`
 - `.env.*`
 - `media/`
-- `/hostello_backend/media/`
+- `/backend/media/`
 - `.vscode/`
 - `.idea/`
 - `.DS_Store`
@@ -39,9 +39,9 @@ Added or strengthened rules:
 - `*.pyd`
 - `.venv/`
 - `!.env.example`
-- `hostello_backend/media/`
+- `backend/media/`
 - `staticfiles/`
-- `hostello_backend/staticfiles/`
+- `backend/staticfiles/`
 - `*.log`
 - `logs/`
 - `backup_*.json`
@@ -59,10 +59,10 @@ From the Phase 21B audit, these local files/folders exist on disk:
 - root `backup_phase3.json`
 - root `backup_phase4.json`
 - root `backup_phase5.json`
-- `hostello_backend/db.sqlite3`
-- `hostello_backend/venv/`
-- `hostello_backend/media/`
-- `hostello_backend/phase8b2_wip.patch`
+- `backend/db.sqlite3`
+- `backend/venv/`
+- `backend/media/`
+- `backend/phase8b2_wip.patch`
 
 These are local/demo/history artifacts and should not be committed unless explicitly approved.
 
@@ -118,7 +118,7 @@ Legacy HOSTELLO apps and templates remain in the repository. They should not be 
 - Local `venv/` folders still exist and should stay ignored.
 - Local backup JSON files still exist and should stay ignored.
 - Local media files still exist and should stay ignored unless future media policy changes.
-- `hostello_backend/phase8b2_wip.patch` exists locally and should not be committed unless explicitly reviewed.
+- `backend/phase8b2_wip.patch` exists locally and should not be committed unless explicitly reviewed.
 
 ## Recommended Next Step
 

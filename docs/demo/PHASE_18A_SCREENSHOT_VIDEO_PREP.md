@@ -20,7 +20,7 @@ docs/demo/FINAL_DEMO_PACKAGE.md
 From the repository root:
 
 ```powershell
-cd hostello_backend
+cd backend
 ```
 
 Run safety checks:

@@ -1,4 +1,4 @@
-# Phase 20E: Owner CRUD Pages Polish
+﻿# Phase 20E: Owner CRUD Pages Polish
 
 ## Status
 
@@ -12,40 +12,40 @@ Polish active RentEase owner management pages so they visually align with the Ph
 
 ### List Pages
 
-- `hostello_backend/templates/portal/owner_rooms_list.html`
-- `hostello_backend/templates/portal/owner_listings_list.html`
-- `hostello_backend/templates/portal/owner_tenants_list.html`
-- `hostello_backend/templates/portal/owner_contracts_list.html`
-- `hostello_backend/templates/portal/owner_invoices_list.html`
-- `hostello_backend/templates/portal/owner_repairs_list.html`
-- `hostello_backend/templates/portal/owner_viewing_registrations_list.html`
+- `frontend/templates/portal/owner_rooms_list.html`
+- `frontend/templates/portal/owner_listings_list.html`
+- `frontend/templates/portal/owner_tenants_list.html`
+- `frontend/templates/portal/owner_contracts_list.html`
+- `frontend/templates/portal/owner_invoices_list.html`
+- `frontend/templates/portal/owner_repairs_list.html`
+- `frontend/templates/portal/owner_viewing_registrations_list.html`
 
 ### Detail Pages
 
-- `hostello_backend/templates/portal/owner_room_detail.html`
-- `hostello_backend/templates/portal/owner_listing_detail.html`
-- `hostello_backend/templates/portal/owner_tenant_detail.html`
-- `hostello_backend/templates/portal/owner_contract_detail.html`
-- `hostello_backend/templates/portal/owner_invoice_detail.html`
-- `hostello_backend/templates/portal/owner_repair_detail.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_detail.html`
+- `frontend/templates/portal/owner_room_detail.html`
+- `frontend/templates/portal/owner_listing_detail.html`
+- `frontend/templates/portal/owner_tenant_detail.html`
+- `frontend/templates/portal/owner_contract_detail.html`
+- `frontend/templates/portal/owner_invoice_detail.html`
+- `frontend/templates/portal/owner_repair_detail.html`
+- `frontend/templates/portal/owner_viewing_registration_detail.html`
 
 ### Form Pages
 
-- `hostello_backend/templates/portal/owner_room_form.html`
-- `hostello_backend/templates/portal/owner_listing_form.html`
-- `hostello_backend/templates/portal/owner_tenant_form.html`
-- `hostello_backend/templates/portal/owner_contract_form.html`
-- `hostello_backend/templates/portal/owner_invoice_form.html`
+- `frontend/templates/portal/owner_room_form.html`
+- `frontend/templates/portal/owner_listing_form.html`
+- `frontend/templates/portal/owner_tenant_form.html`
+- `frontend/templates/portal/owner_contract_form.html`
+- `frontend/templates/portal/owner_invoice_form.html`
 
 ### Payment / Recording Pages
 
-- `hostello_backend/templates/portal/owner_payment_form.html`
+- `frontend/templates/portal/owner_payment_form.html`
 
 ### Repair / Viewing Process Pages
 
-- `hostello_backend/templates/portal/owner_repair_process_form.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
+- `frontend/templates/portal/owner_repair_process_form.html`
+- `frontend/templates/portal/owner_viewing_registration_process_form.html`
 
 ## Owner Templates Modified
 
@@ -66,7 +66,7 @@ Changes included:
 Updated:
 
 ```text
-hostello_backend/static/css/rentease-design.css
+frontend/static/css/rentease-design.css
 ```
 
 Added reusable owner CRUD polish styles:

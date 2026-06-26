@@ -1,4 +1,4 @@
-# Phase 20K-B: Dashboard Interaction And Visual Polish
+﻿# Phase 20K-B: Dashboard Interaction And Visual Polish
 
 ## Status
 
@@ -20,7 +20,7 @@ This phase focused on the Phase 20J findings:
 Changed only shared portal dashboard CSS:
 
 ```text
-hostello_backend/static/css/rentease-layout.css
+frontend/static/css/rentease-layout.css
 ```
 
 No templates, views, forms, URLs, settings, models, migrations, billing logic, reports logic, admin logic, or legacy apps were changed.

@@ -1,4 +1,4 @@
-# Phase 20D: Reviewed UI Package Application
+﻿# Phase 20D: Reviewed UI Package Application
 
 ## Status
 
@@ -22,14 +22,14 @@ The temporary extraction folder was not added to Git.
 
 ## Files Modified
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
+- `frontend/static/css/rentease-design.css`
+- `frontend/templates/home.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/tenant_dashboard.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
 
 No legacy HOSTELLO templates were edited.
 

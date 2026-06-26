@@ -1,4 +1,4 @@
-# RentEase Autonomous Work Log
+﻿# RentEase Autonomous Work Log
 
 ## 2026-06-19
 
@@ -76,65 +76,65 @@
 - `docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md`
 - `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
 - `docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md`
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/reports/templates/reports/base.html`
-- `hostello_backend/templates/404.html`
-- `hostello_backend/templates/500.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/owner_repair_process_form.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
-- `hostello_backend/portal/management/__init__.py`
-- `hostello_backend/portal/management/commands/__init__.py`
-- `hostello_backend/portal/management/commands/seed_rentease_demo_data.py`
+- `frontend/static/css/rentease-design.css`
+- `backend/reports/templates/reports/base.html`
+- `frontend/templates/404.html`
+- `frontend/templates/500.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/owner_repair_process_form.html`
+- `frontend/templates/portal/owner_viewing_registration_process_form.html`
+- `backend/portal/management/__init__.py`
+- `backend/portal/management/commands/__init__.py`
+- `backend/portal/management/commands/seed_rentease_demo_data.py`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/spqm/QUALITY_METRICS.md`
 - `docs/spqm/RELEASE_CHECKLIST.md`
 - `docs/agent/AUTONOMOUS_WORK_LOG.md`
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/owner_rooms_list.html`
-- `hostello_backend/templates/portal/owner_room_detail.html`
-- `hostello_backend/templates/portal/owner_room_form.html`
-- `hostello_backend/templates/portal/owner_listings_list.html`
-- `hostello_backend/templates/portal/owner_listing_detail.html`
-- `hostello_backend/templates/portal/owner_listing_form.html`
-- `hostello_backend/templates/portal/owner_tenants_list.html`
-- `hostello_backend/templates/portal/owner_tenant_detail.html`
-- `hostello_backend/templates/portal/owner_tenant_form.html`
-- `hostello_backend/templates/portal/owner_contracts_list.html`
-- `hostello_backend/templates/portal/owner_contract_detail.html`
-- `hostello_backend/templates/portal/owner_contract_form.html`
-- `hostello_backend/templates/portal/owner_invoices_list.html`
-- `hostello_backend/templates/portal/owner_invoice_detail.html`
-- `hostello_backend/templates/portal/owner_invoice_form.html`
-- `hostello_backend/templates/portal/owner_payment_form.html`
-- `hostello_backend/templates/portal/owner_repairs_list.html`
-- `hostello_backend/templates/portal/owner_repair_detail.html`
-- `hostello_backend/templates/portal/owner_repair_process_form.html`
-- `hostello_backend/templates/portal/owner_viewing_registrations_list.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_detail.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
-- `hostello_backend/templates/portal/tenant_profile.html`
-- `hostello_backend/templates/portal/tenant_contracts_list.html`
-- `hostello_backend/templates/portal/tenant_contract_detail.html`
-- `hostello_backend/templates/portal/tenant_invoices_list.html`
-- `hostello_backend/templates/portal/tenant_invoice_detail.html`
-- `hostello_backend/templates/portal/tenant_payments_list.html`
-- `hostello_backend/templates/portal/tenant_repairs_list.html`
-- `hostello_backend/templates/portal/tenant_repair_detail.html`
-- `hostello_backend/templates/portal/tenant_repair_form.html`
-- `hostello_backend/templates/portal/tenant_notifications_list.html`
-- `hostello_backend/templates/portal/tenant_notification_detail.html`
+- `frontend/templates/home.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/owner_rooms_list.html`
+- `frontend/templates/portal/owner_room_detail.html`
+- `frontend/templates/portal/owner_room_form.html`
+- `frontend/templates/portal/owner_listings_list.html`
+- `frontend/templates/portal/owner_listing_detail.html`
+- `frontend/templates/portal/owner_listing_form.html`
+- `frontend/templates/portal/owner_tenants_list.html`
+- `frontend/templates/portal/owner_tenant_detail.html`
+- `frontend/templates/portal/owner_tenant_form.html`
+- `frontend/templates/portal/owner_contracts_list.html`
+- `frontend/templates/portal/owner_contract_detail.html`
+- `frontend/templates/portal/owner_contract_form.html`
+- `frontend/templates/portal/owner_invoices_list.html`
+- `frontend/templates/portal/owner_invoice_detail.html`
+- `frontend/templates/portal/owner_invoice_form.html`
+- `frontend/templates/portal/owner_payment_form.html`
+- `frontend/templates/portal/owner_repairs_list.html`
+- `frontend/templates/portal/owner_repair_detail.html`
+- `frontend/templates/portal/owner_repair_process_form.html`
+- `frontend/templates/portal/owner_viewing_registrations_list.html`
+- `frontend/templates/portal/owner_viewing_registration_detail.html`
+- `frontend/templates/portal/owner_viewing_registration_process_form.html`
+- `frontend/templates/portal/tenant_dashboard.html`
+- `frontend/templates/portal/tenant_profile.html`
+- `frontend/templates/portal/tenant_contracts_list.html`
+- `frontend/templates/portal/tenant_contract_detail.html`
+- `frontend/templates/portal/tenant_invoices_list.html`
+- `frontend/templates/portal/tenant_invoice_detail.html`
+- `frontend/templates/portal/tenant_payments_list.html`
+- `frontend/templates/portal/tenant_repairs_list.html`
+- `frontend/templates/portal/tenant_repair_detail.html`
+- `frontend/templates/portal/tenant_repair_form.html`
+- `frontend/templates/portal/tenant_notifications_list.html`
+- `frontend/templates/portal/tenant_notification_detail.html`
 
 ### Checks Run
 
@@ -272,23 +272,23 @@ Completed.
 - Improved homepage into a clearer public product/property entry page.
 - Improved public room list, room detail, viewing registration form, and success page.
 - Styled owner and tenant portals toward a dashboard/sidebar direction through shared CSS and portal base updates.
-- Corrected remaining user-facing copy issues such as `Thang` to `Tháng` and English access-denied text.
+- Corrected remaining user-facing copy issues such as `Thang` to `ThÃ¡ng` and English access-denied text.
 - Did not add external images; used safe local CSS room/property visual panels.
 - Did not change models, migrations, schema, billing logic, authentication, authorization, or production settings.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/access_denied.html`
-- `hostello_backend/templates/portal/owner_invoices_list.html`
-- `hostello_backend/templates/portal/tenant_invoices_list.html`
+- `frontend/static/css/rentease-design.css`
+- `frontend/templates/home.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/access_denied.html`
+- `frontend/templates/portal/owner_invoices_list.html`
+- `frontend/templates/portal/tenant_invoices_list.html`
 - `docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -346,7 +346,7 @@ Completed.
 ### Files Changed
 
 - `AGENTS.md`
-- `hostello_backend/tenants/models.py`
+- `backend/tenants/models.py`
 - `docs/agent/RENTEASE_PROJECT_MAP.md`
 - `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md`
 - `docs/PHAN-CONG-THANH-VIEN.md`
@@ -464,14 +464,14 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/login.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
+- `frontend/static/css/rentease-design.css`
+- `frontend/templates/home.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/login.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/tenant_dashboard.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
 - `docs/ui/PHASE_20D_UI_PACKAGE_APPLICATION.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -509,9 +509,9 @@ Completed.
 
 ### Summary
 
-- Inventoried active owner templates under `hostello_backend/templates/portal/owner_*.html`.
+- Inventoried active owner templates under `frontend/templates/portal/owner_*.html`.
 - Grouped owner templates into list, detail, form, payment, repair process, and viewing registration process pages.
-- Added reusable owner CRUD polish CSS to `hostello_backend/static/css/rentease-design.css`.
+- Added reusable owner CRUD polish CSS to `frontend/static/css/rentease-design.css`.
 - Polished owner page headers with Bootstrap Icons.
 - Improved action buttons, empty states, form containers, table presentation, detail information grids, and responsive behavior.
 - Converted remaining English owner labels to Vietnamese.
@@ -520,29 +520,29 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/templates/portal/owner_rooms_list.html`
-- `hostello_backend/templates/portal/owner_room_detail.html`
-- `hostello_backend/templates/portal/owner_room_form.html`
-- `hostello_backend/templates/portal/owner_listings_list.html`
-- `hostello_backend/templates/portal/owner_listing_detail.html`
-- `hostello_backend/templates/portal/owner_listing_form.html`
-- `hostello_backend/templates/portal/owner_tenants_list.html`
-- `hostello_backend/templates/portal/owner_tenant_detail.html`
-- `hostello_backend/templates/portal/owner_tenant_form.html`
-- `hostello_backend/templates/portal/owner_contracts_list.html`
-- `hostello_backend/templates/portal/owner_contract_detail.html`
-- `hostello_backend/templates/portal/owner_contract_form.html`
-- `hostello_backend/templates/portal/owner_invoices_list.html`
-- `hostello_backend/templates/portal/owner_invoice_detail.html`
-- `hostello_backend/templates/portal/owner_invoice_form.html`
-- `hostello_backend/templates/portal/owner_payment_form.html`
-- `hostello_backend/templates/portal/owner_repairs_list.html`
-- `hostello_backend/templates/portal/owner_repair_detail.html`
-- `hostello_backend/templates/portal/owner_repair_process_form.html`
-- `hostello_backend/templates/portal/owner_viewing_registrations_list.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_detail.html`
-- `hostello_backend/templates/portal/owner_viewing_registration_process_form.html`
+- `frontend/static/css/rentease-design.css`
+- `frontend/templates/portal/owner_rooms_list.html`
+- `frontend/templates/portal/owner_room_detail.html`
+- `frontend/templates/portal/owner_room_form.html`
+- `frontend/templates/portal/owner_listings_list.html`
+- `frontend/templates/portal/owner_listing_detail.html`
+- `frontend/templates/portal/owner_listing_form.html`
+- `frontend/templates/portal/owner_tenants_list.html`
+- `frontend/templates/portal/owner_tenant_detail.html`
+- `frontend/templates/portal/owner_tenant_form.html`
+- `frontend/templates/portal/owner_contracts_list.html`
+- `frontend/templates/portal/owner_contract_detail.html`
+- `frontend/templates/portal/owner_contract_form.html`
+- `frontend/templates/portal/owner_invoices_list.html`
+- `frontend/templates/portal/owner_invoice_detail.html`
+- `frontend/templates/portal/owner_invoice_form.html`
+- `frontend/templates/portal/owner_payment_form.html`
+- `frontend/templates/portal/owner_repairs_list.html`
+- `frontend/templates/portal/owner_repair_detail.html`
+- `frontend/templates/portal/owner_repair_process_form.html`
+- `frontend/templates/portal/owner_viewing_registrations_list.html`
+- `frontend/templates/portal/owner_viewing_registration_detail.html`
+- `frontend/templates/portal/owner_viewing_registration_process_form.html`
 - `docs/ui/PHASE_20E_OWNER_CRUD_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -590,20 +590,20 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
-- `hostello_backend/templates/portal/tenant_profile.html`
-- `hostello_backend/templates/portal/tenant_contracts_list.html`
-- `hostello_backend/templates/portal/tenant_contract_detail.html`
-- `hostello_backend/templates/portal/tenant_invoices_list.html`
-- `hostello_backend/templates/portal/tenant_invoice_detail.html`
-- `hostello_backend/templates/portal/tenant_payments_list.html`
-- `hostello_backend/templates/portal/tenant_repairs_list.html`
-- `hostello_backend/templates/portal/tenant_repair_form.html`
-- `hostello_backend/templates/portal/tenant_repair_detail.html`
-- `hostello_backend/templates/portal/tenant_notifications_list.html`
-- `hostello_backend/templates/portal/tenant_notification_detail.html`
+- `frontend/static/css/rentease-design.css`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/tenant_dashboard.html`
+- `frontend/templates/portal/tenant_profile.html`
+- `frontend/templates/portal/tenant_contracts_list.html`
+- `frontend/templates/portal/tenant_contract_detail.html`
+- `frontend/templates/portal/tenant_invoices_list.html`
+- `frontend/templates/portal/tenant_invoice_detail.html`
+- `frontend/templates/portal/tenant_payments_list.html`
+- `frontend/templates/portal/tenant_repairs_list.html`
+- `frontend/templates/portal/tenant_repair_form.html`
+- `frontend/templates/portal/tenant_repair_detail.html`
+- `frontend/templates/portal/tenant_notifications_list.html`
+- `frontend/templates/portal/tenant_notification_detail.html`
 - `docs/ui/PHASE_20F_TENANT_PORTAL_BUGFIX_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -646,7 +646,7 @@ Completed.
 - Extracted the uploaded `rentease_ui_v2.zip` package.
 - Located the actual extracted package folder at `rentease_v2/`.
 - Copied the prepared UI v2 files exactly into the active RentEase portal targets.
-- Added the new dashboard-only CSS file `hostello_backend/static/css/rentease-layout.css`.
+- Added the new dashboard-only CSS file `frontend/static/css/rentease-layout.css`.
 - Replaced `portal/base.html`, `portal/owner_dashboard.html`, and `portal/tenant_dashboard.html` from the provided package.
 - Did not modify `rentease-design.css`.
 - Did not modify models, views, URLs, forms, settings, migrations, legacy apps, public pages, owner CRUD child pages, or tenant child pages.
@@ -654,10 +654,10 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-layout.css`
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
-- `hostello_backend/templates/portal/tenant_dashboard.html`
+- `frontend/static/css/rentease-layout.css`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/tenant_dashboard.html`
 - `docs/ui/PHASE_20G_RENTEASE_UI_V2_DARK_SIDEBAR.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -705,11 +705,11 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/templates/listings/public_base.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/listings/public_base.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
 - `docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -851,7 +851,7 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/tenants/admin.py`
+- `backend/tenants/admin.py`
 - `docs/security/PHASE_20K_A_ADMIN_TENANT_PRIVACY_HOTFIX.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -899,7 +899,7 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-layout.css`
+- `frontend/static/css/rentease-layout.css`
 - `docs/ui/PHASE_20K_B_DASHBOARD_INTERACTION_VISUAL_POLISH.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -947,8 +947,8 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/static/css/rentease-layout.css`
-- `hostello_backend/templates/portal/owner_invoice_form.html`
+- `frontend/static/css/rentease-layout.css`
+- `frontend/templates/portal/owner_invoice_form.html`
 - `docs/ui/PHASE_20L_OWNER_CRUD_FORM_TABLE_PROFESSIONALIZATION.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -999,13 +999,13 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/reports/templates/reports/base.html`
-- `hostello_backend/reports/templates/reports/dashboard.html`
-- `hostello_backend/reports/templates/reports/billing_report.html`
-- `hostello_backend/reports/templates/reports/room_report.html`
-- `hostello_backend/reports/templates/reports/tenant_contract_report.html`
-- `hostello_backend/reports/templates/reports/maintenance_report.html`
-- `hostello_backend/reports/templates/reports/listing_report.html`
+- `backend/reports/templates/reports/base.html`
+- `backend/reports/templates/reports/dashboard.html`
+- `backend/reports/templates/reports/billing_report.html`
+- `backend/reports/templates/reports/room_report.html`
+- `backend/reports/templates/reports/tenant_contract_report.html`
+- `backend/reports/templates/reports/maintenance_report.html`
+- `backend/reports/templates/reports/listing_report.html`
 - `docs/ui/PHASE_20M_REPORTS_ADMIN_VISUAL_POLISH_PLANNING.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
@@ -1058,8 +1058,8 @@ Completed.
 
 ### Files Changed
 
-- `hostello_backend/contracts/admin.py`
-- `hostello_backend/billing/admin.py`
+- `backend/contracts/admin.py`
+- `backend/billing/admin.py`
 - `docs/security/PHASE_20N_ADMIN_SEARCH_PRIVACY_HARDENING.md`
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`

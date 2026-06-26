@@ -1,4 +1,4 @@
-# Cleanup Audit
+﻿# Cleanup Audit
 
 ## 1. Purpose
 
@@ -18,7 +18,7 @@ These items are usually safe to delete later because they are generated cache or
 
 Notes:
 
-- Cache/temp files also exist under local virtual environments such as `venv/` and `hostello_backend/venv/`. The better cleanup action is usually to keep virtual environments ignored by Git rather than manually cleaning package internals.
+- Cache/temp files also exist under local virtual environments such as `venv/` and `backend/venv/`. The better cleanup action is usually to keep virtual environments ignored by Git rather than manually cleaning package internals.
 - Do not delete migration files even if they are Python files.
 
 ## 3. Needs Manual Review
@@ -29,48 +29,48 @@ These files or folders may be unused, old, duplicated, or local-only, but they n
   - Contains original HOSTELLO screenshots and `Hostello_Project_Working_Demo.mp4`.
   - May be useful for historical documentation, but not part of the active RentEase UI.
 - `run_backend.bat`
-  - Could be a helper script, but should be reviewed against the current `hostello_backend/manage.py` flow.
+  - Could be a helper script, but should be reviewed against the current `backend/manage.py` flow.
 - `run_frontend.bat`
   - The project currently uses Django Templates, not React. This may be old or misleading.
 - `Working.py`
   - Unclear root-level Python file. Needs review before removal.
 - `backup_phase2.json`, `backup_phase3.json`, `backup_phase4.json`, `backup_phase5.json`
   - Local backup/demo data files. Should not be committed if they contain account or demo data.
-- `hostello_backend/phase8b2_wip.patch`
+- `backend/phase8b2_wip.patch`
   - Old work-in-progress patch file. Needs confirmation before deletion.
-- `hostello_backend/static/css/styles.css`
+- `frontend/static/css/styles.css`
   - Appears related to old HOSTELLO public UI.
-- `hostello_backend/static/js/script.js`
+- `frontend/static/js/script.js`
   - Appears related to old HOSTELLO public/login UI.
-- `hostello_backend/templates/payments/success.html`
+- `frontend/templates/payments/success.html`
   - Referenced by legacy `fees/views.py`, so do not delete without reviewing legacy behavior.
 
 ## 4. Do Not Delete
 
 These files/folders are important and must not be deleted during cleanup.
 
-- `hostello_backend/manage.py`
-- `hostello_backend/hostello_backend/settings.py`
-- `hostello_backend/hostello_backend/urls.py`
-- `hostello_backend/accounts/`
-- `hostello_backend/properties/`
-- `hostello_backend/tenants/`
-- `hostello_backend/contracts/`
-- `hostello_backend/billing/`
-- `hostello_backend/maintenance/`
-- `hostello_backend/listings/`
-- `hostello_backend/portal/`
-- `hostello_backend/reports/`
+- `backend/manage.py`
+- `backend/backend/settings.py`
+- `backend/backend/urls.py`
+- `backend/accounts/`
+- `backend/properties/`
+- `backend/tenants/`
+- `backend/contracts/`
+- `backend/billing/`
+- `backend/maintenance/`
+- `backend/listings/`
+- `backend/portal/`
+- `backend/reports/`
 - All `migrations/` folders and migration files.
 - All `models.py` files.
-- `hostello_backend/templates/portal/`
-- `hostello_backend/templates/listings/`
-- `hostello_backend/reports/templates/reports/`
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/static/css/rentease-layout.css`
-- `hostello_backend/static/admin/css/custom_admin.css`
-- `hostello_backend/media/`
-- `hostello_backend/db.sqlite3`
+- `frontend/templates/portal/`
+- `frontend/templates/listings/`
+- `backend/reports/templates/reports/`
+- `frontend/static/css/rentease-design.css`
+- `frontend/static/css/rentease-layout.css`
+- `frontend/static/admin/css/custom_admin.css`
+- `backend/media/`
+- `backend/db.sqlite3`
   - Do not commit it, but do not delete local databases without explicit approval.
 - `docs/`
 - `AGENTS.md`
@@ -84,45 +84,45 @@ Do not delete or modify permission checks, owner-scoped querysets, tenant-scoped
 
 These templates appear to be legacy, old, or unclear. They must be reviewed before deletion because some are still referenced by legacy views/admin.
 
-- `hostello_backend/templates/index.html`
+- `frontend/templates/index.html`
   - Referenced by `students/views.py` for legacy registration.
-- `hostello_backend/templates/login.html`
+- `frontend/templates/login.html`
   - Referenced by `students/views.py` for legacy student login.
-- `hostello_backend/templates/dashboard.html`
+- `frontend/templates/dashboard.html`
   - Referenced by `students/views.py` for legacy student dashboard.
-- `hostello_backend/templates/admin/attendance_management.html`
+- `frontend/templates/admin/attendance_management.html`
   - Legacy attendance admin template.
-- `hostello_backend/templates/admin/assign_room.html`
+- `frontend/templates/admin/assign_room.html`
   - Referenced by `students/admin.py`.
-- `hostello_backend/templates/admin/request_management.html`
+- `frontend/templates/admin/request_management.html`
   - Legacy request admin template.
-- `hostello_backend/templates/admin/fees/board.html`
+- `frontend/templates/admin/fees/board.html`
   - Referenced by `fees/views.py` and fee admin templates.
-- `hostello_backend/templates/admin/fees/feemonth/change_list.html`
+- `frontend/templates/admin/fees/feemonth/change_list.html`
   - Legacy/admin fee template.
-- `hostello_backend/templates/payments/success.html`
+- `frontend/templates/payments/success.html`
   - Referenced by legacy `fees/views.py`.
 
 Active templates that should not be treated as unused:
 
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/404.html`
-- `hostello_backend/templates/500.html`
-- `hostello_backend/templates/listings/*`
-- `hostello_backend/templates/portal/*`
-- `hostello_backend/reports/templates/reports/*`
+- `frontend/templates/home.html`
+- `frontend/templates/404.html`
+- `frontend/templates/500.html`
+- `frontend/templates/listings/*`
+- `frontend/templates/portal/*`
+- `backend/reports/templates/reports/*`
 
 ## 6. Possibly Unused Static Files
 
 These static files may be legacy or unclear:
 
-- `hostello_backend/static/css/styles.css`
+- `frontend/static/css/styles.css`
   - HOSTELLO-era styling.
-- `hostello_backend/static/css/student-dashboard.css`
+- `frontend/static/css/student-dashboard.css`
   - Used by legacy `templates/dashboard.html`.
-- `hostello_backend/static/js/script.js`
+- `frontend/static/js/script.js`
   - HOSTELLO-era JavaScript.
-- `hostello_backend/static/js/student-dashboard.js`
+- `frontend/static/js/student-dashboard.js`
   - Student dashboard JavaScript.
 - `assets/*.png`
   - HOSTELLO screenshots and documentation images.
@@ -131,37 +131,37 @@ These static files may be legacy or unclear:
 
 Active/static files that should not be removed:
 
-- `hostello_backend/static/css/rentease-design.css`
-- `hostello_backend/static/css/rentease-layout.css`
-- `hostello_backend/static/admin/css/custom_admin.css`
+- `frontend/static/css/rentease-design.css`
+- `frontend/static/css/rentease-layout.css`
+- `frontend/static/admin/css/custom_admin.css`
 - `frontend/static/**/.gitkeep`
 
 Potential static issue to review later:
 
-- `hostello_backend/templates/payments/success.html` references `{% static 'css/site.css' %}`, but `site.css` was not found in the current static listing. This belongs to the legacy fees/payment area and should be reviewed before any cleanup.
+- `frontend/templates/payments/success.html` references `{% static 'css/site.css' %}`, but `site.css` was not found in the current static listing. This belongs to the legacy fees/payment area and should be reviewed before any cleanup.
 
 ## 7. Possibly Unused Python Code / Imports
 
 These are suspicious or legacy code areas. They were not edited.
 
-- `hostello_backend/hostello_backend/urls.py`
+- `backend/backend/urls.py`
   - Contains commented `# from fees.admin import FeesAdminSite`.
   - Contains `from fees import admin as fees_admin`, which appears unused in the current URL file.
-- `hostello_backend/students/views.py`
+- `backend/students/views.py`
   - Contains many `print()` debug statements and HOSTELLO-era messages.
-- `hostello_backend/attendance/admin.py`
+- `backend/attendance/admin.py`
   - Contains many debug `print()` statements and HOSTELLO email content.
-- `hostello_backend/requests/views.py`
+- `backend/requests/views.py`
   - Contains debug `print()` statements, including old request handling logs.
-- `hostello_backend/requests/admin.py`
+- `backend/requests/admin.py`
   - Contains debug/notification `print()` statements.
-- `hostello_backend/requests/models.py`
+- `backend/requests/models.py`
   - Contains print-based notification logging.
-- `hostello_backend/fees/views.py`
+- `backend/fees/views.py`
   - Contains TODO around real attendance write behavior.
-- `hostello_backend/attendance/utils.py`
+- `backend/attendance/utils.py`
   - Uses `HOSTELLO_EMAIL_SETTINGS`.
-- `hostello_backend/attendance/signals.py`
+- `backend/attendance/signals.py`
   - Uses legacy HOSTELLO absence notification settings.
 
 These areas may still be needed for legacy `/legacy/` behavior. Do not edit or delete without a separate legacy dependency audit.
@@ -170,22 +170,22 @@ These areas may still be needed for legacy `/legacy/` behavior. Do not edit or d
 
 These apps and files appear to belong mostly to the original HOSTELLO project:
 
-- `hostello_backend/students/`
-- `hostello_backend/attendance/`
-- `hostello_backend/fees/`
-- `hostello_backend/requests/`
-- `hostello_backend/notices/`
-- `hostello_backend/templates/index.html`
-- `hostello_backend/templates/login.html`
-- `hostello_backend/templates/dashboard.html`
-- `hostello_backend/templates/admin/`
-- `hostello_backend/templates/payments/success.html`
-- `hostello_backend/static/css/styles.css`
-- `hostello_backend/static/css/student-dashboard.css`
-- `hostello_backend/static/js/script.js`
-- `hostello_backend/static/js/student-dashboard.js`
+- `backend/students/`
+- `backend/attendance/`
+- `backend/fees/`
+- `backend/requests/`
+- `backend/notices/`
+- `frontend/templates/index.html`
+- `frontend/templates/login.html`
+- `frontend/templates/dashboard.html`
+- `frontend/templates/admin/`
+- `frontend/templates/payments/success.html`
+- `frontend/static/css/styles.css`
+- `frontend/static/css/student-dashboard.css`
+- `frontend/static/js/script.js`
+- `frontend/static/js/student-dashboard.js`
 - `assets/`
-- `HOSTELLO_EMAIL_SETTINGS` in `hostello_backend/hostello_backend/settings.py`
+- `HOSTELLO_EMAIL_SETTINGS` in `backend/backend/settings.py`
 
 Legacy areas are currently isolated from the main RentEase product path. They should not be removed until their URL usage, model dependencies, admin dependencies, template references, and data dependencies are reviewed.
 

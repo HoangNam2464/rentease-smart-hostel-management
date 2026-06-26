@@ -77,7 +77,7 @@ Do not implement Phase 14B-2 before producing a plan and receiving approval.
 
 ## Non-Negotiable Rules
 
-- Do NOT rename `hostello_backend`.
+- Do NOT rename the inner Django config package `backend/hostello_backend` or the Python module path `hostello_backend`.
 - Do NOT delete legacy apps unless explicitly approved.
 - Do NOT create migrations unless explicitly approved.
 - Do NOT change database schema unless explicitly approved.
@@ -92,7 +92,7 @@ Do not implement Phase 14B-2 before producing a plan and receiving approval.
 
 Global python may not be available.
 
-Use direct venv Python:
+From the Django project folder `backend/`, use direct venv Python:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check
@@ -118,7 +118,7 @@ git log --oneline -15
 git tag --list
 ```
 
-Then:
+Then from `backend/`:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check

@@ -1,263 +1,248 @@
-# RentEase Project Structure Map
+﻿# RentEase Project Structure Map
 
-## Mục Đích
+## Má»¥c ÄÃ­ch
 
-Tài liệu này ghi lại cấu trúc hiện tại của RentEase và đề xuất hướng tách dần thành cấu trúc dễ hiểu hơn theo kiểu:
+TÃ i liá»‡u nÃ y mÃ´ táº£ cáº¥u trÃºc hiá»‡n táº¡i cá»§a RentEase sau khi Ä‘á»•i tÃªn thÆ° má»¥c Django ngoÃ i tá»« `backend/` thÃ nh `backend/` vÃ  chuyá»ƒn templates/static sang `frontend/`.
 
-```text
-RentEase/
-├── backend/
-├── frontend/
-└── docs/
-```
+Phase nÃ y chá»‰ Ä‘á»•i cáº¥u trÃºc thÆ° má»¥c ngoÃ i vÃ  vá»‹ trÃ­ frontend assets. KhÃ´ng Ä‘á»•i business logic, khÃ´ng Ä‘á»•i models, khÃ´ng táº¡o migrations, khÃ´ng Ä‘á»•i URL names, khÃ´ng Ä‘á»•i permissions vÃ  khÃ´ng Ä‘á»•i owner-scoped querysets.
 
-Phase hiện tại chỉ kiểm kê và lập kế hoạch. Chưa di chuyển file, chưa đổi import, chưa đổi settings, chưa đổi template path, chưa đổi static path.
-
-## Cấu Trúc Hiện Tại
+## Cáº¥u TrÃºc Hiá»‡n Táº¡i
 
 ```text
 HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
-├── AGENTS.md
-├── README.md
-├── docs/
-├── assets/
-├── hostello_backend/
-│   ├── manage.py
-│   ├── requirements.txt
-│   ├── db.sqlite3                  # local database, không nên commit
-│   ├── media/                      # local uploaded/demo media
-│   ├── static/
-│   ├── templates/
-│   ├── hostello_backend/
-│   ├── accounts/
-│   ├── properties/
-│   ├── tenants/
-│   ├── contracts/
-│   ├── billing/
-│   ├── maintenance/
-│   ├── listings/
-│   ├── portal/
-│   ├── reports/
-│   ├── students/
-│   ├── attendance/
-│   ├── fees/
-│   ├── requests/
-│   └── notices/
-└── venv/                           # local virtual environment, không nên commit
+â”œâ”€â”€ AGENTS.md
+â”œâ”€â”€ README.md
+â”œâ”€â”€ docs/
+â”œâ”€â”€ assets/
+â”œâ”€â”€ backend/
+â”‚   â”œâ”€â”€ manage.py
+â”‚   â”œâ”€â”€ requirements.txt
+â”‚   â”œâ”€â”€ db.sqlite3                  # local database, khÃ´ng nÃªn commit
+â”‚   â”œâ”€â”€ media/                      # local uploaded/demo media
+â”‚   â”œâ”€â”€ backend/           # inner Django config package, giá»¯ nguyÃªn tÃªn
+â”‚   â”œâ”€â”€ accounts/
+â”‚   â”œâ”€â”€ properties/
+â”‚   â”œâ”€â”€ tenants/
+â”‚   â”œâ”€â”€ contracts/
+â”‚   â”œâ”€â”€ billing/
+â”‚   â”œâ”€â”€ maintenance/
+â”‚   â”œâ”€â”€ listings/
+â”‚   â”œâ”€â”€ portal/
+â”‚   â”œâ”€â”€ reports/
+â”‚   â”œâ”€â”€ students/
+â”‚   â”œâ”€â”€ attendance/
+â”‚   â”œâ”€â”€ fees/
+â”‚   â”œâ”€â”€ requests/
+â”‚   â””â”€â”€ notices/
+â”œâ”€â”€ frontend/
+â”‚   â”œâ”€â”€ templates/
+â”‚   â””â”€â”€ static/
+â””â”€â”€ venv/                           # local virtual environment, khÃ´ng nÃªn commit
 ```
 
-## Manage.py Và Settings Module
+## Manage.py VÃ  Settings Module
 
-- `manage.py` hiện nằm tại: `hostello_backend/manage.py`
-- Django settings module hiện tại: `hostello_backend.settings`
-- File settings hiện tại: `hostello_backend/hostello_backend/settings.py`
-- Root URLConf hiện tại: `hostello_backend.urls`
-- File URL chính: `hostello_backend/hostello_backend/urls.py`
+- `manage.py` hiá»‡n náº±m táº¡i: `backend/manage.py`
+- Django settings module váº«n lÃ : `hostello_backend.settings`
+- File settings hiá»‡n táº¡i: `backend/backend/settings.py`
+- Root URLConf váº«n lÃ : `hostello_backend.urls`
+- File URL chÃ­nh: `backend/backend/urls.py`
+
+Äiá»ƒm quan trá»ng: chá»‰ Ä‘á»•i tÃªn thÆ° má»¥c ngoÃ i. Package cáº¥u hÃ¬nh Django bÃªn trong váº«n lÃ  `hostello_backend`, khÃ´ng Ä‘á»•i thÃ nh `backend`.
 
 ## Current Backend Files/Folders
 
 ### Django config
 
 ```text
-hostello_backend/hostello_backend/
-├── settings.py
-├── urls.py
-├── wsgi.py
-└── asgi.py
+backend/backend/
+â”œâ”€â”€ settings.py
+â”œâ”€â”€ urls.py
+â”œâ”€â”€ wsgi.py
+â””â”€â”€ asgi.py
 ```
 
 ### Active RentEase apps
 
 ```text
-hostello_backend/accounts/
-hostello_backend/properties/
-hostello_backend/tenants/
-hostello_backend/contracts/
-hostello_backend/billing/
-hostello_backend/maintenance/
-hostello_backend/listings/
-hostello_backend/portal/
-hostello_backend/reports/
+backend/accounts/
+backend/properties/
+backend/tenants/
+backend/contracts/
+backend/billing/
+backend/maintenance/
+backend/listings/
+backend/portal/
+backend/reports/
 ```
 
 ### Legacy HOSTELLO apps
 
 ```text
-hostello_backend/students/
-hostello_backend/attendance/
-hostello_backend/fees/
-hostello_backend/requests/
-hostello_backend/notices/
+backend/students/
+backend/attendance/
+backend/fees/
+backend/requests/
+backend/notices/
 ```
 
-Các app legacy vẫn còn trong `INSTALLED_APPS` để giữ tương thích/lịch sử. Không xóa nếu chưa có dependency audit riêng.
+CÃ¡c app legacy váº«n cÃ²n trong `INSTALLED_APPS` Ä‘á»ƒ giá»¯ tÆ°Æ¡ng thÃ­ch/lá»‹ch sá»­. KhÃ´ng xÃ³a náº¿u chÆ°a cÃ³ dependency audit riÃªng.
 
 ## Current Frontend Template Files/Folders
 
-### Global template directory
+Django hiá»‡n Ä‘á»c template chÃ­nh tá»«:
 
-Django hiện dùng:
+```text
+frontend/templates/
+```
+
+`settings.py` dÃ¹ng:
 
 ```python
-TEMPLATES["DIRS"] = [BASE_DIR / "templates"]
+REPO_ROOT / "frontend" / "templates"
 ```
 
-Tức thư mục template chính là:
+CÃ¡c nhÃ³m template chÃ­nh:
 
 ```text
-hostello_backend/templates/
+frontend/templates/home.html
+frontend/templates/404.html
+frontend/templates/500.html
+frontend/templates/portal/
+frontend/templates/listings/
+frontend/templates/admin/
+frontend/templates/payments/
+frontend/templates/base/
+frontend/templates/reports/
 ```
 
-Các nhóm template chính:
+Reports app templates váº«n cÃ²n trong app vÃ  váº«n hoáº¡t Ä‘á»™ng nhá» `APP_DIRS=True`:
 
 ```text
-hostello_backend/templates/home.html
-hostello_backend/templates/404.html
-hostello_backend/templates/500.html
-hostello_backend/templates/portal/
-hostello_backend/templates/listings/
-hostello_backend/templates/admin/
-hostello_backend/templates/payments/
+backend/reports/templates/reports/
 ```
 
-### App templates
-
-Reports hiện có template nằm trong app:
+Legacy templates váº«n cÃ²n nhÆ°ng Ä‘Ã£ náº±m trong frontend:
 
 ```text
-hostello_backend/reports/templates/reports/
+frontend/templates/index.html
+frontend/templates/login.html
+frontend/templates/dashboard.html
+frontend/templates/admin/
+frontend/templates/payments/success.html
 ```
 
-Điều này đang hoạt động nhờ `APP_DIRS=True`.
-
-### Legacy templates
-
-Một số template HOSTELLO cũ vẫn còn:
-
-```text
-hostello_backend/templates/index.html
-hostello_backend/templates/login.html
-hostello_backend/templates/dashboard.html
-hostello_backend/templates/admin/
-hostello_backend/templates/payments/success.html
-```
-
-Không dùng các file này cho RentEase UI mới nếu chưa được duyệt.
+KhÃ´ng dÃ¹ng cÃ¡c file legacy nÃ y cho RentEase UI má»›i náº¿u chÆ°a Ä‘Æ°á»£c duyá»‡t.
 
 ## Current Static Files/Folders
 
-Django hiện dùng:
+Django hiá»‡n Ä‘á»c static source tá»«:
+
+```text
+frontend/static/
+```
+
+`settings.py` dÃ¹ng:
 
 ```python
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+REPO_ROOT / "frontend" / "static"
 ```
 
-Thư mục static chính:
+CÃ¡c file static chÃ­nh:
 
 ```text
-hostello_backend/static/
+frontend/static/css/rentease-design.css
+frontend/static/css/rentease-layout.css
+frontend/static/admin/css/custom_admin.css
+frontend/static/css/styles.css
+frontend/static/css/student-dashboard.css
+frontend/static/js/script.js
+frontend/static/js/student-dashboard.js
+frontend/static/rentease/
+frontend/static/vendor/
 ```
 
-Các file đang thấy:
+RentEase UI hiá»‡n chá»§ yáº¿u dÃ¹ng:
 
 ```text
-hostello_backend/static/css/rentease-design.css
-hostello_backend/static/css/rentease-layout.css
-hostello_backend/static/css/styles.css
-hostello_backend/static/css/student-dashboard.css
-hostello_backend/static/js/script.js
-hostello_backend/static/js/student-dashboard.js
-hostello_backend/static/admin/css/custom_admin.css
+frontend/static/css/rentease-design.css
+frontend/static/css/rentease-layout.css
+frontend/static/admin/css/custom_admin.css
 ```
 
-RentEase UI hiện chủ yếu dùng:
+Legacy/static cÅ© cáº§n cáº©n tháº­n:
 
 ```text
-hostello_backend/static/css/rentease-design.css
-hostello_backend/static/css/rentease-layout.css
-hostello_backend/static/admin/css/custom_admin.css
-```
-
-Legacy/static cũ cần cẩn thận:
-
-```text
-hostello_backend/static/css/styles.css
-hostello_backend/static/css/student-dashboard.css
-hostello_backend/static/js/script.js
-hostello_backend/static/js/student-dashboard.js
+frontend/static/css/styles.css
+frontend/static/css/student-dashboard.css
+frontend/static/js/script.js
+frontend/static/js/student-dashboard.js
 assets/
 ```
 
 ## Current Database/Model Files
 
-Các model chính:
+CÃ¡c model chÃ­nh:
 
 ```text
-hostello_backend/accounts/models.py
-hostello_backend/properties/models.py
-hostello_backend/tenants/models.py
-hostello_backend/contracts/models.py
-hostello_backend/billing/models.py
-hostello_backend/maintenance/models.py
-hostello_backend/listings/models.py
+backend/accounts/models.py
+backend/properties/models.py
+backend/tenants/models.py
+backend/contracts/models.py
+backend/billing/models.py
+backend/maintenance/models.py
+backend/listings/models.py
 ```
 
 Legacy model files:
 
 ```text
-hostello_backend/students/models.py
-hostello_backend/attendance/models.py
-hostello_backend/fees/models.py
-hostello_backend/requests/models.py
-hostello_backend/notices/models.py
+backend/students/models.py
+backend/attendance/models.py
+backend/fees/models.py
+backend/requests/models.py
+backend/notices/models.py
 ```
 
-Database local hiện tại:
+Database local hiá»‡n táº¡i:
 
 ```text
-hostello_backend/db.sqlite3
+backend/db.sqlite3
 ```
 
-Không commit database local.
+KhÃ´ng commit database local.
 
 ## Current Media/Upload Folders
 
-Media config hiện tại:
+Media config hiá»‡n táº¡i:
 
 ```python
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 ```
 
-Thư mục media hiện tại:
+ThÆ° má»¥c media hiá»‡n táº¡i:
 
 ```text
-hostello_backend/media/
+backend/media/
 ```
 
-Nội dung media có thể gồm ảnh/demo upload từ dự án cũ và local data. Không nên commit media thật hoặc dữ liệu có thông tin cá nhân.
+Ná»™i dung media cÃ³ thá»ƒ gá»“m áº£nh/demo upload tá»« dá»± Ã¡n cÅ© vÃ  local data. KhÃ´ng nÃªn commit media tháº­t hoáº·c dá»¯ liá»‡u cÃ³ thÃ´ng tin cÃ¡ nhÃ¢n.
 
 ## Current Documentation Folders
 
 ```text
 docs/agent/
+docs/architecture/
 docs/demo/
 docs/security/
 docs/spqm/
 docs/ui/
 ```
 
-Nên bổ sung và duy trì:
-
-```text
-docs/architecture/
-```
-
 ## Possibly Unused Or Unclear Files
 
-Các mục cần audit riêng trước khi xóa/di chuyển:
+CÃ¡c má»¥c cáº§n audit riÃªng trÆ°á»›c khi xÃ³a/di chuyá»ƒn:
 
 ```text
 assets/
@@ -268,209 +253,119 @@ backup_phase2.json
 backup_phase3.json
 backup_phase4.json
 backup_phase5.json
-hostello_backend/phase8b2_wip.patch
-hostello_backend/static/css/styles.css
-hostello_backend/static/js/script.js
+backend/phase8b2_wip.patch
+frontend/static/css/styles.css
+frontend/static/js/script.js
 ```
 
-Không xóa các file này trong phase hiện tại. Một số có thể là di sản HOSTELLO hoặc công cụ local.
+KhÃ´ng xÃ³a cÃ¡c file nÃ y trong phase hiá»‡n táº¡i. Má»™t sá»‘ cÃ³ thá»ƒ lÃ  di sáº£n HOSTELLO hoáº·c cÃ´ng cá»¥ local.
 
-## Recommended Future Backend/Frontend Structure
+## Completed Folder Reorganization
 
-Định hướng dài hạn:
+ÄÃ£ thá»±c hiá»‡n:
 
-```text
-RentEase/
-├── backend/
-│   ├── config/
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   ├── wsgi.py
-│   │   └── asgi.py
-│   ├── apps/
-│   │   ├── accounts/
-│   │   ├── rooms/
-│   │   ├── tenants/
-│   │   ├── contracts/
-│   │   ├── billing/
-│   │   ├── repairs/
-│   │   ├── reports/
-│   │   └── portal/
-│   ├── manage.py
-│   └── requirements.txt
-├── frontend/
-│   ├── templates/
-│   │   ├── base/
-│   │   ├── portal/
-│   │   │   ├── owner/
-│   │   │   ├── tenant/
-│   │   │   └── public/
-│   │   └── reports/
-│   └── static/
-│       ├── rentease/
-│       │   ├── css/
-│       │   ├── js/
-│       │   └── img/
-│       └── vendor/
-├── docs/
-└── README.md
-```
-
-Không áp dụng toàn bộ cấu trúc này trong một bước.
+- Äá»•i tÃªn thÆ° má»¥c Django ngoÃ i `backend/` thÃ nh `backend/`.
+- Giá»¯ nguyÃªn inner Django config package `backend/backend/`.
+- Di chuyá»ƒn `backend/templates/` sang `frontend/templates/`.
+- Di chuyá»ƒn `backend/static/` sang `frontend/static/`.
+- Giá»¯ nguyÃªn relative paths bÃªn trong template/static.
+- KhÃ´ng Ä‘á»•i tÃªn template files.
+- KhÃ´ng Ä‘á»•i tÃªn CSS/JS files.
+- KhÃ´ng di chuyá»ƒn Django apps.
+- KhÃ´ng Ä‘á»•i models hoáº·c migrations.
 
 ## Files Safe To Move Later
 
-Có thể di chuyển dần trong các phase nhỏ:
+CÃ³ thá»ƒ di chuyá»ƒn/tá»• chá»©c láº¡i dáº§n trong cÃ¡c phase nhá»:
 
-- Public templates trong `hostello_backend/templates/listings/`
-- Portal templates trong `hostello_backend/templates/portal/`
-- Global public templates như `home.html`, `404.html`, `500.html`
-- Reports templates trong `hostello_backend/reports/templates/reports/`, nếu cập nhật đúng template discovery/render path
-- RentEase CSS trong `hostello_backend/static/css/rentease-design.css`
-- Portal layout CSS trong `hostello_backend/static/css/rentease-layout.css`
+- `frontend/templates/listings/` thÃ nh nhÃ³m public rÃµ hÆ¡n.
+- `frontend/templates/portal/` thÃ nh nhÃ³m owner/tenant rÃµ hÆ¡n.
+- `frontend/templates/home.html`, `404.html`, `500.html` vÃ o nhÃ³m public/base náº¿u cáº­p nháº­t render path.
+- `backend/reports/templates/reports/` sang `frontend/templates/reports/` náº¿u tháº­t sá»± cáº§n.
+- `frontend/static/css/rentease-design.css` vÃ o `frontend/static/rentease/css/`.
+- `frontend/static/css/rentease-layout.css` vÃ o `frontend/static/rentease/css/`.
 
-Mỗi nhóm di chuyển phải chạy route smoke test ngay sau đó.
+Má»—i nhÃ³m di chuyá»ƒn pháº£i cháº¡y route smoke test ngay sau Ä‘Ã³.
 
 ## Files That Should Not Be Moved Yet
 
-Không nên di chuyển trong các phase đầu:
+KhÃ´ng nÃªn di chuyá»ƒn trong cÃ¡c phase tiáº¿p theo náº¿u chÆ°a cÃ³ plan riÃªng:
 
-- `hostello_backend/manage.py`
-- `hostello_backend/hostello_backend/settings.py`
-- `hostello_backend/hostello_backend/urls.py`
-- Django app folders như `accounts`, `properties`, `tenants`, `contracts`, `billing`, `maintenance`, `listings`, `portal`, `reports`
+- `backend/manage.py`
+- `backend/backend/settings.py`
+- `backend/backend/urls.py`
+- Django app folders nhÆ° `accounts`, `properties`, `tenants`, `contracts`, `billing`, `maintenance`, `listings`, `portal`, `reports`
 - Migration folders
 - Model files
 - Legacy apps
 - Media upload folder
 - Database local
 
-Lý do: các file này liên quan trực tiếp đến import path, app label, migration history, admin registration và URL routing.
+LÃ½ do: cÃ¡c file nÃ y liÃªn quan trá»±c tiáº¿p Ä‘áº¿n import path, app label, migration history, admin registration vÃ  URL routing.
 
 ## Risks When Moving Django Apps
 
-Di chuyển app Django có thể gây lỗi:
+Di chuyá»ƒn app Django cÃ³ thá»ƒ gÃ¢y lá»—i:
 
 - `INSTALLED_APPS` sai path
 - `AppConfig.name` sai
-- migration dependency bị lệch
-- admin registration không load
-- import trong views/forms/services lỗi
-- content type/app label thay đổi ngoài ý muốn
-- dữ liệu cũ không khớp app label mới
+- migration dependency bá»‹ lá»‡ch
+- admin registration khÃ´ng load
+- import trong views/forms/services lá»—i
+- content type/app label thay Ä‘á»•i ngoÃ i Ã½ muá»‘n
+- dá»¯ liá»‡u cÅ© khÃ´ng khá»›p app label má»›i
 
-Vì vậy không di chuyển app vào `backend/apps/` nếu chưa có phase riêng và kế hoạch rollback.
+VÃ¬ váº­y khÃ´ng di chuyá»ƒn app vÃ o `backend/apps/` náº¿u chÆ°a cÃ³ phase riÃªng vÃ  káº¿ hoáº¡ch rollback.
 
 ## Risks When Moving Templates
 
-Di chuyển template có thể gây lỗi:
+Di chuyá»ƒn template cÃ³ thá»ƒ gÃ¢y lá»—i:
 
-- `render(request, "...")` không tìm thấy template
-- `{% extends %}` trỏ sai path
-- `{% include %}` trỏ sai path
-- template cùng tên bị ưu tiên khác do `APP_DIRS=True`
-- route vẫn chạy nhưng render sai shell public/owner/tenant
+- `render(request, "...")` khÃ´ng tÃ¬m tháº¥y template
+- `{% extends %}` trá» sai path
+- `{% include %}` trá» sai path
+- template cÃ¹ng tÃªn bá»‹ Æ°u tiÃªn khÃ¡c do `APP_DIRS=True`
+- route váº«n cháº¡y nhÆ°ng render sai shell public/owner/tenant
 
-Nếu di chuyển template, cần di chuyển theo từng nhóm nhỏ và kiểm tra route ngay.
+Náº¿u di chuyá»ƒn template tiáº¿p, cáº§n di chuyá»ƒn theo tá»«ng nhÃ³m nhá» vÃ  kiá»ƒm tra route ngay.
 
 ## Risks When Moving Static Files
 
-Di chuyển static có thể gây lỗi:
+Di chuyá»ƒn static cÃ³ thá»ƒ gÃ¢y lá»—i:
 
-- `{% static %}` trỏ sai file
-- admin custom CSS không load
-- public/owner/tenant layout mất style
-- file legacy và RentEase bị trộn
-- `collectstatic` hoặc `STATICFILES_DIRS` bị sai
+- `{% static %}` trá» sai file
+- admin custom CSS khÃ´ng load
+- public/owner/tenant layout máº¥t style
+- file legacy vÃ  RentEase bá»‹ trá»™n
+- `collectstatic` hoáº·c `STATICFILES_DIRS` bá»‹ sai
 
-Không xóa static cũ cho đến khi mọi reference đã được cập nhật và kiểm tra.
+KhÃ´ng xÃ³a static cÅ© cho Ä‘áº¿n khi má»i reference Ä‘Ã£ Ä‘Æ°á»£c cáº­p nháº­t vÃ  kiá»ƒm tra.
 
-## Step-By-Step Migration Plan For Later Phases
+## Recommended Next Phases
 
-## Phase 2 Frontend Folder Preparation
+### Phase A: Route Smoke Test After Folder Rename
 
-Phase 2 đã chuẩn bị thư mục `frontend/` ở root repository để làm nơi tổ chức Django templates và static assets trong các phase sau.
+1. Cháº¡y Django check.
+2. Cháº¡y migration dry-run.
+3. Kiá»ƒm tra public routes: `/`, `/rooms/`, room detail, viewing registration.
+4. Kiá»ƒm tra auth routes: `/login/`, `/dashboard/`.
+5. Kiá»ƒm tra owner routes.
+6. Kiá»ƒm tra tenant routes.
+7. Kiá»ƒm tra `/admin/`.
+8. Kiá»ƒm tra `/reports/`.
 
-Thư mục mới:
+### Phase B: Commit Folder Rename
 
-```text
-frontend/
-├── templates/
-│   ├── base/
-│   ├── portal/
-│   │   ├── owner/
-│   │   ├── tenant/
-│   │   └── public/
-│   └── reports/
-└── static/
-    ├── rentease/
-    │   ├── css/
-    │   ├── js/
-    │   └── img/
-    └── vendor/
-```
+Commit riÃªng pháº§n rename/move náº¿u checks pass.
 
-Ghi chú an toàn:
+### Phase C: Move Public Templates Gradually
 
-- Chưa di chuyển template nào.
-- Chưa di chuyển static file nào.
-- Đường dẫn template cũ `hostello_backend/templates/` vẫn hoạt động.
-- App templates như `reports/templates/reports/` vẫn hoạt động qua `APP_DIRS=True`.
-- Đường dẫn static cũ `hostello_backend/static/` vẫn hoạt động.
-- `frontend/templates/` đã được thêm vào `TEMPLATES["DIRS"]` để Django có thể nhận template mới trong tương lai.
-- `frontend/static/` đã được thêm vào `STATICFILES_DIRS` để Django có thể nhận static mới trong tương lai.
-- Các thư mục rỗng có `.gitkeep` để Git theo dõi.
+Chá»‰ sau khi Phase A/B sáº¡ch, má»›i cÃ¢n nháº¯c tá»• chá»©c láº¡i template public theo nhÃ³m má»›i.
 
-Phase này chỉ là bước chuẩn bị. Các phase sau mới xem xét di chuyển template/static theo từng nhóm nhỏ, sau khi review `render()`, `{% extends %}`, `{% include %}`, `{% static %}` và route smoke test.
+### Phase D: Move Owner/Tenant Templates Gradually
 
-### Phase 2: Prepare Frontend Folder
+Di chuyá»ƒn owner/tenant templates theo tá»«ng nhÃ³m nhá» vÃ  cáº­p nháº­t `render()` náº¿u Ä‘á»•i path.
 
-1. Tạo `frontend/templates/`.
-2. Tạo `frontend/static/`.
-3. Không di chuyển template/static ngay.
-4. Chỉ thêm vào `TEMPLATES["DIRS"]` hoặc `STATICFILES_DIRS` nếu cần và an toàn.
-5. Giữ đường dẫn cũ hoạt động.
-6. Chạy `manage.py check`.
-7. Chạy `makemigrations --check --dry-run`.
+### Phase E: Organize Static Files Gradually
 
-### Phase 3: Move Public Templates
-
-1. Di chuyển public templates trước vì ít phụ thuộc owner/tenant hơn.
-2. Cập nhật `TemplateView`, `render()`, `{% extends %}`, `{% include %}`.
-3. Kiểm tra `/`, `/rooms/`, room detail, viewing registration form/success.
-
-### Phase 4: Move Owner/Tenant Templates
-
-1. Di chuyển owner templates theo nhóm nhỏ: dashboard, rooms, tenants, contracts, invoices, payments, repairs, viewing registrations.
-2. Di chuyển tenant templates theo nhóm nhỏ: dashboard, profile, contracts, invoices, payments, repairs, notifications.
-3. Kiểm tra owner/tenant role access và data scoping sau từng nhóm.
-
-### Phase 5: Move Reports Templates
-
-1. Di chuyển `reports/templates/reports/` nếu thật sự cần.
-2. Đảm bảo staff-only access không đổi.
-3. Kiểm tra `/reports/` và các report con.
-
-### Phase 6: Organize Static Files
-
-1. Tạo `frontend/static/rentease/css/`, `js/`, `img/`.
-2. Copy trước, đổi reference sau, chưa xóa file cũ.
-3. Cập nhật `{% static %}` theo từng nhóm.
-4. Kiểm tra public/owner/tenant/reports/admin CSS.
-
-### Phase 7: Backend Folder Migration
-
-Chỉ thực hiện nếu được duyệt riêng. Đây là phase rủi ro cao.
-
-Không di chuyển:
-
-- Django apps
-- `manage.py`
-- config package
-- migrations
-
-cho đến khi có kế hoạch chi tiết về import path, app labels, migration compatibility và rollback.
-
-## Current Recommendation
-
-Hoàn tất Phase 1 bằng tài liệu trước. Phase tiếp theo an toàn nhất là Phase 2: tạo `frontend/templates/` và `frontend/static/` rỗng hoặc có file placeholder, sau đó thêm cấu hình template/static chỉ khi thật sự cần và kiểm tra kỹ.
+Di chuyá»ƒn CSS/JS vÃ o `frontend/static/rentease/` theo nhÃ³m nhá», cáº­p nháº­t `{% static %}` vÃ  kiá»ƒm tra tá»«ng route.

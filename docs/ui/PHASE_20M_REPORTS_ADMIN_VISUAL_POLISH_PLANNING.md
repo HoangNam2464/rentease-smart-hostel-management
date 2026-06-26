@@ -1,4 +1,4 @@
-# Phase 20M: Reports And Admin Visual Polish Planning
+﻿# Phase 20M: Reports And Admin Visual Polish Planning
 
 ## Status
 
@@ -25,13 +25,13 @@ Reviewed staff report routes:
 
 Reviewed report templates:
 
-- `hostello_backend/reports/templates/reports/base.html`
-- `hostello_backend/reports/templates/reports/dashboard.html`
-- `hostello_backend/reports/templates/reports/billing_report.html`
-- `hostello_backend/reports/templates/reports/room_report.html`
-- `hostello_backend/reports/templates/reports/tenant_contract_report.html`
-- `hostello_backend/reports/templates/reports/maintenance_report.html`
-- `hostello_backend/reports/templates/reports/listing_report.html`
+- `backend/reports/templates/reports/base.html`
+- `backend/reports/templates/reports/dashboard.html`
+- `backend/reports/templates/reports/billing_report.html`
+- `backend/reports/templates/reports/room_report.html`
+- `backend/reports/templates/reports/tenant_contract_report.html`
+- `backend/reports/templates/reports/maintenance_report.html`
+- `backend/reports/templates/reports/listing_report.html`
 
 ### Admin
 
@@ -47,12 +47,12 @@ Reviewed admin-facing surfaces through route/render checks:
 
 Reviewed admin-related files:
 
-- `hostello_backend/tenants/admin.py`
-- `hostello_backend/properties/admin.py`
-- `hostello_backend/contracts/admin.py`
-- `hostello_backend/billing/admin.py`
-- `hostello_backend/static/admin/css/custom_admin.css`
-- Jazzmin settings in `hostello_backend/hostello_backend/settings.py`
+- `backend/tenants/admin.py`
+- `backend/properties/admin.py`
+- `backend/contracts/admin.py`
+- `backend/billing/admin.py`
+- `frontend/static/admin/css/custom_admin.css`
+- Jazzmin settings in `backend/backend/settings.py`
 
 ## Current Visual Issues Found
 

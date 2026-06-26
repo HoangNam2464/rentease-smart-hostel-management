@@ -1,4 +1,4 @@
-# Phase 20H: Full UI Visual QA and Regression Audit
+﻿# Phase 20H: Full UI Visual QA and Regression Audit
 
 ## Purpose
 
@@ -79,7 +79,7 @@ These public listing templates extended `portal/base.html`. After Phase 20G, `po
 
 Fix applied:
 
-- Added `hostello_backend/templates/listings/public_base.html`.
+- Added `frontend/templates/listings/public_base.html`.
 - Switched public listing templates to extend `listings/public_base.html`.
 - Kept public listing pages on `rentease-design.css`.
 - Did not modify views, URLs, models, or settings.
@@ -228,11 +228,11 @@ ISSUE_COUNT=0
 
 ## Files Changed
 
-- `hostello_backend/templates/listings/public_base.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/listings/public_base.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
 - `docs/ui/PHASE_20H_FULL_UI_VISUAL_QA.md`
 - `docs/agent/AUTONOMOUS_WORK_LOG.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`

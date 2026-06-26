@@ -1,4 +1,4 @@
-# Phase 20J - Browser-Based Visual QA
+﻿# Phase 20J - Browser-Based Visual QA
 
 ## 1. Scope
 
@@ -122,13 +122,13 @@ Captured 44 PNG screenshots:
 
 | Page/Form | Problem | Suggested Fix | Files likely affected | Priority |
 |---|---|---|---|---|
-| Login form | Invalid credentials did not show a clearly detected error message in the browser audit. | Add a prominent form-level error message for invalid login. | `hostello_backend/templates/portal/login.html` | P2 |
-| Public viewing registration | Blank submit shows validation errors and stays on form. | Improve error styling if desired; behavior is acceptable. | `hostello_backend/templates/listings/viewing_registration_form.html`, public CSS | P3 |
-| Owner room create | Validation errors appear, but fields look like raw browser-default inputs and buttons. | Apply existing form-card styling consistently to all fields, errors, and actions. | `hostello_backend/templates/portal/owner_room_form.html`, `hostello_backend/static/css/rentease-layout.css` | P1 |
-| Owner contract create | Validation errors appear; dense form needs grouping. | Group room/tenant/dates/financial fields and style errors consistently. | `hostello_backend/templates/portal/owner_contract_form.html`, portal CSS | P2 |
-| Owner invoice create | Validation errors appear; form is safe but plain. | Add invoice context helper text and styled error blocks. | `hostello_backend/templates/portal/owner_invoice_form.html`, portal CSS | P2 |
-| Owner payment form | Blank submit shows errors; page needs stronger balance context. | Highlight invoice total, paid, remaining, and safe payment warning. | `hostello_backend/templates/portal/owner_payment_form.html`, portal CSS | P2 |
-| Tenant repair form | Blank submit shows errors and no save occurs. | Add friendlier examples and consistent styled errors. | `hostello_backend/templates/portal/tenant_repair_form.html`, portal CSS | P3 |
+| Login form | Invalid credentials did not show a clearly detected error message in the browser audit. | Add a prominent form-level error message for invalid login. | `frontend/templates/portal/login.html` | P2 |
+| Public viewing registration | Blank submit shows validation errors and stays on form. | Improve error styling if desired; behavior is acceptable. | `frontend/templates/listings/viewing_registration_form.html`, public CSS | P3 |
+| Owner room create | Validation errors appear, but fields look like raw browser-default inputs and buttons. | Apply existing form-card styling consistently to all fields, errors, and actions. | `frontend/templates/portal/owner_room_form.html`, `frontend/static/css/rentease-layout.css` | P1 |
+| Owner contract create | Validation errors appear; dense form needs grouping. | Group room/tenant/dates/financial fields and style errors consistently. | `frontend/templates/portal/owner_contract_form.html`, portal CSS | P2 |
+| Owner invoice create | Validation errors appear; form is safe but plain. | Add invoice context helper text and styled error blocks. | `frontend/templates/portal/owner_invoice_form.html`, portal CSS | P2 |
+| Owner payment form | Blank submit shows errors; page needs stronger balance context. | Highlight invoice total, paid, remaining, and safe payment warning. | `frontend/templates/portal/owner_payment_form.html`, portal CSS | P2 |
+| Tenant repair form | Blank submit shows errors and no save occurs. | Add friendlier examples and consistent styled errors. | `frontend/templates/portal/tenant_repair_form.html`, portal CSS | P3 |
 
 ## 8. Empty State Findings
 
@@ -150,9 +150,9 @@ Captured 44 PNG screenshots:
 
 | Component | Current state | Recommended effect | Files likely affected | Priority |
 |---|---|---|---|---|
-| Sidebar nav | Hover and active states exist. | Keep, but add clearer active section marker on mobile. | `hostello_backend/static/css/rentease-layout.css` | P3 |
+| Sidebar nav | Hover and active states exist. | Keep, but add clearer active section marker on mobile. | `frontend/static/css/rentease-layout.css` | P3 |
 | Topbar buttons | Hover exists, but search/bell/avatar are not fully meaningful yet. | Either wire meaningful dropdown/search later or visually simplify. | Portal base template/CSS | P3 |
-| Owner list action links | Some action links render like plain underlined browser links. | Convert primary actions such as `Tạo phòng` into consistent buttons. | Owner list/form templates and CSS | P1 |
+| Owner list action links | Some action links render like plain underlined browser links. | Convert primary actions such as `Táº¡o phÃ²ng` into consistent buttons. | Owner list/form templates and CSS | P1 |
 | Tables | Row hover and overflow wrappers exist. | Add mobile card alternative for tenant invoices and key owner financial tables. | Portal templates/CSS | P2 |
 | Forms | Focus styling exists in CSS, but some rendered widgets do not pick up the intended field classes. | Ensure all form inputs/selects/textareas use the shared styled class. | Owner/tenant form templates and CSS | P1 |
 | Cards | Some cards have shadows and spacing. | Add subtle hover only for clickable cards; keep metric cards stable. | Portal CSS | P3 |
@@ -174,21 +174,21 @@ Captured 44 PNG screenshots:
 ### 1. Phase 20K - Dashboard Interaction Polish
 
 - Pages to edit: owner dashboard, tenant dashboard, shared portal base.
-- Files likely affected: `hostello_backend/templates/portal/owner_dashboard.html`, `hostello_backend/templates/portal/tenant_dashboard.html`, `hostello_backend/templates/portal/base.html`, `hostello_backend/static/css/rentease-layout.css`.
+- Files likely affected: `frontend/templates/portal/owner_dashboard.html`, `frontend/templates/portal/tenant_dashboard.html`, `frontend/templates/portal/base.html`, `frontend/static/css/rentease-layout.css`.
 - Changes: fix owner dashboard mobile overflow, improve dashboard card hierarchy, tune active/hover states, reduce topbar clutter if safe.
 - Risk: low to medium, template/CSS-only.
 
 ### 2. Phase 20L - Owner CRUD Professionalization
 
 - Pages to edit: owner rooms, listings, tenants, contracts, invoices, payments, repairs, viewing registrations.
-- Files likely affected: `hostello_backend/templates/portal/owner_*.html`, `hostello_backend/static/css/rentease-layout.css`.
+- Files likely affected: `frontend/templates/portal/owner_*.html`, `frontend/static/css/rentease-layout.css`.
 - Changes: convert plain links to buttons, style all forms, group fields, improve validation/error styling, add mobile card/table patterns.
 - Risk: medium, because many templates are touched.
 
 ### 3. Phase 20M - Tenant Readability Polish
 
 - Pages to edit: tenant contracts, invoices, payments, repairs, notifications, profile.
-- Files likely affected: `hostello_backend/templates/portal/tenant_*.html`, portal CSS.
+- Files likely affected: `frontend/templates/portal/tenant_*.html`, portal CSS.
 - Changes: convert mobile financial tables into cards, improve status labels, add friendlier empty/help text.
 - Risk: medium, privacy rules must remain strict.
 

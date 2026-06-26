@@ -1,4 +1,4 @@
-# Phase 15A: UI/UX Audit And Redesign Planning
+﻿# Phase 15A: UI/UX Audit And Redesign Planning
 
 ## Goal
 
@@ -55,7 +55,7 @@ Static/legacy branding scan:
 `templates/home.html` shows mojibake in the main headline:
 
 ```text
-RentEase - Web Quáº£n LÃ½ NhÃ  Trá»
+RentEase - Web QuÃ¡ÂºÂ£n LÃƒÂ½ NhÃƒÂ  TrÃ¡Â»Â
 ```
 
 Expected:
@@ -206,11 +206,11 @@ Goal: fix landing encoding, improve public room listing/detail/registration page
 
 Likely files:
 
-- `hostello_backend/templates/home.html`
-- `hostello_backend/templates/listings/public_listing_list.html`
-- `hostello_backend/templates/listings/public_listing_detail.html`
-- `hostello_backend/templates/listings/viewing_registration_form.html`
-- `hostello_backend/templates/listings/viewing_registration_success.html`
+- `frontend/templates/home.html`
+- `frontend/templates/listings/public_listing_list.html`
+- `frontend/templates/listings/public_listing_detail.html`
+- `frontend/templates/listings/viewing_registration_form.html`
+- `frontend/templates/listings/viewing_registration_success.html`
 
 No migrations expected.
 
@@ -220,8 +220,8 @@ Goal: improve role navigation and owner dashboard readability.
 
 Likely files:
 
-- `hostello_backend/templates/portal/base.html`
-- `hostello_backend/templates/portal/owner_dashboard.html`
+- `frontend/templates/portal/base.html`
+- `frontend/templates/portal/owner_dashboard.html`
 
 No migrations expected.
 

@@ -1,16 +1,16 @@
 # RentEase - Web Quản Lý Nhà Trọ Bằng Django
 
-RentEase là hệ thống quản lý nhà trọ/phòng trọ được phát triển bằng Django. Dự án được kế thừa từ mã nguồn HOSTELLO cũ và đã được mở rộng thành một ứng dụng có phân quyền theo vai trò: khách truy cập, chủ trọ, khách thuê và quản trị viên.
+RentEase là hệ thống quản lý nhà trọ/phòng trọ được phát triển bằng Django. Dự án được kế thừa từ mã nguồn HOSTELLO cũ và đã được mở rộng thành ứng dụng có phân quyền theo vai trò: khách truy cập, chủ trọ, khách thuê và quản trị viên.
 
 RentEase hiện phù hợp cho demo cục bộ, kiểm thử luồng nghiệp vụ và tiếp tục phát triển thành sản phẩm thực tế. Dự án chưa được đánh dấu production-ready.
 
 ## Kiến Trúc Dự Án
 
-RentEase hiện vẫn giữ cấu trúc Django gốc:
+RentEase hiện đã được tách rõ hơn thành hai vùng chính:
 
 ```text
 HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
-├── hostello_backend/
+├── backend/
 │   ├── manage.py
 │   ├── hostello_backend/
 │   │   ├── settings.py
@@ -26,24 +26,22 @@ HOSTELLO-Automated_Smart_Hostel_Management_System_using_Django-main/
 │   ├── listings/
 │   ├── portal/
 │   ├── reports/
-│   ├── templates/
-│   ├── static/
 │   └── media/
+├── frontend/
+│   ├── templates/
+│   └── static/
 ├── docs/
 ├── AGENTS.md
 └── README.md
 ```
 
-Định hướng tương lai là tách rõ hơn theo kiểu:
+`backend/` là nơi chứa Django project logic, apps, settings, urls, forms, views, models và admin.
 
-```text
-RentEase/
-├── backend/   # Django settings, apps, views, forms, models, admin
-├── frontend/  # Django templates, static CSS/JS/images, UI assets
-└── docs/
-```
+`frontend/` là nơi chứa Django Templates, CSS, JavaScript và UI assets. Dự án vẫn dùng Django Templates, không dùng React.
 
-Hiện tại chưa di chuyển thư mục backend/frontend để tránh rủi ro làm hỏng import, migration, URL, template path và static path. Xem bản đồ chi tiết tại:
+Lưu ý quan trọng: chỉ đổi tên thư mục ngoài từ `hostello_backend/` thành `backend/`. Package cấu hình Django bên trong vẫn giữ tên `hostello_backend`, tức là `backend/hostello_backend/`.
+
+Xem bản đồ chi tiết tại:
 
 ```text
 docs/architecture/PROJECT_STRUCTURE_MAP.md
@@ -61,7 +59,7 @@ docs/architecture/PROJECT_STRUCTURE_MAP.md
 Từ thư mục gốc repository:
 
 ```powershell
-cd hostello_backend
+cd backend
 ```
 
 Cài thư viện nếu cần:
@@ -214,6 +212,7 @@ Trước khi sửa code:
 ```powershell
 git branch --show-current
 git status --short
+cd backend
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
@@ -231,7 +230,6 @@ Quy tắc quan trọng:
 ## Cải Tiến Tương Lai
 
 - Tách production settings khỏi local settings.
-- Chuẩn hóa cấu trúc `backend/` và `frontend/` theo từng phase nhỏ.
 - Tổ chức lại templates thành nhóm public/owner/tenant/reports rõ hơn.
 - Tổ chức lại static thành nhóm CSS/JS/images cho RentEase và vendor.
 - Hoàn thiện billing detail, utility/service charges và quy trình công nợ.

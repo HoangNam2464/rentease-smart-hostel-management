@@ -1,4 +1,4 @@
-# RentEase Current State
+﻿# RentEase Current State
 
 ## Branch
 
@@ -116,7 +116,7 @@ Phase 15D audited the current local demo accounts, model relationships, sample-d
 Phase 15E safe demo data seed implementation:
 
 ```text
-hostello_backend/portal/management/commands/seed_rentease_demo_data.py
+backend/portal/management/commands/seed_rentease_demo_data.py
 docs/demo/DEMO_DATA_SEED_IMPLEMENTATION_NOTES.md
 docs/demo/DEMO_DATA_SEED_USAGE.md
 ```
@@ -201,7 +201,7 @@ Phase 20A professional UI design system and full visual redesign:
 ```text
 docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
 docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
-hostello_backend/static/css/rentease-design.css
+frontend/static/css/rentease-design.css
 ```
 
 Phase 20A created a shared visual design system, redesigned the homepage, improved public room pages, owner/tenant dashboards, key detail/form labels, reports, and branded error pages around a more professional Vietnamese SaaS-style product direction.

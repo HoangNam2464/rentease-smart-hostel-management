@@ -1,4 +1,4 @@
-# RentEase Next Action
+﻿# RentEase Next Action
 
 ## Current Project State
 
@@ -496,7 +496,7 @@ Summary:
 
 - extracted the uploaded UI v2 ZIP package
 - copied the prepared dark-sidebar dashboard layout files into the active portal targets
-- added `hostello_backend/static/css/rentease-layout.css`
+- added `frontend/static/css/rentease-layout.css`
 - replaced `portal/base.html`, `portal/owner_dashboard.html`, and `portal/tenant_dashboard.html`
 - kept `rentease-design.css`, backend logic, routes, forms, models, migrations, public pages, and legacy files unchanged
 

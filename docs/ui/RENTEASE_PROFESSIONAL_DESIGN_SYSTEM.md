@@ -1,4 +1,4 @@
-# RentEase Professional Design System
+﻿# RentEase Professional Design System
 
 ## Product Identity
 
@@ -195,13 +195,13 @@ Use Vietnamese-first, natural wording.
 
 Prefer:
 
-- Quản lý nhà trọ dễ dàng hơn
-- Theo dõi phòng, hợp đồng, hóa đơn và sửa chữa trong một nơi
-- Dành cho chủ trọ, khách thuê và người đang tìm phòng
-- Xem phòng đang cho thuê
-- Đăng nhập hệ thống
-- Ghi nhận thanh toán
-- Xử lý yêu cầu sửa chữa
+- Quáº£n lÃ½ nhÃ  trá» dá»… dÃ ng hÆ¡n
+- Theo dÃµi phÃ²ng, há»£p Ä‘á»“ng, hÃ³a Ä‘Æ¡n vÃ  sá»­a chá»¯a trong má»™t nÆ¡i
+- DÃ nh cho chá»§ trá», khÃ¡ch thuÃª vÃ  ngÆ°á»i Ä‘ang tÃ¬m phÃ²ng
+- Xem phÃ²ng Ä‘ang cho thuÃª
+- ÄÄƒng nháº­p há»‡ thá»‘ng
+- Ghi nháº­n thanh toÃ¡n
+- Xá»­ lÃ½ yÃªu cáº§u sá»­a chá»¯a
 
 Avoid:
 
@@ -216,7 +216,7 @@ Avoid:
 The shared design system is implemented in:
 
 ```text
-hostello_backend/static/css/rentease-design.css
+frontend/static/css/rentease-design.css
 ```
 
 The main public and portal templates load this CSS through Django static files.

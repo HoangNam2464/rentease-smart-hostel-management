@@ -34,7 +34,7 @@ RentEase is not production-ready yet.
 From the repository root:
 
 ```powershell
-cd hostello_backend
+cd backend
 ```
 
 Run checks:

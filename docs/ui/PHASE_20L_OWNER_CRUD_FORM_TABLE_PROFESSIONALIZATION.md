@@ -1,4 +1,4 @@
-# Phase 20L: Owner CRUD Form And Table Professionalization
+﻿# Phase 20L: Owner CRUD Form And Table Professionalization
 
 ## Status
 
@@ -15,8 +15,8 @@ This phase intentionally stayed display-only.
 Changed:
 
 ```text
-hostello_backend/static/css/rentease-layout.css
-hostello_backend/templates/portal/owner_invoice_form.html
+frontend/static/css/rentease-layout.css
+frontend/templates/portal/owner_invoice_form.html
 ```
 
 No model, migration, view, URL, form class, setting, billing calculation, admin permission, report service, or legacy file was changed.
@@ -49,10 +49,10 @@ No model, migration, view, URL, form class, setting, billing calculation, admin 
 
 Updated only visible labels in the owner invoice form:
 
-- `Month` -> `Tháng`
-- `Year` -> `Năm`
-- `Issued date` -> `Ngày lập`
-- `Due date` -> `Hạn thanh toán`
+- `Month` -> `ThÃ¡ng`
+- `Year` -> `NÄƒm`
+- `Issued date` -> `NgÃ y láº­p`
+- `Due date` -> `Háº¡n thanh toÃ¡n`
 
 ## Verification
 
