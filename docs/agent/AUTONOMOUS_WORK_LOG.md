@@ -1275,3 +1275,51 @@ None (analysis/docs-only task).
 ```text
 Phase 20O: Admin Sensitive Detail Permission Planning
 ```
+
+## Phase 20O: Admin Sensitive Detail Permission Hardening (2026-06-28)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran full start procedure. Branch `complete-product`, working tree clean.
+- Django check: `System check identified no issues (0 silenced)`.
+- Migration dry-run: `No changes detected`.
+- Produced implementation plan with three options:
+  - Option A (Recommended): Make fields read-only for non-superusers.
+  - Option B: Hide fields entirely from non-superusers.
+  - Option C: No change.
+- User approved Option A.
+- Modified `backend/tenants/admin.py`:
+  - `TenantAdmin`: added `SENSITIVE_TENANT_FIELDS` and `get_readonly_fields()` override. Non-superuser staff see `citizen_id`, `citizen_id_front`, `citizen_id_back` as read-only.
+  - `CoTenantAdmin`: added `SENSITIVE_COTENANT_FIELDS` and `get_readonly_fields()` override. Non-superuser staff see `citizen_id` as read-only.
+  - Superusers retain full edit access.
+- Post-edit Django check: passed (0 issues).
+- Post-edit migration dry-run: `No changes detected`.
+- Updated `docs/agent/NEXT_ACTION.md`: Phase 20O completed, Phase 14B-2 is new next.
+- Updated `docs/agent/RENTEASE_CURRENT_STATE.md`: latest phase, commits, security status, known gaps.
+- Appended this entry to work log.
+
+### Files Changed
+
+- `backend/tenants/admin.py` (modified — added get_readonly_fields overrides)
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check` — passed (0 issues)
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run` — `No changes detected`
+
+### Tags Created
+
+None yet (awaiting approval).
+
+### Exact Next Recommended Action
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```

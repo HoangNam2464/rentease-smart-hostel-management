@@ -21,24 +21,23 @@ RentEase is **not production-ready yet**.
 ## Latest Phase Completed
 
 ```text
-Phase 20N: Admin Search Privacy Hardening
+Phase 20O: Admin Sensitive Detail Permission Hardening
 ```
 
-Tag:
+Previous phase tag:
 
 ```text
 phase20n-admin-search-privacy-hardening
 ```
 
-## Recent Commits (as of 2026-06-27)
+## Recent Commits (as of 2026-06-28)
 
 ```text
+eb50f98 Add full RentEase technical analysis
+7228f0b Add Antigravity rules for RentEase agents
+f84bf69 Normalize agent documentation for clarity
 9bf9051 Set up RentEase agent documentation
 c3465c0 Polish realistic demo data
-6ba89c4 Consolidate RentEase documentation
-549b3de Add final demo checklist
-b4c7324 Update README for RentEase project
-fbed1d6 Archive unused helper files
 ```
 
 ## Release Tags
@@ -104,6 +103,7 @@ Legacy CSS files remain but are not used for active RentEase UI:
 - Phase 20L: Owner CRUD Form and Table Professionalization
 - Phase 20M: Reports and Admin Visual Polish Planning
 - Phase 20N: Admin Search Privacy Hardening (removed citizen_id from ContractAdmin/InvoiceAdmin search_fields)
+- Phase 20O: Admin Sensitive Detail Permission Hardening (citizen_id/citizen_id_front/citizen_id_back read-only for non-superusers)
 
 ## Current Verification Status
 
@@ -125,10 +125,10 @@ Known admin privacy hardening done:
 2. `CoTenantAdmin`: same treatment.
 3. `ContractAdmin`: removed `tenant__citizen_id` from `search_fields`. Replaced with `tenant__phone_number` and `tenant__email`. `CoTenantInline` restricted to safe non-identity fields.
 4. `InvoiceAdmin`: removed `contract__tenant__citizen_id` from `search_fields`. Replaced with safe contact fields.
+5. `TenantAdmin`: `citizen_id`, `citizen_id_front`, `citizen_id_back` are now **read-only** for non-superuser staff via `get_readonly_fields()` override.
+6. `CoTenantAdmin`: `citizen_id` is now **read-only** for non-superuser staff via `get_readonly_fields()` override.
 
-Remaining privacy recommendation (not yet implemented):
-
-- Decide whether to make `citizen_id`, `citizen_id_front`, `citizen_id_back` read-only or superuser-only in admin detail forms (Phase 20O).
+No remaining admin privacy recommendations.
 
 ## Current Demo Documentation
 
@@ -170,17 +170,10 @@ Legacy HOSTELLO routes are isolated under `/legacy/`.
 - Production settings are not hardened (`DEBUG=True`, `SECRET_KEY` not env-driven).
 - Production database/static/media/email/logging are not configured.
 - Legacy HOSTELLO surfaces still exist under `/legacy/` and in admin legacy templates.
-- Admin detail forms still allow all staff to edit sensitive identity fields (Phase 20O pending).
 - No automated test suite exists (Django Client checks used in place of formal tests).
 - Browser screenshot capture was unavailable in recent phases due to automation instability.
 
 ## Recommended Next Action
-
-```text
-Phase 20O: Admin Sensitive Detail Permission Planning
-```
-
-Then:
 
 ```text
 Phase 14B-2: Production Settings Split Planning

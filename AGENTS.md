@@ -87,7 +87,7 @@ release-rentease-polished-local-demo-v2
 Latest completed phase:
 
 ```text
-Phase 20N: Admin Search Privacy Hardening
+Phase 20O: Admin Sensitive Detail Permission Hardening
 ```
 
 Latest phase tag:
@@ -99,10 +99,10 @@ phase20n-admin-search-privacy-hardening
 Latest known recent commits (verify with `git log --oneline -5`):
 
 ```text
-c3465c0 Polish realistic demo data
-6ba89c4 Consolidate RentEase documentation
-549b3de Add final demo checklist
-b4c7324 Update README for RentEase project
+eb50f98 Add full RentEase technical analysis
+7228f0b Add Antigravity rules for RentEase agents
+f84bf69 Normalize agent documentation for clarity
+9bf9051 Set up RentEase agent documentation
 ```
 
 ## Next Action
@@ -110,18 +110,12 @@ b4c7324 Update README for RentEase project
 Current recommended next action:
 
 ```text
-Phase 20O: Admin Sensitive Detail Permission Planning
-```
-
-Goal: Plan whether sensitive identity fields (citizen_id, citizen_id_front, citizen_id_back) in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only.
-
-Do not implement Phase 20O without first producing a plan and receiving explicit approval.
-
-After Phase 20O, the next recommended phase is:
-
-```text
 Phase 14B-2: Production Settings Split Planning
 ```
+
+Goal: Make Django settings production-aware while preserving local development. Must address: `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, HTTPS/security headers, secure cookies, database config, static/media, email, logging, `.env` support.
+
+Do not implement Phase 14B-2 without first producing a plan and receiving explicit approval.
 
 ## Non-Negotiable Rules
 
