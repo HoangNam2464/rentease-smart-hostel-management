@@ -8,7 +8,7 @@ Every future coding agent must read this file before changing code. Do not rely 
 
 Project name: RentEase
 
-RentEase is a Django-based hostel/boarding-house management system developed from the original HOSTELLO project.
+RentEase is a Django-based boarding-house / rental-room management system developed from the original HOSTELLO project.
 
 ## Product Target
 
@@ -35,32 +35,36 @@ complete-product
 
 ## Current Status
 
-RentEase is local-demo ready.
+RentEase is **local-demo ready**.
 
-RentEase is not production-ready yet.
+RentEase is **not production-ready yet**.
 
-Final local demo release tag:
+Final local demo release tags:
 
 ```text
 release-rentease-complete-product-v1
+release-rentease-polished-local-demo-v2
 ```
 
-Latest production-hardening phase:
+Latest completed phase:
 
 ```text
-Phase 14B-1: Legacy Root API / Fees Cleanup
+Phase 20N: Admin Search Privacy Hardening
 ```
 
-Latest production-hardening tag:
+Latest phase tag:
 
 ```text
-phase14b1-remove-legacy-root-api-fees
+phase20n-admin-search-privacy-hardening
 ```
 
-Latest known commit:
+Latest known recent commits (verify with `git log --oneline -5`):
 
 ```text
-6c6023a Remove legacy API and fees root routes
+c3465c0 Polish realistic demo data
+6ba89c4 Consolidate RentEase documentation
+549b3de Add final demo checklist
+b4c7324 Update README for RentEase project
 ```
 
 ## Next Action
@@ -68,17 +72,23 @@ Latest known commit:
 Current recommended next action:
 
 ```text
-Phase 14B-2: Production Settings Split Planning
+Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
-Goal: make settings production-aware while preserving local development.
+Goal: Plan whether sensitive identity fields (citizen_id, citizen_id_front, citizen_id_back) in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only.
 
-Do not implement Phase 14B-2 before producing a plan and receiving approval.
+Do not implement Phase 20O without first producing a plan and receiving explicit approval.
+
+After Phase 20O, the next recommended phase is:
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```
 
 ## Non-Negotiable Rules
 
 - Do NOT rename the inner Django config package `backend/hostello_backend` or the Python module path `hostello_backend`.
-- Do NOT delete legacy apps unless explicitly approved.
+- Do NOT delete legacy apps (`students`, `attendance`, `fees`, `requests`, `notices`) unless explicitly approved.
 - Do NOT create migrations unless explicitly approved.
 - Do NOT change database schema unless explicitly approved.
 - Do NOT merge branches unless explicitly approved.
@@ -87,12 +97,78 @@ Do not implement Phase 14B-2 before producing a plan and receiving approval.
 - Do NOT touch `temp-auto-auth-bypass`.
 - Do NOT switch branches if working tree has changes.
 - Do NOT use `git reset --hard` or `git restore .` unless explicitly approved.
+- Do NOT push to GitHub unless explicitly approved.
+- Do NOT modify models.py, views.py, urls.py, forms.py, or settings.py without an approved plan.
+- Do NOT touch db.sqlite3, venv/, media/, or .env.
+- Do NOT use `git clean` unless explicitly approved.
+
+## Repository Structure
+
+Confirmed real structure (Option A — restructured):
+
+```text
+RentEase/                            # repository root
+├── AGENTS.md                        # THIS FILE — read first
+├── README.md                        # project overview and setup
+├── PROJECT_SUMMARY.md               # project feature summary
+├── DEMO_SCRIPT.md                   # demo script at root
+├── run_backend.bat                  # local convenience script
+├── assets/                          # historical tracked HOSTELLO media
+├── backend/                         # Django backend
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── venv/                        # official local virtual environment (git-ignored)
+│   ├── db.sqlite3                   # local SQLite database (git-ignored)
+│   ├── media/                       # local uploaded/demo media (git-ignored)
+│   ├── hostello_backend/            # Django config package — do NOT rename
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   ├── accounts/                    # active RentEase app
+│   ├── properties/                  # active RentEase app
+│   ├── tenants/                     # active RentEase app
+│   ├── contracts/                   # active RentEase app
+│   ├── billing/                     # active RentEase app
+│   ├── maintenance/                 # active RentEase app
+│   ├── listings/                    # active RentEase app
+│   ├── portal/                      # active RentEase app (includes demo seed command)
+│   ├── reports/                     # active RentEase app
+│   ├── students/                    # LEGACY HOSTELLO app — do not delete
+│   ├── attendance/                  # LEGACY HOSTELLO app — do not delete
+│   ├── fees/                        # LEGACY HOSTELLO app — do not delete
+│   ├── requests/                    # LEGACY HOSTELLO app — do not delete
+│   └── notices/                     # LEGACY HOSTELLO app — do not delete
+├── frontend/                        # Django Templates and static assets
+│   ├── templates/                   # Django HTML templates
+│   └── static/                      # CSS, JS, static assets
+├── docs/                            # project documentation
+│   ├── README.md
+│   ├── agent/                       # agent operating instructions
+│   ├── architecture/                # project structure and cleanup docs
+│   ├── demo/                        # demo setup and walkthrough docs
+│   ├── security/                    # privacy and security notes
+│   ├── spqm/                        # quality and process docs
+│   ├── ui/                          # UI audit and design system docs
+│   └── archive/                     # old phase logs, old plans, archived helpers
+└── .agents/                         # agent customization config (do not edit casually)
+```
+
+Important paths:
+
+- `manage.py` is at: `backend/manage.py`
+- Django config package: `backend/hostello_backend/`
+- `DJANGO_SETTINGS_MODULE`: `hostello_backend.settings`
+- Template root: `frontend/templates/`
+- Static root: `frontend/static/`
+- Official local virtual environment: `backend/venv/`
+- Demo seed command: `backend/portal/management/commands/seed_rentease_demo_data.py`
 
 ## Environment Rules
 
-Global python may not be available.
+Global Python may not be available.
 
-From the Django project folder `backend/`, use direct venv Python:
+Always run Django commands from the `backend/` directory using the venv Python directly:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check
@@ -107,9 +183,11 @@ python manage.py check
 python manage.py runserver
 ```
 
+The old root-level `venv/` was removed safely. Use only `backend/venv/`.
+
 ## Required Start Procedure
 
-Every task must start with:
+Every task must start with these commands from the repository root:
 
 ```powershell
 git branch --show-current
@@ -118,12 +196,24 @@ git log --oneline -15
 git tag --list
 ```
 
+Expected before proceeding:
+
+- branch is `complete-product`
+- working tree is clean (no uncommitted changes)
+
 Then from `backend/`:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
+
+Expected:
+
+- Django check: `System check identified no issues (0 silenced)`
+- Migration dry-run: `No changes detected`
+
+If either check fails, stop and report. Do not proceed with code changes.
 
 ## Do Not Assume
 
@@ -136,6 +226,70 @@ Future agents must not assume the project state from memory. They must:
 - run migration dry-run
 - inspect related files before editing
 
+## Active Apps (RentEase)
+
+These are the current product-relevant Django apps:
+
+- `accounts` — users and owner profiles
+- `properties` — rooms
+- `tenants` — tenants and co-tenants
+- `contracts` — rental contracts
+- `billing` — invoices, invoice details, payment history
+- `maintenance` — repair requests, maintenance records, notifications
+- `listings` — room listings and viewing registrations
+- `portal` — portal views for owner/tenant, demo seed command
+- `reports` — staff-only report pages
+
+## Legacy Apps (HOSTELLO — Do Not Delete)
+
+These apps exist for compatibility and historical completeness. They must NOT be deleted without a dedicated legacy removal plan and explicit approval:
+
+- `students`
+- `attendance`
+- `fees`
+- `requests`
+- `notices`
+
+## Active Templates
+
+Main active RentEase templates (in `frontend/templates/`):
+
+- `home.html`
+- `404.html`
+- `500.html`
+- `portal/base.html`
+- `portal/login.html`
+- `portal/owner_dashboard.html`
+- `portal/owner_*.html`
+- `portal/tenant_*.html`
+- `listings/public_listing_list.html`
+- `listings/public_listing_detail.html`
+- `listings/viewing_registration_form.html`
+- `listings/viewing_registration_success.html`
+
+## Active CSS
+
+Main active RentEase CSS files (in `frontend/static/css/`):
+
+- `rentease-design.css` — global design system
+- `rentease-layout.css` — sidebar, dashboard layout, CRUD tables and forms
+- `admin/css/custom_admin.css` — custom admin overrides
+
+## Legacy Templates and Static (Do Not Edit For RentEase UI)
+
+Legacy HOSTELLO surfaces that should not be edited for RentEase UI unless explicitly approved:
+
+- `frontend/templates/dashboard.html`
+- `frontend/templates/index.html`
+- `frontend/templates/login.html`
+- `frontend/templates/admin/`
+- `frontend/templates/payments/success.html`
+- `frontend/static/css/styles.css`
+- `frontend/static/css/student-dashboard.css`
+- `frontend/static/js/script.js`
+- `frontend/static/js/student-dashboard.js`
+- `assets/` (historical tracked HOSTELLO media)
+
 ## RentEase Project Map
 
 Before editing templates, CSS, UI, legacy cleanup, production settings, or productization tasks, always read:
@@ -144,22 +298,47 @@ Before editing templates, CSS, UI, legacy cleanup, production settings, or produ
 docs/agent/RENTEASE_PROJECT_MAP.md
 ```
 
-This file defines:
+This file defines active/legacy templates, apps, CSS files, editing rules, UI rules, and privacy rules.
 
-- active RentEase files
-- legacy HOSTELLO files
-- active apps
-- legacy apps
-- safe editing rules
-- UI rules
-- image handling rules
-- privacy/security rules
+## Privacy And Security Rules
 
-Do not edit legacy HOSTELLO templates for RentEase UI unless explicitly approved.
+**Never expose to public/tenant/owner surfaces:**
 
-Do not delete legacy HOSTELLO apps without a separate dependency audit.
+- `citizen_id`
+- `citizen_id_front`
+- `citizen_id_back`
+- citizen ID files/images
+- password/auth internals
+- permission fields
+- payment collector internals
+- other owner data
+- other tenant data
+- admin-only notes
 
-Do not expose `citizen_id` or citizen ID files/images.
+Owner data must always be scoped to the owner's own data. Tenant data must always be scoped to the tenant's own data.
+
+Do not use unscoped querysets in detail/update/delete views.
+
+## Admin Privacy Rules
+
+Sensitive identity fields must only appear in the collapsed `Sensitive identity data` section in admin detail forms — never in list_display or search_fields.
+
+Tenant and CoTenant admin search_fields must not include `citizen_id`.
+
+Contract and Invoice admin search_fields must not use identity lookups. Use safe contact fields (phone_number, email) instead.
+
+## Legacy Route Rules
+
+Do not re-add legacy root routes:
+
+- `path('', include('students.urls'))`
+- `path('api/', include('requests.urls'))`
+- `path('fees/', include('fees.urls', namespace='fees'))`
+
+Allowed legacy routes:
+
+- `/legacy/`
+- `/legacy/login/`
 
 ## Definition of Done
 
@@ -167,21 +346,24 @@ A phase is only considered done when:
 
 - branch is `complete-product`
 - working tree is clean
-- Django check passes
+- Django check passes with 0 issues
 - migration dry-run says `No changes detected` unless migrations were explicitly approved
 - affected routes/features were verified
 - no privacy/security regression exists
 - only intended files changed
-- commit was created and pushed
-- final tag was created only after approval
+- commit was created
+- tag was created only after approval
+- push was done only after approval
 
 ## Keep This Documentation Updated
 
-After each completed and locked phase, future agents should update:
+After each completed and locked phase, update:
 
-- `AGENTS.md` if current phase/status changes
-- `docs/agent/RENTEASE_CURRENT_STATE.md` with latest commit/tag
-- `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md` if roadmap changes
+- `AGENTS.md` — current phase/status section
+- `docs/agent/RENTEASE_CURRENT_STATE.md` — latest commit/tag/phase
+- `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md` — if roadmap priorities change
+- `docs/agent/NEXT_ACTION.md` — next recommended phase
+- `docs/agent/AUTONOMOUS_WORK_LOG.md` — append new entry
 
 Do not update these files silently during feature work unless documentation update is part of the approved task.
 
@@ -196,6 +378,7 @@ Read these files before implementation work:
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md`
 - `docs/agent/RENTEASE_WORKFLOW.md`
+- `docs/agent/RENTEASE_PROJECT_MAP.md`
 
 ## Autonomous Work
 
@@ -213,7 +396,7 @@ Read AGENTS.md, docs/agent/NEXT_ACTION.md, and docs/agent/AUTONOMOUS_EXECUTION_P
 
 ## SPQM Documentation
 
-Future agents must also read the SPQM documentation when doing planning, quality, release, UI, production, billing, or documentation work.
+Future agents must also read SPQM documentation when doing planning, quality, release, UI, production, billing, or documentation work.
 
 SPQM files:
 

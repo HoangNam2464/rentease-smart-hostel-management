@@ -1,4 +1,4 @@
-﻿# RentEase Autonomous Work Log
+# RentEase Autonomous Work Log
 
 ## 2026-06-19
 
@@ -1090,3 +1090,63 @@ Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
 Plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only in a future production-hardening phase.
+
+## Docs and Agent Setup Audit (2026-06-27)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran full mandatory start procedure (git branch, status, log, tag list).
+- Confirmed branch is `complete-product` and working tree was clean.
+- Ran Django check: `System check identified no issues (0 silenced)`.
+- Ran migration dry-run: `No changes detected`.
+- Inventoried all Markdown files in the repository (~75 files excluding venv).
+- Detected real project structure: Option A — backend/frontend/docs monorepo.
+- Read all key agent docs, architecture docs, security docs, demo docs, SPQM docs.
+- Identified key doc problems:
+  - `AGENTS.md` listed Phase 14B-1 as latest phase (actually Phase 20N).
+  - `AGENTS.md` listed `6c6023a` as latest commit (multiple phases have since passed).
+  - `AGENTS.md` listed Phase 14B-2 as next action (actually Phase 20O first).
+  - `AGENTS.md` did not mention `rentease-layout.css` as an active CSS file.
+  - `RENTEASE_CURRENT_STATE.md` was stale — listed `Realistic Demo Data Polish` as next action.
+  - `NEXT_ACTION.md` was stale — same issue.
+  - `RENTEASE_PROJECT_MAP.md` only listed `rentease-design.css`, missing `rentease-layout.css`.
+- Updated `AGENTS.md` to reflect correct phase (20N), next action (20O), correct CSS files, no-push rule, and current commit range.
+- Updated `RENTEASE_CURRENT_STATE.md` to reflect all phases through 20N, correct CSS, security status, known gaps.
+- Updated `NEXT_ACTION.md` to Phase 20O as immediate next, Phase 14B-2 as subsequent.
+- Updated `RENTEASE_PROJECT_MAP.md` CSS section to add `rentease-layout.css` and `custom_admin.css`.
+- Created `docs/agent/DOCS_AND_AGENT_SETUP_AUDIT.md` — full audit report with inventory, problems, fixes, archive candidates, checks, risks.
+- No Python code, models, migrations, templates, static files, database, or venv files were changed.
+
+### Files Changed
+
+- `AGENTS.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_PROJECT_MAP.md`
+- `docs/agent/DOCS_AND_AGENT_SETUP_AUDIT.md` (new)
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check` — passed (0 issues)
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run` — `No changes detected`
+
+### Tags Created
+
+None created in this phase (documentation-only).
+
+### Current Blockers
+
+None.
+
+### Exact Next Recommended Action
+
+```text
+Phase 20O: Admin Sensitive Detail Permission Planning
+```
+
+Plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only. Do not implement before producing a plan and receiving explicit approval.

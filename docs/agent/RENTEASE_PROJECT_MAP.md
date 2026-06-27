@@ -25,11 +25,18 @@ Use these for current RentEase product UI work:
 
 ## Active CSS
 
-Use this CSS for current RentEase UI work:
+Use these CSS files for current RentEase UI work:
 
-- `frontend/static/css/rentease-design.css`
+- `frontend/static/css/rentease-design.css` — global design system, colors, typography, spacing
+- `frontend/static/css/rentease-layout.css` — sidebar, dashboard layout, CRUD tables, forms, responsive
+- `frontend/static/admin/css/custom_admin.css` — custom Django Admin overrides
 
-Avoid editing old student dashboard CSS for RentEase UI.
+Both `rentease-design.css` and `rentease-layout.css` are active. Edits to owner dashboard, sidebar, tables, or forms typically go into `rentease-layout.css`. Global design tokens, typography, and component styles go into `rentease-design.css`.
+
+Avoid editing legacy CSS files for RentEase UI:
+
+- `frontend/static/css/styles.css` — legacy HOSTELLO styles
+- `frontend/static/css/student-dashboard.css` — legacy HOSTELLO student dashboard
 
 ## Active RentEase Apps
 

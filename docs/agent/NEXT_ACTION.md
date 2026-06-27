@@ -20,31 +20,57 @@ Current status:
 - Route smoke test passed for public, protected anonymous, admin, owner, and tenant routes.
 - Legacy dependency audit is complete.
 - Helper files were archived.
+- UI through Phase 20N is complete.
+- Admin privacy hardened: citizen_id removed from TenantAdmin/CoTenantAdmin list and search, ContractAdmin/InvoiceAdmin search replaced with safe fields.
+
+## Last Completed Phase
+
+```text
+Phase 20N: Admin Search Privacy Hardening
+```
+
+Tag: `phase20n-admin-search-privacy-hardening`
 
 ## Immediate Priority
 
-1. Manual browser walkthrough.
-2. UI polish only if the browser walkthrough finds visible issues.
-3. Realistic demo data polish.
-4. Final submission docs and diagrams.
-
-## Recommended Next Phase
-
 ```text
-Realistic Demo Data Polish
+Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
 Goal:
 
-- Make local demo data feel like a real Vietnamese rental-room scenario.
-- Keep fake/safe values only.
-- Avoid real citizen identity data.
-- Keep seed data idempotent.
-- Do not create migrations or schema changes unless explicitly approved.
+- Plan whether `citizen_id`, `citizen_id_front`, `citizen_id_back` in Tenant/CoTenant admin detail forms should:
+  - remain editable for all staff (current state)
+  - become read-only for non-superuser staff
+  - become superuser-only
+- This is a planning-only phase unless approved for implementation.
+- Do not implement before producing a plan and receiving explicit user approval.
+
+## Recommended Next Phase After 20O
+
+```text
+Phase 14B-2: Production Settings Split Planning
+```
+
+Goal: Make settings production-aware while preserving local development.
+
+Must address:
+- `DEBUG`
+- `SECRET_KEY`
+- `ALLOWED_HOSTS`
+- HTTPS/security headers
+- secure cookies
+- database configuration
+- static/media configuration
+- email settings
+- logging
+- `.env` support
+
+Do not implement before producing a plan and receiving explicit approval.
 
 ## Manual Browser Walkthrough Checklist
 
-Review these pages in the browser:
+Review these pages in the browser before any submission or release:
 
 - `/`
 - `/rooms/`
@@ -78,4 +104,4 @@ Check:
 - Do not rename `backend/hostello_backend/`.
 - Do not harden production settings without a separate plan.
 - Do not use real personal data in demo records.
-
+- Do not push to GitHub without explicit approval.
