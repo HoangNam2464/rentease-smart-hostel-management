@@ -1193,3 +1193,44 @@ Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
 Plan whether `citizen_id`, `citizen_id_front`, `citizen_id_back` in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only. Do not implement before presenting a plan and receiving explicit approval.
+
+## Antigravity Rules Setup (2026-06-27)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran full start procedure. Branch `complete-product`, working tree clean.
+- Django check: `System check identified no issues (0 silenced)`.
+- Migration dry-run: `No changes detected`.
+- Created `.agents/rules/` directory and four rule files:
+  - `rentease-safety.md` — branch rules, forbidden actions, stop conditions.
+  - `rentease-workflow.md` — 8-step numbered agent workflow.
+  - `rentease-report-format.md` — final report template and requirements.
+  - `rentease-file-boundaries.md` — active/legacy app, template, CSS, and sensitive field rules.
+- No Python code, models, migrations, templates, static, database, or venv files changed.
+
+### Files Changed
+
+- `.agents/rules/rentease-safety.md` (new)
+- `.agents/rules/rentease-workflow.md` (new)
+- `.agents/rules/rentease-report-format.md` (new)
+- `.agents/rules/rentease-file-boundaries.md` (new)
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check` — passed (0 issues)
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run` — `No changes detected`
+
+### Tags Created
+
+None (rules/docs-only task).
+
+### Exact Next Recommended Action
+
+```text
+Phase 20O: Admin Sensitive Detail Permission Planning
+```
