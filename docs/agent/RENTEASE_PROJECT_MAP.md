@@ -1,10 +1,14 @@
 # RentEase Project Map
 
-## Purpose
+## Responsibility of This File
 
-This file tells future developers and agents which files are active RentEase surfaces and which files are old HOSTELLO legacy surfaces.
+This file defines the **active/legacy boundary**: which apps, templates, and CSS files are current RentEase surfaces versus old HOSTELLO legacy surfaces that must not be edited for RentEase UI.
 
-Read this before editing UI, templates, CSS, production settings, cleanup tasks, or productization work.
+Read this before editing any UI, templates, CSS, production settings, cleanup tasks, or productization work.
+
+For project state, see `docs/agent/RENTEASE_CURRENT_STATE.md`.
+For rules and workflow, see `AGENTS.md`.
+For the next recommended phase, see `docs/agent/NEXT_ACTION.md`.
 
 ## Active RentEase Templates
 
@@ -79,7 +83,9 @@ Do not delete them without a separate dependency audit.
 
 ## Safe Editing Rules
 
-- Prefer active RentEase templates and `rentease-design.css`.
+- Prefer active RentEase templates, `rentease-design.css`, and `rentease-layout.css`.
+- For dashboard, sidebar, table, or form layout work: edit `rentease-layout.css`.
+- For global tokens, typography, or component styles: edit `rentease-design.css`.
 - Do not rename the inner Django config package `backend/hostello_backend` or the Python module path `hostello_backend`.
 - Do not rename Django apps.
 - Do not delete legacy apps in normal UI/product work.

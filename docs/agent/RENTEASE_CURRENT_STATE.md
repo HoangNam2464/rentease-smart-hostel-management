@@ -30,15 +30,15 @@ Tag:
 phase20n-admin-search-privacy-hardening
 ```
 
-## Recent Commits (as of audit 2026-06-27)
+## Recent Commits (as of 2026-06-27)
 
 ```text
+9bf9051 Set up RentEase agent documentation
 c3465c0 Polish realistic demo data
 6ba89c4 Consolidate RentEase documentation
 549b3de Add final demo checklist
 b4c7324 Update README for RentEase project
 fbed1d6 Archive unused helper files
-c7fecea Audit legacy dependencies
 ```
 
 ## Release Tags

@@ -1150,3 +1150,46 @@ Phase 20O: Admin Sensitive Detail Permission Planning
 ```
 
 Plan whether sensitive identity fields in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only. Do not implement before producing a plan and receiving explicit approval.
+
+## Agent Docs Normalization Pass (2026-06-27)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran full mandatory start procedure. Branch `complete-product`, working tree clean.
+- Django check passed. Migration dry-run: `No changes detected`.
+- Reviewed all six active agent docs for single-responsibility and accuracy.
+- Rewrote `NEXT_ACTION.md` to be single-responsibility: removed duplicated Current State block and Browser Walkthrough Checklist (which belong in other files). Now contains only the next phase and immediate constraints.
+- Updated `RENTEASE_PROJECT_MAP.md`: added responsibility header with cross-references to other agent docs; fixed Safe Editing Rules to mention both `rentease-design.css` and `rentease-layout.css`.
+- Updated `AGENTS.md`: added "How Future Agents Should Start" 4-step quick-start block; added Agent Doc Responsibilities table mapping each file to its single responsibility.
+- Updated `RENTEASE_CURRENT_STATE.md`: added `9bf9051` as the most recent commit to the commits list.
+- Appended this entry to `AUTONOMOUS_WORK_LOG.md`.
+- No Python code, models, migrations, templates, static, database, or venv files changed.
+
+### Files Changed
+
+- `AGENTS.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/RENTEASE_PROJECT_MAP.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check` — passed (0 issues)
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run` — `No changes detected`
+
+### Tags Created
+
+None (documentation-only pass).
+
+### Exact Next Recommended Action
+
+```text
+Phase 20O: Admin Sensitive Detail Permission Planning
+```
+
+Plan whether `citizen_id`, `citizen_id_front`, `citizen_id_back` in Tenant/CoTenant admin detail forms should remain editable for all staff, become read-only, or become superuser-only. Do not implement before presenting a plan and receiving explicit approval.

@@ -4,6 +4,44 @@
 
 Every future coding agent must read this file before changing code. Do not rely on conversation memory alone. Verify the repository state locally before planning or editing.
 
+## How Future Agents Should Start
+
+Follow these steps in order every time:
+
+1. **Read** `AGENTS.md` (this file) — rules, structure, forbidden actions.
+2. **Read** `docs/agent/RENTEASE_CURRENT_STATE.md` — latest phase, commits, known gaps.
+3. **Read** `docs/agent/NEXT_ACTION.md` — the one recommended next phase.
+4. **Run** the required checks from the repository root:
+
+```powershell
+git branch --show-current
+git status --short
+git log --oneline -15
+git tag --list
+```
+
+Then from `backend/`:
+
+```powershell
+.\venv\Scripts\python.exe manage.py check
+.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
+```
+
+Stop if branch is not `complete-product`, working tree is not clean, or either check fails.
+
+## Agent Doc Responsibilities
+
+Each agent doc has a single responsibility. Do not duplicate information across them:
+
+| File | Responsibility |
+|---|---|
+| `AGENTS.md` | Mandatory rules, structure, forbidden actions, start procedure |
+| `docs/agent/RENTEASE_CURRENT_STATE.md` | Current truth: phase, commits, CSS, security status, known gaps |
+| `docs/agent/NEXT_ACTION.md` | One recommended next phase only |
+| `docs/agent/RENTEASE_PROJECT_MAP.md` | Active/legacy boundary: apps, templates, CSS, editing rules |
+| `docs/agent/AUTONOMOUS_WORK_LOG.md` | Chronological work log — append only |
+| `docs/agent/DOCS_AND_AGENT_SETUP_AUDIT.md` | Documentation audit results and archive candidates |
+
 ## Project
 
 Project name: RentEase
