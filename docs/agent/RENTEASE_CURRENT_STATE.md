@@ -1,183 +1,90 @@
 # RentEase Current State
 
-## Branch
+## Verified Baseline
 
-```text
-complete-product
-```
+| Item | Current truth |
+|---|---|
+| Branch | `complete-product` |
+| HEAD at Session A start | `93b56a4 Production settings split with env-driven config (Phase 14B-2)` |
+| Latest completed phase | Phase 14B-2: Production Settings Split |
+| Latest available phase tag | `phase20o-admin-sensitive-detail-permissions` |
+| Product classification | Local-demo ready; not production-ready |
 
-Do not rely on this file alone for the latest commit. Always verify with:
+Always verify branch, status, log, tags, Django check, and migration dry-run locally before work.
 
-```powershell
-git log --oneline -15
-```
+## Actual Structure
 
-## Current Status
+RentEase uses the restructured layout:
 
-RentEase is **local-demo ready**.
-
-RentEase is **not production-ready yet**.
-
-## Latest Phase Completed
-
-```text
-Phase 14B-2: Production Settings Split
-```
-
-Previous phase tag:
-
-```text
-phase20o-admin-sensitive-detail-permissions
-```
-
-## Recent Commits (as of 2026-06-28)
-
-```text
-8e080ae Harden admin sensitive detail permissions (Phase 20O)
-eb50f98 Add full RentEase technical analysis
-7228f0b Add Antigravity rules for RentEase agents
-f84bf69 Normalize agent documentation for clarity
-9bf9051 Set up RentEase agent documentation
-```
-
-## Release Tags
-
-Final local demo release tags:
-
-```text
-release-rentease-complete-product-v1
-release-rentease-polished-local-demo-v2
-```
-
-## Current Structure
-
-```text
-RentEase/
-├── backend/   # Django backend, apps, manage.py, settings
-├── frontend/  # Django Templates and static assets
-└── docs/      # Documentation
-```
-
-Important paths:
-
-- Django project folder: `backend/`
+- Django backend and `manage.py`: `backend/`
 - Django config package: `backend/hostello_backend/`
 - Settings module: `hostello_backend.settings`
-- Template root: `frontend/templates/`
-- Static root: `frontend/static/`
-- Official local virtual environment: `backend/venv/`
-- Demo seed command: `backend/portal/management/commands/seed_rentease_demo_data.py`
+- Templates: `frontend/templates/`
+- Static files: `frontend/static/`
+- Documentation: `docs/`
+- Official local venv: `backend/venv/`
+- Environment template: `backend/.env.example`
 
-The old root-level `venv/` was removed safely. Use only `backend/venv/` for local Django commands.
+The inner package name `hostello_backend` must not be renamed casually. Legacy apps remain installed and isolated; they are not approved for removal.
 
-## Active CSS Files
+## Current UI State
 
-The current RentEase UI uses two main CSS files:
+- Public room flow, owner portal, tenant portal, reports, admin styling, error pages, and responsive layouts have received the Phase 15-20 polish sequence.
+- Active shared CSS is `rentease-design.css` plus `rentease-layout.css`; admin overrides use `custom_admin.css`.
+- The UI is suitable for a polished local demo.
+- Manual screenshots/video remain incomplete, and several old demo/UI guides contain stale phase links or status text.
+- No formal automated browser or Django test suite is established; prior confidence comes from Django Client checks and manual/phase verification.
 
-- `frontend/static/css/rentease-design.css` — global design system, colors, typography
-- `frontend/static/css/rentease-layout.css` — sidebar, dashboard layout, CRUD tables and forms
+## Production Settings State
 
-Also active:
+Phase 14B-2 is complete:
 
-- `frontend/static/admin/css/custom_admin.css` — custom admin overrides
+- settings are environment-driven through `python-decouple`
+- `ALLOWED_HOSTS` is environment-driven
+- `DATABASE_URL` is supported through `dj-database-url`, with SQLite fallback for local use
+- WhiteNoise and environment-aware static storage are configured
+- production security settings are enabled conditionally when `DEBUG=False`
+- timezone is `Asia/Ho_Chi_Minh`
+- email identity and logging use RentEase-oriented configuration
+- `backend/.env.example` exists
 
-Legacy CSS files remain but are not used for active RentEase UI:
+This does not make the application production-ready. PostgreSQL data migration, production deployment verification, media access/storage, backups, CI/tests, and operational deployment documentation remain incomplete.
 
-- `frontend/static/css/styles.css`
-- `frontend/static/css/student-dashboard.css`
+## Privacy and Security State
 
-## Completed UI Phases Summary
+- Public, owner, and tenant surfaces must never expose citizen identity fields/files or unrelated users' data.
+- Owner and tenant querysets must remain scoped to the authenticated owner/tenant.
+- Tenant and co-tenant admin lists/search do not include `citizen_id`.
+- Contract and invoice admin search use safe contact fields rather than identity lookups.
+- Sensitive tenant identity fields remain in collapsed admin detail sections.
+- Phase 20O makes those fields read-only for non-superuser staff; superusers retain edit access.
+- Production-grade media access control for identity uploads remains a known gap.
 
-- Phase 15A–C: UI/UX Audit and Public/Owner/Tenant Polish
-- Phase 17A–C: Full UI Completeness Audit and Final Visual QA
-- Phase 19A–B: Product-grade UI redesign and Vietnamese copy
-- Phase 20A–D: Professional UI redesign system, full redesign
-- Phase 20E: Owner CRUD Polish
-- Phase 20F: Tenant Portal Bugfix Polish
-- Phase 20G: RentEase UI v2 — dark sidebar
-- Phase 20H: Full UI Visual QA
-- Phase 20I: Full Role UI/UX Audit
-- Phase 20J: Browser Visual QA (found citizen_id exposure in admin list)
-- Phase 20K-A: Admin Tenant Privacy Hotfix (removed citizen_id from TenantAdmin/CoTenantAdmin list)
-- Phase 20K-B: Dashboard Interaction Visual Polish
-- Phase 20L: Owner CRUD Form and Table Professionalization
-- Phase 20M: Reports and Admin Visual Polish Planning
-- Phase 20N: Admin Search Privacy Hardening (removed citizen_id from ContractAdmin/InvoiceAdmin search_fields)
-- Phase 20O: Admin Sensitive Detail Permission Hardening (citizen_id/citizen_id_front/citizen_id_back read-only for non-superusers)
+## Documentation Cleanup State
 
-## Current Verification Status
+Session A inventoried 83 pre-existing Markdown files and created `DOCS_CONSOLIDATION_AUDIT.md` as the 84th. It found:
 
-Latest verified state:
+- stale phase/status data in roadmap, SPQM, demo, UI, and technical-analysis docs
+- conflicting automatic push/tag instructions
+- duplicate demo and audit documents
+- historical files still outside `docs/archive/`
+- plaintext demo credentials in two demo-package documents
 
-- `manage.py check` passed: `System check identified no issues (0 silenced)`.
-- `makemigrations --check --dry-run` reported `No changes detected`.
-- Admin tenant/co-tenant list pages: confirmed citizen_id not exposed.
-- Admin contract/invoice search_fields: confirmed citizen_id lookups removed.
-- Owner dashboard, rooms, tenants, contracts, invoices: return 200 for owner role.
-- Tenant dashboard, invoices, payments: return 200 for tenant role.
-- Staff reports and admin homepage: accessible to staff.
+No files were moved or deleted. `PROJECT_STRUCTURE_MAP.md` and root `README.md` were accurate enough to leave unchanged.
 
-## Current Security/Privacy Status
+## Known Gaps
 
-Known admin privacy hardening done:
+- Production database is still SQLite; PostgreSQL migration has not been planned or executed.
+- Production deployment and `DEBUG=False` behavior need dedicated verification.
+- Media storage/access, backups, email delivery, CI, automated tests, and coverage are incomplete.
+- Owner-facing invoice detail/utility entry and account lifecycle remain product gaps.
+- Legacy HOSTELLO apps and surfaces remain intentionally present.
+- Roadmap/SPQM/demo docs require later reconciliation after agent rules are rebuilt.
 
-1. `TenantAdmin`: removed `citizen_id` from `list_display` and `search_fields`. Moved identity fields to collapsed `Sensitive identity data` fieldset.
-2. `CoTenantAdmin`: same treatment.
-3. `ContractAdmin`: removed `tenant__citizen_id` from `search_fields`. Replaced with `tenant__phone_number` and `tenant__email`. `CoTenantInline` restricted to safe non-identity fields.
-4. `InvoiceAdmin`: removed `contract__tenant__citizen_id` from `search_fields`. Replaced with safe contact fields.
-5. `TenantAdmin`: `citizen_id`, `citizen_id_front`, `citizen_id_back` are now **read-only** for non-superuser staff via `get_readonly_fields()` override.
-6. `CoTenantAdmin`: `citizen_id` is now **read-only** for non-superuser staff via `get_readonly_fields()` override.
-
-No remaining admin privacy recommendations.
-
-## Current Demo Documentation
-
-Primary demo docs:
-
-- `docs/demo/FINAL_DEMO_CHECKLIST.md`
-- `docs/demo/DEMO_DATA_SEED_USAGE.md`
-- `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md`
-- `docs/demo/FINAL_DEMO_PACKAGE.md`
-- `docs/demo/DEMO_SCRIPT.md`
-
-Also at root: `DEMO_SCRIPT.md` (copy/shortcut)
-
-## Current Architecture Documentation
-
-Primary architecture docs:
-
-- `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
-- `docs/architecture/HELPER_FILE_CLEANUP.md`
-- `docs/architecture/CLEANUP_AUDIT.md`
-
-## Legacy Status
-
-Legacy HOSTELLO apps remain in the repository:
-
-- `students`
-- `attendance`
-- `fees`
-- `requests`
-- `notices`
-
-They are still installed and have models, migrations, admin registrations, and cross-imports. Do not delete or move them without a dedicated legacy removal plan.
-
-Legacy HOSTELLO routes are isolated under `/legacy/`.
-
-## Current Known Gaps
-
-- Production database is still SQLite (PostgreSQL migration planned as Phase 14C).
-- Media files served directly via Django in DEBUG mode — no cloud storage yet.
-- Legacy HOSTELLO surfaces still exist under `/legacy/` and in admin legacy templates.
-- No automated test suite exists (Django Client checks used in place of formal tests).
-- Browser screenshot capture was unavailable in recent phases due to automation instability.
-
-## Recommended Next Action
+## Next Safe Phase
 
 ```text
-Phase 14C: PostgreSQL Migration Planning
+Session B - Rebuild AGENTS.md and Agent Rules from Docs Audit
 ```
 
-See `docs/agent/NEXT_ACTION.md` for the exact next step.
-See `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md` for the full production roadmap.
+After Session B, the product roadmap can return to Phase 14C PostgreSQL Migration Planning. Phase 14C must be planned and explicitly approved before implementation.

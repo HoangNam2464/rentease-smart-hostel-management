@@ -1,44 +1,91 @@
 # RentEase Next Action
 
-## Responsibility of This File
-
-This file answers one question: **what should the agent do next?**
-
-For broader project state, read `docs/agent/RENTEASE_CURRENT_STATE.md`.
-For file boundaries and active/legacy rules, read `docs/agent/RENTEASE_PROJECT_MAP.md`.
-For workflow and safety rules, read `AGENTS.md`.
-
----
-
-## Last Completed Phase
+## Immediate Next Session
 
 ```text
-Phase 14B-2: Production Settings Split
+Session B - Rebuild AGENTS.md and Agent Rules from Docs Audit
 ```
 
-What was done: Refactored `settings.py` to be fully environment-driven via `python-decouple`. Added `whitenoise` for static files, `dj-database-url` for `DATABASE_URL` support, production security headers (conditional on `DEBUG=False`), `Asia/Ho_Chi_Minh` timezone, `RentEase` branding, production-ready logging. Removed legacy `HOSTELLO_EMAIL_SETTINGS` block. Created `.env.example`.
+## Goal
 
----
+Use `docs/agent/DOCS_CONSOLIDATION_AUDIT.md` to make the local agent instructions short, authoritative, and sufficient for future sessions without long prompts.
 
-## ⚠️ Immediate Next Phase
+Session B should:
+
+- rebuild `AGENTS.md` from the verified audit
+- create or update a minimal `.agents/rules/` set
+- remove duplicated state from rule files
+- reconcile commit, push, and tag approval language
+- preserve the current structure, privacy rules, and mandatory checks
+- keep `NEXT_ACTION.md` limited to one recommended action
+
+Do not implement Phase 14C in Session B.
+
+## Allowed Files
+
+- `AGENTS.md`
+- `.agents/rules/*.md`
+- `docs/agent/DOCS_CONSOLIDATION_AUDIT.md` only for factual corrections
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+## Forbidden Files and Actions
+
+- Do not modify Python application code.
+- Do not modify models, views, URLs, forms, settings, admin code, or migrations.
+- Do not modify templates or static files.
+- Do not touch `.env`, databases, media, venvs, or generated runtime output.
+- Do not move/delete legacy apps or documentation.
+- Do not implement PostgreSQL migration or change database configuration/schema.
+- Do not pull, merge, force push, push, or tag without explicit approval.
+
+## Required Checks
+
+From the repository root:
+
+```powershell
+git branch --show-current
+git status --short
+git log --oneline -15
+git tag --list
+```
+
+Then from `backend/`:
+
+```powershell
+.\venv\Scripts\python.exe manage.py check
+.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
+```
+
+Repeat the Django checks and `git status --short` after edits.
+
+## Stop Conditions
+
+Stop and report without editing if:
+
+- branch is not `complete-product`
+- the starting worktree is not clean
+- either Django check fails
+- the task would require application code, schema, migration, database, template, or static changes
+- resolving a rule conflict would expand permissions beyond the user's explicit approval model
+
+## Final Report Format
 
 ```text
-Phase 14C: PostgreSQL Migration Planning
+Current Branch:
+Working Tree Before:
+Rules Rebuilt:
+Conflicts Resolved:
+Files Changed:
+Checks Result:
+Commit:
+Safety Confirmation:
+Recommended Next Phase:
 ```
 
-**This is a PLANNING ONLY phase. Do not implement without explicit user approval.**
+Recommended product phase after Session B:
 
-Goal: Plan migration from SQLite to PostgreSQL for production readiness.
-
-Scope: `DATABASE_URL` configuration, data migration strategy, backup plan, PostgreSQL setup instructions.
-
----
-
-## Do Not Do Yet
-
-- Do not implement Phase 14C without a separate approved plan.
-- Do not delete legacy apps (`students`, `attendance`, `fees`, `requests`, `notices`).
-- Do not delete legacy templates or static files.
-- Do not rename `backend/hostello_backend/`.
-- Do not use real personal data in demo records.
-- Do not push to GitHub without explicit approval.
+```text
+Phase 14C - PostgreSQL Migration Planning
+```
