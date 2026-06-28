@@ -1,6 +1,6 @@
-# RentEase Documentation System
+# RentEase Documentation
 
-RentEase documentation is organized by responsibility. Future agents should load only the context needed for the current task.
+This directory contains only current, project-specific guidance. Load the minimum context required for the task.
 
 ## Read For Every Task
 
@@ -8,58 +8,46 @@ RentEase documentation is organized by responsibility. Future agents should load
 2. `docs/agent/RENTEASE_CURRENT_STATE.md` - verified current truth and known gaps
 3. `docs/agent/NEXT_ACTION.md` - one recommended next task
 
-For substantive work, use the repo-local skill at `.agents/skills/rentease/SKILL.md`. It routes tasks to small backend, UI, or documentation references.
+Use `.agents/skills/rentease/SKILL.md` for substantive project work and `$rentease-design` for focused UI design or visual QA.
 
-## Current Sources of Truth
+## Current Documents
 
 | Document | Responsibility |
 |---|---|
-| `AGENTS.md` | Non-negotiable rules, startup, context routing |
-| `docs/agent/RENTEASE_CURRENT_STATE.md` | Current branch, phase, verification, gaps |
-| `docs/agent/NEXT_ACTION.md` | One immediate next action |
-| `docs/agent/RENTEASE_PRODUCT_CONTEXT.md` | Product purpose, users, capabilities, boundaries |
-| `docs/architecture/PROJECT_STRUCTURE_MAP.md` | Backend/frontend/docs/database/archive/legacy map |
-| `docs/architecture/LEGACY_BOUNDARIES.md` | Current active-versus-legacy editing boundary |
-| `docs/agent/RENTEASE_SECURITY_RULES.md` | Owner/tenant scoping and sensitive-data rules |
-| `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` | Current UI and design guidance |
-| `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md` | Ordered production-readiness work |
+| `agent/RENTEASE_CURRENT_STATE.md` | Current product, runtime, security, and documentation state |
+| `agent/NEXT_ACTION.md` | One immediate next action |
+| `agent/RENTEASE_PRODUCT_CONTEXT.md` | Product purpose, users, capabilities, and boundaries |
+| `agent/RENTEASE_SECURITY_RULES.md` | Owner/tenant scoping and sensitive-data rules |
+| `agent/RENTEASE_PRODUCTION_ROADMAP.md` | Ordered production-readiness work |
+| `architecture/PROJECT_STRUCTURE_MAP.md` | Backend, frontend, data, docs, and agent-resource map |
+| `architecture/LEGACY_BOUNDARIES.md` | Current RentEase-versus-HOSTELLO editing boundary |
+| `ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` | Product-specific UI and design direction |
+| `demo/README.md` | Local setup, seed data, walkthrough, verification, and screenshots |
+| `archive/README.md` | How to retrieve removed historical documents from Git |
 
-## Task-Specific Reading
+## Task Routing
 
-| Task | Load these documents |
+| Task | Load after the three startup documents |
 |---|---|
-| Django/backend/security/billing/settings | Skill `references/backend-safety.md`, then `RENTEASE_SECURITY_RULES.md` |
-| UI/templates/CSS/design | Skill `references/ui-design.md`, then the UI design system |
-| Documentation/reorganization | Skill `references/documentation.md`, then this index |
-| Architecture or legacy boundaries | `PROJECT_STRUCTURE_MAP.md` and `LEGACY_BOUNDARIES.md`; use `LEGACY_DEPENDENCY_AUDIT.md` only as historical evidence |
-| Local demo setup | `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md` and `DEMO_DATA_SEED_USAGE.md` |
-| Demo verification | `docs/demo/FINAL_DEMO_CHECKLIST.md` |
+| Django, permissions, billing, settings, database | Skill `references/backend-safety.md` and `RENTEASE_SECURITY_RULES.md` |
+| UI, templates, CSS, UX copy, responsive behavior | `$rentease-design` and the UI design system |
+| Architecture or legacy work | `PROJECT_STRUCTURE_MAP.md` and `LEGACY_BOUNDARIES.md` |
+| Local setup, demo data, presentation | `demo/README.md` |
+| Documentation maintenance | Skill `references/documentation.md` and this index |
 
-Do not read all of these by default. `AUTONOMOUS_WORK_LOG.md` and `docs/archive/` are historical sources, not startup reading.
+Do not read all documents by default.
 
-## Directory Responsibilities
+## History Policy
 
-| Path | Purpose |
-|---|---|
-| `docs/agent/` | Current product state, next action, security, roadmap, work log |
-| `docs/architecture/` | Current structure map and active/legacy boundary; dependency audit retained as historical evidence |
-| `docs/ui/` | Current design guidance |
-| `docs/demo/` | Current local setup, seed, checklist, and screenshot guidance |
-| `docs/archive/` | Superseded audits, old rules, phase logs, old plans, and historical reports |
-
-## Archive Policy
-
-- `docs/agent/AUTONOMOUS_WORK_LOG.md` is an append-only chronology, not current truth or default reading.
-- Archive files are retained for traceability, not daily instructions.
-- Do not scan `docs/archive/` unless a task needs historical evidence.
-- Do not treat a phase log, old plan, audit, or archived rule as current policy.
-- Move newly superseded documents into a descriptive archive folder; do not delete them silently.
-- Update links in current documents when a source of truth moves.
+- Phase reports, completed audits, old plans, SPQM coursework, duplicate guides, and the former work log are not kept in the active tree.
+- Git commits and tags remain the historical record. Use `archive/README.md` only when retrieval is necessary.
+- Recovered historical content is evidence, not current policy; verify it against source and the documents above.
+- Do not create a new phase report or chronological work log when a current source of truth can be updated instead.
 
 ## Updating Documentation
 
-- Change `RENTEASE_CURRENT_STATE.md` only when current project truth changes.
-- Change `NEXT_ACTION.md` only when the recommended next task changes.
-- Append to `AUTONOMOUS_WORK_LOG.md`; never rewrite its history.
-- Put durable product facts in product context, durable paths in the structure map, durable security rules in security rules, and durable visual rules in the UI guide.
-- Avoid copying the same state or rule across multiple files.
+- Change current state only when verified project truth changes.
+- Change next action only when the recommended task changes.
+- Keep roadmap priorities and next action consistent.
+- Put durable product facts in product context, paths in the structure map, security rules in security rules, and visual rules in the UI guide.
+- Replace superseded instructions instead of creating another parallel document.

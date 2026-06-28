@@ -5,7 +5,7 @@ description: Use for RentEase repository tasks involving Django backend code, pe
 
 # RentEase
 
-Work on RentEase with the minimum relevant context. Treat current source files and canonical documents as truth; treat archived phase material as history.
+Work on RentEase with the minimum relevant context. Treat current source files and canonical documents as truth; treat recovered historical material as evidence only.
 
 ## Setup
 
@@ -26,10 +26,10 @@ Load only the matching reference:
 | Task | Required reference |
 |---|---|
 | Python, Django, permissions, admin, billing, settings, database, deployment | `references/backend-safety.md` |
-| Templates, CSS, UX copy, responsive behavior, visual QA | `references/ui-design.md` |
-| Documentation, agent rules, audits, archive, project-state updates | `references/documentation.md` |
+| Templates, CSS, UX copy, responsive behavior, visual QA | Use `$rentease-design`; for mixed tasks also load `references/ui-design.md` |
+| Documentation, agent rules, audits, history retrieval, project-state updates | `references/documentation.md` |
 
-For mixed tasks, load each relevant reference. Do not read archive files unless a historical decision is necessary.
+For mixed tasks, load each relevant reference. Do not retrieve historical documents unless the task requires evidence from them.
 
 ## Core Workflow
 
@@ -50,6 +50,6 @@ For mixed tasks, load each relevant reference. Do not read archive files unless 
 - UI: `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
 - Production order: `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md`
 - Documentation authority: `docs/README.md`
-- History: `docs/agent/AUTONOMOUS_WORK_LOG.md` and `docs/archive/`
+- History retrieval: `docs/archive/README.md` and Git history/tags
 
 If canonical documents disagree, follow the authority order in `AGENTS.md` and verify against source.

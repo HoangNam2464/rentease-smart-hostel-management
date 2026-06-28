@@ -10,7 +10,7 @@ RentEase/
 |-- README.md                    # human project overview and setup
 |-- .agents/
 |   |-- rules/                   # minimal always-on safety rule
-|   `-- skills/rentease/         # progressive RentEase workflow and references
+|   `-- skills/                  # RentEase core and dedicated design skills
 |-- assets/                      # tracked historical HOSTELLO media
 |-- backend/                     # Django backend and apps
 |-- frontend/                    # Django templates and static files
@@ -19,7 +19,7 @@ RentEase/
     |-- architecture/            # current structure and legacy dependency map
     |-- demo/                    # current local demo guidance
     |-- ui/                      # current design guidance
-    `-- archive/                 # superseded and historical documents
+    `-- archive/                 # Git history retrieval instructions only
 ```
 
 ## Backend
@@ -54,7 +54,7 @@ Important paths:
 
 `students`, `attendance`, `fees`, `requests`, and `notices` remain installed with models, migrations, admin registrations, or cross-imports. Do not move, rename, or delete them without an approved legacy-removal plan.
 
-Read `docs/architecture/LEGACY_BOUNDARIES.md` for current editing boundaries. Use `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md` only as historical evidence when legacy work requires it.
+Read `docs/architecture/LEGACY_BOUNDARIES.md` for current editing boundaries. Re-audit imports, settings, URLs, migrations, admin registrations, and data dependencies before any legacy change.
 
 ## Frontend
 
@@ -96,15 +96,16 @@ Legacy surfaces not used for normal RentEase UI work:
 
 Read `docs/README.md` for the complete authority and task-routing table.
 
-Current documents live in `docs/agent/`, `docs/architecture/`, `docs/ui/`, and `docs/demo/`. Superseded audits, old rules, SPQM coursework/status files, plans, phase reports, and duplicate root documents live in `docs/archive/`.
+Current documents live in `docs/agent/`, `docs/architecture/`, `docs/ui/`, and `docs/demo/`. Superseded documents are removed from the working tree and remain recoverable through Git history and tags.
 
-Archive content is not current policy. Do not scan it unless historical context is required.
+`docs/archive/README.md` explains historical retrieval. Recovered content is not current policy.
 
 ## Agent Resources
 
 - `AGENTS.md` gives mandatory startup and hard rules.
 - `.agents/rules/rentease-safety.md` is the minimal tool-facing safety rule.
 - `.agents/skills/rentease/SKILL.md` routes substantive tasks.
+- `.agents/skills/rentease-design/SKILL.md` handles focused UI design and visual QA work.
 - Skill references load backend, UI, or documentation context separately.
 
 ## Editing Rules

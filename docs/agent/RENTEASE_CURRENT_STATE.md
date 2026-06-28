@@ -7,7 +7,7 @@
 | Expected branch | `complete-product` |
 | Latest product phase | Phase 14B-2: Production Settings Split |
 | Product classification | Local-demo ready; not production-ready |
-| Documentation system | Consolidated entry + repo-local RentEase skill |
+| Documentation system | Consolidated entry + repo-local RentEase skills |
 
 Always verify the actual commit, branch, worktree, tags, Django check, and migration dry-run locally.
 
@@ -20,8 +20,8 @@ Always verify the actual commit, branch, worktree, tags, Django check, and migra
 - Local SQLite database: `backend/db.sqlite3` (ignored; do not touch casually)
 - Official virtual environment: `backend/venv/`
 - Current documentation: `docs/`
-- Historical documentation: `docs/archive/`
-- Repo-local agent skill: `.agents/skills/rentease/`
+- Historical record: Git history and tags; retrieval guidance in `docs/archive/README.md`
+- Repo-local agent skills: `.agents/skills/rentease/` and `.agents/skills/rentease-design/`
 
 ## Product and UI State
 
@@ -49,9 +49,9 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 
 - `AGENTS.md` is now a short mandatory entry file.
 - `.agents/skills/rentease/` provides progressive task-specific guidance.
-- `docs/README.md` defines current sources of truth and archive policy.
-- Superseded rules, audits, plans, SPQM status documents, and completed reports are under `docs/archive/`.
-- Archive documents are historical evidence, not current instructions.
+- `.agents/skills/rentease-design/` provides focused design, critique, audit, polish, responsive, and visual-QA workflows.
+- `docs/` contains 11 current Markdown files, including one consolidated demo guide and one history-retrieval guide.
+- Superseded rules, audits, plans, phase reports, SPQM documents, and the former work log remain recoverable through Git rather than living beside current guidance.
 
 ## Known Product Gaps
 

@@ -25,4 +25,4 @@ These areas remain for compatibility and historical completeness. Some still hav
 - Do not move, rename, delete, or modernize legacy areas during ordinary RentEase work.
 - Do not re-add legacy root routes such as the old students root, `/api/`, or `/fees/` routes.
 - Legacy cleanup requires a dedicated dependency review, an approved plan, and the standard Django checks.
-- Treat `LEGACY_DEPENDENCY_AUDIT.md` as historical evidence, not current policy or proof that dependencies are unchanged.
+- Re-audit the current source before legacy work. Previous dependency-audit evidence is available through Git history but is not proof that dependencies are unchanged.

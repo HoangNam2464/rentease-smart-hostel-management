@@ -244,11 +244,11 @@ Current status:
 - `docs/agent/NEXT_ACTION.md`
 - `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
 - `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
+- `docs/architecture/LEGACY_BOUNDARIES.md`
 - `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
-- `docs/demo/FINAL_DEMO_CHECKLIST.md`
+- `docs/demo/README.md`
 
-Historical audits, plans, phase reports, and superseded rules are retained under `docs/archive/` and should not be used as current instructions.
+Historical audits, plans, phase reports, and superseded rules are available through Git history and tags. See `docs/archive/README.md` only when historical evidence is required.
 
 ## Contact / Support
 

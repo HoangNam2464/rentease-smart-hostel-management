@@ -1,6 +1,6 @@
 # Documentation Work
 
-Load this reference for agent instructions, project state, audits, indexes, roadmaps, work logs, or archive changes.
+Load this reference for agent instructions, project state, indexes, roadmaps, documentation consolidation, or historical retrieval.
 
 ## Authority Model
 
@@ -9,33 +9,34 @@ Load this reference for agent instructions, project state, audits, indexes, road
 - One next task: `docs/agent/NEXT_ACTION.md`
 - Product: `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
 - Structure: `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- Legacy boundary: `docs/architecture/LEGACY_BOUNDARIES.md`
 - Security: `docs/agent/RENTEASE_SECURITY_RULES.md`
 - UI: `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
+- Demo: `docs/demo/README.md`
 - Documentation index: `docs/README.md`
-- Chronology: `docs/agent/AUTONOMOUS_WORK_LOG.md`
 
 Do not duplicate one document's responsibility in another.
 
-## Archive Rules
+## History Rules
 
-- Treat `docs/archive/` as historical evidence, not current policy.
-- Do not scan the archive by default.
-- Move superseded documents into a descriptive archive folder; do not delete them silently.
-- Preserve filenames where practical and update active links after moves.
-- Never rewrite the chronological work log; append a new entry.
+- Keep only current instructions in the working tree.
+- Use Git history and tags when a task requires an old audit, plan, phase report, or work-log entry.
+- Read `docs/archive/README.md` for retrieval commands; it is not a source of product truth.
+- Verify recovered claims against current source and canonical documents.
+- Do not create phase reports or chronological work logs when the current state, roadmap, next action, or Git commit can record the outcome.
 
 ## State Updates
 
 - Update current state only for verified current facts.
 - Keep next action to one approved recommendation.
-- Update roadmap numbering and next action together when priorities change.
+- Update roadmap priorities and next action together when priorities change.
 - Keep commit hashes out of durable context unless they materially identify a locked milestone; Git remains the commit source of truth.
 - Mark unknown facts as unverified rather than guessing.
 
 ## Verification
 
-- Check active Markdown links and referenced paths.
-- Confirm archive documents are not listed as current sources.
-- Run both Django checks even for documentation-only phases.
+- Check all active Markdown references and paths.
+- Confirm removed historical documents are not linked as current sources.
+- Run both Django checks even for documentation-only changes.
 - Inspect `git status` and `git diff --check`.
 - Confirm no application or runtime files changed.

@@ -2,6 +2,8 @@
 
 Load this reference for templates, CSS, UX copy, responsive behavior, screenshots, or visual QA.
 
+For focused design work, invoke the repo-local `$rentease-design` skill. Keep this reference for mixed RentEase tasks that include UI changes.
+
 ## Read Before Editing
 
 - `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`

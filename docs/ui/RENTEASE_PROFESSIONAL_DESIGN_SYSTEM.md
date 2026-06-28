@@ -2,6 +2,19 @@
 
 This is the current source of truth for RentEase templates, CSS, UX copy, responsive behavior, and visual QA.
 
+## Design Identity
+
+Creative north star: calm operations for Vietnamese rentals.
+
+The interface should reduce the mental work of finding a room, running a boarding house, or understanding a tenancy. It should feel grounded, legible, and quietly capable rather than decorative or technology-led.
+
+Avoid these visual references:
+
+- the old HOSTELLO school-management interface
+- a generic SaaS dashboard made from repeated cards
+- a luxury real-estate marketplace that hides operational detail
+- a banking interface that makes routine rental tasks feel formal or intimidating
+
 ## Product Direction
 
 RentEase is a practical Vietnamese boarding-house management product. It should feel trustworthy, clear, business-ready, and human-written rather than like a generic school admin template.
