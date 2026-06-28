@@ -1,5 +1,10 @@
 """
 Django settings for hostello_backend project.
+
+Environment-driven configuration via python-decouple.
+For local development: defaults work without .env file.
+For production: create backend/.env with real values.
+See backend/.env.example for template.
 """
 
 from pathlib import Path
@@ -7,7 +12,7 @@ import os
 
 # Try to import decouple, if not available use default values
 try:
-    from decouple import config
+    from decouple import config, Csv
 except ImportError:
     # Fallback function if decouple is not installed
     def config(key, default=None, cast=None):
@@ -16,9 +21,18 @@ except ImportError:
             return cast(value)
         return value
 
+    def Csv():
+        return lambda v: [h.strip() for h in v.split(',')]
+
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = BASE_DIR.parent
+
+# =============================================================================
+# CORE SECURITY
+# =============================================================================
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here-change-in-production')
@@ -26,13 +40,12 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
-STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
+# =============================================================================
+# APPLICATION DEFINITION
+# =============================================================================
 
-# Application definition
 DJANGO_APPS = [
     'jazzmin',  # Must be before django.contrib.admin
     'django.contrib.admin',
@@ -58,7 +71,7 @@ LOCAL_APPS = [
     'listings',
     'reports',
     'portal',
-    'students', 
+    'students',
     'attendance',
     'requests',
     'fees',
@@ -70,6 +83,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,15 +114,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hostello_backend.wsgi.application'
 
-# Database
+# =============================================================================
+# DATABASE
+# =============================================================================
+# Uses DATABASE_URL env var if available (e.g. postgres://user:pass@host/db).
+# Falls back to SQLite for local development.
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600,
+    )
 }
 
-# Password validation
+# =============================================================================
+# PASSWORD VALIDATION
+# =============================================================================
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -124,30 +146,58 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# =============================================================================
+# INTERNATIONALIZATION
+# =============================================================================
+
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# =============================================================================
+# STATIC FILES (CSS, JavaScript, Images)
+# =============================================================================
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     REPO_ROOT / 'frontend' / 'static',
 ]
 
-# Media files
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': (
+            'whitenoise.storage.CompressedManifestStaticFilesStorage'
+            if not DEBUG else
+            'django.contrib.staticfiles.storage.StaticFilesStorage'
+        ),
+    },
+}
+
+# =============================================================================
+# MEDIA FILES
+# =============================================================================
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
+# =============================================================================
+# DEFAULT PRIMARY KEY FIELD TYPE
+# =============================================================================
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom User Model
+# =============================================================================
+# CUSTOM USER MODEL
+# =============================================================================
+
 AUTH_USER_MODEL = 'accounts.User'
 
-# Django REST Framework
+# =============================================================================
+# DJANGO REST FRAMEWORK
+# =============================================================================
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -157,7 +207,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS Settings for Frontend Integration
+# =============================================================================
+# CORS SETTINGS
+# =============================================================================
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -169,55 +222,34 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 # =============================================================================
-# EMAIL CONFIGURATION - GMAIL SMTP (Hardcoded, no .env file)
+# EMAIL CONFIGURATION
 # =============================================================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 60
 
-# Gmail credentials
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
-# From email settings
-DEFAULT_FROM_EMAIL = f'HOSTELLO Warden <{EMAIL_HOST_USER}>'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=f'RentEase <{EMAIL_HOST_USER}>')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # =============================================================================
-# HOSTELLO EMAIL SETTINGS FOR ABSENCE NOTIFICATIONS
+# STRIPE (kept for future payment integration)
 # =============================================================================
 
-HOSTELLO_EMAIL_SETTINGS = {
-    # Warden Information
-    'WARDEN_NAME': 'HOSTELLO Warden',
-    'WARDEN_PHONE': '+91 9876543210',
-    'WARDEN_EMAIL': EMAIL_HOST_USER,
-    
-    # Hostel Information
-    'HOSTEL_NAME': 'HOSTELLO - Digital Hostel Management',
-    'HOSTEL_ADDRESS': 'Your College Campus, City - PIN Code, Kerala',
-    
-    # Contact & Portal Information
-    'OFFICE_HOURS': '8:00 AM - 8:00 PM',
-    'EMERGENCY_CONTACT': '+91 9876543210',
-    'PORTAL_URL': 'http://127.0.0.1:8000/login/',
-    
-    # Email Notification Settings for Absence Alerts
-    'SEND_ABSENCE_EMAIL': True,
-    'SEND_ATTENDANCE_SUMMARY': True,
-    'ABSENCE_EMAIL_SUBJECT': '[HOSTELLO ALERT] Student Absence Notification',
-    'EMAIL_SIGNATURE': 'Best regards,\nHOSTELLO Warden Team',
-    
-    # Absence Thresholds for Alerts
-    'ABSENCE_WARNING_THRESHOLD': 3,
-    'ABSENCE_CRITICAL_THRESHOLD': 5,
-}
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
 
-# Jazzmin Configuration
+# =============================================================================
+# JAZZMIN CONFIGURATION
+# =============================================================================
+
 JAZZMIN_SETTINGS = {
     "site_title": "RentEase Admin",
     "site_header": "RentEase",
@@ -352,7 +384,7 @@ JAZZMIN_UI_TWEAKS = {
     "dark_mode_theme": None,
     "button_classes": {
         "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary", 
+        "secondary": "btn-outline-secondary",
         "info": "btn-outline-info",
         "warning": "btn-outline-warning",
         "danger": "btn-outline-danger",
@@ -360,20 +392,54 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 
-# Logging
+# =============================================================================
+# PRODUCTION SECURITY HEADERS (only active when DEBUG=False)
+# =============================================================================
+
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# =============================================================================
+# LOGGING
+# =============================================================================
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'rentease.log',
+            'formatter': 'verbose',
         },
     },
+    'root': {
+        'handlers': ['console'] if DEBUG else ['console', 'file'],
+        'level': 'INFO',
+    },
     'loggers': {
-        'requests.views': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+        'django': {
+            'handlers': ['console'] if DEBUG else ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }

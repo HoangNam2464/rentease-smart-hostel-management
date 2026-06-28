@@ -21,23 +21,23 @@ RentEase is **not production-ready yet**.
 ## Latest Phase Completed
 
 ```text
-Phase 20O: Admin Sensitive Detail Permission Hardening
+Phase 14B-2: Production Settings Split
 ```
 
 Previous phase tag:
 
 ```text
-phase20n-admin-search-privacy-hardening
+phase20o-admin-sensitive-detail-permissions
 ```
 
 ## Recent Commits (as of 2026-06-28)
 
 ```text
+8e080ae Harden admin sensitive detail permissions (Phase 20O)
 eb50f98 Add full RentEase technical analysis
 7228f0b Add Antigravity rules for RentEase agents
 f84bf69 Normalize agent documentation for clarity
 9bf9051 Set up RentEase agent documentation
-c3465c0 Polish realistic demo data
 ```
 
 ## Release Tags
@@ -167,8 +167,8 @@ Legacy HOSTELLO routes are isolated under `/legacy/`.
 
 ## Current Known Gaps
 
-- Production settings are not hardened (`DEBUG=True`, `SECRET_KEY` not env-driven).
-- Production database/static/media/email/logging are not configured.
+- Production database is still SQLite (PostgreSQL migration planned as Phase 14C).
+- Media files served directly via Django in DEBUG mode — no cloud storage yet.
 - Legacy HOSTELLO surfaces still exist under `/legacy/` and in admin legacy templates.
 - No automated test suite exists (Django Client checks used in place of formal tests).
 - Browser screenshot capture was unavailable in recent phases due to automation instability.
@@ -176,7 +176,7 @@ Legacy HOSTELLO routes are isolated under `/legacy/`.
 ## Recommended Next Action
 
 ```text
-Phase 14B-2: Production Settings Split Planning
+Phase 14C: PostgreSQL Migration Planning
 ```
 
 See `docs/agent/NEXT_ACTION.md` for the exact next step.

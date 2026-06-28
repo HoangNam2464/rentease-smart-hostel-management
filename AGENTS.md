@@ -87,22 +87,22 @@ release-rentease-polished-local-demo-v2
 Latest completed phase:
 
 ```text
-Phase 20O: Admin Sensitive Detail Permission Hardening
+Phase 14B-2: Production Settings Split
 ```
 
 Latest phase tag:
 
 ```text
-phase20n-admin-search-privacy-hardening
+phase20o-admin-sensitive-detail-permissions
 ```
 
 Latest known recent commits (verify with `git log --oneline -5`):
 
 ```text
+8e080ae Harden admin sensitive detail permissions (Phase 20O)
 eb50f98 Add full RentEase technical analysis
 7228f0b Add Antigravity rules for RentEase agents
 f84bf69 Normalize agent documentation for clarity
-9bf9051 Set up RentEase agent documentation
 ```
 
 ## Next Action
@@ -110,12 +110,12 @@ f84bf69 Normalize agent documentation for clarity
 Current recommended next action:
 
 ```text
-Phase 14B-2: Production Settings Split Planning
+Phase 14C: PostgreSQL Migration Planning
 ```
 
-Goal: Make Django settings production-aware while preserving local development. Must address: `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, HTTPS/security headers, secure cookies, database config, static/media, email, logging, `.env` support.
+Goal: Plan migration from SQLite to PostgreSQL for production readiness.
 
-Do not implement Phase 14B-2 without first producing a plan and receiving explicit approval.
+Do not implement Phase 14C without first producing a plan and receiving explicit approval.
 
 ## Non-Negotiable Rules
 

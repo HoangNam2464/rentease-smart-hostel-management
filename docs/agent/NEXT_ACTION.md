@@ -13,40 +13,30 @@ For workflow and safety rules, read `AGENTS.md`.
 ## Last Completed Phase
 
 ```text
-Phase 20O: Admin Sensitive Detail Permission Hardening
+Phase 14B-2: Production Settings Split
 ```
 
-What was done: Made `citizen_id`, `citizen_id_front`, `citizen_id_back` read-only for non-superuser staff in `TenantAdmin` and `CoTenantAdmin` detail forms. Superusers retain full edit access.
+What was done: Refactored `settings.py` to be fully environment-driven via `python-decouple`. Added `whitenoise` for static files, `dj-database-url` for `DATABASE_URL` support, production security headers (conditional on `DEBUG=False`), `Asia/Ho_Chi_Minh` timezone, `RentEase` branding, production-ready logging. Removed legacy `HOSTELLO_EMAIL_SETTINGS` block. Created `.env.example`.
 
 ---
 
 ## ⚠️ Immediate Next Phase
 
 ```text
-Phase 14B-2: Production Settings Split Planning
+Phase 14C: PostgreSQL Migration Planning
 ```
 
 **This is a PLANNING ONLY phase. Do not implement without explicit user approval.**
 
-Goal: Make Django settings production-aware while preserving local development.
+Goal: Plan migration from SQLite to PostgreSQL for production readiness.
 
-Scope: `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, HTTPS headers, secure cookies, database config, static/media, email, logging, `.env` support.
-
-Steps:
-1. Produce a written plan with options.
-2. Present to user for approval.
-3. Implement only after explicit approval.
-
-Files that would likely be affected:
-- `backend/hostello_backend/settings.py` (split or extend)
-- Possibly a new `backend/hostello_backend/settings_production.py`
-- Possibly `.env.example`
+Scope: `DATABASE_URL` configuration, data migration strategy, backup plan, PostgreSQL setup instructions.
 
 ---
 
 ## Do Not Do Yet
 
-- Do not implement Phase 14B-2 without a separate approved plan.
+- Do not implement Phase 14C without a separate approved plan.
 - Do not delete legacy apps (`students`, `attendance`, `fees`, `requests`, `notices`).
 - Do not delete legacy templates or static files.
 - Do not rename `backend/hostello_backend/`.

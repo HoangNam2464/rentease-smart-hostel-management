@@ -1323,3 +1323,61 @@ None yet (awaiting approval).
 ```text
 Phase 14B-2: Production Settings Split Planning
 ```
+
+## Phase 14B-2: Production Settings Split (2026-06-28)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Ran full start procedure. Branch `complete-product`, working tree clean.
+- Django check: `System check identified no issues (0 silenced)`.
+- Migration dry-run: `No changes detected`.
+- Installed two new dependencies: `dj-database-url==3.1.2`, `whitenoise==6.12.0`.
+- Refactored `backend/hostello_backend/settings.py`:
+  - `ALLOWED_HOSTS` now env-driven via `python-decouple` Csv (removed hardcoded `'*'`).
+  - `TIME_ZONE` changed from `Asia/Kolkata` to `Asia/Ho_Chi_Minh`.
+  - `DEFAULT_FROM_EMAIL` changed from `HOSTELLO Warden` to `RentEase`.
+  - Removed entire `HOSTELLO_EMAIL_SETTINGS` legacy block (lines 190–218).
+  - Added `whitenoise.middleware.WhiteNoiseMiddleware` after `SecurityMiddleware`.
+  - Added `STORAGES` with `CompressedManifestStaticFilesStorage` for production, `StaticFilesStorage` for dev.
+  - Added `dj_database_url.config()` for `DATABASES` — supports `DATABASE_URL` env var, falls back to SQLite.
+  - Added production security headers block (only active when `DEBUG=False`): HSTS, SSL redirect, secure cookies, XSS filter, content type sniff protection, X-Frame-Options DENY.
+  - Replaced legacy logging config with production-ready logging: verbose formatter, console + file handlers.
+  - `EMAIL_HOST` and `EMAIL_PORT` now env-driven.
+- Created `backend/.env.example` as documented template.
+- Updated `backend/requirements.txt` with `dj-database-url==3.1.2` and `whitenoise==6.12.0`.
+- Created `backend/logs/.gitkeep` for production log directory.
+- Smoke tested `runserver` on port 8001 — server started successfully.
+- Post-edit Django check: passed (0 issues).
+- Post-edit migration dry-run: `No changes detected`.
+- Updated agent docs: `AGENTS.md`, `NEXT_ACTION.md`, `RENTEASE_CURRENT_STATE.md`.
+
+### Files Changed
+
+- `backend/hostello_backend/settings.py` (refactored)
+- `backend/requirements.txt` (added 2 dependencies)
+- `backend/.env.example` (new)
+- `backend/logs/.gitkeep` (new)
+- `AGENTS.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/AUTONOMOUS_WORK_LOG.md`
+
+### Checks Run
+
+- `.\venv\Scripts\python.exe manage.py check` — passed (0 issues)
+- `.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run` — `No changes detected`
+- `.\venv\Scripts\python.exe manage.py runserver 127.0.0.1:8001` — started successfully
+
+### Tags Created
+
+None yet (awaiting approval).
+
+### Exact Next Recommended Action
+
+```text
+Phase 14C: PostgreSQL Migration Planning
+```
