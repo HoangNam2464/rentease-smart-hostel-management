@@ -43,13 +43,14 @@ Stop before editing if the branch is not `complete-product`, the starting worktr
 | Task | Read |
 |---|---|
 | Product behavior or scope | `docs/agent/RENTEASE_PRODUCT_CONTEXT.md` |
-| Project paths or active/legacy boundaries | `docs/architecture/PROJECT_STRUCTURE_MAP.md` |
+| Project paths | `docs/architecture/PROJECT_STRUCTURE_MAP.md` |
+| Active/legacy boundaries | `docs/architecture/LEGACY_BOUNDARIES.md` |
 | Django, permissions, data, billing, settings | `.agents/skills/rentease/references/backend-safety.md` and `docs/agent/RENTEASE_SECURITY_RULES.md` |
 | Templates, CSS, UX, responsive work | `.agents/skills/rentease/references/ui-design.md` and `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` |
 | Documentation maintenance | `.agents/skills/rentease/references/documentation.md` and `docs/README.md` |
-| Historical decisions only | `docs/archive/` |
+| Historical decisions only | `docs/agent/AUTONOMOUS_WORK_LOG.md` and `docs/archive/` |
 
-Do not scan `docs/archive/`, venvs, media, databases, or generated files unless the task specifically requires them.
+Do not read the work log or scan `docs/archive/` by default. Do not scan venvs, media, databases, or generated files unless the task specifically requires them.
 
 ## Source-of-Truth Order
 

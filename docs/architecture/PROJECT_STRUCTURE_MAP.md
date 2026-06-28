@@ -54,7 +54,7 @@ Important paths:
 
 `students`, `attendance`, `fees`, `requests`, and `notices` remain installed with models, migrations, admin registrations, or cross-imports. Do not move, rename, or delete them without an approved legacy-removal plan.
 
-For dependency evidence, read `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md` only when legacy work is in scope.
+Read `docs/architecture/LEGACY_BOUNDARIES.md` for current editing boundaries. Use `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md` only as historical evidence when legacy work requires it.
 
 ## Frontend
 
@@ -114,4 +114,3 @@ Archive content is not current policy. Do not scan it unless historical context 
 - Preserve owner/tenant scoping and sensitive-data rules.
 - Plan before settings, schema, auth, billing, database, deployment, or legacy changes.
 - Run Django checks after all changes, including documentation-only reorganizations.
-

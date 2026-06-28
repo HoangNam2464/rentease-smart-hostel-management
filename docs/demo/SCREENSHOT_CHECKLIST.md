@@ -93,9 +93,9 @@ Before publishing screenshots, confirm:
 - [ ] no raw Django template tags are visible
 - [ ] no broken static assets are visible
 
-## Current Demo Data Status
+## Visual Direction
 
-After Phase 20C, capture screenshots from the reference-based UI:
+Use the current RentEase UI direction when capturing screenshots:
 
 - public pages should show the property-listing direction
 - owner pages should show the dashboard/sidebar direction

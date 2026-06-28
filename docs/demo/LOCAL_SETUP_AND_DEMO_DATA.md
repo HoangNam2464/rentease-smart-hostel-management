@@ -1,183 +1,54 @@
 # Local Setup And Demo Data Guide
 
-## Purpose
+Use this guide after obtaining the RentEase source. Complete the environment and dependency setup in the root `README.md` first; the commands below assume `backend/venv/` is ready.
 
-This guide is for teammates who download RentEase from GitHub ZIP and want to run the local demo.
+## Start A Local Demo
 
-RentEase code and RentEase database data are different things:
-
-- Code is the Django project files.
-- Database data is stored locally in `db.sqlite3`.
-- A fresh ZIP download may not include your local demo database.
-
-## Recommended Local Setup
-
-Open PowerShell in the repository root, then go to the Django project folder:
+From the repository root:
 
 ```powershell
 cd backend
-```
-
-Use the local virtual environment Python:
-
-```powershell
 .\venv\Scripts\python.exe manage.py check
-```
-
-Create database tables:
-
-```powershell
 .\venv\Scripts\python.exe manage.py migrate
-```
-
-Seed local demo data:
-
-```powershell
 .\venv\Scripts\python.exe manage.py seed_rentease_demo_data
-```
-
-The seed command creates fake but realistic Vietnamese demo data for the local walkthrough, including owner `Nguyễn Minh Anh`, tenants `Trần Hoàng Nam` and `Lê Thảo Vy`, Vietnamese room names, public listing descriptions, invoices, payments, repair requests, notifications, and viewing registrations.
-
-Start the server:
-
-```powershell
 .\venv\Scripts\python.exe manage.py runserver
 ```
 
-Open:
+Then open `http://127.0.0.1:8000/`.
 
-```text
-http://127.0.0.1:8000/
-```
+`migrate` creates the database tables. `createsuperuser` creates an admin login only. The seed command creates the fake rooms, listings, contracts, billing, repairs, notifications, and viewing requests needed for the walkthrough.
 
-## Migrate vs Createsuperuser vs Seed Demo Data
+## Demo Account Prerequisites
 
-### `migrate`
+By default, the seed command expects local users named `owner_test` and `tenant_test` with their linked owner and tenant profiles. If they are missing:
 
-Creates database tables such as rooms, listings, contracts, invoices, tenants, and users.
+1. Create a local superuser with `manage.py createsuperuser`.
+2. Open `/admin/` and create the demo users and required profiles using fake data.
+3. Run the seed command again.
 
-Run this when you see errors like:
+Do not obtain setup by committing, publishing, or casually sharing a populated `db.sqlite3` file.
 
-```text
-no such table: tin_phong
-```
+## Common Problems
 
-### `createsuperuser`
+| Problem | Action |
+|---|---|
+| `no such table` | Run `manage.py migrate`. |
+| Demo user or profile is missing | Create the local fake account and linked profile in admin. |
+| `/rooms/` is empty | Run the seed command and confirm it completes successfully. |
+| Seed command refuses to run | Confirm this is a local `DEBUG=True` environment and review its error message. |
 
-Creates only an admin account.
+## Local Data Rules
 
-It does not create:
+- `backend/db.sqlite3` is local runtime data, not source or production data.
+- Never commit `.env`, SQLite databases, uploaded media, backups, or real personal information.
+- Prefer migrations plus the seed command for reproducible setup.
+- Use only fake credentials and fake identity details in demo records.
 
-- rooms
-- tenants
-- contracts
-- invoices
-- room listings
-- viewing registrations
+## Ready Check
 
-So `/rooms/` may still be empty after `createsuperuser`.
-
-### `seed_rentease_demo_data`
-
-Creates fake local demo data for RentEase, including realistic Vietnamese rooms, listings, contracts, billing, repairs, notifications, and viewings.
-
-This command exists in:
-
-```text
-backend/portal/management/commands/seed_rentease_demo_data.py
-```
-
-Default demo accounts:
-
-| Role | Username |
-| --- | --- |
-| Owner | `owner_test` |
-| Tenant | `tenant_test` |
-
-The seed command expects the demo accounts to exist. If they do not exist, ask Hoàng Nam for the current test database or create the accounts manually before seeding.
-
-## Common Errors And Fixes
-
-### `no such table: tin_phong`
-
-Cause:
-
-- database tables were not created yet.
-
-Fix:
-
-```powershell
-.\venv\Scripts\python.exe manage.py migrate
-```
-
-### `owner_test does not exist`
-
-Cause:
-
-- demo account is missing in the local database.
-
-Fix options:
-
-1. Ask for the current local demo database if this is only for team demo.
-2. Create owner/tenant accounts manually in admin.
-3. Ask Hoàng Nam before changing account setup.
-
-### `/rooms/` opens but no rooms appear
-
-Cause:
-
-- database tables exist, but there are no published room listings.
-
-Fix:
-
-```powershell
-.\venv\Scripts\python.exe manage.py seed_rentease_demo_data
-```
-
-If the seed command cannot run, create data manually:
-
-1. Create superuser.
-2. Log in to `/admin/`.
-3. Create an owner user and owner profile.
-4. Create a room owned by that owner.
-5. Create a published room listing.
-6. Optional: create tenant, contract, invoice, payment, repair request, and viewing registration.
-
-## If The Seed Command Is Missing
-
-If this command fails because it does not exist:
-
-```powershell
-.\venv\Scripts\python.exe manage.py seed_rentease_demo_data
-```
-
-then use manual admin setup:
-
-```powershell
-.\venv\Scripts\python.exe manage.py createsuperuser
-.\venv\Scripts\python.exe manage.py runserver
-```
-
-Then open `/admin/` and create demo records manually.
-
-## About `db.sqlite3`
-
-`db.sqlite3` is local demo data.
-
-Important:
-
-- It is not production data.
-- It should not be used for real deployment.
-- It should not be committed if it contains accounts or personal/demo data.
-- Copying it between teammates is acceptable only for local demo and only if it contains no sensitive data.
-
-## Safe Local Demo Checklist
-
-- [ ] `manage.py check` passes
-- [ ] `manage.py migrate` completed
-- [ ] demo data exists
-- [ ] `/rooms/` shows published rooms
-- [ ] room/listing/repair names look realistic enough for presentation
-- [ ] `owner_test` can log in
-- [ ] `tenant_test` can log in
-- [ ] no real citizen ID or real personal data is used
+- [ ] `manage.py check` passes.
+- [ ] Migrations are applied locally.
+- [ ] Demo data seeds without errors.
+- [ ] `/rooms/` shows published listings.
+- [ ] Owner and tenant demo accounts can sign in and see only their own data.
+- [ ] No real citizen ID or personal data is present.
