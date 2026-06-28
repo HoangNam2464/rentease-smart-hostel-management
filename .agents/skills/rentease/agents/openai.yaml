@@ -1,0 +1,4 @@
+interface:
+  display_name: "RentEase"
+  short_description: "Safely develop and document RentEase"
+  default_prompt: "Use $rentease to inspect the current project state and complete the requested RentEase task safely."

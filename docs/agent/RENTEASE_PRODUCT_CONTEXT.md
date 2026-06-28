@@ -1,83 +1,57 @@
 # RentEase Product Context
 
-## Product Target
+## Product
 
-RentEase is intended to become a real production-ready boarding-house management system, not only a local demo.
+RentEase is a Django boarding-house and rental-room management system evolved from the original HOSTELLO project. RentEase is the active product; HOSTELLO apps remain only for compatibility and historical continuity.
 
-The system should eventually support:
+## Users
 
-- secure production settings
-- production database
-- owner-facing billing details and utility/service charges
-- proper account lifecycle
-- owner tenant creation/onboarding
-- deployment-ready static/media/email/logging
-- clean legacy isolation or removal
-- strong owner/tenant data isolation
+### Visitor
 
-## Product Vision
+- Browse published rooms and public-safe room details.
+- Submit viewing registrations without gaining private system access.
 
-RentEase is a Django-based hostel/boarding-house management system. It started from the original HOSTELLO project, so legacy HOSTELLO apps still exist in the repository.
+### Owner
 
-RentEase should be the main product surface. Legacy HOSTELLO should not be part of the production user flow.
+- Manage owned rooms and listings.
+- Manage linked tenants, contracts, invoices, payments, repairs, and viewing registrations.
+- See only data connected to the owner's profile.
 
-## Core Users
+### Tenant
 
-Visitor/Public:
+- View the tenant's own profile, contracts, invoices, payments, repairs, and notifications.
+- Submit tenant-safe repair requests.
 
-- browse published rooms
-- view public-safe room details
-- submit viewing registrations
+### Admin and Staff
 
-Owner:
+- Manage system-wide data through Django Admin.
+- Access staff-only reports.
+- Handle sensitive identity data only under the documented admin restrictions.
 
-- manage own rooms
-- manage own listings
-- manage own linked tenants
-- manage own contracts
-- manage own invoices
-- record payments
-- handle repair requests
-- process viewing registrations
-- view owner dashboard metrics
+## Product Stage
 
-Tenant:
+RentEase is a polished local demo, not a production-ready service. The product direction is a practical Vietnamese rental-management system, not a generic school admin dashboard.
 
-- view own profile
-- view own contracts
-- view own invoices
-- view own payments
-- submit and view own repair requests
-- view own notifications
+Completed foundations include role-based portals, public listings, owner workflows, tenant self-service, reports, demo data, UI polish, privacy hardening, and environment-driven production settings.
 
-Admin/Staff:
+## Production Target
 
-- manage system-wide data through Django Admin
-- view staff-only reports
-- supervise data consistency and operational records
+Production readiness requires:
 
-## Current Product Direction
+- PostgreSQL and a validated data migration
+- secure deployment and environment management
+- protected production media storage
+- backups and recovery
+- verified email delivery and logging
+- owner-facing billing details and utility/service entry
+- account onboarding and lifecycle
+- automated tests, CI, and coverage
+- a deliberate long-term legacy strategy
 
-The project has moved beyond a simple school demo. It is now being hardened toward a real web application.
+## Product Boundaries
 
-Production standard requires:
-
-- secure settings
-- production database
-- no root legacy exposure
-- complete owner-facing billing
-- account lifecycle
-- deployment-ready static/media/email/logging
-
-## Legacy Context
-
-The original HOSTELLO apps are still present. They must not be deleted unless explicitly approved.
-
-Legacy routes should remain isolated. Root-level legacy exposure must not be reintroduced.
-
-Allowed legacy routes at the current state:
-
-- `/legacy/`
-- `/legacy/login/`
-
-Do not add `/legacy/api/` or `/legacy/fees/` unless explicitly approved.
+- RentEase routes and UI are the main product surface.
+- Legacy routes remain limited to `/legacy/` and `/legacy/login/`.
+- Public pages expose only listing-safe data.
+- Owner data is owner-scoped; tenant data is tenant-scoped.
+- Citizen identity data and authentication internals are never product UI content.

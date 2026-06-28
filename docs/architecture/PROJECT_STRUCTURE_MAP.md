@@ -1,171 +1,117 @@
 # RentEase Project Structure Map
 
-## Purpose
+This is the canonical map for repository paths, active/legacy boundaries, runtime data, documentation, and agent resources.
 
-This document describes the current RentEase repository layout after the backend/frontend restructure and documentation consolidation.
-
-RentEase uses Django Templates, not React/Vite.
-
-## Current Top-Level Structure
+## Top-Level Structure
 
 ```text
 RentEase/
-├── AGENTS.md
-├── README.md
-├── assets/                       # historical tracked HOSTELLO media, kept for now
-├── backend/                      # Django backend
-├── frontend/                     # Django Templates and static assets
-└── docs/                         # documentation
+|-- AGENTS.md                    # mandatory short agent entry
+|-- README.md                    # human project overview and setup
+|-- .agents/
+|   |-- rules/                   # minimal always-on safety rule
+|   `-- skills/rentease/         # progressive RentEase workflow and references
+|-- assets/                      # tracked historical HOSTELLO media
+|-- backend/                     # Django backend and apps
+|-- frontend/                    # Django templates and static files
+`-- docs/
+    |-- agent/                   # current state, next action, product, security, roadmap
+    |-- architecture/            # current structure and legacy dependency map
+    |-- demo/                    # current local demo guidance
+    |-- ui/                      # current design guidance
+    `-- archive/                 # superseded and historical documents
 ```
 
-## Backend Structure
+## Backend
 
-```text
-backend/
-├── manage.py
-├── requirements.txt
-├── venv/                         # official local virtual environment, ignored by Git
-├── db.sqlite3                    # local database, ignored by Git
-├── media/                        # local uploaded/demo media, ignored by Git
-├── hostello_backend/             # Django config package, do not rename casually
-├── accounts/
-├── properties/
-├── tenants/
-├── contracts/
-├── billing/
-├── maintenance/
-├── listings/
-├── portal/
-├── reports/
-├── students/                     # legacy HOSTELLO app
-├── attendance/                   # legacy HOSTELLO app
-├── fees/                         # legacy HOSTELLO app
-├── requests/                     # legacy HOSTELLO app
-└── notices/                      # legacy HOSTELLO app
-```
+Important paths:
 
-## Django Config Package
+- `backend/manage.py`
+- `backend/requirements.txt`
+- `backend/.env.example`
+- `backend/hostello_backend/` - Django config package; do not rename
+- `backend/venv/` - official local venv; ignored and protected
+- `backend/db.sqlite3` - local database; ignored and protected
+- `backend/media/` - local uploads; ignored and protected
 
-```text
-backend/hostello_backend/
-├── settings.py
-├── urls.py
-├── wsgi.py
-└── asgi.py
-```
+`DJANGO_SETTINGS_MODULE` remains `hostello_backend.settings`.
 
-Important:
+### Active RentEase Apps
 
-- `DJANGO_SETTINGS_MODULE` remains `hostello_backend.settings`.
-- `ROOT_URLCONF` remains `hostello_backend.urls`.
-- Do not rename `backend/hostello_backend/` without a dedicated migration/refactor plan.
+| App | Purpose |
+|---|---|
+| `accounts` | Users and owner profiles |
+| `properties` | Rooms |
+| `tenants` | Tenants and co-tenants |
+| `contracts` | Rental contracts |
+| `billing` | Price configuration, invoices, details, payments |
+| `maintenance` | Repairs, maintenance records, notifications |
+| `listings` | Public listings and viewing registrations |
+| `portal` | Owner/tenant portal and demo seed command |
+| `reports` | Staff-only reports |
 
-## Frontend Structure
+### Legacy HOSTELLO Apps
 
-```text
-frontend/
-├── templates/
-└── static/
-```
+`students`, `attendance`, `fees`, `requests`, and `notices` remain installed with models, migrations, admin registrations, or cross-imports. Do not move, rename, or delete them without an approved legacy-removal plan.
 
-Main template groups:
+For dependency evidence, read `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md` only when legacy work is in scope.
 
-```text
-frontend/templates/home.html
-frontend/templates/404.html
-frontend/templates/500.html
-frontend/templates/portal/
-frontend/templates/listings/
-frontend/templates/reports/
-frontend/templates/admin/
-frontend/templates/payments/
-```
+## Frontend
 
-Main static groups:
+All current Django templates, including reports, live under `frontend/templates/`.
 
-```text
-frontend/static/css/
-frontend/static/js/
-frontend/static/admin/
-frontend/static/rentease/
-frontend/static/vendor/
-```
+Current product surfaces:
 
-Current RentEase UI mainly uses:
+- `frontend/templates/home.html`
+- `frontend/templates/listings/`
+- `frontend/templates/portal/`
+- `frontend/templates/reports/`
+- `frontend/templates/404.html` and `500.html`
 
-```text
-frontend/static/css/rentease-design.css
-frontend/static/css/rentease-layout.css
-frontend/static/admin/css/custom_admin.css
-```
+Current styles:
 
-Legacy frontend files remain for `/legacy/` and old admin surfaces:
+- `frontend/static/css/rentease-design.css`
+- `frontend/static/css/rentease-layout.css`
+- `frontend/static/admin/css/custom_admin.css`
 
-```text
-frontend/templates/index.html
-frontend/templates/login.html
-frontend/templates/dashboard.html
-frontend/templates/admin/
-frontend/templates/payments/success.html
-frontend/static/css/styles.css
-frontend/static/css/student-dashboard.css
-frontend/static/js/script.js
-frontend/static/js/student-dashboard.js
-```
+Legacy surfaces not used for normal RentEase UI work:
 
-Do not delete these without a dedicated legacy template/static removal audit.
+- `frontend/templates/index.html`, `login.html`, `dashboard.html`
+- `frontend/templates/admin/`
+- `frontend/templates/payments/success.html`
+- `frontend/static/css/styles.css`
+- `frontend/static/css/student-dashboard.css`
+- `frontend/static/js/script.js`
+- `frontend/static/js/student-dashboard.js`
+- root `assets/`
 
-## Archived Helper Files
+## Database and Runtime Data
 
-These files are no longer active root helper files:
+- SQLite is the current local database.
+- PostgreSQL is the production target but has not been migrated.
+- Do not scan or edit `db.sqlite3`, media, venvs, logs, static runtime output, backups, or `.env` during ordinary code/documentation work.
+- Migrations are part of source control but may be created only with explicit approval.
 
-```text
-docs/archive/Working.py
-docs/archive/run_frontend.bat
-```
+## Documentation Authority
 
-Local backup JSON files were moved to:
+Read `docs/README.md` for the complete authority and task-routing table.
 
-```text
-docs/archive/local-backups/
-```
+Current documents live in `docs/agent/`, `docs/architecture/`, `docs/ui/`, and `docs/demo/`. Superseded audits, old rules, SPQM coursework/status files, plans, phase reports, and duplicate root documents live in `docs/archive/`.
 
-The backup JSON files remain ignored/local and should not be committed.
+Archive content is not current policy. Do not scan it unless historical context is required.
 
-## Historical Media
+## Agent Resources
 
-`assets/` is kept at the repository root for now because it contains tracked historical HOSTELLO screenshots/video. It is not known to be required by Django runtime, but moving it would create a large rename and may affect documentation history.
+- `AGENTS.md` gives mandatory startup and hard rules.
+- `.agents/rules/rentease-safety.md` is the minimal tool-facing safety rule.
+- `.agents/skills/rentease/SKILL.md` routes substantive tasks.
+- Skill references load backend, UI, or documentation context separately.
 
-Future cleanup should handle `assets/` in a separate media/archive phase.
+## Editing Rules
 
-## Documentation Structure
-
-```text
-docs/
-├── README.md
-├── architecture/
-├── demo/
-├── security/
-├── spqm/
-├── ui/
-├── agent/
-└── archive/
-```
-
-Archived phase history and old plans are stored under:
-
-```text
-docs/archive/phase-history/
-docs/archive/old-plans/
-```
-
-## Runtime Safety Rules
-
-- Do not change models or migrations unless explicitly approved.
-- Do not move Django apps unless explicitly approved.
-- Do not rename `backend/hostello_backend/` unless explicitly approved.
-- Do not delete legacy apps `students`, `attendance`, `fees`, `requests`, `notices` without a dedicated removal plan.
-- Do not delete templates/static/media without dependency review.
-- Use `backend/venv/` for local Django commands.
-- Do not use a root-level `venv/`.
+- Inspect the real target before editing.
+- Keep active RentEase work out of legacy files unless explicitly requested.
+- Preserve owner/tenant scoping and sensitive-data rules.
+- Plan before settings, schema, auth, billing, database, deployment, or legacy changes.
+- Run Django checks after all changes, including documentation-only reorganizations.
 

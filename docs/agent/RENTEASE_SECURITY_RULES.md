@@ -1,20 +1,15 @@
 # RentEase Security Rules
 
+This file is the canonical durable security reference. Read it for permissions, data access, admin, billing, account, settings, or media work.
+
 ## Owner Scoping
 
-Owner data must always be scoped through:
+Resolve the owner through `request.user.rentease_profile` and scope data through owned rooms or related objects.
 
-```python
-request.user.rentease_profile
-```
-
-Safe owner query patterns:
+Examples:
 
 ```python
 Room.objects.filter(owner=profile)
-RoomListing.objects.filter(room__owner=profile)
-ViewingRegistration.objects.filter(listing__room__owner=profile)
-RepairRequest.objects.filter(room__owner=profile)
 Contract.objects.filter(room__owner=profile)
 Invoice.objects.filter(contract__room__owner=profile)
 PaymentHistory.objects.filter(invoice__contract__room__owner=profile)
@@ -23,13 +18,9 @@ Tenant.objects.filter(contracts__room__owner=profile).distinct()
 
 ## Tenant Scoping
 
-Tenant data must always be scoped through:
+Resolve the tenant through `request.user.tenant_profile` and scope every query to that tenant.
 
-```python
-request.user.tenant_profile
-```
-
-Safe tenant query patterns:
+Examples:
 
 ```python
 Contract.objects.filter(tenant=tenant)
@@ -38,42 +29,47 @@ PaymentHistory.objects.filter(invoice__contract__tenant=tenant)
 RepairRequest.objects.filter(tenant=tenant)
 ```
 
-## Forbidden Sensitive Query Patterns
-
-For sensitive detail/update/delete views, do not use:
-
-```python
-get_object_or_404(Model, pk=pk)
-Model.objects.all()
-```
-
-Use scoped querysets:
-
-```python
-get_object_or_404(owner_scoped_queryset(profile), pk=pk)
-get_object_or_404(tenant_scoped_queryset(tenant), pk=pk)
-```
+For sensitive detail, update, or delete views, never use unrestricted `Model.objects.all()` or `get_object_or_404(Model, pk=pk)`.
 
 ## Sensitive Data
 
-Do not expose:
+Never expose on public, owner, or tenant surfaces:
 
-- password
-- account/auth internals
-- permission fields
-- citizen_id
-- citizen_id_front
-- citizen_id_back
-- citizen ID file/image
+- `citizen_id`, `citizen_id_front`, `citizen_id_back`
+- identity files or direct media URLs
+- passwords, hashes, tokens, permission/auth internals
 - payment collector internals
-- other owner data
-- other tenant data
-- admin-only notes to tenant/public
-- owner internal notes to tenant/public
+- admin/private owner notes
+- unrelated owner or tenant records
 
-## Legacy Rules
+Use fake data only in demos and screenshots.
 
-Do not re-add root legacy routes:
+## Admin Identity Rules
+
+- Do not add identity fields to `list_display` or `search_fields`.
+- Keep identity fields only in the collapsed `Sensitive identity data` detail section.
+- Keep sensitive identity fields read-only for non-superuser staff.
+- Do not expose co-tenant identity fields through contract inlines.
+- Use phone/email/name for safe search when needed.
+
+## Billing Integrity
+
+- Scope invoices and payments through the owner or tenant relationship.
+- Preserve calculated totals, paid amount, remaining amount, and status transitions.
+- Reject overpayment.
+- Do not expose collector/internal payment fields to tenants.
+- Plan before changing invoice detail or utility logic.
+
+## Settings, Database, and Media
+
+- Do not commit `.env`, databases, dumps, credentials, or uploaded media.
+- Treat PostgreSQL migration and production media storage as separate approved phases.
+- Do not assume Django's DEBUG media serving is production access control.
+- Preserve environment-driven security settings and local development behavior.
+
+## Legacy Boundaries
+
+Do not re-add these root routes:
 
 ```python
 path('', include('students.urls'))
@@ -81,21 +77,13 @@ path('api/', include('requests.urls'))
 path('fees/', include('fees.urls', namespace='fees'))
 ```
 
-Allowed legacy routes:
+Only `/legacy/` and `/legacy/login/` are approved legacy entry points.
 
-- `/legacy/`
-- `/legacy/login/`
+## Security Definition of Done
 
-Do not add `/legacy/api/` or `/legacy/fees/` unless explicitly approved.
-
-## Definition of Done
-
-Security-sensitive work is not done until:
-
-- owner/tenant scoped access is verified
-- protected routes reject the wrong roles
-- unrelated owner/tenant records are not visible
-- sensitive fields are not rendered
-- legacy root routes are not re-exposed
-- Django check passes
-- migration dry-run is clean unless migrations were approved
+- Verify correct-role access and wrong-role rejection.
+- Verify unrelated owner/tenant records cannot be accessed by identifier changes.
+- Scan rendered output for sensitive fields and raw template syntax.
+- Run Django check and migration dry-run.
+- Test affected routes.
+- Confirm no legacy root route was restored.

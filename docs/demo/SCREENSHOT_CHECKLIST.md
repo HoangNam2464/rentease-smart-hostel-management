@@ -7,14 +7,9 @@ Capture a clean visual set for project presentation, README updates, or a short 
 Use this checklist together with:
 
 ```text
-docs/ui/PHASE_17C_FINAL_VISUAL_QA.md
-docs/demo/PHASE_18A_SCREENSHOT_VIDEO_PREP.md
-docs/ui/PHASE_19A_PRODUCT_GRADE_UI_REDESIGN.md
-docs/ui/PHASE_19B_VIETNAMESE_COPY_AND_HUMAN_UI_FIXES.md
 docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md
-docs/ui/PHASE_20A_PROFESSIONAL_UI_REDESIGN.md
-docs/ui/PHASE_20B_TEMPLATE_REFERENCE_UI_DIRECTION.md
-docs/ui/PHASE_20C_REFERENCE_BASED_UI_REDESIGN.md
+docs/demo/FINAL_DEMO_CHECKLIST.md
+docs/demo/DEMO_DATA_SEED_USAGE.md
 ```
 
 Recommended capture setup:
@@ -107,8 +102,4 @@ After Phase 20C, capture screenshots from the reference-based UI:
 - tenant pages should show the simpler readable portal direction
 - public room visuals are safe CSS panels unless real license-checked images are added later
 
-Recommended next step:
-
-```text
-Run Phase 20D browser visual review, then capture screenshots and record the demo video.
-```
+This checklist is optional presentation support. It is not the current product roadmap.

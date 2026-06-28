@@ -1,60 +1,65 @@
-# RentEase Documentation Index
+# RentEase Documentation System
 
-This folder contains the working documentation for RentEase, a Django-based boarding-house / rental-room management system.
+RentEase documentation is organized by responsibility. Future agents should load only the context needed for the current task.
 
-RentEase is currently **local-demo ready**, but it is **not production-ready yet**.
+## Read For Every Task
 
-## Recommended Reading Order
+1. `AGENTS.md` - mandatory rules and startup checks
+2. `docs/agent/RENTEASE_CURRENT_STATE.md` - verified current truth and known gaps
+3. `docs/agent/NEXT_ACTION.md` - one recommended next task
 
-For demo, submission, or onboarding, read in this order:
+For substantive work, use the repo-local skill at `.agents/skills/rentease/SKILL.md`. It routes tasks to small backend, UI, or documentation references.
 
-1. `README.md`
-2. `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-3. `docs/demo/FINAL_DEMO_CHECKLIST.md`
-4. `docs/demo/DEMO_DATA_SEED_USAGE.md`
-5. `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md`
-6. `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
-7. `docs/architecture/HELPER_FILE_CLEANUP.md`
-8. `docs/security/PHASE_20N_ADMIN_SEARCH_PRIVACY_HARDENING.md`
+## Current Sources of Truth
 
-## Main Documentation Areas
-
-| Folder | Purpose |
+| Document | Responsibility |
 |---|---|
-| `docs/architecture/` | Project structure, cleanup audits, legacy dependency notes |
-| `docs/demo/` | Demo setup, seed data, final demo checklist, walkthrough docs |
-| `docs/security/` | Privacy and admin exposure hardening notes |
-| `docs/spqm/` | Software process and quality management documentation |
-| `docs/ui/` | Current UI/design system documentation and selected UI audit outputs |
-| `docs/agent/` | Agent operating rules and current project state |
-| `docs/archive/` | Old phase logs, old plans, helper files, and local ignored backup archive |
+| `AGENTS.md` | Non-negotiable rules, startup, context routing |
+| `docs/agent/RENTEASE_CURRENT_STATE.md` | Current branch, phase, verification, gaps |
+| `docs/agent/NEXT_ACTION.md` | One immediate next action |
+| `docs/agent/RENTEASE_PRODUCT_CONTEXT.md` | Product purpose, users, capabilities, boundaries |
+| `docs/architecture/PROJECT_STRUCTURE_MAP.md` | Backend/frontend/docs/database/archive/legacy map |
+| `docs/agent/RENTEASE_SECURITY_RULES.md` | Owner/tenant scoping and sensitive-data rules |
+| `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` | Current UI and design guidance |
+| `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md` | Ordered production-readiness work |
+| `docs/agent/AUTONOMOUS_WORK_LOG.md` | Append-only chronology, not current truth |
 
-## Current Runtime Layout
+## Task-Specific Reading
 
-```text
-backend/   # Django backend, apps, manage.py, settings
-frontend/  # Django templates and static assets
-docs/      # Documentation
-```
+| Task | Load these documents |
+|---|---|
+| Django/backend/security/billing/settings | Skill `references/backend-safety.md`, then `RENTEASE_SECURITY_RULES.md` |
+| UI/templates/CSS/design | Skill `references/ui-design.md`, then the UI design system |
+| Documentation/reorganization | Skill `references/documentation.md`, then this index |
+| Architecture or legacy boundaries | `PROJECT_STRUCTURE_MAP.md`; use `LEGACY_DEPENDENCY_AUDIT.md` only if legacy work is in scope |
+| Local demo setup | `docs/demo/LOCAL_SETUP_AND_DEMO_DATA.md` and `DEMO_DATA_SEED_USAGE.md` |
+| Demo verification | `docs/demo/FINAL_DEMO_CHECKLIST.md` |
 
-Official virtual environment:
+Do not read all of these by default.
 
-```text
-backend/venv/
-```
+## Directory Responsibilities
 
-Run Django commands from `backend/`:
+| Path | Purpose |
+|---|---|
+| `docs/agent/` | Current product state, next action, security, roadmap, work log |
+| `docs/architecture/` | Current structure map and necessary legacy dependency reference |
+| `docs/ui/` | Current design guidance |
+| `docs/demo/` | Current local setup, seed, checklist, and screenshot guidance |
+| `docs/archive/` | Superseded audits, old rules, phase logs, old plans, and historical reports |
 
-```powershell
-.\venv\Scripts\python.exe manage.py check
-.\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
-```
+## Archive Policy
 
-## Important Notes
+- Archive files are retained for traceability, not daily instructions.
+- Do not scan `docs/archive/` unless a task needs historical evidence.
+- Do not treat a phase log, old plan, audit, or archived rule as current policy.
+- Move newly superseded documents into a descriptive archive folder; do not delete them silently.
+- Update links in current documents when a source of truth moves.
 
-- The inner Django config package remains `backend/hostello_backend/`.
-- `DJANGO_SETTINGS_MODULE` remains `hostello_backend.settings`.
-- Legacy HOSTELLO apps still exist and should not be deleted without a dedicated dependency/removal plan.
-- Historical phase logs and old plans are archived, not deleted.
-- Demo data must remain fake/local-only and must not include real citizen identity data.
+## Updating Documentation
+
+- Change `RENTEASE_CURRENT_STATE.md` only when current project truth changes.
+- Change `NEXT_ACTION.md` only when the recommended next task changes.
+- Append to `AUTONOMOUS_WORK_LOG.md`; never rewrite its history.
+- Put durable product facts in product context, durable paths in the structure map, durable security rules in security rules, and durable visual rules in the UI guide.
+- Avoid copying the same state or rule across multiple files.
 

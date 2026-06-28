@@ -4,87 +4,63 @@
 
 | Item | Current truth |
 |---|---|
-| Branch | `complete-product` |
-| HEAD at Session A start | `93b56a4 Production settings split with env-driven config (Phase 14B-2)` |
-| Latest completed phase | Phase 14B-2: Production Settings Split |
-| Latest available phase tag | `phase20o-admin-sensitive-detail-permissions` |
+| Expected branch | `complete-product` |
+| Latest product phase | Phase 14B-2: Production Settings Split |
 | Product classification | Local-demo ready; not production-ready |
+| Documentation system | Consolidated entry + repo-local RentEase skill |
 
-Always verify branch, status, log, tags, Django check, and migration dry-run locally before work.
+Always verify the actual commit, branch, worktree, tags, Django check, and migration dry-run locally.
 
-## Actual Structure
+## Runtime Structure
 
-RentEase uses the restructured layout:
-
-- Django backend and `manage.py`: `backend/`
+- Django backend: `backend/`
 - Django config package: `backend/hostello_backend/`
-- Settings module: `hostello_backend.settings`
-- Templates: `frontend/templates/`
-- Static files: `frontend/static/`
-- Documentation: `docs/`
-- Official local venv: `backend/venv/`
-- Environment template: `backend/.env.example`
+- Templates and reports templates: `frontend/templates/`
+- Static assets: `frontend/static/`
+- Local SQLite database: `backend/db.sqlite3` (ignored; do not touch casually)
+- Official virtual environment: `backend/venv/`
+- Current documentation: `docs/`
+- Historical documentation: `docs/archive/`
+- Repo-local agent skill: `.agents/skills/rentease/`
 
-The inner package name `hostello_backend` must not be renamed casually. Legacy apps remain installed and isolated; they are not approved for removal.
+## Product and UI State
 
-## Current UI State
-
-- Public room flow, owner portal, tenant portal, reports, admin styling, error pages, and responsive layouts have received the Phase 15-20 polish sequence.
-- Active shared CSS is `rentease-design.css` plus `rentease-layout.css`; admin overrides use `custom_admin.css`.
-- The UI is suitable for a polished local demo.
-- Manual screenshots/video remain incomplete, and several old demo/UI guides contain stale phase links or status text.
-- No formal automated browser or Django test suite is established; prior confidence comes from Django Client checks and manual/phase verification.
+- Visitor, owner, tenant, admin, and staff-report flows exist.
+- Public, owner, tenant, reports, admin, and error-page UI received the Phase 15-20 polish sequence.
+- Active CSS: `rentease-design.css`, `rentease-layout.css`, and admin `custom_admin.css`.
+- The project is suitable for a polished local demo.
+- Manual screenshot/video capture remains optional presentation work.
 
 ## Production Settings State
 
-Phase 14B-2 is complete:
+Phase 14B-2 completed environment-driven settings, `DATABASE_URL` support, WhiteNoise, conditional production security settings, RentEase email/logging configuration, `Asia/Ho_Chi_Minh`, and `backend/.env.example`.
 
-- settings are environment-driven through `python-decouple`
-- `ALLOWED_HOSTS` is environment-driven
-- `DATABASE_URL` is supported through `dj-database-url`, with SQLite fallback for local use
-- WhiteNoise and environment-aware static storage are configured
-- production security settings are enabled conditionally when `DEBUG=False`
-- timezone is `Asia/Ho_Chi_Minh`
-- email identity and logging use RentEase-oriented configuration
-- `backend/.env.example` exists
-
-This does not make the application production-ready. PostgreSQL data migration, production deployment verification, media access/storage, backups, CI/tests, and operational deployment documentation remain incomplete.
+Remaining production work includes PostgreSQL migration planning/execution, production deployment verification, media access/storage, backups, email delivery verification, CI, automated tests, and coverage.
 
 ## Privacy and Security State
 
-- Public, owner, and tenant surfaces must never expose citizen identity fields/files or unrelated users' data.
-- Owner and tenant querysets must remain scoped to the authenticated owner/tenant.
-- Tenant and co-tenant admin lists/search do not include `citizen_id`.
-- Contract and invoice admin search use safe contact fields rather than identity lookups.
-- Sensitive tenant identity fields remain in collapsed admin detail sections.
-- Phase 20O makes those fields read-only for non-superuser staff; superusers retain edit access.
-- Production-grade media access control for identity uploads remains a known gap.
+- Owner and tenant portal data must remain scoped to the authenticated profile.
+- Citizen identity fields/files are forbidden on public, owner, and tenant surfaces.
+- Admin list/search exposure of `citizen_id` is removed.
+- Sensitive identity fields are read-only for non-superuser staff in admin detail forms.
+- Production-grade access control/storage for uploaded identity media remains a gap.
 
-## Documentation Cleanup State
+## Documentation State
 
-Session A inventoried 83 pre-existing Markdown files and created `DOCS_CONSOLIDATION_AUDIT.md` as the 84th. It found:
+- `AGENTS.md` is now a short mandatory entry file.
+- `.agents/skills/rentease/` provides progressive task-specific guidance.
+- `docs/README.md` defines current sources of truth and archive policy.
+- Superseded rules, audits, plans, SPQM status documents, and completed reports are under `docs/archive/`.
+- Archive documents are historical evidence, not current instructions.
 
-- stale phase/status data in roadmap, SPQM, demo, UI, and technical-analysis docs
-- conflicting automatic push/tag instructions
-- duplicate demo and audit documents
-- historical files still outside `docs/archive/`
-- plaintext demo credentials in two demo-package documents
+## Known Product Gaps
 
-No files were moved or deleted. `PROJECT_STRUCTURE_MAP.md` and root `README.md` were accurate enough to leave unchanged.
+- PostgreSQL migration is not planned or executed.
+- Owner-facing invoice detail/utility entry is incomplete.
+- Account onboarding, invitation, recovery, and lifecycle are incomplete.
+- Deployment, media, backup, CI, and automated test coverage remain incomplete.
+- Legacy HOSTELLO apps remain installed and intentionally isolated.
 
-## Known Gaps
+## Next Safe Action
 
-- Production database is still SQLite; PostgreSQL migration has not been planned or executed.
-- Production deployment and `DEBUG=False` behavior need dedicated verification.
-- Media storage/access, backups, email delivery, CI, automated tests, and coverage are incomplete.
-- Owner-facing invoice detail/utility entry and account lifecycle remain product gaps.
-- Legacy HOSTELLO apps and surfaces remain intentionally present.
-- Roadmap/SPQM/demo docs require later reconciliation after agent rules are rebuilt.
-
-## Next Safe Phase
-
-```text
-Session B - Rebuild AGENTS.md and Agent Rules from Docs Audit
-```
-
-After Session B, the product roadmap can return to Phase 14C PostgreSQL Migration Planning. Phase 14C must be planned and explicitly approved before implementation.
+See `docs/agent/NEXT_ACTION.md`.

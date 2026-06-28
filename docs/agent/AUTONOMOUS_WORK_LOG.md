@@ -1429,3 +1429,37 @@ Session B - Rebuild AGENTS.md and Agent Rules from Docs Audit
 ```
 
 Use `DOCS_CONSOLIDATION_AUDIT.md`, update `AGENTS.md`, reconcile minimal `.agents/rules/`, and do not implement Phase 14C during Session B.
+
+## Session B - Agent Skill and Documentation Reorganization (2026-06-28)
+
+### Status
+
+Completed.
+
+### Summary
+
+- Verified branch, clean starting worktree, commit history, tags, Django check, and migration dry-run.
+- Studied `pbakaus/impeccable` only for its organizational pattern: short repository entry, separate product/design context, repo-local skill, and task-routed references.
+- Replaced the large root agent prompt with a concise mandatory entry and source-of-truth order.
+- Created `.agents/skills/rentease/` with backend, UI, and documentation references loaded only when relevant.
+- Consolidated the current documentation authority in `docs/README.md`.
+- Corrected the canonical project map, including the reports template path under `frontend/templates/reports/`.
+- Updated current state, product context, security rules, UI guidance, production roadmap, and next action.
+- Moved superseded rules, audits, autonomous guidance, SPQM status/coursework docs, duplicate root docs, and completed reports into descriptive `docs/archive/` folders.
+- Preserved every moved document; nothing was deleted.
+- No application code, settings, models, migrations, templates, static files, database, media, venv, or runtime output was changed.
+
+### Documentation System
+
+- Always read: `AGENTS.md`, `RENTEASE_CURRENT_STATE.md`, `NEXT_ACTION.md`.
+- Load by task: RentEase skill backend, UI, or documentation reference.
+- Use canonical product, architecture, security, UI, and roadmap documents for durable context.
+- Use `docs/archive/` only for historical evidence.
+
+### Exact Next Recommended Action
+
+```text
+Phase 14C - PostgreSQL Migration Planning
+```
+
+Planning only; implementation requires explicit approval.

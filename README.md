@@ -239,14 +239,16 @@ Current status:
 
 ## Related Documentation
 
+- `docs/README.md`
+- `docs/agent/RENTEASE_CURRENT_STATE.md`
+- `docs/agent/NEXT_ACTION.md`
+- `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
 - `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- `docs/architecture/FOODIEGO_STRUCTURE_REFERENCE.md`
-- `docs/architecture/CLEANUP_AUDIT.md`
 - `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
-- `docs/architecture/HELPER_FILE_CLEANUP.md`
-- `docs/demo/`
-- `docs/security/`
-- `docs/ui/`
+- `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
+- `docs/demo/FINAL_DEMO_CHECKLIST.md`
+
+Historical audits, plans, phase reports, and superseded rules are retained under `docs/archive/` and should not be used as current instructions.
 
 ## Contact / Support
 
@@ -254,8 +256,10 @@ This is a student/project development repository. For setup or maintenance, star
 
 1. `README.md`
 2. `AGENTS.md`
-3. `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-4. `docs/architecture/LEGACY_DEPENDENCY_AUDIT.md`
+3. `docs/agent/RENTEASE_CURRENT_STATE.md`
+4. `docs/agent/NEXT_ACTION.md`
+
+For agent-assisted work, the repo-local skill is `.agents/skills/rentease/SKILL.md`.
 
 When in doubt, run Django checks before changing code:
 
@@ -264,4 +268,3 @@ cd backend
 .\venv\Scripts\python.exe manage.py check
 .\venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
-
