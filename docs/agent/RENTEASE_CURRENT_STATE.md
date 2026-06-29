@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-3A1: Additive Property Schema |
+| Latest product phase | Phase 14C-3A2: Default Property Backfill |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -48,7 +48,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - PostgreSQL has not been provisioned or populated; SQLite remains the verified local runtime database.
 - Phase 14C-2 established a 20-test baseline covering role login and rejection, public listings and viewing registration, cross-owner/cross-tenant isolation, billing snapshots/totals/overpayment, database uniqueness, and maintenance relationship validation.
 - Phase 14C-3A1 added the `Property` model and nullable `Room.property` transition field. `Room.owner` remains authoritative; no property backfill, queryset switch, form, admin, UI, or real-data change has occurred.
-- The suite now contains 26 tests, including Property ownership/uniqueness, transition-safe blank location fields, and forward/backward migration preservation.
+- Phase 14C-3A2 added a reversible data migration that creates one deterministic default Property per owner profile, copies only an existing rental address, and links previously unlinked Rooms without changing `Room.owner`. It has been exercised only in disposable test databases; protected local SQLite data was not altered.
+- The suite now contains 27 tests, including Property ownership/uniqueness, transition-safe blank location fields, deterministic backfill, owner/property matching, and forward/backward migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 

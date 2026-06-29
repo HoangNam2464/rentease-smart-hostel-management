@@ -19,9 +19,9 @@ Follow `docs/architecture/TARGET_DATA_MODEL.md`. Each implementation stage needs
 
 - `14C-1` target architecture planning and ERD decision
 - `14C-2` schema safety baseline and legacy production-table audit
-- `14C-3A1` additive Property schema and nullable room relationship
-- `14C-3A2` reversible default-Property backfill
-- `14C-3A3` Property integration across portal, admin, listings, reports, and seed data
+- `14C-3A1` additive Property schema and nullable room relationship (complete)
+- `14C-3A2` reversible default-Property backfill (complete)
+- `14C-3A3` staged Property integration: owner/admin first, then listings/reports/seed data
 - `14C-3A4` required room relationship and Property-scoped room-code constraint
 - `14C-3B` invoice-line, service, meter, and reading schema/domain foundation; UI workflow remains Phase 14D
 - `14C-3C1` maintenance lifecycle correction

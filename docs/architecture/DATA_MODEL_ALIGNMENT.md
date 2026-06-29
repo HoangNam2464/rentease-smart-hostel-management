@@ -32,7 +32,7 @@ The diagram contains 15 conceptual entities. All 15 have an active Django equiva
 
 `accounts.WardenProfile` also exists for retained HOSTELLO compatibility and is intentionally outside the RentEase ERD.
 
-`properties.Property` / `co_so_cho_thue` is an approved RentEase extension above rooms. It is not one of the original 15 diagram entities. Phase 14C-3A1 created it without changing current owner-scoped behavior.
+`properties.Property` / `co_so_cho_thue` is an approved RentEase extension above rooms. It is not one of the original 15 diagram entities. Phase 14C-3A2 now provides a deterministic default-Property backfill while `Room.owner` remains authoritative.
 
 ## Relationship Corrections
 

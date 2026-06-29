@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
-from django.db import IntegrityError, connection, transaction
+from django.db import IntegrityError, connection, models, transaction
 from django.db.migrations.executor import MigrationExecutor
 from django.test import TestCase, TransactionTestCase
 
@@ -129,3 +129,99 @@ class PropertyMigrationRehearsalTests(TransactionTestCase):
         ReversedRoom = reversed_apps.get_model('properties', 'Room')
         reversed_room = ReversedRoom.objects.get(pk=original_room_id)
         self.assertEqual(reversed_room.owner_id, original_owner_id)
+
+
+class PropertyBackfillMigrationTests(TransactionTestCase):
+    migrate_from = ('properties', '0002_property_room_property_and_more')
+    migrate_to = ('properties', '0003_backfill_default_properties')
+
+    def migrate(self, target):
+        executor = MigrationExecutor(connection)
+        executor.migrate([target])
+        return executor.loader.project_state([target]).apps
+
+    def tearDown(self):
+        executor = MigrationExecutor(connection)
+        executor.migrate(executor.loader.graph.leaf_nodes())
+        super().tearDown()
+
+    def test_backfill_links_rooms_and_reverses_without_inventing_location(self):
+        old_apps = self.migrate(self.migrate_from)
+        User = old_apps.get_model('accounts', 'User')
+        UserProfile = old_apps.get_model('accounts', 'UserProfile')
+        OldProperty = old_apps.get_model('properties', 'Property')
+        OldRoom = old_apps.get_model('properties', 'Room')
+
+        first_user = User.objects.create(username='backfill_owner_a', user_type='OWNER')
+        first_owner = UserProfile.objects.create(
+            user=first_user,
+            full_name='Backfill Owner A',
+            rental_address='123 Đường Hiện Hữu',
+        )
+        second_user = User.objects.create(username='backfill_owner_b', user_type='OWNER')
+        second_owner = UserProfile.objects.create(
+            user=second_user,
+            full_name='Backfill Owner B',
+            rental_address='',
+        )
+        existing_property = OldProperty.objects.create(
+            owner=first_owner,
+            property_code='EXISTING-PROPERTY',
+            name='Cơ sở đã tồn tại',
+        )
+        unlinked_room = OldRoom.objects.create(
+            owner=first_owner,
+            room_code='BACKFILL-ROOM',
+            room_name='Phòng cần backfill',
+            default_rent=Decimal('3000000.00'),
+        )
+        linked_room = OldRoom.objects.create(
+            owner=first_owner,
+            property=existing_property,
+            room_code='EXISTING-ROOM',
+            room_name='Phòng đã liên kết',
+            default_rent=Decimal('3500000.00'),
+        )
+        original_room_owners = dict(OldRoom.objects.values_list('pk', 'owner_id'))
+
+        new_apps = self.migrate(self.migrate_to)
+        NewProperty = new_apps.get_model('properties', 'Property')
+        NewRoom = new_apps.get_model('properties', 'Room')
+
+        self.assertEqual(NewProperty.objects.count(), 3)
+        self.assertEqual(NewRoom.objects.count(), 2)
+        first_default = NewProperty.objects.get(
+            owner_id=first_owner.pk,
+            property_code=f'AUTO-OWNER-{first_owner.pk}',
+        )
+        second_default = NewProperty.objects.get(
+            owner_id=second_owner.pk,
+            property_code=f'AUTO-OWNER-{second_owner.pk}',
+        )
+        self.assertEqual(first_default.address, '123 Đường Hiện Hữu')
+        self.assertEqual(first_default.ward, '')
+        self.assertEqual(first_default.province_city, '')
+        self.assertEqual(second_default.address, '')
+        self.assertEqual(second_default.ward, '')
+        self.assertEqual(second_default.province_city, '')
+        self.assertEqual(NewRoom.objects.get(pk=unlinked_room.pk).property_id, first_default.pk)
+        self.assertEqual(NewRoom.objects.get(pk=linked_room.pk).property_id, existing_property.pk)
+        self.assertFalse(NewRoom.objects.filter(property_id__isnull=True).exists())
+        self.assertFalse(NewRoom.objects.exclude(property_id=None).exclude(
+            owner_id=models.F('property__owner_id'),
+        ).exists())
+
+        reversed_apps = self.migrate(self.migrate_from)
+        ReversedProperty = reversed_apps.get_model('properties', 'Property')
+        ReversedRoom = reversed_apps.get_model('properties', 'Room')
+        self.assertEqual(ReversedProperty.objects.count(), 1)
+        self.assertEqual(ReversedRoom.objects.count(), 2)
+        self.assertIsNone(ReversedRoom.objects.get(pk=unlinked_room.pk).property_id)
+        self.assertEqual(
+            ReversedRoom.objects.get(pk=linked_room.pk).property_id,
+            existing_property.pk,
+        )
+        self.assertEqual(
+            dict(ReversedRoom.objects.values_list('pk', 'owner_id')),
+            original_room_owners,
+        )

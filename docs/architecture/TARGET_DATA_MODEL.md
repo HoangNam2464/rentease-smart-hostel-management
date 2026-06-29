@@ -192,18 +192,20 @@ Status: complete.
 
 #### Phase 14C-3A2 - Default Property Backfill
 
-Approval gate: requires a reviewed reversible data migration.
+Status: complete through a reviewed reversible data migration.
 
 - create one deterministic default Property per existing owner profile
 - copy `UserProfile.rental_address` when present and leave unknown structured location fields blank
 - link every existing Room to its owner's default Property
 - keep `Room.owner` authoritative and `Room.property` nullable at the schema level
 - verify row counts, owner/property consistency, uniqueness, and backward preservation without using real production data
+- stop on reserved-code collision or an owner/property mismatch rather than silently guessing
+- preserve any pre-existing Property relationship while reversing only migration-created defaults
 
 #### Phase 14C-3A3 - Product Integration
 
-- add owner-scoped Property admin and portal management
-- update room/listing forms, querysets, reports, public-safe presentation, and disposable seed data
+- first slice: add owner-scoped Property admin/portal management and restrict room forms to the authenticated owner's Properties
+- second slice: update listings, reports, public-safe presentation, and disposable seed data
 - reject selecting a Property owned by another owner
 - keep compatibility reads through `Room.owner` until all paths are verified
 
@@ -331,4 +333,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-3A1 is complete. The next implementation task is the separately approval-gated Phase 14C-3A2 data backfill. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A2 is complete. The next implementation task is the separately approval-gated owner/admin slice of Phase 14C-3A3. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
