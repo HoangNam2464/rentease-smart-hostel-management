@@ -36,7 +36,7 @@ Expected active application tables are:
 ```text
 accounts_user, accounts_user_groups, accounts_user_user_permissions
 nguoi_dung, accounts_wardenprofile
-phong
+co_so_cho_thue, phong
 khach_thue, nguoi_o_cung
 hop_dong
 cau_hinh_gia, hoa_don, chi_tiet_hoa_don, lich_su_thanh_toan

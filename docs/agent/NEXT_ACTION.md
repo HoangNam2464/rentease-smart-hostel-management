@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3A - Property Foundation
+Phase 14C-3A2 - Default Property Backfill
 ```
 
-Status: waiting for explicit user approval. Do not edit models or create migrations merely because this file names the next phase.
+Status: waiting for explicit user approval. Do not create the data migration merely because this file names the next phase.
 
 ## Goal
 
-Add the property/building layer between owner and room through a reversible transitional migration while preserving every current owner, tenant, listing, billing, repair, and report scope.
+Populate the additive Property schema without inventing addresses or changing current owner-scoped behavior.
 
 ## Required Context
 
@@ -22,24 +22,23 @@ Add the property/building layer between owner and room through a reversible tran
 - `docs/architecture/TARGET_DATA_MODEL.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- current `properties`, `portal`, `listings`, `reports`, admin, seed command, templates, migrations, and tests inspected directly
+- current `accounts.UserProfile`, `properties.Property`, `properties.Room`, migrations, disposable seed data, and tests inspected directly
 
 ## Approval Decisions Required Before Editing
 
-- approve Phase 14C-3A model and migration changes
-- confirm the minimum Property identifier, name, address, contact, status, and timezone fields
-- confirm one default Property per existing owner for the disposable-data backfill
-- confirm `Room.owner` remains temporarily as a compatibility field
-- confirm room-code uniqueness moves to Property plus room code only after backfill and scope updates
-- approve the forward/backward disposable-database migration rehearsal
+- approve the Phase 14C-3A2 reversible data migration
+- confirm one default Property is created for every existing owner profile, including owners without rooms
+- confirm deterministic codes may use the owner primary key and names may use the existing owner display name
+- confirm `rental_address` is copied when present while unknown ward/province/location fields remain blank
+- confirm every current Room is linked to its owner's default Property
 
 ## Expected Scope After Approval
 
-- add `Property` and a nullable transitional `Room.property`
-- create and review the data backfill migration
-- update owner-scoped querysets, forms, admin, public listings, reports, seed data, and tests
-- make the property relationship required only after isolation and backfill checks pass
-- keep authentication, billing calculations, legacy apps, production settings, and real data unchanged
+- add one reversible `RunPython` migration after `properties.0002`
+- preserve all owner-profile, room, contract, listing, invoice, repair, and payment rows
+- keep `Room.owner` authoritative and `Room.property` nullable at schema level
+- add migration tests for deterministic creation, room linking, no invented address, and reverse preservation
+- keep portal/admin/forms/reports/templates/seed data, authentication, billing, settings, legacy apps, and real data unchanged
 
 ## Required Checks
 
@@ -47,17 +46,17 @@ Add the property/building layer between owner and room through a reversible tran
 - `manage.py makemigrations --check --dry-run`
 - targeted tests and full test suite
 - `git diff --check`
-- migration forward/backward rehearsal on a disposable database copy
-- row-count, null-property, owner/property mismatch, and cross-owner isolation checks
+- migration forward/backward rehearsal in the disposable test database
+- owner/property counts, room counts, zero unlinked existing rooms after forward migration, zero owner/property mismatches, and reverse preservation
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3A approval has not been given
-- the backfill cannot map every room to exactly one owner-owned Property
+- explicit Phase 14C-3A2 approval has not been given
+- deterministic codes would collide or a room cannot map to exactly one owner-owned Property
 - owner/tenant/listing/report isolation differs during the transition
 - the migration is not reversible on disposable data
-- billing, authentication, settings, legacy runtime, or real personal data would need to change
+- invented personal/location data, billing, authentication, settings, legacy runtime, or real production data would be required
 - the starting worktree or Django checks are not clean
 
-Phase 14C-3B billing/meter work and Phase 14C-3D production legacy exclusion remain separately approval-gated.
+Phase 14C-3A3 product integration, Phase 14C-3B billing/meter work, and Phase 14C-3D production legacy exclusion remain separately approval-gated.

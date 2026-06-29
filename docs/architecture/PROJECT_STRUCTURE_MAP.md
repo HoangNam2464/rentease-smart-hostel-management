@@ -42,7 +42,7 @@ Important paths:
 | App | Purpose |
 |---|---|
 | `accounts` | Users and owner profiles |
-| `properties` | Rooms |
+| `properties` | Properties/buildings and rooms |
 | `tenants` | Tenants and co-tenants |
 | `contracts` | Rental contracts |
 | `billing` | Price configuration, invoices, details, payments |

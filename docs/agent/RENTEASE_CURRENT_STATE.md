@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-2: Schema Safety Baseline and Legacy Audit |
+| Latest product phase | Phase 14C-3A1: Additive Property Schema |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -47,6 +47,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Planned capability folders under `docs/features/planned/` contain no active app, model, migration, URL, or settings code.
 - PostgreSQL has not been provisioned or populated; SQLite remains the verified local runtime database.
 - Phase 14C-2 established a 20-test baseline covering role login and rejection, public listings and viewing registration, cross-owner/cross-tenant isolation, billing snapshots/totals/overpayment, database uniqueness, and maintenance relationship validation.
+- Phase 14C-3A1 added the `Property` model and nullable `Room.property` transition field. `Room.owner` remains authoritative; no property backfill, queryset switch, form, admin, UI, or real-data change has occurred.
+- The suite now contains 26 tests, including Property ownership/uniqueness, transition-safe blank location fields, and forward/backward migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 

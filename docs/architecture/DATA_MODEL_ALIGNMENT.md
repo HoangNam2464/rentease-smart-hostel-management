@@ -17,7 +17,7 @@ The diagram contains 15 conceptual entities. All 15 have an active Django equiva
 | `TAI_KHOAN` | `accounts.User` / `accounts_user` | Close. Django auth also owns staff, superuser, active-state, login, name, and permission fields. |
 | `NGUOI_DUNG` | `accounts.UserProfile` / `nguoi_dung` | Close. This is the owner/manager profile, not a second authentication table. |
 | `KHACH_THUE` | `tenants.Tenant` / `khach_thue` | Close. The account link is optional; status and timestamps also exist. |
-| `PHONG` | `properties.Room` / `phong` | Close. Description and timestamps also exist. |
+| `PHONG` | `properties.Room` / `phong` | Close. Description and timestamps also exist; the nullable Property link is transitional. |
 | `NGUOI_O_CUNG` | `tenants.CoTenant` / `nguoi_o_cung` | Direct match. |
 | `HOP_DONG` | `contracts.Contract` / `hop_dong` | Close. The previous-contract relationship is a self-reference. |
 | `CAU_HINH_GIA` | `billing.PriceConfig` / `cau_hinh_gia` | Partial. Current code links price configuration to a room; owner is derived through `room.owner`. |
@@ -32,12 +32,14 @@ The diagram contains 15 conceptual entities. All 15 have an active Django equiva
 
 `accounts.WardenProfile` also exists for retained HOSTELLO compatibility and is intentionally outside the RentEase ERD.
 
+`properties.Property` / `co_so_cho_thue` is an approved RentEase extension above rooms. It is not one of the original 15 diagram entities. Phase 14C-3A1 created it without changing current owner-scoped behavior.
+
 ## Relationship Corrections
 
 Use these relationships as current truth:
 
 1. `User` has optional one-to-one owner `UserProfile` and optional one-to-one `Tenant` profile.
-2. `Room` belongs to `UserProfile`; owner scoping is derived through this relationship.
+2. `Property` belongs to `UserProfile`. During the transition, `Room.property` is optional and `Room.owner` remains the authoritative owner-scoping relationship.
 3. `PriceConfig` belongs to `Room`. Do not add a duplicate direct owner foreign key without a separate design decision.
 4. `Contract` joins `Room` and `Tenant`, and may reference a previous `Contract`.
 5. `Invoice` belongs to `Contract`; `InvoiceDetail` is one-to-one with `Invoice`; `PaymentHistory` is many-to-one with `Invoice`.
@@ -49,7 +51,9 @@ Use these relationships as current truth:
 erDiagram
     USER ||--o| OWNER_PROFILE : has
     USER ||--o| TENANT : may_access_as
-    OWNER_PROFILE ||--o{ ROOM : owns
+    OWNER_PROFILE ||--o{ PROPERTY : owns
+    OWNER_PROFILE ||--o{ ROOM : owns_during_transition
+    PROPERTY o|--o{ ROOM : groups
     ROOM ||--o{ PRICE_CONFIG : priced_by
     ROOM ||--o{ ROOM_LISTING : advertised_as
     ROOM ||--o{ CONTRACT : rented_under
@@ -75,7 +79,7 @@ erDiagram
 
 The diagram and current schema both omit or only partially represent several production capabilities:
 
-- properties/buildings and reusable addresses above individual rooms
+- completing Property backfill, owner-scoping integration, and required room membership
 - room image galleries, amenities, and listing location/search metadata
 - service catalog, meter-reading history, and owner utility-entry workflow
 - owner and tenant onboarding, invitations, recovery, and account verification

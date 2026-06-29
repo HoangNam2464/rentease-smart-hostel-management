@@ -178,15 +178,42 @@ Expected files: test modules, current legacy-boundary reference, target-model re
 
 ### Phase 14C-3A - Property Foundation
 
-Approval gate: this phase changes models and creates migrations. Do not start until the user explicitly approves Phase 14C-3A after reviewing the Phase 14C-2 commit.
+Status: in progress through separately reviewed additive subphases.
 
-- implement `Property` and the staged room relationship
-- preserve owner isolation during the transition
-- update owner CRUD, public listings, reports, admin, seed command, and tests
-- run migration forward/backward on a disposable database copy
-- do not load real data
+#### Phase 14C-3A1 - Additive Property Schema
 
-Expected first-pass files:
+Status: complete.
+
+- added `Property` with owner-scoped code, name, structured location fields, optional coordinates, contact, status, timezone, house rules, and timestamps
+- allowed address and province/city to remain blank during transition so backfill never invents location data
+- added nullable `Room.property` while retaining `Room.owner` and its existing uniqueness/scoping behavior
+- added model, uniqueness, transition, and forward/backward migration tests
+- did not backfill data or change admin, forms, querysets, templates, reports, seed data, authentication, billing, or legacy behavior
+
+#### Phase 14C-3A2 - Default Property Backfill
+
+Approval gate: requires a reviewed reversible data migration.
+
+- create one deterministic default Property per existing owner profile
+- copy `UserProfile.rental_address` when present and leave unknown structured location fields blank
+- link every existing Room to its owner's default Property
+- keep `Room.owner` authoritative and `Room.property` nullable at the schema level
+- verify row counts, owner/property consistency, uniqueness, and backward preservation without using real production data
+
+#### Phase 14C-3A3 - Product Integration
+
+- add owner-scoped Property admin and portal management
+- update room/listing forms, querysets, reports, public-safe presentation, and disposable seed data
+- reject selecting a Property owned by another owner
+- keep compatibility reads through `Room.owner` until all paths are verified
+
+#### Phase 14C-3A4 - Required Relationship and Constraint
+
+- require `Room.property` only after zero-null and owner-match checks pass
+- move room-code uniqueness from owner plus room code to Property plus room code
+- retain `Room.owner` until a later reviewed cleanup after PostgreSQL cutover
+
+Expected files across the remaining subphases:
 
 - `backend/properties/models.py`, `backend/properties/admin.py`, and new reviewed `backend/properties/migrations/` files
 - `backend/portal/views.py`, `backend/portal/forms.py`, and `backend/portal/tests.py`
@@ -196,7 +223,7 @@ Expected first-pass files:
 - `backend/portal/management/commands/seed_rentease_demo_data.py` for disposable development data only
 - current architecture/state/next-action documentation
 
-Required pre-edit decisions: property identifier/address minimum, transitional `Room.owner` lifetime, one-property-per-existing-owner backfill rule, room-code uniqueness scope, and migration rollback method.
+Resolved decisions: keep `Room.owner` during transition, create one default Property per owner profile, avoid invented address data, and defer Property-scoped room-code uniqueness until after backfill and product integration.
 
 Disposable-data acceptance checks for the transitional migration:
 
@@ -304,4 +331,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-2 is complete. The next implementation task is Phase 14C-3A, but its model and migration work requires separate explicit approval. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A1 is complete. The next implementation task is the separately approval-gated Phase 14C-3A2 data backfill. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

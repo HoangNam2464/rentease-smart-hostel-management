@@ -19,9 +19,14 @@ Follow `docs/architecture/TARGET_DATA_MODEL.md`. Each implementation stage needs
 
 - `14C-1` target architecture planning and ERD decision
 - `14C-2` schema safety baseline and legacy production-table audit
-- `14C-3A` Property foundation with staged room migration
-- `14C-3B` invoice lines, services, meters, and meter readings
-- `14C-3C` maintenance lifecycle and data-governance foundation
+- `14C-3A1` additive Property schema and nullable room relationship
+- `14C-3A2` reversible default-Property backfill
+- `14C-3A3` Property integration across portal, admin, listings, reports, and seed data
+- `14C-3A4` required room relationship and Property-scoped room-code constraint
+- `14C-3B` invoice-line, service, meter, and reading schema/domain foundation; UI workflow remains Phase 14D
+- `14C-3C1` maintenance lifecycle correction
+- `14C-3C2` protected-document and audit foundation
+- `14C-3D` production legacy-app exclusion and clean-schema verification
 - `14C-4` fresh PostgreSQL provisioning from reviewed migrations
 - `14C-5` owner-approved real-data onboarding without demo or regression records
 - backup, rollback, relationship, financial-total, privacy, and row-count validation throughout
