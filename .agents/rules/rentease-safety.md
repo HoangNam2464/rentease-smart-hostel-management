@@ -24,6 +24,6 @@ Do not change schema, migrations, settings, auth, permissions, billing, database
 
 Never expose citizen identity data/files or unrelated owner/tenant data. Never rename `backend/hostello_backend/` or delete legacy apps.
 
-Do not use destructive Git/filesystem commands. Do not pull, merge, rebase, switch branches, push, or tag without explicit approval.
+Never use `git reset --hard`, `git restore .`, `git clean`, or force push. Perform file deletion or movement only when explicitly requested, narrowly scoped, and verified to stay inside the intended workspace path. Do not pull, merge, rebase, switch branches, push, or tag without explicit approval.
 
 Use `.agents/skills/rentease/SKILL.md` to load task-specific guidance instead of reading unrelated documentation.

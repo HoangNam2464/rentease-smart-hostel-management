@@ -11,7 +11,7 @@ Design and refine RentEase as a practical Vietnamese rental-management product. 
 
 Before editing:
 
-1. Read `AGENTS.md` and `docs/agent/RENTEASE_CURRENT_STATE.md`.
+1. Read `AGENTS.md`, `docs/agent/RENTEASE_CURRENT_STATE.md`, and `docs/agent/NEXT_ACTION.md`.
 2. Read `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` and `docs/architecture/LEGACY_BOUNDARIES.md`.
 3. Inspect the affected template, its loaded CSS, and a representative neighboring surface.
 4. Read `docs/agent/RENTEASE_SECURITY_RULES.md` when the surface renders user, tenancy, billing, payment, repair, or identity-related data.

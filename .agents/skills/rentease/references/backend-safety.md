@@ -8,7 +8,7 @@ Load this reference for Python, Django, admin, permissions, billing, settings, d
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - Directly related source files
 
-Read the production roadmap only for production work. Read the legacy dependency audit only when legacy files are in scope.
+Read the production roadmap only for production work. For legacy work, read `docs/architecture/LEGACY_BOUNDARIES.md` and re-audit current imports, settings, URLs, migrations, admin registrations, and data dependencies; do not rely on recovered historical audits.
 
 ## Approval Gates
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "RentEase Design"
   short_description: "Design and refine RentEase interfaces"
-  default_prompt: "Use $rentease-design to critique and improve the requested RentEase interface while preserving its design system and role boundaries."
+  default_prompt: "Use $rentease-design to shape, critique, audit, or refine the requested RentEase interface while preserving its design system and role boundaries."
