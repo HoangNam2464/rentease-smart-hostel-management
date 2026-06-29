@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14B-2: Production Settings Split |
+| Latest product phase | Phase 14C-2: Schema Safety Baseline and Legacy Audit |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -46,6 +46,9 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - `docs/architecture/TARGET_DATA_MODEL.md` contains the staged implementation, migration, verification, rollback, and approval plan.
 - Planned capability folders under `docs/features/planned/` contain no active app, model, migration, URL, or settings code.
 - PostgreSQL has not been provisioned or populated; SQLite remains the verified local runtime database.
+- Phase 14C-2 established a 20-test baseline covering role login and rejection, public listings and viewing registration, cross-owner/cross-tenant isolation, billing snapshots/totals/overpayment, database uniqueness, and maintenance relationship validation.
+- No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
+- The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 
 ## Privacy and Security State
 
@@ -68,7 +71,7 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - PostgreSQL is not executed; its staged target-schema and provisioning plan is documented.
 - Owner-facing invoice detail/utility entry is incomplete.
 - Account onboarding, invitation, recovery, and lifecycle are incomplete.
-- Deployment, media, backup, CI, and automated test coverage remain incomplete.
+- Deployment, media, backup, CI, and broader workflow test coverage remain incomplete.
 - Legacy HOSTELLO apps remain installed and intentionally isolated.
 
 ## Next Safe Action

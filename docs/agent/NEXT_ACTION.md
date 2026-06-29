@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-2 - Schema Safety Baseline and Legacy Audit
+Phase 14C-3A - Property Foundation
 ```
 
-This phase may add tests and update current architecture references. It must not change models, migrations, settings, database schema/data, authentication, billing calculations, URLs, or legacy code.
+Status: waiting for explicit user approval. Do not edit models or create migrations merely because this file names the next phase.
 
 ## Goal
 
-Protect current RentEase behavior with a focused automated baseline and determine exactly which legacy HOSTELLO dependencies and tables a fresh PostgreSQL database would create before any target-schema implementation begins.
+Add the property/building layer between owner and room through a reversible transitional migration while preserving every current owner, tenant, listing, billing, repair, and report scope.
 
 ## Required Context
 
@@ -22,17 +22,24 @@ Protect current RentEase behavior with a focused automated baseline and determin
 - `docs/architecture/TARGET_DATA_MODEL.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- current models, migrations, settings, URLs, admin registrations, and existing tests inspected directly
+- current `properties`, `portal`, `listings`, `reports`, admin, seed command, templates, migrations, and tests inspected directly
 
-## Required Output
+## Approval Decisions Required Before Editing
 
-- test inventory and missing critical coverage
-- new tests for owner/tenant isolation and migration-sensitive core behavior where absent
-- current legacy dependency map across installed apps, imports, URLs, admin, content types, models, and migrations
-- recommendation: temporarily retain legacy tables in PostgreSQL or schedule a separate safe removal phase
-- expected active/legacy table inventory for a clean migration
-- exact files and approval gates for Phase 14C-3A Property Foundation
-- updated current documentation without a phase log
+- approve Phase 14C-3A model and migration changes
+- confirm the minimum Property identifier, name, address, contact, status, and timezone fields
+- confirm one default Property per existing owner for the disposable-data backfill
+- confirm `Room.owner` remains temporarily as a compatibility field
+- confirm room-code uniqueness moves to Property plus room code only after backfill and scope updates
+- approve the forward/backward disposable-database migration rehearsal
+
+## Expected Scope After Approval
+
+- add `Property` and a nullable transitional `Room.property`
+- create and review the data backfill migration
+- update owner-scoped querysets, forms, admin, public listings, reports, seed data, and tests
+- make the property relationship required only after isolation and backfill checks pass
+- keep authentication, billing calculations, legacy apps, production settings, and real data unchanged
 
 ## Required Checks
 
@@ -40,14 +47,17 @@ Protect current RentEase behavior with a focused automated baseline and determin
 - `manage.py makemigrations --check --dry-run`
 - targeted tests and full test suite
 - `git diff --check`
+- migration forward/backward rehearsal on a disposable database copy
+- row-count, null-property, owner/property mismatch, and cross-owner isolation checks
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- any proposed test requires production or real personal data
-- existing owner/tenant isolation cannot be demonstrated
-- active models or migrations have an unexpected legacy dependency
-- the audit unexpectedly requires settings, URL, legacy-code, model, or migration changes
+- explicit Phase 14C-3A approval has not been given
+- the backfill cannot map every room to exactly one owner-owned Property
+- owner/tenant/listing/report isolation differs during the transition
+- the migration is not reversible on disposable data
+- billing, authentication, settings, legacy runtime, or real personal data would need to change
 - the starting worktree or Django checks are not clean
 
-Phase 14C-3 model and migration work requires separate explicit approval after this audit is reviewed.
+Phase 14C-3B billing/meter work and Phase 14C-3D production legacy exclusion remain separately approval-gated.

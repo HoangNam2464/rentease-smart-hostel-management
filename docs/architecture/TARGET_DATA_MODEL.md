@@ -167,17 +167,18 @@ Status: complete when this plan is reviewed.
 
 ### Phase 14C-2 - Schema Safety Baseline and Legacy Audit
 
-No schema change.
+Status: complete. No schema change was made.
 
-- add missing tests around owner/tenant isolation, billing totals, viewing registration, repairs, and migration-sensitive routes
-- inventory installed legacy apps, imports, admin registrations, content types, migrations, and URL dependencies
-- decide whether production PostgreSQL temporarily includes legacy tables or whether a separate removal phase is safe
-- document exact row-count and relationship checks for the disposable SQLite database
-- stop if current behavior is not protected by tests
+- the suite now protects owner/tenant isolation, billing snapshots and totals, overpayment, database uniqueness, role login, public listings, and repair/notification relationships
+- active migrations have no dependency on legacy apps; legacy migrations depend on `accounts`
+- current settings, root URLs, admin registrations, content types, permissions, and tables still include legacy apps
+- production PostgreSQL should exclude legacy through Phase 14C-3D rather than silently retaining those tables
 
 Expected files: test modules, current legacy-boundary reference, target-model reference, and roadmap only.
 
 ### Phase 14C-3A - Property Foundation
+
+Approval gate: this phase changes models and creates migrations. Do not start until the user explicitly approves Phase 14C-3A after reviewing the Phase 14C-2 commit.
 
 - implement `Property` and the staged room relationship
 - preserve owner isolation during the transition
@@ -185,7 +186,27 @@ Expected files: test modules, current legacy-boundary reference, target-model re
 - run migration forward/backward on a disposable database copy
 - do not load real data
 
-Likely source areas: `properties`, `portal`, `listings`, `reports`, templates, admin, tests, and migrations.
+Expected first-pass files:
+
+- `backend/properties/models.py`, `backend/properties/admin.py`, and new reviewed `backend/properties/migrations/` files
+- `backend/portal/views.py`, `backend/portal/forms.py`, and `backend/portal/tests.py`
+- `backend/listings/views.py`, `backend/listings/forms.py`, `backend/listings/tests.py`, and listing templates only where property context is visible
+- `backend/reports/views.py`, `backend/reports/services.py`, and affected report templates
+- affected owner room/listing templates under `frontend/templates/portal/`
+- `backend/portal/management/commands/seed_rentease_demo_data.py` for disposable development data only
+- current architecture/state/next-action documentation
+
+Required pre-edit decisions: property identifier/address minimum, transitional `Room.owner` lifetime, one-property-per-existing-owner backfill rule, room-code uniqueness scope, and migration rollback method.
+
+Disposable-data acceptance checks for the transitional migration:
+
+- record pre-migration counts for owner profiles, rooms, contracts, listings, invoices, repairs, and distinct room owners
+- preserve every recorded business-row count after the migration
+- create exactly one default Property per owner profile under the approved backfill rule
+- require zero rooms with a null Property after backfill
+- require zero rooms where `room.owner_id != room.property.owner_id`
+- require zero duplicate `(property_id, room_code)` pairs before adding that uniqueness constraint
+- after reverse migration, preserve the original room count and every original `Room.owner_id`
 
 ### Phase 14C-3B - Billing and Meter Foundation
 
@@ -204,6 +225,15 @@ Likely source areas: `billing`, `portal`, `reports`, admin, templates, tests, an
 - verify no identity path is exposed publicly
 
 Likely source areas: `maintenance`, `tenants`, admin, portal, media access, tests, and migrations.
+
+### Phase 14C-3D - Production Legacy Exclusion
+
+- create a production-safe installed-app boundary that excludes `students`, `attendance`, `requests`, `fees`, and `notices`
+- remove production URL and admin startup dependencies on those apps without deleting their source or local history
+- verify legacy content types, permissions, and tables are absent from a clean production migration
+- keep local compatibility behavior explicit rather than conditionally hiding errors
+
+Likely source areas: settings, root URLs, legacy admin loading, production checks, tests, and current architecture documentation. This phase requires its own approval because it changes settings and legacy runtime behavior.
 
 ### Phase 14C-4 - Fresh PostgreSQL Provisioning
 
@@ -274,4 +304,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-The next safe task is Phase 14C-2, which adds tests and performs a legacy/schema audit without changing models or database schema. Phase 14C-3 requires separate explicit approval before editing any model or migration.
+Phase 14C-2 is complete. The next implementation task is Phase 14C-3A, but its model and migration work requires separate explicit approval. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

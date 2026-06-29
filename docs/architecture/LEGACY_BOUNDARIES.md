@@ -20,6 +20,49 @@ Normal RentEase feature, security, and UI work should target these areas.
 
 These areas remain for compatibility and historical completeness. Some still have models, migrations, admin registrations, imports, or route dependencies.
 
+## Clean-Migration Audit
+
+The Phase 14C-2 audit confirmed the following current behavior:
+
+- all five legacy apps are unconditional members of `INSTALLED_APPS`
+- `/legacy/` includes `students.urls`, and the root URL configuration imports `fees.admin`
+- legacy models import one another; active RentEase source does not import legacy models
+- legacy migrations depend on `accounts`; no active RentEase migration depends on a legacy app
+- Django Admin registers models from all five legacy apps
+- a clean migration therefore creates legacy content types, permissions, and tables
+
+Expected active application tables are:
+
+```text
+accounts_user, accounts_user_groups, accounts_user_user_permissions
+nguoi_dung, accounts_wardenprofile
+phong
+khach_thue, nguoi_o_cung
+hop_dong
+cau_hinh_gia, hoa_don, chi_tiet_hoa_don, lich_su_thanh_toan
+yeu_cau_sua_chua, bao_tri, thong_bao
+tin_phong, dang_ky_xem_phong
+```
+
+`portal` and `reports` currently add no database tables. Standard Django tables such as migrations, content types, permissions, groups, admin log, and sessions are also expected.
+
+Expected legacy tables under the current settings are:
+
+```text
+students_student, students_room
+attendance_roomattendance, attendance_messattendance
+attendance_attendancenotification, attendance_attendancestats
+student_requests, request_notifications
+fees_feeconfig, fees_feemonth, fees_fine, fees_feepayment
+notices_notice, notices_noticereadstatus, notices_systemnotification
+```
+
+## Production Disposition
+
+Do not silently carry these legacy tables into the intended clean PostgreSQL database. Schedule a separate approval-gated legacy-exclusion phase before PostgreSQL provisioning. That phase must remove the five apps from the production installed-app set, remove their admin and URL dependencies, verify content-type/permission behavior, and prove a clean migration from zero.
+
+Until that phase is implemented and verified, retain the legacy apps and tables in local development. Removing tables alone would leave settings, imports, URLs, and admin startup inconsistent.
+
 ## Editing Boundary
 
 - Do not move, rename, delete, or modernize legacy areas during ordinary RentEase work.

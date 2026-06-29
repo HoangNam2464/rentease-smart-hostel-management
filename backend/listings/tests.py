@@ -1,13 +1,14 @@
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
 
 from accounts.models import UserProfile
 from properties.models import Room
 
-from .models import RoomListing
+from .models import RoomListing, ViewingRegistration
 
 
 class PublicListingPresentationTests(TestCase):
@@ -80,3 +81,33 @@ class PublicListingPresentationTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "FILTER-R1")
         self.assertContains(response, f"/rooms/{self.listing_one.pk}/register/")
+
+    def test_visitor_can_submit_viewing_registration_for_published_listing(self):
+        response = self.client.post(
+            f"/rooms/{self.listing_one.pk}/register/",
+            {
+                "full_name": "Khách xem phòng",
+                "phone": "0901234567",
+                "email": "visitor@example.com",
+                "preferred_date": timezone.localdate() + timedelta(days=1),
+                "preferred_time": "09:30",
+                "note": "Xin xem phòng buổi sáng.",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            f"/rooms/{self.listing_one.pk}/register/success/",
+            fetch_redirect_response=False,
+        )
+        registration = ViewingRegistration.objects.get(listing=self.listing_one)
+        self.assertEqual(registration.phone, "0901234567")
+        self.assertEqual(registration.status, ViewingRegistration.STATUS_PENDING)
+
+    def test_hidden_listing_cannot_receive_viewing_registration(self):
+        self.listing_one.status = RoomListing.STATUS_HIDDEN
+        self.listing_one.save()
+
+        response = self.client.get(f"/rooms/{self.listing_one.pk}/register/")
+
+        self.assertEqual(response.status_code, 404)
