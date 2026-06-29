@@ -17,6 +17,7 @@ RentEase/
 `-- docs/
     |-- agent/                   # current state, next action, product, security, roadmap
     |-- architecture/            # current structure and legacy dependency map
+    |-- features/                # non-active future capability placeholders
     |-- demo/                    # current local demo guidance
     |-- ui/                      # current design guidance
     `-- archive/                 # Git history retrieval instructions only
@@ -55,6 +56,8 @@ Important paths:
 `students`, `attendance`, `fees`, `requests`, and `notices` remain installed with models, migrations, admin registrations, or cross-imports. Do not move, rename, or delete them without an approved legacy-removal plan.
 
 Read `docs/architecture/LEGACY_BOUNDARIES.md` for current editing boundaries. Re-audit imports, settings, URLs, migrations, admin registrations, and data dependencies before any legacy change.
+
+Read `docs/architecture/DATA_MODEL_ALIGNMENT.md` before ERD, PostgreSQL schema, or new-entity planning. The supplied diagram is a conceptual reference; reviewed Django migrations remain the executable schema source.
 
 ## Frontend
 
@@ -96,7 +99,9 @@ Legacy surfaces not used for normal RentEase UI work:
 
 Read `docs/README.md` for the complete authority and task-routing table.
 
-Current documents live in `docs/agent/`, `docs/architecture/`, `docs/ui/`, and `docs/demo/`. Superseded documents are removed from the working tree and remain recoverable through Git history and tags.
+Current documents live in `docs/agent/`, `docs/architecture/`, `docs/features/`, `docs/ui/`, and `docs/demo/`. Superseded documents are removed from the working tree and remain recoverable through Git history and tags.
+
+`docs/features/` contains non-active placeholders for future capability areas. These folders are not Django apps and must not be added to `INSTALLED_APPS`, URLs, models, or migrations without an approved implementation plan.
 
 `docs/archive/README.md` explains historical retrieval. Recovered content is not current policy.
 

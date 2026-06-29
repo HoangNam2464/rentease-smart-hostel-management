@@ -19,7 +19,8 @@ Plan first, then implement only after approval.
 
 - backup and rollback strategy
 - target environment and credentials
-- data transfer method
+- fresh schema creation from reviewed Django migrations
+- real-data onboarding/import without demo or regression records
 - relationship and row-count validation
 - local SQLite fallback for development
 
@@ -57,6 +58,7 @@ Schema changes may be required and need separate approval.
 
 ## Optional Later Work
 
+- planned capability areas cataloged in `docs/features/README.md`
 - legacy HOSTELLO retirement after a dedicated dependency/data/contenttypes plan
 - report exports
 - online payment integration

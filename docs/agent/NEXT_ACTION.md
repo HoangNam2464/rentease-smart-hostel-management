@@ -10,13 +10,14 @@ This is a planning-only phase. Do not change database configuration, schema, mig
 
 ## Goal
 
-Produce a safe, reviewable plan for moving the production target from local SQLite to PostgreSQL while preserving the local demo workflow.
+Produce a safe, reviewable plan for creating a fresh PostgreSQL production database from Django migrations, preserving an explicit local SQLite fallback, and onboarding owner-approved real data without copying demo or regression records.
 
 ## Required Context
 
 - `AGENTS.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- `docs/architecture/DATA_MODEL_ALIGNMENT.md`
 - `.agents/skills/rentease/references/backend-safety.md`
 - Current database/settings configuration inspected directly from source
 
@@ -29,8 +30,11 @@ The plan should cover:
 - dependency and credential requirements
 - schema creation and Django migration sequence
 - SQLite backup and rollback
-- data transfer options and recommendation
-- validation of row counts, relationships, users, media references, and critical workflows
+- a clean-database recommendation that does not transfer demo, regression, or test rows
+- approved sources and ownership for real rooms, tenants, contracts, invoices, payments, and media
+- administrator bootstrap and real-data import/onboarding sequence
+- validation of row counts, relationships, uniqueness, users, money totals, media references, and critical workflows
+- explicit handling for any legitimate non-demo SQLite records, without assuming they should be copied
 - local-development fallback
 - deployment order and downtime considerations
 - explicit implementation files and commands
