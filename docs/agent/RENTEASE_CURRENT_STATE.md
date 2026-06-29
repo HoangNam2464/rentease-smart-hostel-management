@@ -42,6 +42,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - The supplied 15-entity RentEase ERD has been compared with active Django model metadata.
 - Every diagram entity has an active conceptual equivalent, but several fields and relationships differ from current code.
 - `docs/architecture/DATA_MODEL_ALIGNMENT.md` is the current alignment reference for PostgreSQL and future model planning.
+- The approved target direction keeps the current Django project as the base and adds Property, flexible billing/metering, maintenance lifecycle, and data-governance foundations before PostgreSQL real-data onboarding.
+- `docs/architecture/TARGET_DATA_MODEL.md` contains the staged implementation, migration, verification, rollback, and approval plan.
 - Planned capability folders under `docs/features/planned/` contain no active app, model, migration, URL, or settings code.
 - PostgreSQL has not been provisioned or populated; SQLite remains the verified local runtime database.
 
@@ -58,12 +60,12 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - `AGENTS.md` is now a short mandatory entry file.
 - `.agents/skills/rentease/` provides progressive task-specific guidance.
 - `.agents/skills/rentease-design/` provides focused design, critique, audit, polish, responsive, and visual-QA workflows.
-- `docs/` contains 13 current Markdown files, including one consolidated demo guide, one data-model alignment reference, one planned-feature catalog, and one history-retrieval guide.
+- `docs/` contains 14 current Markdown files, including one consolidated demo guide, current/target data-model references, one planned-feature catalog, and one history-retrieval guide.
 - Superseded rules, audits, plans, phase reports, SPQM documents, and the former work log remain recoverable through Git rather than living beside current guidance.
 
 ## Known Product Gaps
 
-- PostgreSQL migration is not planned or executed.
+- PostgreSQL is not executed; its staged target-schema and provisioning plan is documented.
 - Owner-facing invoice detail/utility entry is incomplete.
 - Account onboarding, invitation, recovery, and lifecycle are incomplete.
 - Deployment, media, backup, CI, and automated test coverage remain incomplete.

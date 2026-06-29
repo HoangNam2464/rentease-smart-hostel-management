@@ -3,50 +3,51 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C - PostgreSQL Migration Planning
+Phase 14C-2 - Schema Safety Baseline and Legacy Audit
 ```
 
-This is a planning-only phase. Do not change database configuration, schema, migrations, or data without a separate approved implementation plan.
+This phase may add tests and update current architecture references. It must not change models, migrations, settings, database schema/data, authentication, billing calculations, URLs, or legacy code.
 
 ## Goal
 
-Produce a safe, reviewable plan for creating a fresh PostgreSQL production database from Django migrations, preserving an explicit local SQLite fallback, and onboarding owner-approved real data without copying demo or regression records.
+Protect current RentEase behavior with a focused automated baseline and determine exactly which legacy HOSTELLO dependencies and tables a fresh PostgreSQL database would create before any target-schema implementation begins.
 
 ## Required Context
 
 - `AGENTS.md`
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- `docs/architecture/LEGACY_BOUNDARIES.md`
 - `docs/architecture/DATA_MODEL_ALIGNMENT.md`
+- `docs/architecture/TARGET_DATA_MODEL.md`
+- `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- Current database/settings configuration inspected directly from source
+- current models, migrations, settings, URLs, admin registrations, and existing tests inspected directly
 
-## Planning Output
+## Required Output
 
-The plan should cover:
+- test inventory and missing critical coverage
+- new tests for owner/tenant isolation and migration-sensitive core behavior where absent
+- current legacy dependency map across installed apps, imports, URLs, admin, content types, models, and migrations
+- recommendation: temporarily retain legacy tables in PostgreSQL or schedule a separate safe removal phase
+- expected active/legacy table inventory for a clean migration
+- exact files and approval gates for Phase 14C-3A Property Foundation
+- updated current documentation without a phase log
 
-- current SQLite and `DATABASE_URL` behavior
-- PostgreSQL environment assumptions
-- dependency and credential requirements
-- schema creation and Django migration sequence
-- SQLite backup and rollback
-- a clean-database recommendation that does not transfer demo, regression, or test rows
-- approved sources and ownership for real rooms, tenants, contracts, invoices, payments, and media
-- administrator bootstrap and real-data import/onboarding sequence
-- validation of row counts, relationships, uniqueness, users, money totals, media references, and critical workflows
-- explicit handling for any legitimate non-demo SQLite records, without assuming they should be copied
-- local-development fallback
-- deployment order and downtime considerations
-- explicit implementation files and commands
-- stop conditions and risks
+## Required Checks
 
-## Forbidden In This Phase
+- `manage.py check`
+- `manage.py makemigrations --check --dry-run`
+- targeted tests and full test suite
+- `git diff --check`
+- clean final worktree after the requested local commit
 
-- No settings changes
-- No database writes or exports containing sensitive data
-- No schema/model/migration changes
-- No dependency installation
-- No PostgreSQL service provisioning
-- No push or tag
+## Stop Conditions
 
-Implementation requires explicit approval after the plan is reviewed.
+- any proposed test requires production or real personal data
+- existing owner/tenant isolation cannot be demonstrated
+- active models or migrations have an unexpected legacy dependency
+- the audit unexpectedly requires settings, URL, legacy-code, model, or migration changes
+- the starting worktree or Django checks are not clean
+
+Phase 14C-3 model and migration work requires separate explicit approval after this audit is reviewed.

@@ -13,18 +13,21 @@ RentEase is local-demo ready and not production-ready. `NEXT_ACTION.md` controls
 
 ## Ordered Production Work
 
-### Phase 14C - PostgreSQL Migration
+### Phase 14C - Target Schema and PostgreSQL
 
-Plan first, then implement only after approval.
+Follow `docs/architecture/TARGET_DATA_MODEL.md`. Each implementation stage needs separate approval.
 
-- backup and rollback strategy
-- target environment and credentials
-- fresh schema creation from reviewed Django migrations
-- real-data onboarding/import without demo or regression records
-- relationship and row-count validation
-- local SQLite fallback for development
+- `14C-1` target architecture planning and ERD decision
+- `14C-2` schema safety baseline and legacy production-table audit
+- `14C-3A` Property foundation with staged room migration
+- `14C-3B` invoice lines, services, meters, and meter readings
+- `14C-3C` maintenance lifecycle and data-governance foundation
+- `14C-4` fresh PostgreSQL provisioning from reviewed migrations
+- `14C-5` owner-approved real-data onboarding without demo or regression records
+- backup, rollback, relationship, financial-total, privacy, and row-count validation throughout
+- explicit local SQLite fallback for development
 
-### Phase 14D - Owner Billing Detail and Utility Entry
+### Phase 14D - Owner Billing Workflow Completion
 
 - invoice detail lines
 - electricity/water readings
@@ -32,7 +35,7 @@ Plan first, then implement only after approval.
 - clear tenant invoice presentation
 - calculated-total and overpayment integrity
 
-Schema changes may be required and need separate approval.
+This phase builds the owner/tenant workflows on the approved 14C billing foundation. Any remaining schema change needs separate approval.
 
 ### Phase 14E - Account Lifecycle
 

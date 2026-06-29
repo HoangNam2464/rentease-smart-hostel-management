@@ -22,6 +22,7 @@ Use `.agents/skills/rentease/SKILL.md` for substantive project work and `$rentea
 | `architecture/PROJECT_STRUCTURE_MAP.md` | Backend, frontend, data, docs, and agent-resource map |
 | `architecture/LEGACY_BOUNDARIES.md` | Current RentEase-versus-HOSTELLO editing boundary |
 | `architecture/DATA_MODEL_ALIGNMENT.md` | Current Django model graph, supplied ERD differences, and PostgreSQL boundary |
+| `architecture/TARGET_DATA_MODEL.md` | Approved target relationships and staged pre-PostgreSQL implementation plan |
 | `features/README.md` | Non-active placeholders and activation rules for planned product capabilities |
 | `ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` | Product-specific UI and design direction |
 | `demo/README.md` | Local setup, seed data, walkthrough, verification, and screenshots |
@@ -34,7 +35,7 @@ Use `.agents/skills/rentease/SKILL.md` for substantive project work and `$rentea
 | Django, permissions, billing, settings, database | Skill `references/backend-safety.md` and `RENTEASE_SECURITY_RULES.md` |
 | UI, templates, CSS, UX copy, responsive behavior | `$rentease-design` and the UI design system |
 | Architecture or legacy work | `PROJECT_STRUCTURE_MAP.md` and `LEGACY_BOUNDARIES.md` |
-| Data model, ERD, or PostgreSQL schema planning | `DATA_MODEL_ALIGNMENT.md` and backend-safety guidance |
+| Data model, ERD, or PostgreSQL schema planning | `DATA_MODEL_ALIGNMENT.md`, `TARGET_DATA_MODEL.md`, and backend-safety guidance |
 | Planned product capabilities | `features/README.md`; open only the relevant placeholder area |
 | Local setup, demo data, presentation | `demo/README.md` |
 | Documentation maintenance | Skill `references/documentation.md` and this index |
