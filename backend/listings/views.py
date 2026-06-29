@@ -1,4 +1,7 @@
+from decimal import Decimal, InvalidOperation
+
 from django.contrib import messages
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ViewingRegistrationForm
@@ -15,8 +18,45 @@ def published_listings():
 
 def public_listing_list(request):
     listings = published_listings()
+
+    query = request.GET.get('q', '').strip()
+    max_price = request.GET.get('max_price', '').strip()
+    order = request.GET.get('order', 'newest')
+
+    if query:
+        listings = listings.filter(
+            Q(title__icontains=query)
+            | Q(description__icontains=query)
+            | Q(room__room_name__icontains=query)
+        )
+
+    if max_price:
+        try:
+            parsed_max_price = Decimal(max_price)
+        except InvalidOperation:
+            max_price = ''
+        else:
+            if parsed_max_price.is_finite() and parsed_max_price >= 0:
+                listings = listings.filter(listing_price__lte=parsed_max_price)
+            else:
+                max_price = ''
+
+    ordering = {
+        'price_asc': ('listing_price', '-created_at'),
+        'price_desc': ('-listing_price', '-created_at'),
+        'newest': ('-created_at',),
+    }
+    if order not in ordering:
+        order = 'newest'
+    listings = listings.order_by(*ordering[order])
+
     return render(request, 'listings/public_listing_list.html', {
         'listings': listings,
+        'filters': {
+            'q': query,
+            'max_price': max_price,
+            'order': order,
+        },
     })
 
 

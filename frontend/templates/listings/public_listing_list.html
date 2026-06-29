@@ -1,78 +1,82 @@
 {% extends "listings/public_base.html" %}
+{% load rentease_format %}
 
-{% block title %}Tìm phòng trọ - RentEase{% endblock %}
+{% block title %}Phòng đang cho thuê - RentEase{% endblock %}
 
 {% block content %}
-<section class="page-header">
-    <h1><i class="page-icon bi bi-search"></i>Phòng trọ đang cho thuê</h1>
-    <p>Chọn phòng phù hợp, xem thông tin chi tiết và gửi đăng ký xem phòng. Không cần tài khoản.</p>
+<section class="page-header public-listing-header">
+    <p class="home-section-label">Danh sách công khai</p>
+    <h1>Phòng đang cho thuê</h1>
+    <p>Xem giá, diện tích và ngày có thể vào ở trước khi gửi lịch hẹn.</p>
 </section>
 
+<form class="listing-filters" method="get" aria-label="Lọc danh sách phòng">
+    <div class="filter-field filter-search">
+        <label for="listing-query">Tìm theo tên hoặc mô tả</label>
+        <input id="listing-query" type="search" name="q" value="{{ filters.q }}" placeholder="Ví dụ: phòng gác lửng">
+    </div>
+    <div class="filter-field">
+        <label for="max-price">Giá tối đa mỗi tháng</label>
+        <input id="max-price" type="number" name="max_price" value="{{ filters.max_price }}" min="0" step="100000" placeholder="3.000.000">
+    </div>
+    <div class="filter-field">
+        <label for="listing-order">Sắp xếp</label>
+        <select id="listing-order" name="order">
+            <option value="newest"{% if filters.order == 'newest' %} selected{% endif %}>Mới đăng</option>
+            <option value="price_asc"{% if filters.order == 'price_asc' %} selected{% endif %}>Giá thấp trước</option>
+            <option value="price_desc"{% if filters.order == 'price_desc' %} selected{% endif %}>Giá cao trước</option>
+        </select>
+    </div>
+    <button class="button primary" type="submit">Áp dụng</button>
+    {% if filters.q or filters.max_price or filters.order != 'newest' %}
+        <a class="button subtle" href="/rooms/">Xóa lọc</a>
+    {% endif %}
+</form>
+
 {% if listings %}
+    <div class="listing-result-summary">Tìm thấy <strong>{{ listings|length }}</strong> phòng phù hợp.</div>
     <section class="listing-grid" aria-label="Danh sách phòng đang cho thuê">
         {% for listing in listings %}
-            <article class="card listing-card">
-                {% if listing.room.room_image %}
-                    <img class="listing-media" src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}" loading="lazy">
-                {% elif listing.image_url %}
-                    <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}" loading="lazy">
-                {% else %}
-                    <img class="listing-media" src="https://picsum.photos/seed/room{{ listing.pk }}/800/500" alt="{{ listing.title }}" loading="lazy">
-                {% endif %}
-
-                <div class="card-body">
-                    <div class="section-heading" style="align-items:center;margin-bottom:8px;">
-                        <span class="status-badge success">
-                            <i class="bi bi-check-circle-fill"></i> Đang cho thuê
+            <article class="listing-card-grounded">
+                <a class="listing-media-link" href="{% url 'listings:public_listing_detail' listing.pk %}" aria-label="Xem {{ listing.title }}">
+                    {% if listing.room.room_image %}
+                        <img class="listing-media" src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}" loading="lazy">
+                    {% elif listing.image_url %}
+                        <img class="listing-media" src="{{ listing.image_url }}" alt="{{ listing.title }}" loading="lazy">
+                    {% else %}
+                        <span class="listing-placeholder-grounded">
+                            <i class="bi bi-image" aria-hidden="true"></i>
+                            <span>Ảnh phòng đang được cập nhật</span>
                         </span>
+                    {% endif %}
+                </a>
+
+                <div class="listing-card-content">
+                    <div class="listing-card-topline">
+                        <span class="status-text"><span aria-hidden="true"></span> Còn phòng</span>
+                        <strong>{{ listing.listing_price|vnd }}<small>/tháng</small></strong>
                     </div>
-
-                    <h2 class="listing-title">
-                        <a href="{% url 'listings:public_listing_detail' listing.pk %}">{{ listing.title }}</a>
-                    </h2>
-
-                    <p class="listing-description">{{ listing.description|truncatewords:22 }}</p>
-
-                    <div class="property-meta" aria-label="Thông tin nhanh">
-                        {% if listing.room.area %}
-                            <span><i class="bi bi-crop"></i> {{ listing.room.area }} m²</span>
-                        {% endif %}
-                        {% if listing.room.floor %}
-                            <span><i class="bi bi-building"></i> Tầng {{ listing.room.floor }}</span>
-                        {% endif %}
-                        <span><i class="bi bi-people"></i> Tối đa {{ listing.room.max_occupants }} người</span>
+                    <h2 class="listing-title"><a href="{% url 'listings:public_listing_detail' listing.pk %}">{{ listing.title }}</a></h2>
+                    <p class="listing-description">{{ listing.description|truncatewords:20 }}</p>
+                    <div class="property-meta property-meta-plain" aria-label="Thông tin phòng">
+                        {% if listing.room.area %}<span>{{ listing.room.area|floatformat:"-1" }} m²</span>{% endif %}
+                        {% if listing.room.floor %}<span>Tầng {{ listing.room.floor }}</span>{% endif %}
+                        <span>Tối đa {{ listing.room.max_occupants }} người</span>
                     </div>
-
-                    <ul class="meta-list">
-                        <li>
-                            <i class="bi bi-door-closed" style="color:var(--re-primary);margin-right:5px;"></i>
-                            <strong>Phòng:</strong> {{ listing.room.room_code }}{% if listing.room.room_name %} - {{ listing.room.room_name }}{% endif %}
-                        </li>
-                        <li>
-                            <i class="bi bi-calendar-event" style="color:var(--re-primary);margin-right:5px;"></i>
-                            <strong>Có thể vào ở từ:</strong> {{ listing.available_from }}
-                        </li>
-                    </ul>
-
-                    <div class="price-row">
-                        <span><i class="bi bi-tag"></i> Giá thuê tháng</span>
-                        <strong>{{ listing.listing_price }}</strong>
+                    <div class="listing-availability">
+                        <span>Có thể vào ở</span>
+                        <strong>{{ listing.available_from|date:"d/m/Y"|default:"Liên hệ xác nhận" }}</strong>
                     </div>
-
-                    <a class="button primary" href="{% url 'listings:public_listing_detail' listing.pk %}" style="width:100%;margin-top:4px;">
-                        <i class="bi bi-arrow-right-circle"></i>&nbsp; Xem chi tiết
-                    </a>
+                    <a class="text-link" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem thông tin và đặt lịch <span aria-hidden="true">→</span></a>
                 </div>
             </article>
         {% endfor %}
     </section>
 {% else %}
-    <div class="card">
-        <div class="card-body empty-state">
-            <i class="bi bi-inbox" style="font-size:2.5rem;color:var(--re-muted);display:block;margin-bottom:12px;"></i>
-            <p>Hiện chưa có phòng nào được công khai. Vui lòng quay lại sau hoặc đăng nhập nếu bạn là chủ trọ.</p>
-            <a class="button primary" href="/login/" style="margin-top:14px;">Đăng nhập hệ thống</a>
-        </div>
+    <div class="empty-state public-empty-state">
+        <h2>Chưa tìm thấy phòng phù hợp</h2>
+        <p>Thử bỏ bớt điều kiện lọc hoặc quay lại sau khi có tin mới.</p>
+        <a class="button subtle" href="/rooms/">Xem tất cả phòng</a>
     </div>
 {% endif %}
 {% endblock %}

@@ -191,7 +191,7 @@ def login_view(request):
 
 def logout_view(request):
     auth_logout(request)
-    messages.success(request, 'You have been logged out.')
+    messages.success(request, 'Bạn đã đăng xuất an toàn.')
     return redirect('/')
 
 
@@ -873,20 +873,29 @@ def tenant_dashboard(request):
     invoices = Invoice.objects.filter(contract__tenant=tenant)
     open_repairs = RepairRequest.objects.filter(tenant=tenant, status__in=open_repair_statuses)
     unread_notifications = Notification.objects.filter(tenant=tenant, is_read=False)
+    invoices_needing_payment = invoices.filter(
+        status__in=[Invoice.STATUS_UNPAID, Invoice.STATUS_PARTIAL, Invoice.STATUS_OVERDUE],
+    )
 
     metrics = {
         'tenant_name': tenant.full_name,
         'current_contract': active_contract,
-        'unpaid_or_partial_invoices': invoices.filter(
-            status__in=[Invoice.STATUS_UNPAID, Invoice.STATUS_PARTIAL],
-        ).count(),
+        'unpaid_or_partial_invoices': invoices_needing_payment.count(),
+        'outstanding_balance': _money_sum(invoices_needing_payment, 'remaining_amount'),
         'open_repair_requests': open_repairs.count(),
         'unread_notifications': unread_notifications.count(),
+    }
+
+    recent = {
+        'invoices': invoices.order_by('-year', '-month', '-created_at')[:5],
+        'repairs': RepairRequest.objects.filter(tenant=tenant).order_by('-requested_at', '-created_at')[:4],
+        'notifications': Notification.objects.filter(tenant=tenant).order_by('-created_at')[:4],
     }
 
     return render(request, 'portal/tenant_dashboard.html', {
         'tenant': tenant,
         'metrics': metrics,
+        'recent': recent,
     })
 
 

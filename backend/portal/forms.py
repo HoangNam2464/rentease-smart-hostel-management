@@ -15,8 +15,7 @@ class RentEaseAuthenticationForm(AuthenticationForm):
     error_messages = {
         **AuthenticationForm.error_messages,
         'invalid_login': (
-            'Please enter a correct username and password. Note that both '
-            'fields may be case-sensitive.'
+            'Tên đăng nhập hoặc mật khẩu chưa đúng. Vui lòng kiểm tra và thử lại.'
         ),
     }
 

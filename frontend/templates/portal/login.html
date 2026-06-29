@@ -13,33 +13,26 @@
         .login-brand { text-align: center; margin-bottom: 28px; }
         .login-brand-mark {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 56px; height: 56px; border-radius: 18px;
+            width: 52px; height: 52px; border-radius: 12px;
             background: var(--re-primary); color: #fff;
             font-size: 1.6rem; font-weight: 900; margin-bottom: 12px;
         }
         .login-brand h1 { font-size: 1.6rem; font-weight: 900; color: var(--re-heading); margin: 0; }
         .login-brand p { color: var(--re-muted); margin: 4px 0 0; font-size: 0.92rem; }
-        .login-card { background: var(--re-card-bg); border: 1px solid var(--re-card-border); border-radius: 20px; padding: 32px 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+        .login-card { background: var(--re-card-bg); border: 1px solid var(--re-card-border); border-radius: 12px; padding: 32px 28px; }
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; font-weight: 700; font-size: 0.88rem; color: var(--re-heading); margin-bottom: 7px; }
         .form-group label .bi { margin-right: 6px; color: var(--re-primary); }
         .form-group input { width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1.5px solid var(--re-card-border); border-radius: 10px; font-family: inherit; font-size: 0.95rem; color: var(--re-text); background: var(--re-bg); transition: border-color 0.15s; }
         .form-group input:focus { outline: none; border-color: var(--re-primary); box-shadow: 0 0 0 3px var(--re-primary-soft); }
-        .login-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: var(--re-primary); color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.01em; transition: background 0.15s, transform 0.1s; }
-        .login-btn:hover { background: var(--re-primary-dark); transform: translateY(-1px); }
-        .login-btn:active { transform: translateY(0); }
+        .login-btn { width: 100%; padding: 13px; border: none; border-radius: 8px; background: var(--re-primary); color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.01em; transition: background 0.15s; }
+        .login-btn:hover { background: var(--re-primary-dark); }
         .login-footer { text-align: center; margin-top: 20px; color: var(--re-muted); font-size: 0.88rem; }
         .login-footer a { color: var(--re-primary); font-weight: 600; text-decoration: none; }
         .login-footer a:hover { text-decoration: underline; }
         .error-list { background: var(--re-danger-soft); border: 1px solid var(--re-danger); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; color: var(--re-danger); font-size: 0.9rem; }
         .error-list ul { margin: 0; padding-left: 18px; }
-        .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--re-muted); font-size: 0.82rem; }
-        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--re-card-border); }
-        .role-hint { display: flex; gap: 10px; flex-wrap: wrap; }
-        .role-hint-item { flex: 1; min-width: 110px; text-align: center; background: var(--re-bg-soft); border: 1px solid var(--re-card-border); border-radius: 12px; padding: 12px 8px; font-size: 0.82rem; }
-        .role-hint-item .bi { display: block; font-size: 1.4rem; margin-bottom: 5px; color: var(--re-primary); }
-        .role-hint-item strong { display: block; color: var(--re-heading); margin-bottom: 2px; }
-        .role-hint-item span { color: var(--re-muted); }
+        .login-note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--re-card-border); color: var(--re-muted); font-size: 0.82rem; line-height: 1.55; }
     </style>
 </head>
 <body>
@@ -118,25 +111,7 @@
                 </button>
             </form>
 
-            <div class="divider">Phân loại người dùng</div>
-
-            <div class="role-hint">
-                <div class="role-hint-item">
-                    <i class="bi bi-person-badge"></i>
-                    <strong>Chủ trọ</strong>
-                    <span>Quản lý phòng</span>
-                </div>
-                <div class="role-hint-item">
-                    <i class="bi bi-person-circle"></i>
-                    <strong>Khách thuê</strong>
-                    <span>Xem hóa đơn</span>
-                </div>
-                <div class="role-hint-item">
-                    <i class="bi bi-shield-lock"></i>
-                    <strong>Quản trị</strong>
-                    <span>Toàn quyền</span>
-                </div>
-            </div>
+            <p class="login-note">Sau khi đăng nhập, hệ thống sẽ tự đưa bạn đến đúng khu vực dành cho chủ trọ, khách thuê hoặc quản trị viên.</p>
         </div>
 
         <div class="login-footer">

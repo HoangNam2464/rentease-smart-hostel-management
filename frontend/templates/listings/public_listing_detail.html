@@ -1,114 +1,61 @@
 {% extends "listings/public_base.html" %}
+{% load rentease_format %}
 
 {% block title %}{{ listing.title }} - RentEase{% endblock %}
 
 {% block content %}
-<nav style="margin-bottom:20px;font-size:0.9rem;color:var(--re-muted);">
-    <a href="/" style="color:var(--re-muted);text-decoration:none;"><i class="bi bi-house"></i></a>
-    <span style="margin:0 8px;">/</span>
-    <a href="/rooms/" style="color:var(--re-primary);text-decoration:none;">Xem phòng</a>
-    <span style="margin:0 8px;">/</span>
-    <span>{{ listing.title }}</span>
+<nav class="public-breadcrumb" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a><span>/</span><a href="/rooms/">Phòng đang cho thuê</a><span>/</span><span>Chi tiết</span>
 </nav>
 
-<div class="grid" style="grid-template-columns:1fr 380px;align-items:start;gap:24px;">
-    <div>
-        <div style="border-radius:20px;overflow:hidden;margin-bottom:20px;aspect-ratio:16/9;background:var(--re-bg-soft);">
-            {% if listing.room.room_image %}
-                <img src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-            {% elif listing.image_url %}
-                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-            {% else %}
-                <img src="https://picsum.photos/seed/room{{ listing.pk }}/1200/675" alt="{{ listing.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-            {% endif %}
-        </div>
-
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-            <h1 style="margin:0;font-size:1.7rem;flex:1;">{{ listing.title }}</h1>
-            <span class="status-badge success"><i class="bi bi-check-circle-fill"></i> Đang cho thuê</span>
-        </div>
-
-        <div class="property-meta" style="margin-bottom:20px;">
-            {% if listing.room.area %}
-                <span><i class="bi bi-crop"></i> {{ listing.room.area }} m²</span>
-            {% endif %}
-            {% if listing.room.floor %}
-                <span><i class="bi bi-building"></i> Tầng {{ listing.room.floor }}</span>
-            {% endif %}
-            <span><i class="bi bi-people"></i> Tối đa {{ listing.room.max_occupants }} người</span>
-            <span><i class="bi bi-door-closed"></i> Phòng {{ listing.room.room_code }}</span>
-        </div>
-
-        <div class="card" style="margin-bottom:16px;">
-            <div class="card-body">
-                <h2 style="font-size:1.05rem;margin:0 0 12px;">
-                    <i class="bi bi-info-circle" style="color:var(--re-primary);margin-right:8px;"></i>Mô tả phòng
-                </h2>
-                <p style="color:var(--re-muted);line-height:1.75;margin:0;">{{ listing.description }}</p>
-            </div>
-        </div>
-
-        {% if listing.room.description %}
-            <div class="card">
-                <div class="card-body">
-                    <h2 style="font-size:1.05rem;margin:0 0 12px;">
-                        <i class="bi bi-lightning-charge" style="color:var(--re-primary);margin-right:8px;"></i>Thông tin thêm
-                    </h2>
-                    <p style="color:var(--re-muted);line-height:1.75;margin:0;">{{ listing.room.description }}</p>
-                </div>
+<div class="public-detail-layout">
+    <main class="listing-detail-main">
+        {% if listing.room.room_image %}
+            <img class="listing-detail-media" src="{{ listing.room.room_image.url }}" alt="{{ listing.title }}">
+        {% elif listing.image_url %}
+            <img class="listing-detail-media" src="{{ listing.image_url }}" alt="{{ listing.title }}">
+        {% else %}
+            <div class="listing-detail-media listing-placeholder-grounded">
+                <i class="bi bi-image" aria-hidden="true"></i>
+                <span>Ảnh phòng đang được cập nhật</span>
             </div>
         {% endif %}
-    </div>
 
-    <div style="position:sticky;top:24px;">
-        <div class="card" style="margin-bottom:16px;border-top:3px solid var(--re-primary);">
-            <div class="card-body">
-                <div class="price-row" style="margin-bottom:14px;">
-                    <span style="font-size:0.9rem;"><i class="bi bi-tag"></i> Giá thuê / tháng</span>
-                    <strong style="font-size:1.5rem;color:var(--re-primary);">{{ listing.listing_price }}</strong>
-                </div>
-                <div class="stat-row">
-                    <i class="bi bi-shield-lock"></i>
-                    <span class="stat-row-label">Tiền cọc</span>
-                    <span class="stat-row-value">{{ listing.deposit_amount|default:"Thỏa thuận" }}</span>
-                </div>
-                <div class="stat-row">
-                    <i class="bi bi-calendar-check"></i>
-                    <span class="stat-row-label">Có thể vào ở từ</span>
-                    <span class="stat-row-value">{{ listing.available_from }}</span>
-                </div>
-                <div class="stat-row" style="border:none;">
-                    <i class="bi bi-geo-alt"></i>
-                    <span class="stat-row-label">Liên hệ</span>
-                    <span class="stat-row-value">Đăng ký xem phòng để được xác nhận lịch hẹn</span>
-                </div>
+        <div class="listing-detail-heading">
+            <span class="status-text"><span aria-hidden="true"></span> Còn phòng</span>
+            <h1>{{ listing.title }}</h1>
+            <div class="property-meta property-meta-plain">
+                {% if listing.room.area %}<span>{{ listing.room.area|floatformat:"-1" }} m²</span>{% endif %}
+                {% if listing.room.floor %}<span>Tầng {{ listing.room.floor }}</span>{% endif %}
+                <span>Tối đa {{ listing.room.max_occupants }} người</span>
             </div>
         </div>
 
-        <div class="card" style="border-top:3px solid var(--re-blue);">
-            <div class="card-body">
-                <h2 style="font-size:1.05rem;margin:0 0 16px;">
-                    <i class="bi bi-calendar-plus" style="color:var(--re-blue);margin-right:8px;"></i>Đăng ký xem phòng
-                </h2>
-                <p style="color:var(--re-muted);font-size:0.88rem;margin:0 0 16px;">Gửi thông tin để đặt lịch hẹn với chủ nhà. Chúng tôi sẽ liên hệ xác nhận.</p>
+        <section class="listing-copy-section" aria-labelledby="listing-description-title">
+            <h2 id="listing-description-title">Thông tin phòng</h2>
+            <p>{{ listing.description }}</p>
+        </section>
 
-                <form method="post" action="{% url 'listings:viewing_registration_create' listing.pk %}">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="form-group" style="margin-bottom:14px;">
-                            <label style="display:block;font-weight:700;font-size:0.88rem;color:var(--re-heading);margin-bottom:6px;">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                                <div style="color:var(--re-danger);font-size:0.82rem;margin-top:4px;">{{ field.errors|join:", " }}</div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <button type="submit" style="width:100%;padding:13px;border:none;border-radius:12px;background:var(--re-blue);color:#fff;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;transition:background 0.15s;">
-                        <i class="bi bi-send" style="margin-right:8px;"></i>Gửi đăng ký xem phòng
-                    </button>
-                </form>
-            </div>
+        {% if listing.room.description %}
+            <section class="listing-copy-section" aria-labelledby="room-description-title">
+                <h2 id="room-description-title">Thông tin thêm</h2>
+                <p>{{ listing.room.description }}</p>
+            </section>
+        {% endif %}
+    </main>
+
+    <aside class="listing-summary sticky-summary" aria-label="Giá và lịch xem phòng">
+        <div class="listing-summary-price">
+            <span>Giá thuê mỗi tháng</span>
+            <strong>{{ listing.listing_price|vnd }}</strong>
         </div>
-    </div>
+        <dl class="listing-summary-details">
+            <div><dt>Tiền cọc</dt><dd>{% if listing.deposit_amount %}{{ listing.deposit_amount|vnd }}{% else %}Thỏa thuận{% endif %}</dd></div>
+            <div><dt>Có thể vào ở</dt><dd>{{ listing.available_from|date:"d/m/Y"|default:"Liên hệ xác nhận" }}</dd></div>
+            {% if listing.room.room_name %}<div><dt>Loại phòng</dt><dd>{{ listing.room.room_name }}</dd></div>{% endif %}
+        </dl>
+        <a class="button primary" href="{% url 'listings:viewing_registration_create' listing.pk %}">Đăng ký xem phòng</a>
+        <p class="listing-summary-note">Không cần tài khoản. Chủ nhà sẽ liên hệ để xác nhận thời gian.</p>
+    </aside>
 </div>
 {% endblock %}
