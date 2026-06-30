@@ -135,7 +135,9 @@ Known compatibility gaps, not behavior to copy into the target design:
 - invoice detail has no supported product deletion workflow or delete-time total recalculation.
 - payment transaction codes are indexed but not unique and are not gateway reconciliation identifiers.
 
-#### Phase 14C-3B2 Additive Schema Proposal
+#### Implemented Phase 14C-3B2 Additive Schema
+
+These four models and their reversible migration are implemented. They remain empty compatibility foundations: no backfill, current billing recalculation, read/write switch, portal/report/template change, protected SQLite change, or real-data operation occurred.
 
 `ServiceDefinition`:
 
@@ -158,7 +160,7 @@ Known compatibility gaps, not behavior to copy into the target design:
 - Invoice, invoice-scoped line code, line type, charge/credit direction, description snapshot, non-negative quantity, unit, non-negative unit price, non-negative amount, sort order, timestamps, and nullable protected links to ServiceDefinition, MeterReading, and legacy InvoiceDetail
 - unique `(invoice, line_code)`; discount/credit contribution is subtracted by direction instead of storing ambiguous negative quantities
 
-Phase 14C-3B3 reconciliation must create four deterministic legacy lines for every existing detail (`rent`, `electricity`, `water`, `service`), including zero-usage lines. For every invoice, the signed line sum must equal both `InvoiceDetail.total_line_amount` and `Invoice.total_amount` with exact `Decimal('0.00')` variance. Paid amount, remaining amount, status, invoice count, payment count, and every owner/tenant relationship must remain unchanged. Backfill must not invent Meter or MeterReading records from invoice-only readings.
+Phase 14C-3B3A reconciliation must create four deterministic legacy lines for every existing detail (`rent`, `electricity`, `water`, `service`), including zero-usage lines. For every invoice, the signed line sum must equal both `InvoiceDetail.total_line_amount` and `Invoice.total_amount` with exact `Decimal('0.00')` variance. Paid amount, remaining amount, status, invoice count, payment count, and every owner/tenant relationship must remain unchanged. Backfill must not invent Meter or MeterReading records from invoice-only readings. Phase 14C-3B3B may switch reads/writes only after this parity evidence is reviewed and separately approved.
 
 ### Maintenance Lifecycle
 
@@ -295,8 +297,9 @@ Disposable-data acceptance checks for the transitional migration:
 ### Phase 14C-3B - Billing and Meter Foundation
 
 - `14C-3B1`: compatibility/reconciliation baseline and exact additive schema proposal (complete)
-- `14C-3B2`: implement additive service, meter, reading, and invoice-line models without switching current invoice reads/writes
-- `14C-3B3`: backfill disposable data, reconcile every total, and switch reads/writes only after parity is proven
+- `14C-3B2`: additive service, meter, reading, and invoice-line models without switching current invoice reads/writes (complete)
+- `14C-3B3A`: backfill invoice lines on disposable data and prove exact total parity without switching reads/writes
+- `14C-3B3B`: switch reads/writes only after parity evidence is reviewed and separately approved
 - preserve payment and overpayment rules throughout
 
 Likely source areas: `billing`, `portal`, `reports`, admin, templates, tests, and migrations.
@@ -388,4 +391,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-3A and Phase 14C-3B1 are complete. The next task is the separately approval-gated Phase 14C-3B2 additive billing and meter schema. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A, Phase 14C-3B1, and Phase 14C-3B2 are complete. The next task is the separately approval-gated Phase 14C-3B3A disposable invoice-line backfill and exact reconciliation. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

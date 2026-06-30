@@ -34,6 +34,8 @@ The diagram contains 15 conceptual entities. All 15 have an active Django equiva
 
 `properties.Property` / `co_so_cho_thue` is an approved RentEase extension above rooms. It is not one of the original 15 diagram entities. Phase 14C-3A4 requires Property membership and Property-scoped room codes while `Room.owner` remains authoritative for access control.
 
+`billing.ServiceDefinition`, `billing.Meter`, `billing.MeterReading`, and `billing.InvoiceLine` are additive target-model foundations introduced in Phase 14C-3B2. They do not yet replace `PriceConfig`, `InvoiceDetail`, or any current invoice calculation/read/write path.
+
 ## Relationship Corrections
 
 Use these relationships as current truth:
@@ -81,7 +83,7 @@ The diagram and current schema both omit or only partially represent several pro
 
 - eventually deriving room ownership through Property after a separately reviewed authorization migration
 - room image galleries, amenities, and listing location/search metadata
-- service catalog, meter-reading history, and owner utility-entry workflow
+- backfilled invoice lines, authoritative meter-reading workflows, and owner utility-entry UI
 - owner and tenant onboarding, invitations, recovery, and account verification
 - planned maintenance schedules, vendors, work orders, and before/after attachments
 - payment reconciliation, gateway callbacks, receipts, refunds, and deposit settlement

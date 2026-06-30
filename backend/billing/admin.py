@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import Invoice, InvoiceDetail, PaymentHistory, PriceConfig
+from .models import (
+    Invoice,
+    InvoiceDetail,
+    InvoiceLine,
+    Meter,
+    MeterReading,
+    PaymentHistory,
+    PriceConfig,
+    ServiceDefinition,
+)
 
 
 @admin.register(PriceConfig)
@@ -19,6 +28,66 @@ class PriceConfigAdmin(admin.ModelAdmin):
     list_filter = ['year', 'month', 'room__owner']
     readonly_fields = ['created_at', 'updated_at']
     list_select_related = ['room', 'room__owner']
+
+
+@admin.register(ServiceDefinition)
+class ServiceDefinitionAdmin(admin.ModelAdmin):
+    list_display = [
+        'service_code',
+        'name',
+        'property',
+        'charge_method',
+        'unit',
+        'default_unit_price',
+        'is_active',
+        'updated_at',
+    ]
+    search_fields = ['service_code', 'name', 'property__property_code', 'property__name']
+    list_filter = ['charge_method', 'is_active', 'property__owner']
+    readonly_fields = ['created_at', 'updated_at']
+    list_select_related = ['property', 'property__owner']
+
+
+@admin.register(Meter)
+class MeterAdmin(admin.ModelAdmin):
+    list_display = [
+        'meter_code',
+        'room',
+        'service_definition',
+        'serial_number',
+        'initial_value',
+        'is_active',
+        'installed_on',
+        'retired_on',
+    ]
+    search_fields = [
+        'meter_code',
+        'serial_number',
+        'room__room_code',
+        'room__room_name',
+        'service_definition__service_code',
+    ]
+    list_filter = ['is_active', 'service_definition__charge_method', 'room__property']
+    readonly_fields = ['created_at', 'updated_at']
+    list_select_related = ['room', 'room__property', 'service_definition']
+
+
+@admin.register(MeterReading)
+class MeterReadingAdmin(admin.ModelAdmin):
+    list_display = [
+        'meter',
+        'month',
+        'year',
+        'previous_value',
+        'current_value',
+        'consumption',
+        'read_at',
+        'captured_by',
+    ]
+    search_fields = ['meter__meter_code', 'meter__serial_number', 'meter__room__room_code']
+    list_filter = ['year', 'month', 'meter__room__property']
+    readonly_fields = ['consumption', 'created_at', 'updated_at']
+    list_select_related = ['meter', 'meter__room', 'captured_by']
 
 
 class InvoiceDetailInline(admin.StackedInline):
@@ -100,6 +169,36 @@ class InvoiceAdmin(admin.ModelAdmin):
     def mark_selected_overdue(self, request, queryset):
         updated = queryset.exclude(status=Invoice.STATUS_PAID).update(status=Invoice.STATUS_OVERDUE)
         self.message_user(request, f'Marked {updated} invoices as overdue.')
+
+
+@admin.register(InvoiceLine)
+class InvoiceLineAdmin(admin.ModelAdmin):
+    list_display = [
+        'invoice',
+        'line_code',
+        'line_type',
+        'direction',
+        'description',
+        'quantity',
+        'unit_price',
+        'amount',
+        'sort_order',
+    ]
+    search_fields = [
+        'invoice__invoice_code',
+        'line_code',
+        'description',
+        'invoice__contract__room__room_code',
+    ]
+    list_filter = ['line_type', 'direction', 'invoice__year', 'invoice__month']
+    readonly_fields = ['created_at', 'updated_at']
+    list_select_related = [
+        'invoice',
+        'invoice__contract',
+        'service_definition',
+        'meter_reading',
+        'legacy_detail',
+    ]
 
 
 @admin.register(PaymentHistory)
