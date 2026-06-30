@@ -23,8 +23,8 @@ Follow `docs/architecture/TARGET_DATA_MODEL.md`. Each implementation stage needs
 - `14C-3A2` reversible default-Property backfill (complete)
 - `14C-3A3` Property integration across owner/admin, listings, reports, and disposable seed data (complete)
 - `14C-3A4` required room relationship and Property-scoped room-code constraint (complete)
-- `14C-3B1` billing/meter compatibility and reconciliation baseline (next)
-- `14C-3B2` additive invoice-line, service, meter, and reading schema/domain foundation
+- `14C-3B1` billing/meter compatibility and reconciliation baseline (complete)
+- `14C-3B2` additive invoice-line, service, meter, and reading schema/domain foundation (next)
 - `14C-3B3` disposable-data backfill, total parity, and controlled read/write switch; UI workflow remains Phase 14D
 - `14C-3C1` maintenance lifecycle correction
 - `14C-3C2` protected-document and audit foundation

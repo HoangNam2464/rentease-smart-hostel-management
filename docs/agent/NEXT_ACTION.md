@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3B1 - Billing and Meter Compatibility Baseline
+Phase 14C-3B2 - Additive Billing and Meter Schema
 ```
 
-Status: waiting for explicit user approval. This phase must freeze and document current financial behavior before any service, meter, reading, or invoice-line schema is added.
+Status: waiting for explicit user approval. This phase adds new tables only; it must not switch current invoice calculation, reads, writes, reports, or UI.
 
 ## Goal
 
-Create an evidence-backed compatibility and reconciliation baseline for current rent, electricity, water, service-fee, invoice-total, payment, remaining-balance, and overpayment behavior; finalize the smallest additive Phase 14C-3B2 schema without changing production behavior.
+Add the approved ServiceDefinition, Meter, MeterReading, and InvoiceLine foundations while keeping `PriceConfig`, `InvoiceDetail`, current totals, payments, and all existing workflows authoritative.
 
 ## Required Context
 
@@ -20,38 +20,40 @@ Create an evidence-backed compatibility and reconciliation baseline for current 
 - `docs/architecture/TARGET_DATA_MODEL.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- current `PriceConfig`, `Invoice`, `InvoiceDetail`, and `PaymentHistory` models, migrations, signals/services, owner forms/views, tenant reads, reports, admin, seed command, and tests inspected directly
+- current billing models/migration/tests, Property/Room constraints, account model, and admin inspected directly
 
 ## Approval Decisions Required Before Editing
 
-- approve a no-schema billing compatibility audit and regression-test phase
-- keep every current calculation, invoice status transition, payment rule, and overpayment rejection unchanged
-- use only disposable test data; do not inspect or mutate protected local SQLite or real data
-- defer new models and migrations to separately approved Phase 14C-3B2
+- approve four additive models and one reviewed migration
+- approve the exact fields, relationships, choices, and uniqueness constraints recorded in `TARGET_DATA_MODEL.md`
+- keep old billing tables and every current calculation/read/write path authoritative
+- create no backfill, demo records, meters, readings, invoice lines, UI, or PostgreSQL data in this phase
 
 ## Expected Scope After Approval
 
-- map the current billing write/read paths and calculation triggers from source
-- add missing regression tests for rent, electricity, water, service, zero usage, price snapshots, recalculation, partial/full payment, remaining balance, and overpayment
-- define reconciliation inputs/outputs and acceptance tolerances for the later additive migration
-- finalize proposed fields, uniqueness, ordering, ownership, and compatibility links for ServiceDefinition, Meter, MeterReading, and InvoiceLine
-- keep models, migrations, settings, authentication, permissions, templates, legacy apps, PostgreSQL provisioning, and real data unchanged
+- add ServiceDefinition, Meter, MeterReading, and InvoiceLine models and admin registration
+- add database constraints for owner/property scope, period uniqueness, non-negative numeric values, and stable invoice line codes where expressible
+- add model validation for cross-Property service/meter consistency and reading monotonicity
+- add forward/backward migration tests and model/constraint tests
+- keep `PriceConfig`, `Invoice`, `InvoiceDetail`, `PaymentHistory`, billing services, portal, reports, templates, settings, auth, legacy apps, protected SQLite, and real data unchanged
 
 ## Required Checks
 
 - `manage.py check`
 - `manage.py makemigrations --check --dry-run`
-- targeted billing tests and full test suite
-- current owner/tenant isolation and payment-overflow tests
+- targeted billing model/migration tests and full test suite
+- clean forward/backward migration on disposable databases
+- existing billing compatibility, payment, role-isolation, and Property tests
 - `git diff --check`
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3B1 approval has not been given
-- any current financial total or status behavior must change
-- a model, migration, setting, authentication, permission, template, legacy runtime, PostgreSQL, or real-data change becomes necessary
-- protected local SQLite would need inspection or mutation
+- explicit Phase 14C-3B2 approval has not been given
+- existing billing behavior or old model fields must change
+- a backfill or current read/write switch becomes necessary
+- protected local SQLite, real data, settings, authentication, permissions, templates, reports, or legacy runtime would change
+- an irreversible migration is required
 - the starting worktree or Django checks are not clean
 
-Phase 14C-3B2 additive schema, 14C-3B3 reconciliation/read-write switch, maintenance/data-governance work, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.
+Phase 14C-3B3 backfill/reconciliation/read-write switch, billing UI completion, maintenance/data governance, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.

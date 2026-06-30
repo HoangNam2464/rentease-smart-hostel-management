@@ -114,6 +114,52 @@ Compatibility path:
 
 Do not expose a RentEase internal invoice as a legal tax e-invoice. Tax e-invoice integration is a later boundary.
 
+#### Verified Phase 14C-3B1 Compatibility Baseline
+
+Current behavior that later phases must preserve:
+
+- `PriceConfig` is unique per room, month, and year.
+- `Invoice` is unique per contract, month, and year; a header without detail remains zero-total draft data.
+- saving `InvoiceDetail` snapshots the current electricity price, water price, contract rent, and service fee, then calculates usage amounts and recalculates the invoice.
+- changing `PriceConfig` alone does not mutate an existing detail snapshot; saving that detail again intentionally refreshes its snapshot from the current config.
+- electricity amount is `(electricity_end - electricity_start) * electricity_unit_price`; water uses the equivalent formula.
+- invoice total is the exact sum of electricity, water, rent, and service snapshot amounts.
+- payment create/update/delete recalculates paid amount, remaining amount, and status; zero/negative payment and overpayment are rejected.
+- status order is draft for zero total, paid for zero remaining, partial for a positive partial payment, overdue for unpaid past-due debt, and unpaid otherwise.
+- service invoice generation is atomic and refuses to create a header when its room-period price config is missing.
+
+Known compatibility gaps, not behavior to copy into the target design:
+
+- meter readings exist only as integer start/end values on the one-to-one invoice detail; there is no meter identity or independent history.
+- owner invoice creation currently creates the header only; owner utility/detail entry remains incomplete.
+- invoice detail has no supported product deletion workflow or delete-time total recalculation.
+- payment transaction codes are indexed but not unique and are not gateway reconciliation identifiers.
+
+#### Phase 14C-3B2 Additive Schema Proposal
+
+`ServiceDefinition`:
+
+- Property, owner-scoped service code, name, charge method (`fixed` or `usage`), unit, default non-negative unit price, active flag, and timestamps
+- unique `(property, service_code)`
+
+`Meter`:
+
+- Room, usage-based ServiceDefinition, room-scoped meter code, optional serial number, non-negative initial value, installed/retired dates, active flag, and timestamps
+- unique `(room, meter_code)` and application validation that service Property matches room Property
+
+`MeterReading`:
+
+- Meter, month, year, non-negative previous/current value snapshots, calculated consumption snapshot, read time, captured-by user, note, and timestamps
+- unique `(meter, month, year)`; current value must be at least previous value
+- no evidence/media field until protected-document storage is approved
+
+`InvoiceLine`:
+
+- Invoice, invoice-scoped line code, line type, charge/credit direction, description snapshot, non-negative quantity, unit, non-negative unit price, non-negative amount, sort order, timestamps, and nullable protected links to ServiceDefinition, MeterReading, and legacy InvoiceDetail
+- unique `(invoice, line_code)`; discount/credit contribution is subtracted by direction instead of storing ambiguous negative quantities
+
+Phase 14C-3B3 reconciliation must create four deterministic legacy lines for every existing detail (`rent`, `electricity`, `water`, `service`), including zero-usage lines. For every invoice, the signed line sum must equal both `InvoiceDetail.total_line_amount` and `Invoice.total_amount` with exact `Decimal('0.00')` variance. Paid amount, remaining amount, status, invoice count, payment count, and every owner/tenant relationship must remain unchanged. Backfill must not invent Meter or MeterReading records from invoice-only readings.
+
 ### Maintenance Lifecycle
 
 Keep `RepairRequest` separate from `MaintenanceRecord`.
@@ -248,7 +294,7 @@ Disposable-data acceptance checks for the transitional migration:
 
 ### Phase 14C-3B - Billing and Meter Foundation
 
-- `14C-3B1`: freeze current billing behavior with a compatibility/reconciliation baseline and finalize exact additive schema decisions
+- `14C-3B1`: compatibility/reconciliation baseline and exact additive schema proposal (complete)
 - `14C-3B2`: implement additive service, meter, reading, and invoice-line models without switching current invoice reads/writes
 - `14C-3B3`: backfill disposable data, reconcile every total, and switch reads/writes only after parity is proven
 - preserve payment and overpayment rules throughout
@@ -342,4 +388,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-3A is complete. The next task is the separately approval-gated Phase 14C-3B1 billing and meter compatibility baseline. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A and Phase 14C-3B1 are complete. The next task is the separately approval-gated Phase 14C-3B2 additive billing and meter schema. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
