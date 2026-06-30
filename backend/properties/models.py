@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -73,8 +74,6 @@ class Room(models.Model):
         Property,
         on_delete=models.PROTECT,
         related_name='rooms',
-        blank=True,
-        null=True,
     )
     room_code = models.CharField(max_length=50)
     room_name = models.CharField(max_length=100)
@@ -94,7 +93,7 @@ class Room(models.Model):
         verbose_name = 'Room'
         verbose_name_plural = 'Rooms'
         constraints = [
-            models.UniqueConstraint(fields=['owner', 'room_code'], name='unique_room_code_per_owner'),
+            models.UniqueConstraint(fields=['property', 'room_code'], name='unique_room_code_per_property'),
         ]
         indexes = [
             models.Index(fields=['status']),
@@ -103,3 +102,10 @@ class Room(models.Model):
 
     def __str__(self):
         return f'{self.room_code} - {self.room_name}'
+
+    def clean(self):
+        super().clean()
+        if self.owner_id and self.property_id and self.property.owner_id != self.owner_id:
+            raise ValidationError({
+                'property': 'Property must belong to the same owner as the room.',
+            })

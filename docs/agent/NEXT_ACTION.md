@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3A4 - Required Property Relationship and Room-Code Constraint
+Phase 14C-3B1 - Billing and Meter Compatibility Baseline
 ```
 
-Status: waiting for explicit user approval. This is a schema-and-migration phase and must remain separate from billing, PostgreSQL provisioning, and legacy exclusion.
+Status: waiting for explicit user approval. This phase must freeze and document current financial behavior before any service, meter, reading, or invoice-line schema is added.
 
 ## Goal
 
-Complete the transitional Property foundation by requiring every Room to belong to an owner-matched Property and scoping room-code uniqueness to that Property while retaining `Room.owner` as the current authorization boundary.
+Create an evidence-backed compatibility and reconciliation baseline for current rent, electricity, water, service-fee, invoice-total, payment, remaining-balance, and overpayment behavior; finalize the smallest additive Phase 14C-3B2 schema without changing production behavior.
 
 ## Required Context
 
@@ -18,46 +18,40 @@ Complete the transitional Property foundation by requiring every Room to belong 
 - `docs/agent/RENTEASE_CURRENT_STATE.md`
 - `docs/architecture/DATA_MODEL_ALIGNMENT.md`
 - `docs/architecture/TARGET_DATA_MODEL.md`
-- `docs/architecture/LEGACY_BOUNDARIES.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- current Property/Room models, migrations, admin/forms/querysets, migration tests, and protected-data boundaries inspected directly
+- current `PriceConfig`, `Invoice`, `InvoiceDetail`, and `PaymentHistory` models, migrations, signals/services, owner forms/views, tenant reads, reports, admin, seed command, and tests inspected directly
 
 ## Approval Decisions Required Before Editing
 
-- approve changing `Room.property` from nullable to required
-- approve replacing owner-plus-room-code uniqueness with Property-plus-room-code uniqueness
-- keep `Room.owner` and all current authorization querysets during this phase
-- approve a precondition migration that stops on null Property, owner mismatch, or duplicate `(property, room_code)` data instead of guessing
-- keep protected local SQLite and all real data untouched; exercise migrations only in disposable test databases unless separately authorized
+- approve a no-schema billing compatibility audit and regression-test phase
+- keep every current calculation, invoice status transition, payment rule, and overpayment rejection unchanged
+- use only disposable test data; do not inspect or mutate protected local SQLite or real data
+- defer new models and migrations to separately approved Phase 14C-3B2
 
 ## Expected Scope After Approval
 
-- add a reviewed migration precondition for zero null, zero owner mismatch, and zero duplicate Property room codes
-- make `Room.property` required
-- replace `unique_room_code_per_owner` with a Property-scoped unique constraint
-- preserve owner/property consistency in forms and Django Admin
-- update model and migration tests for forward/reverse behavior and constraint enforcement
-- keep authentication, permissions, billing, settings, reports, legacy apps, PostgreSQL provisioning, and real-data onboarding unchanged
+- map the current billing write/read paths and calculation triggers from source
+- add missing regression tests for rent, electricity, water, service, zero usage, price snapshots, recalculation, partial/full payment, remaining balance, and overpayment
+- define reconciliation inputs/outputs and acceptance tolerances for the later additive migration
+- finalize proposed fields, uniqueness, ordering, ownership, and compatibility links for ServiceDefinition, Meter, MeterReading, and InvoiceLine
+- keep models, migrations, settings, authentication, permissions, templates, legacy apps, PostgreSQL provisioning, and real data unchanged
 
 ## Required Checks
 
 - `manage.py check`
 - `manage.py makemigrations --check --dry-run`
-- targeted model/admin/form/migration tests and full test suite
-- migration forward and backward on disposable databases
-- zero-null, owner-match, and duplicate-precondition tests
-- existing role, public privacy, staff report, billing, and seed tests
+- targeted billing tests and full test suite
+- current owner/tenant isolation and payment-overflow tests
 - `git diff --check`
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3A4 approval has not been given
-- current disposable migration-state data contains null Property, owner mismatch, or duplicate `(property, room_code)` rows that are not deliberately covered by the precondition tests
-- authorization would need to switch away from `Room.owner`
-- protected local SQLite or real data would need mutation
-- billing, authentication, settings, legacy runtime, PostgreSQL provisioning, or another model area must change
+- explicit Phase 14C-3B1 approval has not been given
+- any current financial total or status behavior must change
+- a model, migration, setting, authentication, permission, template, legacy runtime, PostgreSQL, or real-data change becomes necessary
+- protected local SQLite would need inspection or mutation
 - the starting worktree or Django checks are not clean
 
-Billing/meter work, maintenance/data-governance work, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.
+Phase 14C-3B2 additive schema, 14C-3B3 reconciliation/read-write switch, maintenance/data-governance work, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.

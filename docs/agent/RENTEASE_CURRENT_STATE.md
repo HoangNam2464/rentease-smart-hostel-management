@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-3A3: Property Product Integration |
+| Latest product phase | Phase 14C-3A4: Required Property Relationship and Constraint |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -50,7 +50,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Phase 14C-3A1 added the `Property` model and nullable `Room.property` transition field. `Room.owner` remains authoritative; no property backfill, queryset switch, form, admin, UI, or real-data change has occurred.
 - Phase 14C-3A2 added a reversible data migration that creates one deterministic default Property per owner profile, copies only an existing rental address, and links previously unlinked Rooms without changing `Room.owner`. It has been exercised only in disposable test databases; protected local SQLite data was not altered.
 - Phase 14C-3A3 is complete: owner/admin Property management, owner-scoped listing filters, public-safe Property name/ward/province presentation, staff-only Property report filters, and Property-first disposable demo seeding are integrated. Public pages do not render exact address, coordinates, contact phone, timezone, or house rules.
-- The suite now contains 41 tests, including Property CRUD and listing isolation, public-field privacy, staff report access/filtering, idempotent Property-first demo seeding, admin consistency, deterministic backfill, and migration preservation.
+- Phase 14C-3A4 requires every Room to belong to a Property, scopes room-code uniqueness to `(property, room_code)`, and retains `Room.owner` as the authorization boundary. Migration preconditions stop on null Property, owner mismatch, duplicate Property room code, or unsafe reverse owner-code duplication.
+- The suite now contains 49 tests, including required-Property enforcement, Property-scoped room codes in the database and owner form, migration forward/backward stop conditions, Property CRUD and listing isolation, public-field privacy, staff report access/filtering, idempotent Property-first demo seeding, admin consistency, deterministic backfill, and migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 

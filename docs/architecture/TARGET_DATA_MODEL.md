@@ -178,7 +178,7 @@ Expected files: test modules, current legacy-boundary reference, target-model re
 
 ### Phase 14C-3A - Property Foundation
 
-Status: in progress through separately reviewed additive subphases.
+Status: complete through separately reviewed additive subphases.
 
 #### Phase 14C-3A1 - Additive Property Schema
 
@@ -216,9 +216,13 @@ Status: complete.
 
 #### Phase 14C-3A4 - Required Relationship and Constraint
 
-- require `Room.property` only after zero-null and owner-match checks pass
-- move room-code uniqueness from owner plus room code to Property plus room code
-- retain `Room.owner` until a later reviewed cleanup after PostgreSQL cutover
+Status: complete.
+
+- requires `Room.property` after zero-null, owner-match, and duplicate checks pass
+- moves room-code uniqueness from owner plus room code to Property plus room code
+- stops forward migration on null Property, owner mismatch, or duplicate Property room code
+- stops reverse migration when restoring owner-scoped uniqueness would lose data
+- retains `Room.owner` until a later reviewed cleanup after PostgreSQL cutover
 
 Expected files across the remaining subphases:
 
@@ -244,10 +248,10 @@ Disposable-data acceptance checks for the transitional migration:
 
 ### Phase 14C-3B - Billing and Meter Foundation
 
-- implement service, meter, reading, and invoice-line models
-- add calculation and reconciliation tests before switching reads/writes
-- backfill and reconcile existing disposable SQLite invoice totals
-- keep payment and overpayment rules unchanged
+- `14C-3B1`: freeze current billing behavior with a compatibility/reconciliation baseline and finalize exact additive schema decisions
+- `14C-3B2`: implement additive service, meter, reading, and invoice-line models without switching current invoice reads/writes
+- `14C-3B3`: backfill disposable data, reconcile every total, and switch reads/writes only after parity is proven
+- preserve payment and overpayment rules throughout
 
 Likely source areas: `billing`, `portal`, `reports`, admin, templates, tests, and migrations.
 
@@ -338,4 +342,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-3A3 is complete. The next implementation task is the separately approval-gated Phase 14C-3A4 required relationship and Property-scoped room-code constraint. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A is complete. The next task is the separately approval-gated Phase 14C-3B1 billing and meter compatibility baseline. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

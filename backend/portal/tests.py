@@ -117,8 +117,14 @@ class PortalDataIsolationTests(TestCase):
                 citizen_id=f"ISOLATION-{suffix}",
                 phone_number=f"090000000{1 if suffix == 'A' else 2}",
             )
+            property_record = Property.objects.create(
+                owner=owner_profile,
+                property_code=f"ISO-PROPERTY-{suffix}",
+                name=f"Isolation Property {suffix}",
+            )
             room = Room.objects.create(
                 owner=owner_profile,
+                property=property_record,
                 room_code=f"ISO-ROOM-{suffix}",
                 room_name=f"Isolation Room {suffix}",
                 default_rent=Decimal("5000000.00"),
@@ -457,6 +463,43 @@ class OwnerPropertyPortalTests(TestCase):
         self.room.refresh_from_db()
         self.assertEqual(self.room.property, self.properties[0])
         self.assertEqual(self.room.room_name, "Phòng Portal A")
+
+    def test_room_code_is_scoped_to_selected_property(self):
+        second_property = Property.objects.create(
+            owner=self.owner_profiles[0],
+            property_code="PORTAL-PROPERTY-A2",
+            name="Cơ sở Portal A2",
+        )
+        self.client.force_login(self.owner_users[0])
+
+        allowed_response = self.client.post(
+            "/owner/rooms/new/",
+            self.room_payload(
+                second_property,
+                room_code=self.room.room_code,
+                room_name="Same code in another Property",
+            ),
+        )
+        self.assertRedirects(allowed_response, "/owner/rooms/", fetch_redirect_response=False)
+        self.assertTrue(Room.objects.filter(
+            property=second_property,
+            room_code=self.room.room_code,
+        ).exists())
+
+        duplicate_response = self.client.post(
+            "/owner/rooms/new/",
+            self.room_payload(
+                self.properties[0],
+                room_code=self.room.room_code,
+                room_name="Duplicate in same Property",
+            ),
+        )
+        self.assertEqual(duplicate_response.status_code, 200)
+        self.assertContains(duplicate_response, "Cơ sở này đã có một phòng sử dụng mã này.")
+        self.assertEqual(Room.objects.filter(
+            property=self.properties[0],
+            room_code=self.room.room_code,
+        ).count(), 1)
 
     def test_owner_listing_property_context_and_filter_are_owner_scoped(self):
         second_property = Property.objects.create(

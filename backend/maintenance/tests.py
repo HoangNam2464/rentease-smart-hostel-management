@@ -7,7 +7,7 @@ from django.test import TestCase
 from accounts.models import UserProfile
 from billing.models import Invoice
 from contracts.models import Contract
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 from .models import Notification, RepairRequest
@@ -22,9 +22,15 @@ class MaintenanceRelationshipInvariantTests(TestCase):
             user_type="OWNER",
         )
         owner = UserProfile.objects.create(user=owner_user, full_name="Maintenance Owner")
+        property_record = Property.objects.create(
+            owner=owner,
+            property_code="MAINTENANCE-PROPERTY",
+            name="Maintenance Property",
+        )
         cls.rooms = [
             Room.objects.create(
                 owner=owner,
+                property=property_record,
                 room_code=f"MAINTENANCE-{suffix}",
                 room_name=f"Maintenance Room {suffix}",
                 default_rent="5000000.00",

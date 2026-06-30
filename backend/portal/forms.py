@@ -95,11 +95,12 @@ class OwnerRoomForm(forms.ModelForm):
 
     def clean_room_code(self):
         room_code = self.cleaned_data['room_code']
-        if self.owner_profile and Room.objects.filter(
-            owner=self.owner_profile,
+        property_record = self.cleaned_data.get('property')
+        if property_record and Room.objects.filter(
+            property=property_record,
             room_code=room_code,
         ).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError('Bạn đã có một phòng sử dụng mã này.')
+            raise forms.ValidationError('Cơ sở này đã có một phòng sử dụng mã này.')
         return room_code
 
     def clean_max_occupants(self):

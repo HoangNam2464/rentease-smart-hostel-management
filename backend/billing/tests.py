@@ -8,7 +8,7 @@ from django.test import TestCase
 
 from accounts.models import UserProfile
 from contracts.models import Contract
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 from .models import Invoice, InvoiceDetail, PaymentHistory, PriceConfig
@@ -23,8 +23,14 @@ class BillingInvariantTests(TestCase):
             user_type="OWNER",
         )
         owner = UserProfile.objects.create(user=owner_user, full_name="Billing Owner")
+        property_record = Property.objects.create(
+            owner=owner,
+            property_code="BILLING-PROPERTY",
+            name="Billing Property",
+        )
         cls.room = Room.objects.create(
             owner=owner,
+            property=property_record,
             room_code="BILLING-ROOM",
             room_name="Billing Room",
             default_rent=Decimal("5000000.00"),

@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError, connection, models, transaction
 from django.db.migrations.executor import MigrationExecutor
 from django.test import TestCase, TransactionTestCase
@@ -70,14 +71,15 @@ class PropertyFoundationTests(TestCase):
         self.assertEqual(first.property_code, second.property_code)
         self.assertNotEqual(first.owner_id, second.owner_id)
 
-    def test_room_property_is_optional_during_transition(self):
-        room_without_property = Room.objects.create(
+    def test_room_property_is_required_after_transition(self):
+        property_record = self.create_property(self.owners[0])
+        room_with_required_property = Room.objects.create(
             owner=self.owners[0],
+            property=property_record,
             room_code="TRANSITION-001",
             room_name="Phòng chuyển tiếp",
             default_rent=Decimal("3000000.00"),
         )
-        property_record = self.create_property(self.owners[0])
         room_with_property = Room.objects.create(
             owner=self.owners[0],
             property=property_record,
@@ -86,8 +88,60 @@ class PropertyFoundationTests(TestCase):
             default_rent=Decimal("3500000.00"),
         )
 
-        self.assertIsNone(room_without_property.property_id)
+        self.assertEqual(room_with_required_property.property_id, property_record.pk)
         self.assertEqual(room_with_property.property_id, property_record.pk)
+
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Room.objects.create(
+                    owner=self.owners[0],
+                    property=None,
+                    room_code="REQUIRED-ROOM",
+                    room_name="Room without Property",
+                    default_rent=Decimal("3000000.00"),
+                )
+
+    def test_room_code_is_unique_within_property(self):
+        first_property = self.create_property(self.owners[0], code="PROPERTY-A")
+        second_property = self.create_property(self.owners[0], code="PROPERTY-B")
+        Room.objects.create(
+            owner=self.owners[0],
+            property=first_property,
+            room_code="SHARED-CODE",
+            room_name="Room in first Property",
+            default_rent=Decimal("3500000.00"),
+        )
+        same_code_other_property = Room.objects.create(
+            owner=self.owners[0],
+            property=second_property,
+            room_code="SHARED-CODE",
+            room_name="Room in second Property",
+            default_rent=Decimal("3500000.00"),
+        )
+
+        self.assertEqual(same_code_other_property.property_id, second_property.pk)
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Room.objects.create(
+                    owner=self.owners[0],
+                    property=first_property,
+                    room_code="SHARED-CODE",
+                    room_name="Duplicate room",
+                    default_rent=Decimal("3500000.00"),
+                )
+
+    def test_room_validation_rejects_property_owned_by_another_owner(self):
+        foreign_property = self.create_property(self.owners[1])
+        room = Room(
+            owner=self.owners[0],
+            property=foreign_property,
+            room_code="MISMATCHED-ROOM",
+            room_name="Mismatched Room",
+            default_rent=Decimal("3000000.00"),
+        )
+
+        with self.assertRaises(ValidationError):
+            room.full_clean()
 
     def test_property_admin_keeps_owner_and_code_readonly_after_creation(self):
         property_record = self.create_property(self.owners[0])
@@ -254,3 +308,143 @@ class PropertyBackfillMigrationTests(TransactionTestCase):
             dict(ReversedRoom.objects.values_list('pk', 'owner_id')),
             original_room_owners,
         )
+
+
+class PropertyRequiredMigrationTests(TransactionTestCase):
+    migrate_from = ('properties', '0003_backfill_default_properties')
+    migrate_to = ('properties', '0004_require_room_property_and_scope_room_code')
+
+    def migrate(self, target):
+        executor = MigrationExecutor(connection)
+        executor.migrate([target])
+        return executor.loader.project_state([target]).apps
+
+    def tearDown(self):
+        executor = MigrationExecutor(connection)
+        executor.migrate(executor.loader.graph.leaf_nodes())
+        super().tearDown()
+
+    def create_owner(self, apps, username):
+        User = apps.get_model('accounts', 'User')
+        UserProfile = apps.get_model('accounts', 'UserProfile')
+        user = User.objects.create(username=username, user_type='OWNER')
+        return UserProfile.objects.create(user=user, full_name=username)
+
+    def create_property(self, apps, owner, code):
+        PropertyModel = apps.get_model('properties', 'Property')
+        return PropertyModel.objects.create(
+            owner=owner,
+            property_code=code,
+            name=code,
+        )
+
+    def create_room(self, apps, owner, property_record, code):
+        RoomModel = apps.get_model('properties', 'Room')
+        return RoomModel.objects.create(
+            owner_id=owner.pk,
+            property_id=property_record.pk,
+            room_code=code,
+            room_name=code,
+            default_rent=Decimal('3000000.00'),
+        )
+
+    def test_forward_and_backward_migration_preserve_valid_rooms(self):
+        old_apps = self.migrate(self.migrate_from)
+        owner = self.create_owner(old_apps, 'required_migration_owner')
+        first_property = self.create_property(old_apps, owner, 'REQUIRED-PROPERTY-A')
+        second_property = self.create_property(old_apps, owner, 'REQUIRED-PROPERTY-B')
+        original_room = self.create_room(old_apps, owner, first_property, 'SHARED-CODE')
+
+        new_apps = self.migrate(self.migrate_to)
+        NewRoom = new_apps.get_model('properties', 'Room')
+        self.assertFalse(NewRoom._meta.get_field('property').null)
+        self.assertEqual(NewRoom.objects.get(pk=original_room.pk).property_id, first_property.pk)
+
+        same_code_other_property = self.create_room(
+            new_apps,
+            owner,
+            second_property,
+            'SHARED-CODE',
+        )
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                self.create_room(new_apps, owner, first_property, 'SHARED-CODE')
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                NewRoom.objects.create(
+                    owner_id=owner.pk,
+                    property_id=None,
+                    room_code='NO-PROPERTY',
+                    room_name='No Property',
+                    default_rent=Decimal('3000000.00'),
+                )
+
+        same_code_other_property.delete()
+        reversed_apps = self.migrate(self.migrate_from)
+        ReversedRoom = reversed_apps.get_model('properties', 'Room')
+        self.assertTrue(ReversedRoom._meta.get_field('property').null)
+        self.assertEqual(ReversedRoom.objects.get(pk=original_room.pk).property_id, first_property.pk)
+
+    def test_forward_migration_rejects_unlinked_room(self):
+        old_apps = self.migrate(self.migrate_from)
+        owner = self.create_owner(old_apps, 'unlinked_migration_owner')
+        property_record = self.create_property(old_apps, owner, 'UNLINKED-PROPERTY')
+        OldRoom = old_apps.get_model('properties', 'Room')
+        room = OldRoom.objects.create(
+            owner=owner,
+            property=None,
+            room_code='UNLINKED-ROOM',
+            room_name='Unlinked Room',
+            default_rent=Decimal('3000000.00'),
+        )
+
+        with self.assertRaisesRegex(RuntimeError, 'has no Property'):
+            self.migrate(self.migrate_to)
+
+        OldRoom.objects.filter(pk=room.pk).update(property=property_record)
+        self.migrate(self.migrate_to)
+
+    def test_forward_migration_rejects_owner_mismatch(self):
+        old_apps = self.migrate(self.migrate_from)
+        first_owner = self.create_owner(old_apps, 'mismatch_migration_owner_a')
+        second_owner = self.create_owner(old_apps, 'mismatch_migration_owner_b')
+        first_property = self.create_property(old_apps, first_owner, 'MISMATCH-PROPERTY-A')
+        second_property = self.create_property(old_apps, second_owner, 'MISMATCH-PROPERTY-B')
+        room = self.create_room(old_apps, first_owner, second_property, 'MISMATCH-ROOM')
+        OldRoom = old_apps.get_model('properties', 'Room')
+
+        with self.assertRaisesRegex(RuntimeError, 'owned by another owner'):
+            self.migrate(self.migrate_to)
+
+        OldRoom.objects.filter(pk=room.pk).update(property=first_property)
+        self.migrate(self.migrate_to)
+
+    def test_forward_migration_rejects_duplicate_property_room_code(self):
+        old_apps = self.migrate(self.migrate_from)
+        first_owner = self.create_owner(old_apps, 'duplicate_migration_owner_a')
+        second_owner = self.create_owner(old_apps, 'duplicate_migration_owner_b')
+        property_record = self.create_property(old_apps, first_owner, 'DUPLICATE-PROPERTY')
+        self.create_room(old_apps, first_owner, property_record, 'DUPLICATE-CODE')
+        duplicate_room = self.create_room(old_apps, second_owner, property_record, 'DUPLICATE-CODE')
+        OldRoom = old_apps.get_model('properties', 'Room')
+
+        with self.assertRaisesRegex(RuntimeError, 'Duplicate room code'):
+            self.migrate(self.migrate_to)
+
+        OldRoom.objects.filter(pk=duplicate_room.pk).delete()
+        self.migrate(self.migrate_to)
+
+    def test_reverse_migration_rejects_duplicate_owner_room_code(self):
+        new_apps = self.migrate(self.migrate_to)
+        owner = self.create_owner(new_apps, 'reverse_migration_owner')
+        first_property = self.create_property(new_apps, owner, 'REVERSE-PROPERTY-A')
+        second_property = self.create_property(new_apps, owner, 'REVERSE-PROPERTY-B')
+        self.create_room(new_apps, owner, first_property, 'REVERSE-CODE')
+        duplicate_room = self.create_room(new_apps, owner, second_property, 'REVERSE-CODE')
+        NewRoom = new_apps.get_model('properties', 'Room')
+
+        with self.assertRaisesRegex(RuntimeError, 'Cannot reverse'):
+            self.migrate(self.migrate_from)
+
+        NewRoom.objects.filter(pk=duplicate_room.pk).delete()
+        self.migrate(self.migrate_from)
