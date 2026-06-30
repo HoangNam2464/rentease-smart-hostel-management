@@ -14,6 +14,16 @@
             <img class="listing-media detail" src="{{ listing.image_url }}" alt="{{ listing.title }}">
         {% endif %}
         <ul class="info-list">
+            <li>
+                <span>Cơ sở</span>
+                <strong>
+                    {% if listing.room.property and listing.room.property.owner_id == profile.pk %}
+                        <a href="{% url 'portal:owner_property_detail' listing.room.property.pk %}">{{ listing.room.property.name }}</a>
+                    {% else %}
+                        Chưa liên kết
+                    {% endif %}
+                </strong>
+            </li>
             <li><span>Phòng</span><strong>{{ listing.room.room_code }} - {{ listing.room.room_name }}</strong></li>
             <li><span>Giá đăng</span><strong>{{ listing.listing_price }}</strong></li>
             <li><span>Tiền cọc</span><strong>{{ listing.deposit_amount }}</strong></li>

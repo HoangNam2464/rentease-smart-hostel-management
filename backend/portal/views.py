@@ -101,7 +101,7 @@ def owner_contracts_queryset(profile):
 
 
 def owner_listings_queryset(profile):
-    return RoomListing.objects.select_related('room').filter(room__owner=profile)
+    return RoomListing.objects.select_related('room', 'room__property').filter(room__owner=profile)
 
 
 def owner_tenants_queryset(profile):
@@ -574,10 +574,24 @@ def owner_listings_list(request):
     if not profile:
         return render_missing_owner_profile(request)
 
-    listings = owner_listings_queryset(profile).order_by('-published_at', '-created_at')
+    properties = owner_properties_queryset(profile).order_by('property_code')
+    selected_property = None
+    property_id = request.GET.get('property', '').strip()
+    if property_id:
+        try:
+            selected_property = properties.filter(pk=property_id).first()
+        except (TypeError, ValueError):
+            selected_property = None
+
+    listings = owner_listings_queryset(profile)
+    if selected_property:
+        listings = listings.filter(room__property=selected_property)
+    listings = listings.order_by('-published_at', '-created_at')
     return render(request, 'portal/owner_listings_list.html', {
         'profile': profile,
         'listings': listings,
+        'properties': properties,
+        'selected_property': selected_property,
     })
 
 

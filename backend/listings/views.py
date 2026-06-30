@@ -1,7 +1,7 @@
 from decimal import Decimal, InvalidOperation
 
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import F, Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ViewingRegistrationForm
@@ -11,8 +11,9 @@ from .models import RoomListing
 def published_listings():
     return (
         RoomListing.objects
-        .select_related('room')
+        .select_related('room', 'room__property')
         .filter(status=RoomListing.STATUS_PUBLISHED)
+        .filter(Q(room__property__isnull=True) | Q(room__property__owner_id=F('room__owner_id')))
     )
 
 
@@ -28,6 +29,9 @@ def public_listing_list(request):
             Q(title__icontains=query)
             | Q(description__icontains=query)
             | Q(room__room_name__icontains=query)
+            | Q(room__property__name__icontains=query)
+            | Q(room__property__ward__icontains=query)
+            | Q(room__property__province_city__icontains=query)
         )
 
     if max_price:

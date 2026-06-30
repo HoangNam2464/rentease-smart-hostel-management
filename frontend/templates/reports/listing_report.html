@@ -4,6 +4,19 @@
 <h1 class="report-page-title">Báo cáo tin phòng & lịch xem</h1>
 <p class="report-page-subtitle">Theo dõi tin phòng đang công khai, lịch xem chờ xử lý, lịch đã hoàn thành và lịch vắng mặt.</p>
 
+<form class="filter-form" method="get" aria-label="Lọc báo cáo tin phòng theo cơ sở">
+  <label for="listing-property-filter">Cơ sở cho thuê
+    <select id="listing-property-filter" name="property">
+      <option value="">Tất cả cơ sở</option>
+      {% for property_record in properties %}
+        <option value="{{ property_record.pk }}"{% if selected_property.pk == property_record.pk %} selected{% endif %}>{{ property_record.name }} · {{ property_record.owner }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit">Lọc báo cáo</button>
+  {% if selected_property %}<a href="{% url 'reports:listings' %}">Xóa lọc</a>{% endif %}
+</form>
+
 <div class="report-section">
   <h2>Tin phòng công khai</h2>
   <div class="report-table-wrap">
@@ -13,7 +26,10 @@
         {% for listing in published_listings %}
         <tr>
           <td>{{ listing.title }}</td>
-          <td>{{ listing.room.room_code }}</td>
+          <td>
+            {{ listing.room.room_code }}
+            {% if listing.room.property %}<br><small>{{ listing.room.property.name }} · {{ listing.room.property.property_code }}</small>{% endif %}
+          </td>
           <td>{{ listing.listing_price }}</td>
           <td>{{ listing.published_at }}</td>
         </tr>

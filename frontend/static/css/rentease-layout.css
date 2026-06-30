@@ -604,6 +604,46 @@ body.app-body {
     outline-offset: 2px;
 }
 
+.portal-filter-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--card-bg);
+}
+
+.portal-filter-bar .filter-field {
+    display: grid;
+    gap: 6px;
+    min-width: min(320px, 100%);
+}
+
+.portal-filter-bar .filter-field label {
+    color: var(--text-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.portal-filter-bar .filter-field select {
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 10px;
+    border: 1px solid var(--card-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--text-heading);
+    font: inherit;
+}
+
+.portal-filter-bar .filter-field select:focus-visible {
+    outline: 3px solid rgba(15,118,110,0.16);
+    outline-offset: 2px;
+}
+
 /* ── BADGES / STATUS ─────────────────────────────────────────── */
 
 .badge {
@@ -1043,6 +1083,14 @@ body.app-body {
         text-overflow: ellipsis;
     }
     .app-content { padding: 14px; overflow-x: hidden; }
+    .portal-filter-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .portal-filter-bar .filter-field,
+    .portal-filter-bar .button {
+        width: 100%;
+    }
     .page-title {
         font-size: 1.32rem;
         align-items: flex-start;

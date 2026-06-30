@@ -13,12 +13,13 @@ from billing.models import Invoice, InvoiceDetail, PaymentHistory, PriceConfig
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import Notification, RepairRequest
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 
 DEMO_PREFIX = "DEMO-"
 DEMO_EMAIL_DOMAIN = "@example.test"
+DEMO_PROPERTY_CODE = "DEMO-P001"
 
 
 class Command(BaseCommand):
@@ -107,7 +108,7 @@ class Command(BaseCommand):
         self.stdout.write(f"- Tenant account: {tenant_user.username} / linked tenant record found.")
         if self.reset_demo_data:
             self.stdout.write("- Would reset command-created DEMO-prefixed data first.")
-        self.stdout.write("- Would create/update 5 realistic Vietnamese demo rooms for the owner.")
+        self.stdout.write("- Would create/update 1 Property before linking 5 realistic Vietnamese demo rooms.")
         self.stdout.write("- Would create/update 3 published public listings and 2 internal listings with Vietnamese copy.")
         self.stdout.write("- Would create/update 2 fake tenants linked through owner contracts.")
         self.stdout.write("- Would create/update 2 active contracts with realistic contract codes.")
@@ -116,6 +117,10 @@ class Command(BaseCommand):
 
     def _reset_demo_data(self, owner_profile, tenant):
         demo_rooms = Room.objects.filter(owner=owner_profile, room_code__startswith=DEMO_PREFIX)
+        demo_properties = Property.objects.filter(
+            owner=owner_profile,
+            property_code__startswith=DEMO_PREFIX,
+        )
         demo_contracts = Contract.objects.filter(
             Q(contract_code__startswith=DEMO_PREFIX) | Q(room__in=demo_rooms)
         )
@@ -156,6 +161,7 @@ class Command(BaseCommand):
             ("contracts", demo_contracts),
             ("price configs", PriceConfig.objects.filter(room__in=demo_rooms)),
             ("rooms", demo_rooms),
+            ("properties", demo_properties),
             ("demo-only tenants", demo_tenants),
         ]:
             count = queryset.count()
@@ -178,7 +184,8 @@ class Command(BaseCommand):
         owner_profile = self._prepare_owner_profile(owner_profile)
         tenant = self._prepare_primary_tenant(tenant)
         second_tenant = self._upsert_second_tenant()
-        rooms = self._upsert_rooms(owner_profile)
+        property_record = self._upsert_property(owner_profile)
+        rooms = self._upsert_rooms(owner_profile, property_record)
         self._upsert_listings(rooms, today)
         contracts = self._upsert_contracts(rooms, tenant, second_tenant, today, contract_end, ending_soon)
         invoices = self._upsert_billing(owner_user, rooms, contracts, month, year, month_start, today)
@@ -231,7 +238,27 @@ class Command(BaseCommand):
         tenant.save()
         return tenant
 
-    def _upsert_rooms(self, owner_profile):
+    def _upsert_property(self, owner_profile):
+        property_record, _created = Property.objects.update_or_create(
+            owner=owner_profile,
+            property_code=DEMO_PROPERTY_CODE,
+            defaults={
+                "name": "Nhà trọ Hoa Sữa",
+                "address": "123 Đường Hoa Sữa",
+                "ward": "Phường 7",
+                "province_city": "TP. Hồ Chí Minh",
+                "contact_phone": "0901000101",
+                "status": Property.STATUS_ACTIVE,
+                "timezone": "Asia/Ho_Chi_Minh",
+                "house_rules": "Giữ yên tĩnh sau 22:00 và để xe đúng khu vực quy định.",
+            },
+        )
+        property_record.full_clean()
+        property_record.save()
+        self.actions.append("Verified one owner-matched demo Property before seeding rooms.")
+        return property_record
+
+    def _upsert_rooms(self, owner_profile, property_record):
         room_specs = [
             (
                 "DEMO-R001",
@@ -290,6 +317,7 @@ class Command(BaseCommand):
                 owner=owner_profile,
                 room_code=code,
                 defaults={
+                    "property": property_record,
                     "room_name": name,
                     "status": status,
                     "default_rent": rent,

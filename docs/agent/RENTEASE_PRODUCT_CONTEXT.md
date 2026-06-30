@@ -8,7 +8,7 @@ RentEase is a Django boarding-house and rental-room management system evolved fr
 
 ### Visitor
 
-- Browse published rooms and public-safe room details.
+- Browse published rooms with public-safe Property name/ward/province context and room details.
 - Submit viewing registrations without gaining private system access.
 
 ### Owner

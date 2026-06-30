@@ -8,7 +8,7 @@ from billing.models import Invoice
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import MaintenanceRecord, RepairRequest
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 
@@ -73,10 +73,26 @@ def billing_report(month=None, year=None, status=None):
     }
 
 
-def room_report():
-    rooms = Room.objects.select_related('owner').order_by('room_code')
-    status_summary = count_by_status(Room.objects.all())
-    active_contract_room_ids = Contract.objects.filter(status='active').values_list('room_id', flat=True).distinct()
+def property_filter_context(property_id):
+    properties = Property.objects.select_related('owner').order_by('owner__full_name', 'property_code')
+    try:
+        selected_property = properties.filter(pk=property_id).first() if property_id else None
+    except (TypeError, ValueError):
+        selected_property = None
+    return properties, selected_property
+
+
+def room_report(property_id=None):
+    properties, selected_property = property_filter_context(property_id)
+    rooms = Room.objects.select_related('owner', 'property')
+    if selected_property:
+        rooms = rooms.filter(property=selected_property)
+    rooms = rooms.order_by('property__property_code', 'room_code')
+    status_summary = count_by_status(rooms)
+    active_contract_room_ids = Contract.objects.filter(
+        status='active',
+        room__in=rooms,
+    ).values_list('room_id', flat=True).distinct()
 
     return {
         'rooms': rooms,
@@ -87,6 +103,8 @@ def room_report():
         'occupied_rooms': status_summary.get('occupied', 0),
         'maintenance_rooms': status_summary.get('maintenance', 0),
         'inactive_rooms': status_summary.get('inactive', 0),
+        'properties': properties,
+        'selected_property': selected_property,
     }
 
 
@@ -115,18 +133,32 @@ def maintenance_report():
     }
 
 
-def listing_report():
+def listing_report(property_id=None):
+    properties, selected_property = property_filter_context(property_id)
+    listings = RoomListing.objects.select_related('room', 'room__property')
+    registrations = ViewingRegistration.objects.select_related(
+        'listing',
+        'listing__room',
+        'listing__room__property',
+        'tenant',
+    )
+    if selected_property:
+        listings = listings.filter(room__property=selected_property)
+        registrations = registrations.filter(listing__room__property=selected_property)
+
     return {
-        'published_listings': RoomListing.objects.select_related('room').filter(
+        'properties': properties,
+        'selected_property': selected_property,
+        'published_listings': listings.filter(
             status=RoomListing.STATUS_PUBLISHED,
         ).order_by('-published_at'),
-        'pending_viewing_registrations': ViewingRegistration.objects.select_related('listing', 'listing__room', 'tenant').filter(
+        'pending_viewing_registrations': registrations.filter(
             status=ViewingRegistration.STATUS_PENDING,
         ).order_by('preferred_date', 'preferred_time'),
-        'completed_viewings': ViewingRegistration.objects.select_related('listing', 'listing__room', 'tenant').filter(
+        'completed_viewings': registrations.filter(
             status=ViewingRegistration.STATUS_COMPLETED,
         ).order_by('-updated_at'),
-        'no_show_viewings': ViewingRegistration.objects.select_related('listing', 'listing__room', 'tenant').filter(
+        'no_show_viewings': registrations.filter(
             status=ViewingRegistration.STATUS_NO_SHOW,
         ).order_by('-updated_at'),
     }

@@ -4,6 +4,19 @@
 <h1 class="report-page-title">Báo cáo phòng</h1>
 <p class="report-page-subtitle">Tổng hợp trạng thái phòng, giá thuê mặc định và mức độ sử dụng phòng.</p>
 
+<form class="filter-form" method="get" aria-label="Lọc báo cáo phòng theo cơ sở">
+  <label for="room-property-filter">Cơ sở cho thuê
+    <select id="room-property-filter" name="property">
+      <option value="">Tất cả cơ sở</option>
+      {% for property_record in properties %}
+        <option value="{{ property_record.pk }}"{% if selected_property.pk == property_record.pk %} selected{% endif %}>{{ property_record.name }} · {{ property_record.owner }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit">Lọc báo cáo</button>
+  {% if selected_property %}<a href="{% url 'reports:rooms' %}">Xóa lọc</a>{% endif %}
+</form>
+
 <div class="metric-grid">
   <div class="metric-card">Tổng số phòng<strong>{{ total_rooms }}</strong></div>
   <div class="metric-card">Đang trống<strong>{{ available_rooms }}</strong></div>
@@ -28,7 +41,15 @@
       {% for room in rooms %}
       <tr>
         <td>{{ room.room_code }}</td>
-        <td>{{ room.room_name }}</td>
+        <td>
+          {{ room.room_name }}
+          {% if room.property %}
+            <br><small>{{ room.property.name }} · {{ room.property.property_code }}</small>
+            {% if room.property.address %}<br><small>{{ room.property.address }}</small>{% endif %}
+          {% else %}
+            <br><small>Chưa liên kết cơ sở</small>
+          {% endif %}
+        </td>
         <td>{{ room.owner }}</td>
         <td>{{ room.get_status_display }}</td>
         <td>{{ room.default_rent }}</td>

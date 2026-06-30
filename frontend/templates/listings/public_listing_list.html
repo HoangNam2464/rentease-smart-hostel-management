@@ -58,6 +58,14 @@
                     </div>
                     <h2 class="listing-title"><a href="{% url 'listings:public_listing_detail' listing.pk %}">{{ listing.title }}</a></h2>
                     <p class="listing-description">{{ listing.description|truncatewords:20 }}</p>
+                    {% if listing.room.property and listing.room.property.owner_id == listing.room.owner_id %}
+                        <p class="listing-result-summary">
+                            {{ listing.room.property.name }}
+                            {% if listing.room.property.ward or listing.room.property.province_city %}
+                                · {{ listing.room.property.ward }}{% if listing.room.property.ward and listing.room.property.province_city %}, {% endif %}{{ listing.room.property.province_city }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
                     <div class="property-meta property-meta-plain" aria-label="Thông tin phòng">
                         {% if listing.room.area %}<span>{{ listing.room.area|floatformat:"-1" }} m²</span>{% endif %}
                         {% if listing.room.floor %}<span>Tầng {{ listing.room.floor }}</span>{% endif %}

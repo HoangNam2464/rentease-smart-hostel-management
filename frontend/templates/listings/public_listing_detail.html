@@ -24,6 +24,14 @@
         <div class="listing-detail-heading">
             <span class="status-text"><span aria-hidden="true"></span> Còn phòng</span>
             <h1>{{ listing.title }}</h1>
+            {% if listing.room.property and listing.room.property.owner_id == listing.room.owner_id %}
+                <p class="listing-result-summary">
+                    {{ listing.room.property.name }}
+                    {% if listing.room.property.ward or listing.room.property.province_city %}
+                        · {{ listing.room.property.ward }}{% if listing.room.property.ward and listing.room.property.province_city %}, {% endif %}{{ listing.room.property.province_city }}
+                    {% endif %}
+                </p>
+            {% endif %}
             <div class="property-meta property-meta-plain">
                 {% if listing.room.area %}<span>{{ listing.room.area|floatformat:"-1" }} m²</span>{% endif %}
                 {% if listing.room.floor %}<span>Tầng {{ listing.room.floor }}</span>{% endif %}

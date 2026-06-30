@@ -25,7 +25,7 @@ def billing_report(request):
 
 @staff_member_required(login_url='admin:login')
 def room_report(request):
-    context = services.room_report()
+    context = services.room_report(property_id=request.GET.get('property'))
     context['title'] = 'Room Report'
     return render(request, 'reports/room_report.html', context)
 
@@ -46,6 +46,6 @@ def maintenance_report(request):
 
 @staff_member_required(login_url='admin:login')
 def listing_report(request):
-    context = services.listing_report()
+    context = services.listing_report(property_id=request.GET.get('property'))
     context['title'] = 'Listing and Viewing Report'
     return render(request, 'reports/listing_report.html', context)

@@ -6,7 +6,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 from accounts.models import UserProfile
-from properties.models import Room
+from properties.models import Property, Room
 
 from .models import RoomListing, ViewingRegistration
 
@@ -20,9 +20,23 @@ class PublicListingPresentationTests(TestCase):
             user_type="OWNER",
         )
         owner = UserProfile.objects.create(user=owner_user, full_name="Chủ trọ kiểm thử")
+        cls.property = Property.objects.create(
+            owner=owner,
+            property_code="PUBLIC-P001",
+            name="Cơ sở Hoa Sữa",
+            address="PRIVATE-EXACT-ADDRESS",
+            ward="Phường 7",
+            province_city="TP. Hồ Chí Minh",
+            latitude=Decimal("10.123456"),
+            longitude=Decimal("106.654321"),
+            contact_phone="0987654321",
+            timezone="PRIVATE/TIMEZONE",
+            house_rules="PRIVATE-HOUSE-RULES",
+        )
 
         room_one = Room.objects.create(
             owner=owner,
+            property=cls.property,
             room_code="FILTER-R1",
             room_name="Phòng gác lửng",
             floor=2,
@@ -32,6 +46,7 @@ class PublicListingPresentationTests(TestCase):
         )
         room_two = Room.objects.create(
             owner=owner,
+            property=cls.property,
             room_code="FILTER-R2",
             room_name="Phòng studio",
             floor=1,
@@ -81,6 +96,23 @@ class PublicListingPresentationTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "FILTER-R1")
         self.assertContains(response, f"/rooms/{self.listing_one.pk}/register/")
+
+    def test_public_pages_show_only_public_safe_property_fields(self):
+        for url in ("/rooms/", f"/rooms/{self.listing_one.pk}/"):
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertContains(response, "Cơ sở Hoa Sữa")
+                self.assertContains(response, "Phường 7")
+                self.assertContains(response, "TP. Hồ Chí Minh")
+                for private_value in (
+                    "PRIVATE-EXACT-ADDRESS",
+                    "0987654321",
+                    "10.123456",
+                    "106.654321",
+                    "PRIVATE/TIMEZONE",
+                    "PRIVATE-HOUSE-RULES",
+                ):
+                    self.assertNotContains(response, private_value)
 
     def test_visitor_can_submit_viewing_registration_for_published_listing(self):
         response = self.client.post(

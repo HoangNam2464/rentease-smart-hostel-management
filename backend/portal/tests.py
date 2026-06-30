@@ -457,3 +457,42 @@ class OwnerPropertyPortalTests(TestCase):
         self.room.refresh_from_db()
         self.assertEqual(self.room.property, self.properties[0])
         self.assertEqual(self.room.room_name, "Phòng Portal A")
+
+    def test_owner_listing_property_context_and_filter_are_owner_scoped(self):
+        second_property = Property.objects.create(
+            owner=self.owner_profiles[0],
+            property_code="PORTAL-PROPERTY-A2",
+            name="Cơ sở Portal A2",
+        )
+        second_room = Room.objects.create(
+            owner=self.owner_profiles[0],
+            property=second_property,
+            room_code="PORTAL-ROOM-A2",
+            room_name="Phòng Portal A2",
+            default_rent=Decimal("3200000.00"),
+        )
+        RoomListing.objects.create(
+            room=self.room,
+            title="LISTING-PROPERTY-A1",
+            description="Tin thuộc cơ sở thứ nhất.",
+            listing_price=Decimal("3000000.00"),
+            available_from=timezone.localdate(),
+        )
+        RoomListing.objects.create(
+            room=second_room,
+            title="LISTING-PROPERTY-A2",
+            description="Tin thuộc cơ sở thứ hai.",
+            listing_price=Decimal("3200000.00"),
+            available_from=timezone.localdate(),
+        )
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.get(
+            "/owner/listings/",
+            {"property": self.properties[0].pk},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "LISTING-PROPERTY-A1")
+        self.assertNotContains(response, "LISTING-PROPERTY-A2")
+        self.assertNotContains(response, "PORTAL-PROPERTY-B")

@@ -13,6 +13,22 @@
     </div>
 </section>
 
+{% if properties %}
+    <form class="toolbar portal-filter-bar" method="get" aria-label="Lọc tin phòng theo cơ sở">
+        <div class="filter-field">
+            <label for="property-filter">Cơ sở cho thuê</label>
+            <select id="property-filter" name="property">
+                <option value="">Tất cả cơ sở</option>
+                {% for property_record in properties %}
+                    <option value="{{ property_record.pk }}"{% if selected_property.pk == property_record.pk %} selected{% endif %}>{{ property_record.name }} ({{ property_record.property_code }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="button" type="submit">Lọc tin</button>
+        {% if selected_property %}<a class="button subtle" href="{% url 'portal:owner_listings_list' %}">Xóa lọc</a>{% endif %}
+    </form>
+{% endif %}
+
 <section class="card">
     <div class="card-body">
         {% if listings %}
@@ -21,6 +37,7 @@
                     <thead>
                         <tr>
                             <th>Tin phòng</th>
+                            <th>Cơ sở</th>
                             <th>Phòng</th>
                             <th>Giá</th>
                             <th>Tiền cọc</th>
@@ -32,6 +49,13 @@
                         {% for listing in listings %}
                             <tr>
                                 <td><a href="{% url 'portal:owner_listing_detail' listing.pk %}">{{ listing.title }}</a></td>
+                                <td>
+                                    {% if listing.room.property and listing.room.property.owner_id == profile.pk %}
+                                        <a href="{% url 'portal:owner_property_detail' listing.room.property.pk %}">{{ listing.room.property.name }}</a>
+                                    {% else %}
+                                        Chưa liên kết
+                                    {% endif %}
+                                </td>
                                 <td>{{ listing.room.room_code }}</td>
                                 <td>{{ listing.listing_price }}</td>
                                 <td>{{ listing.deposit_amount }}</td>

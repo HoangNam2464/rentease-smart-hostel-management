@@ -204,10 +204,13 @@ Status: complete through a reviewed reversible data migration.
 
 #### Phase 14C-3A3 - Product Integration
 
-Status: owner/admin slice complete; public/report/seed slice remains approval-gated.
+Status: complete.
 
-- completed first slice: owner-scoped Property admin/portal management and room-form restriction to the authenticated owner's Properties
-- next second slice: update listings, reports, public-safe presentation, and disposable seed data
+- owner-scoped Property admin/portal management and room-form restriction to the authenticated owner's Properties
+- owner listing Property context and filtering
+- public listing presentation limited to Property name, ward, and province/city
+- Property context and filtering in staff-only room/listing reports
+- disposable seed data creates an owner-matched Property before linking every seeded Room
 - reject selecting a Property owned by another owner
 - keep compatibility reads through `Room.owner` until all paths are verified
 
@@ -335,4 +338,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-The owner/admin slice of Phase 14C-3A3 is complete. The next implementation task is its separately approval-gated public listing/report/seed-data slice. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A3 is complete. The next implementation task is the separately approval-gated Phase 14C-3A4 required relationship and Property-scoped room-code constraint. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

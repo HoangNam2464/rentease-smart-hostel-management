@@ -42,7 +42,7 @@ Preview without writing:
 .\venv\Scripts\python.exe manage.py seed_rentease_demo_data --dry-run --owner-username owner_test --tenant-username tenant_test
 ```
 
-Create or refresh the fake rooms, listings, contracts, invoices, payments, repairs, notifications, and viewing registrations:
+Create or refresh the fake Property, linked rooms, listings, contracts, invoices, payments, repairs, notifications, and viewing registrations:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py seed_rentease_demo_data --owner-username owner_test --tenant-username tenant_test
