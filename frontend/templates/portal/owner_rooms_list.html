@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>Phòng</th>
+                            <th>Cơ sở</th>
                             <th>Tầng</th>
                             <th>Diện tích</th>
                             <th>Số người</th>
@@ -32,6 +33,13 @@
                             <tr>
                                 <td>
                                     <a href="{% url 'portal:owner_room_detail' room.pk %}">{{ room.room_code }} - {{ room.room_name }}</a>
+                                </td>
+                                <td>
+                                    {% if room.property and room.property.owner_id == profile.pk %}
+                                        <a href="{% url 'portal:owner_property_detail' room.property.pk %}">{{ room.property.name }}</a>
+                                    {% else %}
+                                        <span class="muted-empty">Chưa liên kết</span>
+                                    {% endif %}
                                 </td>
                                 <td>{{ room.floor|default:"-" }}</td>
                                 <td>{{ room.area|default:"-" }}</td>

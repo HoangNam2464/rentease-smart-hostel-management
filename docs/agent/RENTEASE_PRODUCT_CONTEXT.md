@@ -13,6 +13,7 @@ RentEase is a Django boarding-house and rental-room management system evolved fr
 
 ### Owner
 
+- Manage owned properties/buildings and their rooms.
 - Manage owned rooms and listings.
 - Manage linked tenants, contracts, invoices, payments, repairs, and viewing registrations.
 - See only data connected to the owner's profile.

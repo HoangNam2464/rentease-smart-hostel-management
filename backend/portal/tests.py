@@ -10,7 +10,7 @@ from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import Notification, RepairRequest
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 
@@ -268,3 +268,192 @@ class PortalDataIsolationTests(TestCase):
             "/access-denied/",
             fetch_redirect_response=False,
         )
+
+
+class OwnerPropertyPortalTests(TestCase):
+    password = "local-test-password"
+
+    @classmethod
+    def setUpTestData(cls):
+        User = get_user_model()
+        cls.owner_users = []
+        cls.owner_profiles = []
+        cls.properties = []
+
+        for suffix in ("A", "B"):
+            user = User.objects.create_user(
+                username=f"property_portal_owner_{suffix.lower()}",
+                password=cls.password,
+                user_type="OWNER",
+            )
+            profile = UserProfile.objects.create(
+                user=user,
+                full_name=f"Property Portal Owner {suffix}",
+            )
+            property_record = Property.objects.create(
+                owner=profile,
+                property_code=f"PORTAL-PROPERTY-{suffix}",
+                name=f"Cơ sở Portal {suffix}",
+                address=f"Địa chỉ Portal {suffix}",
+                ward=f"Phường {suffix}",
+                province_city="TP. Hồ Chí Minh",
+            )
+            cls.owner_users.append(user)
+            cls.owner_profiles.append(profile)
+            cls.properties.append(property_record)
+
+        cls.room = Room.objects.create(
+            owner=cls.owner_profiles[0],
+            property=cls.properties[0],
+            room_code="PORTAL-ROOM-A",
+            room_name="Phòng Portal A",
+            default_rent=Decimal("3000000.00"),
+        )
+
+    def property_payload(self, **overrides):
+        payload = {
+            "property_code": "NEW-PROPERTY",
+            "name": "Cơ sở mới",
+            "address": "456 Đường Mới",
+            "ward": "Phường Mới",
+            "province_city": "TP. Hồ Chí Minh",
+            "latitude": "",
+            "longitude": "",
+            "contact_phone": "0901234567",
+            "status": Property.STATUS_ACTIVE,
+            "house_rules": "Giữ yên tĩnh sau 22 giờ.",
+        }
+        payload.update(overrides)
+        return payload
+
+    def room_payload(self, property_record, **overrides):
+        payload = {
+            "property": property_record.pk,
+            "room_code": "NEW-ROOM",
+            "room_name": "Phòng mới",
+            "floor": "1",
+            "area": "25.00",
+            "max_occupants": "2",
+            "default_rent": "3500000.00",
+            "status": "available",
+            "description": "Phòng kiểm thử Property.",
+        }
+        payload.update(overrides)
+        return payload
+
+    def test_property_list_and_detail_are_owner_scoped(self):
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.get("/owner/properties/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Cơ sở Portal A")
+        self.assertContains(response, "Hoạt động")
+        self.assertNotContains(response, "Cơ sở Portal B")
+        detail_response = self.client.get(f"/owner/properties/{self.properties[0].pk}/")
+        self.assertEqual(detail_response.status_code, 200)
+        self.assertContains(detail_response, "Địa chỉ Portal A")
+        self.assertContains(detail_response, "PORTAL-ROOM-A")
+        self.assertEqual(
+            self.client.get(f"/owner/properties/{self.properties[1].pk}/").status_code,
+            404,
+        )
+        self.assertEqual(
+            self.client.get(f"/owner/properties/{self.properties[1].pk}/edit/").status_code,
+            404,
+        )
+
+    def test_owner_can_create_property_without_choosing_owner(self):
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.post(
+            "/owner/properties/new/",
+            self.property_payload(),
+        )
+
+        self.assertRedirects(response, "/owner/properties/", fetch_redirect_response=False)
+        created = Property.objects.get(property_code="NEW-PROPERTY")
+        self.assertEqual(created.owner, self.owner_profiles[0])
+
+    def test_property_update_preserves_owner_and_stable_code(self):
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.post(
+            f"/owner/properties/{self.properties[0].pk}/edit/",
+            self.property_payload(
+                property_code="ATTEMPTED-CHANGE",
+                name="Cơ sở Portal A đã cập nhật",
+            ),
+        )
+
+        self.assertRedirects(
+            response,
+            f"/owner/properties/{self.properties[0].pk}/",
+            fetch_redirect_response=False,
+        )
+        self.properties[0].refresh_from_db()
+        self.assertEqual(self.properties[0].owner, self.owner_profiles[0])
+        self.assertEqual(self.properties[0].property_code, "PORTAL-PROPERTY-A")
+        self.assertEqual(self.properties[0].name, "Cơ sở Portal A đã cập nhật")
+
+    def test_room_form_lists_only_owner_properties(self):
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.get("/owner/rooms/new/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "PORTAL-PROPERTY-A")
+        self.assertNotContains(response, "PORTAL-PROPERTY-B")
+
+    def test_inconsistent_room_relationship_does_not_expose_foreign_property(self):
+        mismatched_room = Room.objects.create(
+            owner=self.owner_profiles[0],
+            property=self.properties[1],
+            room_code="MISMATCHED-ROOM",
+            room_name="Phòng dữ liệu sai",
+            default_rent=Decimal("3000000.00"),
+        )
+        self.client.force_login(self.owner_users[0])
+
+        list_response = self.client.get("/owner/rooms/")
+        detail_response = self.client.get(f"/owner/rooms/{mismatched_room.pk}/")
+
+        self.assertNotContains(list_response, "Cơ sở Portal B")
+        self.assertNotContains(detail_response, "Cơ sở Portal B")
+        self.assertContains(detail_response, "Chưa liên kết")
+
+    def test_owner_can_create_room_with_owned_property(self):
+        self.client.force_login(self.owner_users[0])
+
+        response = self.client.post(
+            "/owner/rooms/new/",
+            self.room_payload(self.properties[0]),
+        )
+
+        self.assertRedirects(response, "/owner/rooms/", fetch_redirect_response=False)
+        room = Room.objects.get(owner=self.owner_profiles[0], room_code="NEW-ROOM")
+        self.assertEqual(room.property, self.properties[0])
+
+    def test_room_create_and_update_reject_foreign_property(self):
+        self.client.force_login(self.owner_users[0])
+
+        create_response = self.client.post(
+            "/owner/rooms/new/",
+            self.room_payload(self.properties[1]),
+        )
+        self.assertEqual(create_response.status_code, 200)
+        self.assertContains(create_response, "Cơ sở đã chọn không thuộc quyền quản lý của bạn")
+        self.assertFalse(Room.objects.filter(owner=self.owner_profiles[0], room_code="NEW-ROOM").exists())
+
+        update_response = self.client.post(
+            f"/owner/rooms/{self.room.pk}/edit/",
+            self.room_payload(
+                self.properties[1],
+                room_code=self.room.room_code,
+                room_name="Tên không được lưu",
+            ),
+        )
+        self.assertEqual(update_response.status_code, 200)
+        self.assertContains(update_response, "Cơ sở đã chọn không thuộc quyền quản lý của bạn")
+        self.room.refresh_from_db()
+        self.assertEqual(self.room.property, self.properties[0])
+        self.assertEqual(self.room.room_name, "Phòng Portal A")

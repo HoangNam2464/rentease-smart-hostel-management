@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3A3 - Owner/Admin Property Integration
+Phase 14C-3A3 - Listing, Report, and Seed Property Integration
 ```
 
-Status: waiting for explicit user approval. This first integration slice must not expand into public listings, reports, or schema constraints.
+Status: waiting for explicit user approval. This second integration slice must not change models, migrations, billing, or the required-Property constraint.
 
 ## Goal
 
-Let owners and administrators manage Property records safely, and require owner room forms to select only a Property owned by the authenticated owner.
+Carry verified Property context into listings, staff reports, and disposable demo seeding without exposing private location/contact data publicly.
 
 ## Required Context
 
@@ -23,24 +23,23 @@ Let owners and administrators manage Property records safely, and require owner 
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
 - `.agents/skills/rentease-design/SKILL.md` and the RentEase design system
-- current Property/Room admin, portal URLs/views/forms/templates, owner navigation, migrations, and tests inspected directly
+- current public/owner listing views and templates, reports views/services/templates, disposable seed command, Property/Room relationships, and tests inspected directly
 
 ## Approval Decisions Required Before Editing
 
-- approve owner Property list/detail/create/update routes and templates
-- confirm owners may manage only their own Properties and may never reassign ownership
-- confirm owner room create/update requires an owner-owned Property even while the database column remains nullable
-- confirm admin may manage all Properties and inspect Room-to-Property ownership consistency
-- keep exact address, coordinates, owner contact, and house rules out of public/tenant surfaces in this slice
+- approve Property name, ward, and province/city as the only public-safe Property fields
+- keep exact address, coordinates, owner contact, timezone, and house rules private
+- confirm staff reports may use full Property context but remain staff-only
+- confirm the disposable seed command creates owner Properties before Rooms and links every seeded Room
+- keep `Room.owner` as the authorization boundary throughout this slice
 
 ## Expected Scope After Approval
 
-- register Property in Django Admin with owner-safe search/filter fields
-- add owner-scoped Property list/detail/create/update forms and templates
-- filter owner room forms to the authenticated owner's Properties and reject cross-owner identifiers
-- preserve existing room/listing/contract/invoice/repair query scoping through `Room.owner`
-- add correct-owner, cross-owner rejection, and regression tests
-- keep models/migrations, public listings, reports, disposable seed data, authentication, billing, settings, legacy apps, and real data unchanged
+- add public-safe Property context to published room list/detail pages
+- add Property context/filtering to owner listing pages and staff-only room/listing reports
+- update the disposable seed command so seeded Rooms always belong to seeded Properties
+- preserve every owner/tenant/staff queryset boundary and test public privacy markers
+- keep models/migrations, authentication, billing, settings, legacy apps, and real data unchanged
 
 ## Required Checks
 
@@ -48,18 +47,20 @@ Let owners and administrators manage Property records safely, and require owner 
 - `manage.py makemigrations --check --dry-run`
 - targeted tests and full test suite
 - `git diff --check`
-- owner Property CRUD route tests and cross-owner identifier rejection
-- owner room create/update tests using own versus foreign Property identifiers
-- existing role, owner/tenant isolation, listing, billing, and migration tests
+- public listing tests proving safe fields are visible and private fields are absent
+- staff report access/filter tests and wrong-role rejection
+- seed idempotency and zero-unlinked-seeded-room checks
+- existing role, Property isolation, billing, and migration tests
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3A3 owner/admin-slice approval has not been given
-- a Property can be read or modified by another owner
-- a room form can accept a Property owned by another owner
+- explicit Phase 14C-3A3 second-slice approval has not been given
+- exact address, coordinates, contact phone, timezone, or house rules would appear publicly
+- a report becomes accessible to an owner, tenant, or anonymous visitor
+- seeded Rooms can remain unlinked or link across owners
 - existing owner/tenant/listing/report isolation differs
-- a model, migration, public/tenant exposure, billing, authentication, settings, legacy runtime, or real-data change becomes necessary
+- a model, migration, billing, authentication, settings, legacy runtime, or real-data change becomes necessary
 - the starting worktree or Django checks are not clean
 
-The public listing/report/seed-data slice of Phase 14C-3A3, Phase 14C-3A4 constraints, billing/meter work, and production legacy exclusion remain separately approval-gated.
+Phase 14C-3A4 constraints, billing/meter work, maintenance/data-governance work, and production legacy exclusion remain separately approval-gated.

@@ -7,7 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import IntegrityError
-from django.db.models import Sum
+from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -15,7 +15,7 @@ from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import Notification, RepairRequest
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 from .decorators import is_admin_user, owner_required, tenant_required
@@ -25,6 +25,7 @@ from .forms import (
     OwnerInvoiceCreateForm,
     OwnerInvoiceUpdateForm,
     OwnerPaymentCreateForm,
+    OwnerPropertyForm,
     OwnerRepairProcessForm,
     OwnerRoomForm,
     OwnerRoomListingForm,
@@ -88,7 +89,11 @@ def render_missing_tenant_profile(request):
 
 
 def owner_rooms_queryset(profile):
-    return Room.objects.filter(owner=profile)
+    return Room.objects.select_related('property').filter(owner=profile)
+
+
+def owner_properties_queryset(profile):
+    return Property.objects.filter(owner=profile)
 
 
 def owner_contracts_queryset(profile):
@@ -282,12 +287,111 @@ def owner_dashboard(request):
 
 
 @owner_required
+def owner_properties_list(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    properties = (
+        owner_properties_queryset(profile)
+        .annotate(room_count=Count('rooms'))
+        .order_by('property_code')
+    )
+    return render(request, 'portal/owner_properties_list.html', {
+        'profile': profile,
+        'properties': properties,
+    })
+
+
+@owner_required
+def owner_property_detail(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    property_record = get_object_or_404(owner_properties_queryset(profile), pk=pk)
+    rooms = owner_rooms_queryset(profile).filter(property=property_record).order_by('room_code')
+    return render(request, 'portal/owner_property_detail.html', {
+        'profile': profile,
+        'property_record': property_record,
+        'rooms': rooms,
+    })
+
+
+@owner_required
+def owner_property_create(request):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    if request.method == 'POST':
+        form = OwnerPropertyForm(request.POST, owner_profile=profile)
+        if form.is_valid():
+            property_record = form.save(commit=False)
+            property_record.owner = profile
+            try:
+                property_record.save()
+            except IntegrityError:
+                form.add_error('property_code', 'Bạn đã có một cơ sở sử dụng mã này.')
+            else:
+                messages.success(request, 'Đã tạo cơ sở cho thuê.')
+                return redirect('portal:owner_properties_list')
+    else:
+        form = OwnerPropertyForm(owner_profile=profile)
+
+    return render(request, 'portal/owner_property_form.html', {
+        'profile': profile,
+        'form': form,
+        'form_title': 'Thêm cơ sở cho thuê',
+        'submit_label': 'Tạo cơ sở',
+    })
+
+
+@owner_required
+def owner_property_update(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    property_record = get_object_or_404(owner_properties_queryset(profile), pk=pk)
+    if request.method == 'POST':
+        form = OwnerPropertyForm(
+            request.POST,
+            instance=property_record,
+            owner_profile=profile,
+        )
+        if form.is_valid():
+            updated_property = form.save(commit=False)
+            updated_property.owner = profile
+            try:
+                updated_property.save()
+            except IntegrityError:
+                form.add_error('property_code', 'Bạn đã có một cơ sở sử dụng mã này.')
+            else:
+                messages.success(request, 'Đã cập nhật cơ sở cho thuê.')
+                return redirect('portal:owner_property_detail', pk=property_record.pk)
+    else:
+        form = OwnerPropertyForm(
+            instance=property_record,
+            owner_profile=profile,
+        )
+
+    return render(request, 'portal/owner_property_form.html', {
+        'profile': profile,
+        'property_record': property_record,
+        'form': form,
+        'form_title': 'Cập nhật cơ sở cho thuê',
+        'submit_label': 'Lưu thay đổi',
+    })
+
+
+@owner_required
 def owner_rooms_list(request):
     profile = get_owner_profile(request.user)
     if not profile:
         return render_missing_owner_profile(request)
 
-    rooms = owner_rooms_queryset(profile).order_by('room_code')
+    rooms = owner_rooms_queryset(profile).order_by('property__property_code', 'room_code')
     return render(request, 'portal/owner_rooms_list.html', {
         'profile': profile,
         'rooms': rooms,
@@ -323,9 +427,9 @@ def owner_room_create(request):
             except ValidationError as exc:
                 form.add_error(None, exc)
             except IntegrityError:
-                form.add_error('room_code', 'This owner already has a room with this room code.')
+                form.add_error('room_code', 'Bạn đã có một phòng sử dụng mã này.')
             else:
-                messages.success(request, 'Room created successfully.')
+                messages.success(request, 'Đã tạo phòng.')
                 return redirect('portal:owner_rooms_list')
     else:
         form = OwnerRoomForm(owner_profile=profile)
@@ -333,8 +437,9 @@ def owner_room_create(request):
     return render(request, 'portal/owner_room_form.html', {
         'profile': profile,
         'form': form,
-        'form_title': 'Create Room',
-        'submit_label': 'Create Room',
+        'has_properties': owner_properties_queryset(profile).exists(),
+        'form_title': 'Thêm phòng',
+        'submit_label': 'Tạo phòng',
     })
 
 
@@ -356,9 +461,9 @@ def owner_room_update(request, pk):
             except ValidationError as exc:
                 form.add_error(None, exc)
             except IntegrityError:
-                form.add_error('room_code', 'This owner already has a room with this room code.')
+                form.add_error('room_code', 'Bạn đã có một phòng sử dụng mã này.')
             else:
-                messages.success(request, 'Room updated successfully.')
+                messages.success(request, 'Đã cập nhật phòng.')
                 return redirect('portal:owner_room_detail', pk=room.pk)
     else:
         form = OwnerRoomForm(instance=room, owner_profile=profile)
@@ -367,8 +472,9 @@ def owner_room_update(request, pk):
         'profile': profile,
         'room': room,
         'form': form,
-        'form_title': 'Edit Room',
-        'submit_label': 'Save Changes',
+        'has_properties': owner_properties_queryset(profile).exists(),
+        'form_title': 'Cập nhật phòng',
+        'submit_label': 'Lưu thay đổi',
     })
 
 

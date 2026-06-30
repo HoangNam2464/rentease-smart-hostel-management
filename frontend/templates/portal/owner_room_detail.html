@@ -13,6 +13,16 @@
         <ul class="info-list">
             <li><span>Mã phòng</span><strong>{{ room.room_code }}</strong></li>
             <li><span>Tên phòng</span><strong>{{ room.room_name }}</strong></li>
+            <li>
+                <span>Cơ sở cho thuê</span>
+                <strong>
+                    {% if room.property and room.property.owner_id == profile.pk %}
+                        <a href="{% url 'portal:owner_property_detail' room.property.pk %}">{{ room.property.name }}</a>
+                    {% else %}
+                        Chưa liên kết
+                    {% endif %}
+                </strong>
+            </li>
             <li><span>Tầng</span><strong>{{ room.floor|default:"-" }}</strong></li>
             <li><span>Diện tích</span><strong>{{ room.area|default:"-" }}</strong></li>
             <li><span>Số người tối đa</span><strong>{{ room.max_occupants }}</strong></li>

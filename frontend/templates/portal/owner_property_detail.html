@@ -1,0 +1,89 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ property_record.name }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="toolbar">
+        <div>
+            <h1><i class="page-icon bi bi-building"></i>{{ property_record.name }}</h1>
+            <p>Thông tin vận hành của cơ sở {{ property_record.property_code }}.</p>
+        </div>
+        <a class="button primary" href="{% url 'portal:owner_property_update' property_record.pk %}"><i class="bi bi-pencil-square"></i> Chỉnh sửa</a>
+    </div>
+</section>
+
+<section class="card">
+    <div class="card-body">
+        <ul class="info-list">
+            <li><span>Mã cơ sở</span><strong>{{ property_record.property_code }}</strong></li>
+            <li><span>Tên cơ sở</span><strong>{{ property_record.name }}</strong></li>
+            <li>
+                <span>Trạng thái</span>
+                <strong><span class="status-badge">{% if property_record.status == 'active' %}Hoạt động{% else %}Tạm ngưng{% endif %}</span></strong>
+            </li>
+            <li><span>Địa chỉ</span><strong>{{ property_record.address|default:"Chưa cập nhật" }}</strong></li>
+            <li><span>Phường/Xã</span><strong>{{ property_record.ward|default:"Chưa cập nhật" }}</strong></li>
+            <li><span>Tỉnh/Thành phố</span><strong>{{ property_record.province_city|default:"Chưa cập nhật" }}</strong></li>
+            <li><span>Số điện thoại liên hệ</span><strong>{{ property_record.contact_phone|default:"Chưa cập nhật" }}</strong></li>
+            <li><span>Múi giờ</span><strong>{{ property_record.timezone }}</strong></li>
+            {% if property_record.latitude is not None and property_record.longitude is not None %}
+                <li><span>Tọa độ</span><strong>{{ property_record.latitude }}, {{ property_record.longitude }}</strong></li>
+            {% endif %}
+        </ul>
+
+        {% if property_record.house_rules %}
+            <section class="section">
+                <h2>Nội quy</h2>
+                <p class="listing-description">{{ property_record.house_rules }}</p>
+            </section>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="toolbar">
+        <div>
+            <h2>Phòng thuộc cơ sở</h2>
+            <p class="help-text">Các phòng vẫn được kiểm soát theo hồ sơ chủ trọ trong giai đoạn chuyển tiếp.</p>
+        </div>
+        <a class="button" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-circle"></i> Thêm phòng</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if rooms %}
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Phòng</th>
+                                <th>Tầng</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room in rooms %}
+                                <tr>
+                                    <td><a href="{% url 'portal:owner_room_detail' room.pk %}">{{ room.room_code }} - {{ room.room_name }}</a></td>
+                                    <td>{{ room.floor|default:"-" }}</td>
+                                    <td><span class="status-badge">{{ room.get_status_display }}</span></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-door-open"></i>
+                    <p>Cơ sở này chưa có phòng nào.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<div class="page-actions">
+    <a class="button" href="{% url 'portal:owner_properties_list' %}">Quay lại danh sách cơ sở</a>
+</div>
+{% endblock %}

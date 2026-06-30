@@ -11,6 +11,11 @@
 <section class="card form-card">
     <div class="card-body">
         <p class="help-text">Giữ thông tin phòng rõ ràng để dùng cho hợp đồng, tin đăng, hóa đơn và thông tin hiển thị cho khách thuê.</p>
+        {% if not has_properties %}
+            <div class="alert warning">
+                Bạn chưa có cơ sở cho thuê. Hãy <a href="{% url 'portal:owner_property_create' %}">tạo cơ sở trước</a> rồi quay lại thêm phòng.
+            </div>
+        {% endif %}
         <form method="post" novalidate>
             {% csrf_token %}
 
@@ -19,6 +24,12 @@
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.property.id_for_label }}">Cơ sở cho thuê</label>
+                {{ form.property }}
+                {{ form.property.errors }}
+            </div>
 
             <div class="form-field">
                 <label for="{{ form.room_code.id_for_label }}">Mã phòng</label>

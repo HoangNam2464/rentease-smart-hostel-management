@@ -5,7 +5,7 @@ from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
 from listings.models import RoomListing, ViewingRegistration
 from maintenance.models import RepairRequest
-from properties.models import Room
+from properties.models import Property, Room
 from tenants.models import Tenant
 
 
@@ -20,10 +20,47 @@ class RentEaseAuthenticationForm(AuthenticationForm):
     }
 
 
+class OwnerPropertyForm(forms.ModelForm):
+    class Meta:
+        model = Property
+        fields = [
+            'property_code',
+            'name',
+            'address',
+            'ward',
+            'province_city',
+            'latitude',
+            'longitude',
+            'contact_phone',
+            'status',
+            'house_rules',
+        ]
+        widgets = {
+            'address': forms.Textarea(attrs={'rows': 3}),
+            'house_rules': forms.Textarea(attrs={'rows': 5}),
+        }
+
+    def __init__(self, *args, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.owner_profile = owner_profile
+        if self.instance and self.instance.pk:
+            self.fields['property_code'].disabled = True
+
+    def clean_property_code(self):
+        property_code = self.cleaned_data['property_code'].strip()
+        if self.owner_profile and Property.objects.filter(
+            owner=self.owner_profile,
+            property_code=property_code,
+        ).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Bạn đã có một cơ sở sử dụng mã này.')
+        return property_code
+
+
 class OwnerRoomForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = [
+            'property',
             'room_code',
             'room_name',
             'floor',
@@ -40,6 +77,21 @@ class OwnerRoomForm(forms.ModelForm):
     def __init__(self, *args, owner_profile=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.owner_profile = owner_profile
+        owner_properties = (
+            Property.objects.filter(owner=owner_profile)
+            if owner_profile
+            else Property.objects.none()
+        )
+        self.fields['property'].queryset = owner_properties.order_by('property_code')
+        self.fields['property'].required = True
+        self.fields['property'].error_messages['required'] = 'Hãy chọn cơ sở cho thuê của phòng.'
+        self.fields['property'].error_messages['invalid_choice'] = 'Cơ sở đã chọn không thuộc quyền quản lý của bạn.'
+
+    def clean_property(self):
+        property_record = self.cleaned_data['property']
+        if not self.owner_profile or property_record.owner_id != self.owner_profile.pk:
+            raise forms.ValidationError('Cơ sở đã chọn không thuộc quyền quản lý của bạn.')
+        return property_record
 
     def clean_room_code(self):
         room_code = self.cleaned_data['room_code']
@@ -47,13 +99,13 @@ class OwnerRoomForm(forms.ModelForm):
             owner=self.owner_profile,
             room_code=room_code,
         ).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError('This owner already has a room with this room code.')
+            raise forms.ValidationError('Bạn đã có một phòng sử dụng mã này.')
         return room_code
 
     def clean_max_occupants(self):
         max_occupants = self.cleaned_data['max_occupants']
         if max_occupants < 1:
-            raise forms.ValidationError('Ensure this value is greater than or equal to 1.')
+            raise forms.ValidationError('Số người tối đa phải từ 1 trở lên.')
         return max_occupants
 
 

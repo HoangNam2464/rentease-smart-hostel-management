@@ -1,0 +1,93 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ form_title }} - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="page-icon bi bi-building-gear"></i>{{ form_title }}</h1>
+    <p>Thông tin này giúp bạn nhóm phòng và quản lý từng địa điểm cho thuê rõ ràng.</p>
+</section>
+
+<section class="card form-card">
+    <div class="card-body">
+        <p class="help-text">Chỉ nhập dữ liệu bạn đã xác minh. Các trường vị trí chưa rõ có thể để trống và cập nhật sau.</p>
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert warning">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.property_code.id_for_label }}">Mã cơ sở</label>
+                {{ form.property_code }}
+                {{ form.property_code.errors }}
+                {% if property_record %}<p class="help-text">Mã cơ sở là định danh ổn định và không đổi sau khi tạo.</p>{% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.name.id_for_label }}">Tên cơ sở</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.address.id_for_label }}">Địa chỉ</label>
+                {{ form.address }}
+                {{ form.address.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.ward.id_for_label }}">Phường/Xã</label>
+                {{ form.ward }}
+                {{ form.ward.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.province_city.id_for_label }}">Tỉnh/Thành phố</label>
+                {{ form.province_city }}
+                {{ form.province_city.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.latitude.id_for_label }}">Vĩ độ (không bắt buộc)</label>
+                {{ form.latitude }}
+                {{ form.latitude.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.longitude.id_for_label }}">Kinh độ (không bắt buộc)</label>
+                {{ form.longitude }}
+                {{ form.longitude.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.contact_phone.id_for_label }}">Số điện thoại liên hệ</label>
+                {{ form.contact_phone }}
+                {{ form.contact_phone.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Trạng thái</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.house_rules.id_for_label }}">Nội quy</label>
+                {{ form.house_rules }}
+                {{ form.house_rules.errors }}
+            </div>
+
+            <div class="page-actions">
+                <button class="button primary" type="submit">{{ submit_label }}</button>
+                {% if property_record %}
+                    <a class="button" href="{% url 'portal:owner_property_detail' property_record.pk %}">Hủy</a>
+                {% else %}
+                    <a class="button" href="{% url 'portal:owner_properties_list' %}">Hủy</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

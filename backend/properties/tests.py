@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError, connection, models, transaction
 from django.db.migrations.executor import MigrationExecutor
@@ -7,6 +8,7 @@ from django.test import TestCase, TransactionTestCase
 
 from accounts.models import UserProfile
 
+from .admin import PropertyAdmin, RoomAdminForm
 from .models import Property, Room
 
 
@@ -86,6 +88,33 @@ class PropertyFoundationTests(TestCase):
 
         self.assertIsNone(room_without_property.property_id)
         self.assertEqual(room_with_property.property_id, property_record.pk)
+
+    def test_property_admin_keeps_owner_and_code_readonly_after_creation(self):
+        property_record = self.create_property(self.owners[0])
+        property_admin = PropertyAdmin(Property, admin.site)
+
+        readonly_fields = property_admin.get_readonly_fields(None, property_record)
+
+        self.assertIn('owner', readonly_fields)
+        self.assertIn('property_code', readonly_fields)
+
+    def test_room_admin_rejects_property_owned_by_another_owner(self):
+        foreign_property = self.create_property(self.owners[1])
+        form = RoomAdminForm(data={
+            'owner': self.owners[0].pk,
+            'property': foreign_property.pk,
+            'room_code': 'ADMIN-ROOM',
+            'room_name': 'Admin Room',
+            'floor': '',
+            'area': '',
+            'max_occupants': '1',
+            'default_rent': '3000000.00',
+            'status': 'available',
+            'description': '',
+        })
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('Cơ sở cho thuê phải thuộc cùng chủ trọ với phòng.', form.errors['property'])
 
 
 class PropertyMigrationRehearsalTests(TransactionTestCase):
