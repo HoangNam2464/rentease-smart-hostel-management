@@ -625,3 +625,341 @@ class AdditiveBillingMigrationTests(TransactionTestCase):
         reversed_apps = self.migrate(self.migrate_from)
         ReversedInvoice = reversed_apps.get_model('billing', 'Invoice')
         self.assertTrue(ReversedInvoice.objects.filter(pk=invoice.pk, invoice_code='INV-MIGRATION').exists())
+
+
+class InvoiceLineBackfillMigrationTests(TransactionTestCase):
+    migrate_from = ('billing', '0002_add_billing_meter_foundations')
+    migrate_to = ('billing', '0003_backfill_legacy_invoice_lines')
+    compatibility_codes = {
+        'legacy-rent',
+        'legacy-electricity',
+        'legacy-water',
+        'legacy-service',
+    }
+
+    def migrate(self, target):
+        executor = MigrationExecutor(connection)
+        targets = [target, ('properties', '0004_require_room_property_and_scope_room_code')]
+        executor.migrate(targets)
+        return executor.loader.project_state(targets).apps
+
+    def tearDown(self):
+        executor = MigrationExecutor(connection)
+        executor.migrate(executor.loader.graph.leaf_nodes())
+        super().tearDown()
+
+    def create_foundation(self, apps):
+        User = apps.get_model('accounts', 'User')
+        UserProfileModel = apps.get_model('accounts', 'UserProfile')
+        PropertyModel = apps.get_model('properties', 'Property')
+        RoomModel = apps.get_model('properties', 'Room')
+        TenantModel = apps.get_model('tenants', 'Tenant')
+        ContractModel = apps.get_model('contracts', 'Contract')
+
+        user = User.objects.create(username='line_backfill_owner', user_type='OWNER')
+        owner = UserProfileModel.objects.create(user=user, full_name='Line Backfill Owner')
+        property_record = PropertyModel.objects.create(
+            owner=owner,
+            property_code='LINE-BACKFILL-PROPERTY',
+            name='Line Backfill Property',
+        )
+        room = RoomModel.objects.create(
+            owner=owner,
+            property=property_record,
+            room_code='LINE-BACKFILL-ROOM',
+            room_name='Line Backfill Room',
+            default_rent=Decimal('5000000.00'),
+        )
+        tenant = TenantModel.objects.create(
+            full_name='Line Backfill Tenant',
+            citizen_id='LINE-BACKFILL-TENANT',
+        )
+        contract = ContractModel.objects.create(
+            room=room,
+            tenant=tenant,
+            contract_code='LINE-BACKFILL-CONTRACT',
+            signed_date=date(2026, 1, 1),
+            start_date=date(2026, 1, 1),
+            end_date=date(2026, 12, 31),
+            rent_amount=Decimal('5000000.00'),
+            deposit_amount=Decimal('5000000.00'),
+            status='active',
+        )
+        return contract
+
+    def create_invoice_detail(
+        self,
+        apps,
+        contract,
+        *,
+        month,
+        electricity_start,
+        electricity_end,
+        water_start,
+        water_end,
+        paid_amount,
+        status,
+    ):
+        InvoiceModel = apps.get_model('billing', 'Invoice')
+        InvoiceDetailModel = apps.get_model('billing', 'InvoiceDetail')
+        PaymentHistoryModel = apps.get_model('billing', 'PaymentHistory')
+
+        electricity_unit_price = Decimal('3500.00')
+        water_unit_price = Decimal('15000.00')
+        rent_amount = Decimal('5000000.00')
+        service_amount = Decimal('150000.00')
+        electricity_amount = Decimal(electricity_end - electricity_start) * electricity_unit_price
+        water_amount = Decimal(water_end - water_start) * water_unit_price
+        total_amount = electricity_amount + water_amount + rent_amount + service_amount
+        invoice = InvoiceModel.objects.create(
+            contract=contract,
+            invoice_code=f'INV-BACKFILL-{month:02d}',
+            month=month,
+            year=2026,
+            issued_date=date(2026, month, 1),
+            total_amount=total_amount,
+            paid_amount=paid_amount,
+            remaining_amount=total_amount - paid_amount,
+            status=status,
+        )
+        detail = InvoiceDetailModel.objects.create(
+            invoice=invoice,
+            electricity_start=electricity_start,
+            electricity_end=electricity_end,
+            electricity_unit_price=electricity_unit_price,
+            electricity_amount=electricity_amount,
+            water_start=water_start,
+            water_end=water_end,
+            water_unit_price=water_unit_price,
+            water_amount=water_amount,
+            rent_amount=rent_amount,
+            service_amount=service_amount,
+        )
+        if paid_amount:
+            PaymentHistoryModel.objects.create(
+                invoice=invoice,
+                amount=paid_amount,
+                method='bank_transfer',
+                transaction_code=f'PAY-BACKFILL-{month:02d}',
+            )
+        return invoice, detail
+
+    def test_forward_and_backward_backfill_preserves_exact_financial_state(self):
+        old_apps = self.migrate(self.migrate_from)
+        contract = self.create_foundation(old_apps)
+        InvoiceModel = old_apps.get_model('billing', 'Invoice')
+        InvoiceLineModel = old_apps.get_model('billing', 'InvoiceLine')
+        PaymentHistoryModel = old_apps.get_model('billing', 'PaymentHistory')
+
+        unpaid_invoice, unpaid_detail = self.create_invoice_detail(
+            old_apps,
+            contract,
+            month=4,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+            paid_amount=Decimal('0.00'),
+            status='unpaid',
+        )
+        partial_invoice, partial_detail = self.create_invoice_detail(
+            old_apps,
+            contract,
+            month=5,
+            electricity_start=110,
+            electricity_end=110,
+            water_start=22,
+            water_end=22,
+            paid_amount=Decimal('1000000.00'),
+            status='partial',
+        )
+        paid_total = Decimal('5215000.00')
+        paid_invoice, paid_detail = self.create_invoice_detail(
+            old_apps,
+            contract,
+            month=6,
+            electricity_start=110,
+            electricity_end=120,
+            water_start=22,
+            water_end=24,
+            paid_amount=paid_total,
+            status='paid',
+        )
+        header_without_detail = InvoiceModel.objects.create(
+            contract=contract,
+            invoice_code='INV-BACKFILL-03',
+            month=3,
+            year=2026,
+            issued_date=date(2026, 3, 1),
+        )
+        invoice_snapshot = list(InvoiceModel.objects.order_by('pk').values_list(
+            'pk',
+            'contract_id',
+            'total_amount',
+            'paid_amount',
+            'remaining_amount',
+            'status',
+        ))
+        payment_snapshot = list(PaymentHistoryModel.objects.order_by('pk').values_list(
+            'pk',
+            'invoice_id',
+            'amount',
+            'method',
+            'transaction_code',
+        ))
+        InvoiceLineModel.objects.create(
+            invoice=header_without_detail,
+            line_code='manual-note',
+            line_type='adjustment',
+            direction='charge',
+            description='Unrelated line must survive reverse migration',
+            quantity=Decimal('0.000'),
+            unit_price=Decimal('0.00'),
+            amount=Decimal('0.00'),
+        )
+
+        new_apps = self.migrate(self.migrate_to)
+        NewInvoice = new_apps.get_model('billing', 'Invoice')
+        NewInvoiceDetail = new_apps.get_model('billing', 'InvoiceDetail')
+        NewInvoiceLine = new_apps.get_model('billing', 'InvoiceLine')
+        NewPaymentHistory = new_apps.get_model('billing', 'PaymentHistory')
+        ServiceDefinitionModel = new_apps.get_model('billing', 'ServiceDefinition')
+        MeterModel = new_apps.get_model('billing', 'Meter')
+        MeterReadingModel = new_apps.get_model('billing', 'MeterReading')
+
+        self.assertEqual(NewInvoiceLine.objects.filter(line_code__in=self.compatibility_codes).count(), 12)
+        self.assertEqual(NewInvoiceLine.objects.filter(invoice_id=header_without_detail.pk).count(), 1)
+        self.assertFalse(ServiceDefinitionModel.objects.exists())
+        self.assertFalse(MeterModel.objects.exists())
+        self.assertFalse(MeterReadingModel.objects.exists())
+        self.assertEqual(
+            list(NewInvoice.objects.order_by('pk').values_list(
+                'pk',
+                'contract_id',
+                'total_amount',
+                'paid_amount',
+                'remaining_amount',
+                'status',
+            )),
+            invoice_snapshot,
+        )
+        self.assertEqual(
+            list(NewPaymentHistory.objects.order_by('pk').values_list(
+                'pk',
+                'invoice_id',
+                'amount',
+                'method',
+                'transaction_code',
+            )),
+            payment_snapshot,
+        )
+
+        for invoice, detail in (
+            (unpaid_invoice, unpaid_detail),
+            (partial_invoice, partial_detail),
+            (paid_invoice, paid_detail),
+        ):
+            migrated_detail = NewInvoiceDetail.objects.get(pk=detail.pk)
+            lines = NewInvoiceLine.objects.filter(legacy_detail_id=detail.pk).order_by('sort_order')
+            self.assertEqual(set(lines.values_list('line_code', flat=True)), self.compatibility_codes)
+            self.assertEqual(set(lines.values_list('direction', flat=True)), {'charge'})
+            self.assertFalse(lines.exclude(service_definition_id=None, meter_reading_id=None).exists())
+            line_total = sum(lines.values_list('amount', flat=True), Decimal('0.00'))
+            detail_total = (
+                migrated_detail.rent_amount
+                + migrated_detail.electricity_amount
+                + migrated_detail.water_amount
+                + migrated_detail.service_amount
+            )
+            self.assertEqual(line_total, detail_total)
+            self.assertEqual(line_total, NewInvoice.objects.get(pk=invoice.pk).total_amount)
+
+        zero_usage_lines = NewInvoiceLine.objects.filter(legacy_detail_id=partial_detail.pk)
+        self.assertEqual(zero_usage_lines.get(line_code='legacy-electricity').quantity, Decimal('0.000'))
+        self.assertEqual(zero_usage_lines.get(line_code='legacy-water').quantity, Decimal('0.000'))
+
+        reversed_apps = self.migrate(self.migrate_from)
+        ReversedInvoice = reversed_apps.get_model('billing', 'Invoice')
+        ReversedInvoiceLine = reversed_apps.get_model('billing', 'InvoiceLine')
+        ReversedPaymentHistory = reversed_apps.get_model('billing', 'PaymentHistory')
+        self.assertFalse(ReversedInvoiceLine.objects.filter(line_code__in=self.compatibility_codes).exists())
+        self.assertTrue(ReversedInvoiceLine.objects.filter(line_code='manual-note').exists())
+        self.assertEqual(
+            list(ReversedInvoice.objects.order_by('pk').values_list(
+                'pk',
+                'contract_id',
+                'total_amount',
+                'paid_amount',
+                'remaining_amount',
+                'status',
+            )),
+            invoice_snapshot,
+        )
+        self.assertEqual(
+            list(ReversedPaymentHistory.objects.order_by('pk').values_list(
+                'pk',
+                'invoice_id',
+                'amount',
+                'method',
+                'transaction_code',
+            )),
+            payment_snapshot,
+        )
+
+    def test_backfill_stops_on_reserved_code_collision_without_partial_writes(self):
+        old_apps = self.migrate(self.migrate_from)
+        contract = self.create_foundation(old_apps)
+        invoice, detail = self.create_invoice_detail(
+            old_apps,
+            contract,
+            month=6,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+            paid_amount=Decimal('0.00'),
+            status='unpaid',
+        )
+        InvoiceLineModel = old_apps.get_model('billing', 'InvoiceLine')
+        collision = InvoiceLineModel.objects.create(
+            invoice=invoice,
+            line_code='legacy-rent',
+            line_type='rent',
+            direction='charge',
+            description='Pre-existing reserved line',
+            quantity=Decimal('1.000'),
+            unit='month',
+            unit_price=detail.rent_amount,
+            amount=detail.rent_amount,
+            legacy_detail=detail,
+        )
+
+        with self.assertRaises(RuntimeError):
+            self.migrate(self.migrate_to)
+
+        self.assertEqual(InvoiceLineModel.objects.count(), 1)
+        collision.delete()
+
+    def test_backfill_stops_on_total_mismatch_without_partial_writes(self):
+        old_apps = self.migrate(self.migrate_from)
+        contract = self.create_foundation(old_apps)
+        invoice, _detail = self.create_invoice_detail(
+            old_apps,
+            contract,
+            month=6,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+            paid_amount=Decimal('0.00'),
+            status='unpaid',
+        )
+        InvoiceModel = old_apps.get_model('billing', 'Invoice')
+        InvoiceLineModel = old_apps.get_model('billing', 'InvoiceLine')
+        InvoiceModel.objects.filter(pk=invoice.pk).update(total_amount=invoice.total_amount + Decimal('1.00'))
+
+        with self.assertRaises(RuntimeError):
+            self.migrate(self.migrate_to)
+
+        self.assertFalse(InvoiceLineModel.objects.exists())
+        InvoiceModel.objects.filter(pk=invoice.pk).update(total_amount=invoice.total_amount)

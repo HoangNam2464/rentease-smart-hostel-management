@@ -3,14 +3,14 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3B3A - Disposable Invoice-Line Backfill and Exact Reconciliation
+Phase 14C-3B3B1 - Atomic Compatibility-Line Dual-Write
 ```
 
-Status: waiting for explicit user approval. This phase proves compatibility on disposable test data only; it must not switch current invoice calculation, reads, writes, reports, or UI.
+Status: waiting for explicit user approval. This phase changes billing write behavior and must keep InvoiceDetail and current invoice calculations/read paths authoritative.
 
 ## Goal
 
-Add a reversible data migration that maps every existing `InvoiceDetail` into four deterministic compatibility `InvoiceLine` rows and proves exact financial and relationship parity. `PriceConfig`, `InvoiceDetail`, current totals, payments, and all existing workflows remain authoritative.
+Atomically synchronize the four deterministic compatibility `InvoiceLine` rows whenever an InvoiceDetail is created or updated, while preserving every current total, payment, status, read path, report, and UI behavior.
 
 ## Required Context
 
@@ -20,45 +20,45 @@ Add a reversible data migration that maps every existing `InvoiceDetail` into fo
 - `docs/architecture/TARGET_DATA_MODEL.md`
 - `docs/agent/RENTEASE_SECURITY_RULES.md`
 - `.agents/skills/rentease/references/backend-safety.md`
-- current billing models, services, migrations, and tests inspected directly
+- current billing models, services, migrations, admin behavior, and tests inspected directly
 
 ## Approval Decisions Required Before Editing
 
-- approve one reversible compatibility data migration and its exact reconciliation rules
-- create four lines per existing detail using stable codes: `legacy-rent`, `legacy-electricity`, `legacy-water`, and `legacy-service`
-- keep old billing tables and every current calculation/read/write path authoritative
-- create no ServiceDefinition, Meter, or MeterReading records from legacy invoice-only values
-- use disposable test databases only; do not migrate protected SQLite or real data in this phase
+- approve runtime dual-write for `legacy-rent`, `legacy-electricity`, `legacy-water`, and `legacy-service`
+- keep InvoiceDetail authoritative for snapshots, calculations, invoice totals, reads, reports, and UI
+- require InvoiceDetail save, compatibility-line synchronization, and invoice recalculation to succeed or roll back together
+- update only lines linked to the saved detail; reject reserved-code ownership conflicts
+- create no ServiceDefinition, Meter, or MeterReading records from InvoiceDetail values
+- do not switch read authority, apply migrations to protected SQLite, or operate on real data in this phase
 
 ## Expected Scope After Approval
 
-- add one reversible data migration that creates exactly four zero-preserving compatibility lines per existing `InvoiceDetail`
-- use snapshot amounts already stored on each detail; do not recalculate from current `PriceConfig`
-- require signed line sum, `InvoiceDetail.total_line_amount`, and `Invoice.total_amount` to match with exact `Decimal('0.00')` variance
-- preserve invoice/payment counts, paid amount, remaining amount, status, owner/tenant relationships, and all legacy billing rows
-- make reversal delete only lines created by this migration and stop on stable-code collisions rather than overwrite data
-- add forward/backward migration tests for zero usage, paid/partial/unpaid invoices, row counts, relationships, and exact totals
-- keep billing services, portal, reports, templates, settings, auth, legacy apps, protected SQLite, and real data unchanged
+- add one focused synchronization service that derives quantities, unit prices, and amounts only from the saved InvoiceDetail snapshot
+- invoke synchronization atomically from supported InvoiceDetail create/update paths without changing snapshot semantics
+- preserve zero-usage electricity/water lines and exact line/detail/header total parity
+- reject a reserved compatibility code when its existing line is not linked to the same InvoiceDetail
+- prove repeated saves update rather than duplicate the four lines
+- prove a synchronization error rolls back the detail snapshot, invoice totals, and compatibility lines together
+- keep portal, reports, templates, settings, auth, schema, migrations, legacy apps, protected SQLite, and real data unchanged
 
 ## Required Checks
 
 - `manage.py check`
 - `manage.py makemigrations --check --dry-run`
-- targeted billing compatibility/backfill migration tests and full test suite
-- clean forward/backward migration on disposable databases with exact row-count and financial reconciliation
+- targeted dual-write, billing compatibility, payment, and migration tests plus the full suite
+- exact line/detail/header parity after create, update, repeated save, zero usage, and forced rollback
 - existing billing compatibility, payment, role-isolation, and Property tests
 - `git diff --check`
 - clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3B3A approval has not been given
-- existing billing behavior, schema, or old model fields must change
-- a current read/write switch becomes necessary
-- any source invoice/detail totals differ before or after compatibility-line creation
-- a stable compatibility line code already exists for a source invoice
+- explicit Phase 14C-3B3B1 approval has not been given
+- InvoiceDetail can no longer remain authoritative
+- a schema migration, read-authority switch, UI/report change, or meter/service invention becomes necessary
+- exact line/detail/header parity cannot be maintained atomically
+- a reserved compatibility line belongs to another source
 - protected local SQLite, real data, settings, authentication, permissions, templates, reports, or legacy runtime would change
-- an irreversible migration is required
 - the starting worktree or Django checks are not clean
 
-Phase 14C-3B3B read/write switch, billing UI completion, maintenance/data governance, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.
+Phase 14C-3B3B2 read-authority switch, billing UI completion, maintenance/data governance, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.

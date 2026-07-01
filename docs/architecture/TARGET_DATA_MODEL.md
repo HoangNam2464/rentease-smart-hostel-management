@@ -160,7 +160,9 @@ These four models and their reversible migration are implemented. They remain em
 - Invoice, invoice-scoped line code, line type, charge/credit direction, description snapshot, non-negative quantity, unit, non-negative unit price, non-negative amount, sort order, timestamps, and nullable protected links to ServiceDefinition, MeterReading, and legacy InvoiceDetail
 - unique `(invoice, line_code)`; discount/credit contribution is subtracted by direction instead of storing ambiguous negative quantities
 
-Phase 14C-3B3A reconciliation must create four deterministic legacy lines for every existing detail (`rent`, `electricity`, `water`, `service`), including zero-usage lines. For every invoice, the signed line sum must equal both `InvoiceDetail.total_line_amount` and `Invoice.total_amount` with exact `Decimal('0.00')` variance. Paid amount, remaining amount, status, invoice count, payment count, and every owner/tenant relationship must remain unchanged. Backfill must not invent Meter or MeterReading records from invoice-only readings. Phase 14C-3B3B may switch reads/writes only after this parity evidence is reviewed and separately approved.
+Phase 14C-3B3A implements a reversible fail-closed data migration that creates four deterministic legacy lines for every existing detail (`rent`, `electricity`, `water`, `service`), including zero-usage lines. It uses stored detail snapshots rather than current PriceConfig and stops on reserved-code collisions, decreasing readings, inconsistent usage amounts, negative snapshots, or any detail/header total mismatch. Disposable forward/backward tests prove exact `Decimal('0.00')` line/detail/header variance while preserving paid amount, remaining amount, status, invoice/payment counts, unrelated lines, and relationships. It does not invent ServiceDefinition, Meter, or MeterReading records and has not been applied to protected SQLite or real data.
+
+Phase 14C-3B3B1 may add atomic compatibility-line dual-write while InvoiceDetail remains authoritative. Phase 14C-3B3B2 may switch read authority only after dual-write parity evidence is reviewed and separately approved.
 
 ### Maintenance Lifecycle
 
@@ -298,8 +300,9 @@ Disposable-data acceptance checks for the transitional migration:
 
 - `14C-3B1`: compatibility/reconciliation baseline and exact additive schema proposal (complete)
 - `14C-3B2`: additive service, meter, reading, and invoice-line models without switching current invoice reads/writes (complete)
-- `14C-3B3A`: backfill invoice lines on disposable data and prove exact total parity without switching reads/writes
-- `14C-3B3B`: switch reads/writes only after parity evidence is reviewed and separately approved
+- `14C-3B3A`: backfill invoice lines on disposable data and prove exact total parity without switching reads/writes (complete)
+- `14C-3B3B1`: atomically dual-write compatibility lines while InvoiceDetail remains authoritative
+- `14C-3B3B2`: switch read authority only after dual-write parity evidence is reviewed and separately approved
 - preserve payment and overpayment rules throughout
 
 Likely source areas: `billing`, `portal`, `reports`, admin, templates, tests, and migrations.
@@ -391,4 +394,4 @@ Stop and request a new approval if:
 
 ## Approval Boundary
 
-Phase 14C-3A, Phase 14C-3B1, and Phase 14C-3B2 are complete. The next task is the separately approval-gated Phase 14C-3B3A disposable invoice-line backfill and exact reconciliation. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.
+Phase 14C-3A through Phase 14C-3B3A are complete. The next task is the separately approval-gated Phase 14C-3B3B1 atomic compatibility-line dual-write with InvoiceDetail still authoritative. Phase 14C-3D must be completed before Phase 14C-4 provisions the clean PostgreSQL database.

@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-3B2: Additive Billing and Meter Schema |
+| Latest product phase | Phase 14C-3B3A: Disposable Invoice-Line Backfill and Exact Reconciliation |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -53,7 +53,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Phase 14C-3A4 requires every Room to belong to a Property, scopes room-code uniqueness to `(property, room_code)`, and retains `Room.owner` as the authorization boundary. Migration preconditions stop on null Property, owner mismatch, duplicate Property room code, or unsafe reverse owner-code duplication.
 - Phase 14C-3B1 freezes current billing behavior: room-period price uniqueness; invoice-detail rate/rent/service snapshots; exact electricity, water, rent, service, total, paid, and remaining calculations; atomic invoice generation; payment status transitions; payment deletion recalculation; and overpayment rejection. No billing source behavior or schema changed.
 - Phase 14C-3B2 adds `ServiceDefinition`, `Meter`, `MeterReading`, and `InvoiceLine` as isolated additive foundations with database constraints, cross-Property/source validation, admin registration, and a reversible migration. Existing invoice calculations, reads, writes, reports, UI, payments, protected SQLite, and real data remain unchanged.
-- The suite now contains 63 tests, including the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
+- Phase 14C-3B3A adds a reversible fail-closed data migration that creates four deterministic compatibility lines per existing InvoiceDetail from stored snapshots. Disposable migration tests prove exact `0.00` total variance, zero-usage preservation, payment/status/relationship preservation, reserved-code collision rejection, total-mismatch rejection, and targeted reversal. Protected SQLite and real data were not migrated.
+- The suite now contains 66 tests, including invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 
@@ -76,7 +77,7 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 ## Known Product Gaps
 
 - PostgreSQL is not executed; its staged target-schema and provisioning plan is documented.
-- The new billing/meter tables contain no backfilled records and are not yet authoritative; owner-facing invoice detail/utility entry remains incomplete.
+- The compatibility backfill exists in reviewed migrations but has only run on disposable test databases. InvoiceLine is not yet authoritative, protected SQLite remains unchanged, and owner-facing invoice detail/utility entry remains incomplete.
 - Account onboarding, invitation, recovery, and lifecycle are incomplete.
 - Deployment, media, backup, CI, and broader workflow test coverage remain incomplete.
 - Legacy HOSTELLO apps remain installed and intentionally isolated.
