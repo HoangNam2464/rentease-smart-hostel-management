@@ -36,7 +36,9 @@ The diagram contains 15 conceptual entities. All 15 have an active Django equiva
 
 `billing.ServiceDefinition`, `billing.Meter`, `billing.MeterReading`, and `billing.InvoiceLine` are additive target-model foundations introduced in Phase 14C-3B2. They do not yet replace `PriceConfig`, `InvoiceDetail`, or any current invoice calculation/read/write path.
 
-Phase 14C-3B3A adds a fail-closed compatibility backfill migration and proves exact line/detail/header parity on disposable databases. The migration has not been applied to protected SQLite or real data, and InvoiceLine is not yet authoritative.
+Phase 14C-3B3A adds a fail-closed compatibility backfill migration and proves exact line/detail/header parity on disposable databases. The configured local SQLite now reports this migration as applied, but its local-data parity has not been audited; no PostgreSQL or real-data onboarding has occurred, and InvoiceLine is not yet authoritative.
+
+Phase 14C-3B3B1 atomically keeps compatibility lines synchronized for supported complete InvoiceDetail saves. InvoiceDetail still supplies authoritative snapshots and invoice totals; direct queryset updates and partial saves are not supported dual-write paths.
 
 ## Relationship Corrections
 

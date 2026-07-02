@@ -5,7 +5,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Sum
 from django.utils import timezone
 
@@ -402,9 +402,18 @@ class InvoiceDetail(models.Model):
         self.water_amount = water_usage * self.water_unit_price
 
     def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        self.invoice.recalculate_totals()
+        if kwargs.get('update_fields') is not None:
+            raise ValueError('InvoiceDetail partial saves are not supported; save the complete snapshot instead.')
+        with transaction.atomic():
+            self.full_clean()
+            super().save(*args, **kwargs)
+
+            from .services import synchronize_compatibility_lines
+
+            line_total = synchronize_compatibility_lines(self)
+            self.invoice.recalculate_totals()
+            if line_total != self.invoice.total_amount:
+                raise ValidationError('Invoice compatibility-line total does not match the invoice total.')
 
 
 class InvoiceLine(models.Model):

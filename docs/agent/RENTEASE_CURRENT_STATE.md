@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-3B3A: Disposable Invoice-Line Backfill and Exact Reconciliation |
+| Latest product phase | Phase 14C-3B3B1: Atomic Compatibility-Line Dual-Write |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -48,13 +48,14 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - PostgreSQL has not been provisioned or populated; SQLite remains the verified local runtime database.
 - Phase 14C-2 established a 20-test baseline covering role login and rejection, public listings and viewing registration, cross-owner/cross-tenant isolation, billing snapshots/totals/overpayment, database uniqueness, and maintenance relationship validation.
 - Phase 14C-3A1 added the `Property` model and nullable `Room.property` transition field. `Room.owner` remains authoritative; no property backfill, queryset switch, form, admin, UI, or real-data change has occurred.
-- Phase 14C-3A2 added a reversible data migration that creates one deterministic default Property per owner profile, copies only an existing rental address, and links previously unlinked Rooms without changing `Room.owner`. It has been exercised only in disposable test databases; protected local SQLite data was not altered.
+- Phase 14C-3A2 added a reversible data migration that creates one deterministic default Property per owner profile, copies only an existing rental address, and links previously unlinked Rooms without changing `Room.owner`. Its behavior is covered on disposable test databases; the configured local SQLite now reports the Property migrations as applied.
 - Phase 14C-3A3 is complete: owner/admin Property management, owner-scoped listing filters, public-safe Property name/ward/province presentation, staff-only Property report filters, and Property-first disposable demo seeding are integrated. Public pages do not render exact address, coordinates, contact phone, timezone, or house rules.
 - Phase 14C-3A4 requires every Room to belong to a Property, scopes room-code uniqueness to `(property, room_code)`, and retains `Room.owner` as the authorization boundary. Migration preconditions stop on null Property, owner mismatch, duplicate Property room code, or unsafe reverse owner-code duplication.
 - Phase 14C-3B1 freezes current billing behavior: room-period price uniqueness; invoice-detail rate/rent/service snapshots; exact electricity, water, rent, service, total, paid, and remaining calculations; atomic invoice generation; payment status transitions; payment deletion recalculation; and overpayment rejection. No billing source behavior or schema changed.
-- Phase 14C-3B2 adds `ServiceDefinition`, `Meter`, `MeterReading`, and `InvoiceLine` as isolated additive foundations with database constraints, cross-Property/source validation, admin registration, and a reversible migration. Existing invoice calculations, reads, writes, reports, UI, payments, protected SQLite, and real data remain unchanged.
+- Phase 14C-3B2 adds `ServiceDefinition`, `Meter`, `MeterReading`, and `InvoiceLine` as isolated additive foundations with database constraints, cross-Property/source validation, admin registration, and a reversible migration. Existing invoice calculations, reads, reports, UI, payments, and real-data onboarding remain unchanged; the configured local SQLite now reports the billing foundation migrations as applied.
 - Phase 14C-3B3A adds a reversible fail-closed data migration that creates four deterministic compatibility lines per existing InvoiceDetail from stored snapshots. Disposable migration tests prove exact `0.00` total variance, zero-usage preservation, payment/status/relationship preservation, reserved-code collision rejection, total-mismatch rejection, and targeted reversal. Protected SQLite and real data were not migrated.
-- The suite now contains 66 tests, including invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
+- Phase 14C-3B3B1 atomically dual-writes the four compatibility lines whenever a complete InvoiceDetail snapshot is created or updated. Reserved-code conflicts roll back the detail, lines, and invoice total together; repeated saves update rather than duplicate; zero usage is preserved. InvoiceDetail remains authoritative, and partial InvoiceDetail saves are rejected to prevent snapshot/line/header divergence.
+- The suite now contains 68 tests, including atomic dual-write and rollback, invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 
@@ -77,7 +78,7 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 ## Known Product Gaps
 
 - PostgreSQL is not executed; its staged target-schema and provisioning plan is documented.
-- The compatibility backfill exists in reviewed migrations but has only run on disposable test databases. InvoiceLine is not yet authoritative, protected SQLite remains unchanged, and owner-facing invoice detail/utility entry remains incomplete.
+- Compatibility backfill and dual-write are verified on disposable test databases, and the configured local SQLite reports all billing migrations as applied. InvoiceLine is not yet read-authoritative, local-data parity has not been audited, and owner-facing invoice detail/utility entry remains incomplete.
 - Account onboarding, invitation, recovery, and lifecycle are incomplete.
 - Deployment, media, backup, CI, and broader workflow test coverage remain incomplete.
 - Legacy HOSTELLO apps remain installed and intentionally isolated.

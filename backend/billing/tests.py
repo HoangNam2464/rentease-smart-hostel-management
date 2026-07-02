@@ -99,6 +99,16 @@ class BillingInvariantTests(TestCase):
         self.assertEqual(invoice.total_amount, Decimal("5215000.00"))
         self.assertEqual(invoice.remaining_amount, Decimal("5215000.00"))
         self.assertEqual(invoice.status, Invoice.STATUS_UNPAID)
+        lines = InvoiceLine.objects.filter(invoice=invoice).order_by('sort_order')
+        self.assertEqual(
+            list(lines.values_list('line_code', flat=True)),
+            ['legacy-rent', 'legacy-electricity', 'legacy-water', 'legacy-service'],
+        )
+        self.assertEqual(
+            sum((line.signed_amount for line in lines), Decimal('0.00')),
+            invoice.total_amount,
+        )
+        self.assertFalse(lines.exclude(legacy_detail=detail).exists())
 
     def test_payment_cannot_exceed_invoice_remaining_amount(self):
         invoice = self.create_invoice()
@@ -145,6 +155,12 @@ class BillingInvariantTests(TestCase):
         self.assertEqual(invoice.total_amount, Decimal("5150000.00"))
         self.assertEqual(invoice.remaining_amount, Decimal("5150000.00"))
         self.assertEqual(invoice.status, Invoice.STATUS_UNPAID)
+        lines = InvoiceLine.objects.filter(invoice=invoice)
+        self.assertEqual(lines.count(), 4)
+        self.assertEqual(lines.get(line_code='legacy-electricity').quantity, Decimal('0.000'))
+        self.assertEqual(lines.get(line_code='legacy-water').quantity, Decimal('0.000'))
+        self.assertEqual(lines.get(line_code='legacy-electricity').amount, Decimal('0.00'))
+        self.assertEqual(lines.get(line_code='legacy-water').amount, Decimal('0.00'))
 
     def test_invoice_detail_snapshot_changes_only_when_detail_is_resaved(self):
         invoice = self.create_invoice()
@@ -160,6 +176,10 @@ class BillingInvariantTests(TestCase):
             detail.water_unit_price,
             detail.service_amount,
             detail.total_line_amount,
+        )
+        original_line_ids = set(InvoiceLine.objects.filter(invoice=invoice).values_list('pk', flat=True))
+        original_line_amounts = dict(
+            InvoiceLine.objects.filter(invoice=invoice).values_list('line_code', 'amount')
         )
 
         PriceConfig.objects.filter(pk=self.price_config.pk).update(
@@ -180,6 +200,10 @@ class BillingInvariantTests(TestCase):
             original_snapshot,
         )
         self.assertEqual(invoice.total_amount, Decimal("5215000.00"))
+        self.assertEqual(
+            dict(InvoiceLine.objects.filter(invoice=invoice).values_list('line_code', 'amount')),
+            original_line_amounts,
+        )
 
         detail.save()
         detail.refresh_from_db()
@@ -188,6 +212,103 @@ class BillingInvariantTests(TestCase):
         self.assertEqual(detail.water_unit_price, Decimal("88888.00"))
         self.assertEqual(detail.service_amount, Decimal("777777.00"))
         self.assertEqual(invoice.total_amount, Decimal("6055543.00"))
+        lines = InvoiceLine.objects.filter(invoice=invoice)
+        self.assertEqual(lines.count(), 4)
+        self.assertEqual(set(lines.values_list('pk', flat=True)), original_line_ids)
+        self.assertEqual(lines.get(line_code='legacy-electricity').unit_price, Decimal('9999.00'))
+        self.assertEqual(lines.get(line_code='legacy-water').unit_price, Decimal('88888.00'))
+        self.assertEqual(lines.get(line_code='legacy-service').amount, Decimal('777777.00'))
+        self.assertEqual(
+            sum((line.signed_amount for line in lines), Decimal('0.00')),
+            invoice.total_amount,
+        )
+
+        detail.save()
+        self.assertEqual(InvoiceLine.objects.filter(invoice=invoice).count(), 4)
+        self.assertEqual(
+            set(InvoiceLine.objects.filter(invoice=invoice).values_list('pk', flat=True)),
+            original_line_ids,
+        )
+
+    def test_invoice_detail_dual_write_conflict_rolls_back_detail_invoice_and_lines(self):
+        invoice = self.create_invoice()
+        detail = InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        InvoiceLine.objects.filter(
+            invoice=invoice,
+            line_code='legacy-rent',
+        ).update(legacy_detail=None)
+        original_lines = list(InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+            'pk',
+            'line_code',
+            'legacy_detail_id',
+            'quantity',
+            'unit_price',
+            'amount',
+        ))
+        original_total = invoice.total_amount
+
+        detail.electricity_end = 120
+        with self.assertRaises(ValidationError):
+            detail.save()
+
+        detail.refresh_from_db()
+        invoice.refresh_from_db()
+        self.assertEqual(detail.electricity_end, 110)
+        self.assertEqual(detail.electricity_amount, Decimal('35000.00'))
+        self.assertEqual(invoice.total_amount, original_total)
+        self.assertEqual(
+            list(InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+                'pk',
+                'line_code',
+                'legacy_detail_id',
+                'quantity',
+                'unit_price',
+                'amount',
+            )),
+            original_lines,
+        )
+
+    def test_invoice_detail_rejects_partial_save_to_protect_dual_write_parity(self):
+        invoice = self.create_invoice()
+        detail = InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        original_lines = list(InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+            'pk',
+            'line_code',
+            'quantity',
+            'unit_price',
+            'amount',
+        ))
+
+        detail.electricity_end = 120
+        with self.assertRaises(ValueError):
+            detail.save(update_fields=['electricity_end'])
+
+        detail.refresh_from_db()
+        invoice.refresh_from_db()
+        self.assertEqual(detail.electricity_end, 110)
+        self.assertEqual(invoice.total_amount, Decimal('5215000.00'))
+        self.assertEqual(
+            list(InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+                'pk',
+                'line_code',
+                'quantity',
+                'unit_price',
+                'amount',
+            )),
+            original_lines,
+        )
 
     def test_payment_status_transitions_and_deletion_recalculate_balance(self):
         invoice = self.create_invoice()
@@ -237,6 +358,14 @@ class BillingInvariantTests(TestCase):
         self.assertEqual(invoice.paid_amount, Decimal("0.00"))
         self.assertEqual(invoice.remaining_amount, Decimal("5215000.00"))
         self.assertEqual(invoice.status, Invoice.STATUS_UNPAID)
+        self.assertEqual(InvoiceLine.objects.filter(invoice=invoice).count(), 4)
+        self.assertEqual(
+            sum(
+                (line.signed_amount for line in InvoiceLine.objects.filter(invoice=invoice)),
+                Decimal('0.00'),
+            ),
+            invoice.total_amount,
+        )
 
     def test_invoice_detail_rejects_decreasing_meter_readings(self):
         invoice = self.create_invoice()
