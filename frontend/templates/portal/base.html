@@ -15,16 +15,21 @@
     <!-- ═══════════════════════════════════════════════════════════
          SIDEBAR
     ════════════════════════════════════════════════════════════ -->
-    <aside class="app-sidebar" id="appSidebar">
+    <aside class="app-sidebar" id="appSidebar" aria-label="Điều hướng tài khoản">
 
         <!-- Logo -->
-        <a class="sidebar-logo" href="/">
-            <div class="sidebar-logo-mark">R</div>
-            <div>
-                <div class="sidebar-logo-name">RentEase</div>
-                <div class="sidebar-logo-sub">Quản lý nhà trọ</div>
-            </div>
-        </a>
+        <div class="sidebar-header">
+            <a class="sidebar-logo" href="{% url 'home' %}">
+                <div class="sidebar-logo-mark">R</div>
+                <div>
+                    <div class="sidebar-logo-name">RentEase</div>
+                    <div class="sidebar-logo-sub">Quản lý nhà trọ</div>
+                </div>
+            </a>
+            <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Đóng menu">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
 
         <!-- Navigation -->
         <nav class="sidebar-nav">
@@ -171,25 +176,26 @@
         <!-- Footer: user info + logout -->
         {% if request.user.is_authenticated %}
         <div class="sidebar-footer">
-            <div class="sidebar-footer-user" title="Đăng xuất" onclick="document.getElementById('logoutForm').submit();" style="cursor:pointer;">
-                <div class="sidebar-footer-avatar">
-                    {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
-                </div>
-                <div style="flex:1;min-width:0;">
-                    <div class="sidebar-footer-name">{{ request.user.get_full_name|default:request.user.username }}</div>
-                    <div class="sidebar-footer-role">
-                        {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Quản trị viên{% else %}Người dùng{% endif %}
-                    </div>
-                </div>
-                <i class="bi bi-box-arrow-right" style="color:#4d6380;font-size:0.95rem;"></i>
-            </div>
-            <form id="logoutForm" action="/logout/" method="post" style="display:none;">
+            <form class="sidebar-footer-form" action="{% url 'portal:logout' %}" method="post">
                 {% csrf_token %}
+                <button class="sidebar-footer-user" type="submit" title="Đăng xuất">
+                    <div class="sidebar-footer-avatar">
+                        {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
+                    </div>
+                    <div class="sidebar-footer-copy">
+                        <div class="sidebar-footer-name">{{ request.user.get_full_name|default:request.user.username }}</div>
+                        <div class="sidebar-footer-role">
+                            {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Quản trị viên{% else %}Người dùng{% endif %}
+                        </div>
+                    </div>
+                    <i class="bi bi-box-arrow-right sidebar-footer-action" aria-hidden="true"></i>
+                </button>
             </form>
         </div>
         {% endif %}
 
     </aside>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Đóng menu" aria-hidden="true" tabindex="-1"></button>
 
     <!-- ═══════════════════════════════════════════════════════════
          MAIN AREA
@@ -200,18 +206,18 @@
         <header class="app-topbar">
             <div class="topbar-left">
                 <!-- Mobile menu toggle -->
-                <button class="topbar-btn" id="sidebarToggle" style="display:none;" aria-label="Mở menu">
-                    <i class="bi bi-list"></i>
+                <button class="topbar-btn sidebar-toggle" id="sidebarToggle" type="button" aria-label="Mở menu" aria-controls="appSidebar" aria-expanded="false">
+                    <i class="bi bi-list" aria-hidden="true"></i>
                 </button>
 
                 <!-- Breadcrumb -->
-                <nav class="topbar-breadcrumb" aria-label="Breadcrumb">
-                    <a href="/"><i class="bi bi-house"></i></a>
+                <nav class="topbar-breadcrumb" aria-label="Đường dẫn">
+                    <a href="{% url 'home' %}" aria-label="Trang chủ"><i class="bi bi-house" aria-hidden="true"></i></a>
                     <span class="sep">/</span>
                     {% if request.user.is_owner %}
-                        <a href="/owner/dashboard/">Chủ trọ</a>
+                        <a href="{% url 'portal:owner_dashboard' %}">Chủ trọ</a>
                     {% elif request.user.is_tenant %}
-                        <a href="/tenant/dashboard/">Khách thuê</a>
+                        <a href="{% url 'portal:tenant_dashboard' %}">Khách thuê</a>
                     {% endif %}
                     {% block breadcrumb %}{% endblock %}
                 </nav>
@@ -234,17 +240,21 @@
 
                 <div class="topbar-divider"></div>
 
-                <div class="topbar-user" onclick="document.getElementById('logoutForm').submit();" title="Đăng xuất">
-                    <div class="topbar-user-avatar">
-                        {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
-                    </div>
-                    <div>
-                        <div class="topbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</div>
-                        <div class="topbar-user-role">
-                            {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Admin{% endif %}
+                <form class="topbar-logout-form" action="{% url 'portal:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="topbar-user" type="submit" title="Đăng xuất" aria-label="Đăng xuất khỏi tài khoản {{ request.user.get_full_name|default:request.user.username }}">
+                        <div class="topbar-user-avatar">
+                            {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
                         </div>
-                    </div>
-                </div>
+                        <div class="topbar-user-copy">
+                            <div class="topbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</div>
+                            <div class="topbar-user-role">
+                                {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Admin{% endif %}
+                            </div>
+                        </div>
+                        <i class="bi bi-box-arrow-right topbar-user-action" aria-hidden="true"></i>
+                    </button>
+                </form>
                 {% else %}
                 <a class="btn btn-primary btn-sm" href="/login/">
                     <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
@@ -255,6 +265,7 @@
 
         <!-- Content -->
         <main class="app-content" id="appContent">
+            <div class="app-content-inner">
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{% if 'error' in message.tags or 'danger' in message.tags %}danger{% elif 'warning' in message.tags %}warning{% elif 'success' in message.tags %}success{% else %}info{% endif %}">
@@ -265,23 +276,94 @@
             {% endif %}
 
             {% block content %}{% endblock %}
+            </div>
         </main>
 
     </div><!-- /.app-main -->
 </div><!-- /.app-wrapper -->
 
 <script>
-// Mobile sidebar toggle
 const sidebar = document.getElementById('appSidebar');
 const toggleBtn = document.getElementById('sidebarToggle');
-if (toggleBtn) {
-    toggleBtn.style.display = 'flex';
-    toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
-    document.addEventListener('click', (e) => {
-        if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-            sidebar.classList.remove('open');
+const closeBtn = document.getElementById('sidebarClose');
+const backdrop = document.getElementById('sidebarBackdrop');
+const mobileSidebar = window.matchMedia('(max-width: 768px)');
+const sidebarFocusable = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function setSidebarOpen(open, restoreFocus = true) {
+    if (!sidebar || !toggleBtn || !mobileSidebar.matches) return;
+
+    sidebar.classList.toggle('open', open);
+    document.body.classList.toggle('sidebar-open', open);
+    toggleBtn.setAttribute('aria-expanded', String(open));
+    sidebar.setAttribute('aria-hidden', String(!open));
+    sidebar.toggleAttribute('inert', !open);
+    backdrop.setAttribute('aria-hidden', String(!open));
+
+    if (open) {
+        const firstControl = sidebar.querySelector(sidebarFocusable);
+        window.requestAnimationFrame(() => firstControl?.focus());
+    } else if (restoreFocus) {
+        toggleBtn.focus();
+    }
+}
+
+function syncSidebarMode() {
+    if (!sidebar || !toggleBtn) return;
+
+    sidebar.classList.remove('open');
+    document.body.classList.remove('sidebar-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    sidebar.setAttribute('aria-hidden', String(mobileSidebar.matches));
+    sidebar.toggleAttribute('inert', mobileSidebar.matches);
+    backdrop.setAttribute('aria-hidden', 'true');
+}
+
+if (sidebar && toggleBtn && closeBtn && backdrop) {
+    document.querySelectorAll('.nav-item.active').forEach((item) => {
+        item.setAttribute('aria-current', 'page');
+    });
+
+    syncSidebarMode();
+    toggleBtn.addEventListener('click', () => setSidebarOpen(true));
+    closeBtn.addEventListener('click', () => setSidebarOpen(false));
+    backdrop.addEventListener('click', () => setSidebarOpen(false));
+
+    sidebar.addEventListener('click', (event) => {
+        if (mobileSidebar.matches && event.target.closest('a[href]')) {
+            setSidebarOpen(false, false);
         }
     });
+
+    document.addEventListener('keydown', (event) => {
+        if (!mobileSidebar.matches || !sidebar.classList.contains('open')) return;
+
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            setSidebarOpen(false);
+            return;
+        }
+
+        if (event.key === 'Tab') {
+            const controls = [...sidebar.querySelectorAll(sidebarFocusable)];
+            const firstControl = controls[0];
+            const lastControl = controls[controls.length - 1];
+
+            if (event.shiftKey && document.activeElement === firstControl) {
+                event.preventDefault();
+                lastControl?.focus();
+            } else if (!event.shiftKey && document.activeElement === lastControl) {
+                event.preventDefault();
+                firstControl?.focus();
+            }
+        }
+    });
+
+    if (mobileSidebar.addEventListener) {
+        mobileSidebar.addEventListener('change', syncSidebarMode);
+    } else {
+        mobileSidebar.addListener(syncSidebarMode);
+    }
 }
 </script>
 {% block extra_js %}{% endblock %}
