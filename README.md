@@ -123,6 +123,7 @@ Frontend hiện tại được render bằng Django Templates:
 - ✅ Invoice management
 - ✅ Payment recording
 - ✅ Payment history
+- ✅ Online Payments via PayOS (VietQR)
 - ✅ Maintenance request management
 - ✅ Public room listings
 - ✅ Viewing registration
