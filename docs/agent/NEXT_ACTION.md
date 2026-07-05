@@ -3,62 +3,58 @@
 ## Immediate Next Phase
 
 ```text
-Phase 14C-3B3B2 - Controlled InvoiceLine Read-Authority Switch
+Phase 14C-3C1 - Maintenance Lifecycle Correction
 ```
 
-Status: waiting for explicit user approval. This phase changes billing read and total-calculation authority, so it must start with reviewed parity evidence and a fail-closed rollback boundary.
+Status: waiting for explicit user approval. This phase changes the `MaintenanceRecord` schema and lifecycle rules, so it must begin with a reviewed field, migration, compatibility, and rollback plan.
 
 ## Goal
 
-Make validated `InvoiceLine` rows authoritative for invoice charge totals while retaining `InvoiceDetail` as the compatibility snapshot/write source. Preserve payment, status, owner/tenant scoping, reports, and current UI behavior.
+Replace the ambiguous required `performed_date` with lifecycle-safe scheduling and execution timestamps while preserving room/repair relationships, owner and staff workflows, reports, existing records, and privacy boundaries.
 
-## Required Context
+## Current Problem
 
-- `AGENTS.md`
-- `docs/agent/RENTEASE_CURRENT_STATE.md`
-- `docs/architecture/DATA_MODEL_ALIGNMENT.md`
-- `docs/architecture/TARGET_DATA_MODEL.md`
-- `docs/agent/RENTEASE_SECURITY_RULES.md`
-- `.agents/skills/rentease/references/backend-safety.md`
-- current billing models, services, migrations, admin behavior, reports, portal reads, and tests inspected directly
+- `MaintenanceRecord.performed_date` is required even for scheduled or cancelled work.
+- Scheduled, in-progress, completed, and cancelled states do not have distinct date semantics.
+- The model cannot represent a scheduled date, optional start time, and optional completion time without overloading one field.
+- Reports currently order and summarize completed work through `performed_date`, so migration and compatibility behavior must be explicit.
 
 ## Approval Decisions Required Before Editing
 
-- approve validated `InvoiceLine` signed amounts as the source for invoice charge totals
-- retain InvoiceDetail as the source for legacy meter/rate snapshots and atomic compatibility-line writes
-- define whether non-compatibility adjustment/discount lines participate now or remain deferred to Phase 14D
-- require missing, duplicate, conflicting, or non-parity compatibility lines to fail closed
-- keep payments, remaining amount, status transitions, reports, and UI outputs unchanged
-- authorize any read-only reconciliation of protected local SQLite separately; do not mutate or onboard real data
+- add `scheduled_for`, nullable `started_at`, and nullable `completed_at`
+- define whether `scheduled_for` is a date or timezone-aware datetime
+- backfill existing `performed_date` conservatively without inventing start/completion times
+- require completed records to have `completed_at` and prevent completion before start
+- define cancelled-record date behavior and whether a cancellation timestamp is deferred
+- preserve or transition `performed_date` only through a reversible migration plan
+- keep vendor, performed-by, cost, owner/tenant scoping, reports, templates, settings, auth, and legacy apps unchanged unless separately approved
 
-## Expected Scope After Approval
+## Expected First Step After Approval
 
-- add a focused validated line-total reader with deterministic ordering and signed-amount handling
-- switch invoice total recalculation only after exact detail/line/header parity is established
-- keep existing compatibility-line dual-write and zero-usage behavior unchanged
-- fail closed on missing/conflicting reserved lines or detail/line variance
-- preserve payment recalculation, overpayment rejection, invoice status, reports, and portal output
-- keep templates, settings, auth, permissions, schema, migrations, legacy apps, and real data unchanged
+- inspect all `MaintenanceRecord` model, admin, report, seed, template, and test consumers
+- write the exact additive migration/backfill/constraint plan before changing the schema
+- add lifecycle validation and disposable forward/backward migration tests
+- update reports only where required to preserve current completed-maintenance output
+- avoid protected media or data-governance work; that remains Phase 14C-3C2
 
 ## Required Checks
 
 - `manage.py check`
 - `manage.py makemigrations --check --dry-run`
-- targeted read-authority, dual-write, billing compatibility, payment, and migration tests plus the full suite
-- exact line/detail/header parity before and after the authority switch, including zero usage and forced rollback
-- existing billing compatibility, payment, role-isolation, and Property tests
+- maintenance model and migration forward/backward tests
+- report/admin compatibility tests
+- owner/tenant relationship and privacy regression tests
+- full test suite
 - `git diff --check`
-- clean final worktree after the requested local commit
 
 ## Stop Conditions
 
-- explicit Phase 14C-3B3B2 approval has not been given
-- exact detail/line/header parity evidence is missing or fails
-- a schema migration, UI workflow, or meter/service invention becomes necessary
-- payment, status, report, or portal behavior would change
-- a reserved compatibility line is missing, duplicated, or belongs to another source
+- explicit Phase 14C-3C1 approval has not been given
+- existing dates cannot be mapped without guessing
+- an irreversible migration or destructive field removal is proposed without a verified compatibility period
+- owner/tenant scoping, repair-request relationships, or report behavior would change unexpectedly
+- protected media, audit logging, billing, PostgreSQL, settings, auth, permissions, or legacy work becomes necessary
 - protected local SQLite or real data would be mutated
-- settings, authentication, permissions, templates, reports, or legacy runtime would change
 - the starting worktree or Django checks are not clean
 
-Billing UI completion, maintenance/data governance, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.
+Owner billing UI completion, protected-document/audit foundations, production legacy exclusion, PostgreSQL provisioning, and real-data onboarding remain separately approval-gated.

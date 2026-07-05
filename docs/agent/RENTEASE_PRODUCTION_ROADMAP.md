@@ -27,8 +27,8 @@ Follow `docs/architecture/TARGET_DATA_MODEL.md`. Each implementation stage needs
 - `14C-3B2` additive invoice-line, service, meter, and reading schema/domain foundation (complete)
 - `14C-3B3A` disposable invoice-line backfill and exact total reconciliation (complete; no read/write switch)
 - `14C-3B3B1` atomic compatibility-line dual-write with InvoiceDetail still authoritative (complete)
-- `14C-3B3B2` controlled InvoiceLine read-authority switch after separately approved dual-write parity (next); UI workflow remains Phase 14D
-- `14C-3C1` maintenance lifecycle correction
+- `14C-3B3B2` controlled InvoiceLine read-authority switch with fail-closed parity (complete); UI workflow remains Phase 14D
+- `14C-3C1` maintenance lifecycle correction (next; separately approval-gated)
 - `14C-3C2` protected-document and audit foundation
 - `14C-3D` production legacy-app exclusion and clean-schema verification
 - `14C-4` fresh PostgreSQL provisioning from reviewed migrations

@@ -312,9 +312,20 @@ class Invoice(models.Model):
                 'year': 'Invoice year must overlap the contract period.',
             })
 
-    def recalculate_totals(self, commit=True):
-        total = getattr(self, 'detail', None).total_line_amount if hasattr(self, 'detail') else self.total_amount
+    def recalculate_totals(self, commit=True, require_current_total_match=True):
+        detail = getattr(self, 'detail', None)
+        if detail is None:
+            total = self.total_amount
+        else:
+            from .services import validated_compatibility_line_total
+
+            total = validated_compatibility_line_total(self, detail=detail)
+            if require_current_total_match and total != self.total_amount:
+                raise ValidationError('Invoice line total does not match the stored invoice total.')
+
         paid = self.payments.aggregate(total=Sum('amount'))['total'] or MONEY_ZERO
+        if paid > total:
+            raise ValidationError('Invoice payments cannot exceed the validated invoice line total.')
         remaining = total - paid
         if remaining < MONEY_ZERO:
             remaining = MONEY_ZERO
@@ -411,7 +422,7 @@ class InvoiceDetail(models.Model):
             from .services import synchronize_compatibility_lines
 
             line_total = synchronize_compatibility_lines(self)
-            self.invoice.recalculate_totals()
+            self.invoice.recalculate_totals(require_current_total_match=False)
             if line_total != self.invoice.total_amount:
                 raise ValidationError('Invoice compatibility-line total does not match the invoice total.')
 
@@ -597,12 +608,14 @@ class PaymentHistory(models.Model):
                 raise ValidationError({'amount': 'Payment amount cannot exceed invoice remaining amount.'})
 
     def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        self.invoice.recalculate_totals()
+        with transaction.atomic():
+            self.full_clean()
+            super().save(*args, **kwargs)
+            self.invoice.recalculate_totals()
 
     def delete(self, *args, **kwargs):
-        invoice = self.invoice
-        result = super().delete(*args, **kwargs)
-        invoice.recalculate_totals()
-        return result
+        with transaction.atomic():
+            invoice = self.invoice
+            result = super().delete(*args, **kwargs)
+            invoice.recalculate_totals()
+            return result

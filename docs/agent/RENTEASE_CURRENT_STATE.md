@@ -5,7 +5,7 @@
 | Item | Current truth |
 |---|---|
 | Expected branch | `complete-product` |
-| Latest product phase | Phase 14C-3B3B1: Atomic Compatibility-Line Dual-Write |
+| Latest product phase | Phase 14C-3B3B2: Controlled InvoiceLine Read Authority |
 | Product classification | Local-demo ready; not production-ready |
 | Documentation system | Consolidated entry + repo-local RentEase skills |
 
@@ -55,7 +55,8 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Phase 14C-3B2 adds `ServiceDefinition`, `Meter`, `MeterReading`, and `InvoiceLine` as isolated additive foundations with database constraints, cross-Property/source validation, admin registration, and a reversible migration. Existing invoice calculations, reads, reports, UI, payments, and real-data onboarding remain unchanged; the configured local SQLite now reports the billing foundation migrations as applied.
 - Phase 14C-3B3A adds a reversible fail-closed data migration that creates four deterministic compatibility lines per existing InvoiceDetail from stored snapshots. Disposable migration tests prove exact `0.00` total variance, zero-usage preservation, payment/status/relationship preservation, reserved-code collision rejection, total-mismatch rejection, and targeted reversal. Protected SQLite and real data were not migrated.
 - Phase 14C-3B3B1 atomically dual-writes the four compatibility lines whenever a complete InvoiceDetail snapshot is created or updated. Reserved-code conflicts roll back the detail, lines, and invoice total together; repeated saves update rather than duplicate; zero usage is preserved. InvoiceDetail remains authoritative, and partial InvoiceDetail saves are rejected to prevent snapshot/line/header divergence.
-- The suite now contains 68 tests, including atomic dual-write and rollback, invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
+- Phase 14C-3B3B2 makes the signed amounts of the four validated compatibility `InvoiceLine` rows authoritative for recalculating invoices that have an InvoiceDetail. The reader requires exact codes, ownership, source boundaries, financial semantics, snapshot values, and detail/header parity. InvoiceDetail remains the atomic snapshot/write source; non-compatibility adjustment and discount lines remain deferred. Payment create/delete and detail updates roll back when line validation fails or a new total would be below the amount already paid. Header-only draft compatibility behavior is unchanged, and no schema, migration, UI, report, permission, or real-data change occurred.
+- The suite now contains 73 tests, including InvoiceLine read authority and fail-closed payment rollback, atomic dual-write and rollback, invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
 - No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
 - The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 
@@ -78,7 +79,7 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 ## Known Product Gaps
 
 - PostgreSQL is not executed; its staged target-schema and provisioning plan is documented.
-- Compatibility backfill and dual-write are verified on disposable test databases, and the configured local SQLite reports all billing migrations as applied. InvoiceLine is not yet read-authoritative, local-data parity has not been audited, and owner-facing invoice detail/utility entry remains incomplete.
+- Compatibility backfill, dual-write, and controlled InvoiceLine read authority are verified on disposable test databases. Protected local-SQLite parity has not been audited, adjustment/discount participation remains deferred, and owner-facing invoice detail/utility entry remains incomplete.
 - Account onboarding, invitation, recovery, and lifecycle are incomplete.
 - Deployment, media, backup, CI, and broader workflow test coverage remain incomplete.
 - Legacy HOSTELLO apps remain installed and intentionally isolated.

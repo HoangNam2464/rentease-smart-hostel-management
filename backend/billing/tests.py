@@ -22,7 +22,7 @@ from .models import (
     PriceConfig,
     ServiceDefinition,
 )
-from .services import generate_invoice, record_payment
+from .services import generate_invoice, record_payment, validated_compatibility_line_total
 
 
 class BillingInvariantTests(TestCase):
@@ -307,6 +307,146 @@ class BillingInvariantTests(TestCase):
                 'unit_price',
                 'amount',
             )),
+            original_lines,
+        )
+
+    def test_recalculation_reads_validated_lines_and_defers_noncompatibility_lines(self):
+        invoice = self.create_invoice()
+        detail = InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        InvoiceLine.objects.create(
+            invoice=invoice,
+            line_code='future-adjustment',
+            line_type=InvoiceLine.TYPE_ADJUSTMENT,
+            direction=InvoiceLine.DIRECTION_CHARGE,
+            description='Deferred adjustment',
+            amount=Decimal('250000.00'),
+        )
+        InvoiceLine.objects.create(
+            invoice=invoice,
+            line_code='future-discount',
+            line_type=InvoiceLine.TYPE_DISCOUNT,
+            direction=InvoiceLine.DIRECTION_CREDIT,
+            description='Deferred discount',
+            amount=Decimal('100000.00'),
+        )
+
+        self.assertEqual(
+            validated_compatibility_line_total(invoice, detail=detail),
+            Decimal('5215000.00'),
+        )
+        invoice.recalculate_totals()
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.total_amount, Decimal('5215000.00'))
+        self.assertEqual(invoice.remaining_amount, Decimal('5215000.00'))
+
+    def test_recalculation_fails_closed_when_a_compatibility_line_is_missing(self):
+        invoice = self.create_invoice()
+        InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        InvoiceLine.objects.filter(invoice=invoice, line_code='legacy-water').delete()
+
+        with self.assertRaises(ValidationError):
+            invoice.recalculate_totals()
+
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.total_amount, Decimal('5215000.00'))
+        self.assertEqual(invoice.remaining_amount, Decimal('5215000.00'))
+
+    def test_recalculation_fails_closed_on_line_snapshot_or_header_variance(self):
+        invoice = self.create_invoice()
+        InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        InvoiceLine.objects.filter(invoice=invoice, line_code='legacy-service').update(
+            amount=Decimal('150001.00'),
+        )
+        with self.assertRaises(ValidationError):
+            invoice.recalculate_totals()
+
+        InvoiceLine.objects.filter(invoice=invoice, line_code='legacy-service').update(
+            amount=Decimal('150000.00'),
+        )
+        Invoice.objects.filter(pk=invoice.pk).update(total_amount=Decimal('5215001.00'))
+        invoice.refresh_from_db()
+        with self.assertRaises(ValidationError):
+            invoice.recalculate_totals()
+
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.total_amount, Decimal('5215001.00'))
+
+    def test_payment_create_and_delete_roll_back_when_line_validation_fails(self):
+        invoice = self.create_invoice()
+        InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        InvoiceLine.objects.filter(invoice=invoice, line_code='legacy-water').delete()
+
+        with self.assertRaises(ValidationError):
+            PaymentHistory.objects.create(invoice=invoice, amount=Decimal('1000000.00'))
+        self.assertFalse(PaymentHistory.objects.filter(invoice=invoice).exists())
+
+        InvoiceDetail.objects.get(invoice=invoice).save()
+        payment = PaymentHistory.objects.create(invoice=invoice, amount=Decimal('1000000.00'))
+        payment_pk = payment.pk
+        InvoiceLine.objects.filter(invoice=invoice, line_code='legacy-water').delete()
+        with self.assertRaises(ValidationError):
+            payment.delete()
+        self.assertTrue(PaymentHistory.objects.filter(pk=payment_pk).exists())
+
+    def test_detail_update_rolls_back_if_validated_line_total_would_be_overpaid(self):
+        invoice = self.create_invoice()
+        detail = InvoiceDetail.objects.create(
+            invoice=invoice,
+            electricity_start=100,
+            electricity_end=110,
+            water_start=20,
+            water_end=22,
+        )
+        PaymentHistory.objects.create(invoice=invoice, amount=Decimal('5100000.00'))
+        original_lines = list(
+            InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+                'line_code', 'quantity', 'unit_price', 'amount'
+            )
+        )
+        PriceConfig.objects.filter(pk=self.price_config.pk).update(
+            electricity_unit_price=Decimal('0.00'),
+            water_unit_price=Decimal('0.00'),
+            service_fee=Decimal('0.00'),
+        )
+
+        with self.assertRaises(ValidationError):
+            detail.save()
+
+        detail.refresh_from_db()
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.total_amount, Decimal('5215000.00'))
+        self.assertEqual(invoice.paid_amount, Decimal('5100000.00'))
+        self.assertEqual(detail.service_amount, Decimal('150000.00'))
+        self.assertEqual(
+            list(
+                InvoiceLine.objects.filter(invoice=invoice).order_by('pk').values_list(
+                    'line_code', 'quantity', 'unit_price', 'amount'
+                )
+            ),
             original_lines,
         )
 

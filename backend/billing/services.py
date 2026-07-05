@@ -65,6 +65,52 @@ def _compatibility_line_values(detail):
     }
 
 
+def validated_compatibility_line_total(invoice, *, detail=None):
+    detail = detail or getattr(invoice, 'detail', None)
+    if detail is None or not detail.pk or detail.invoice_id != invoice.pk:
+        raise ValidationError('Invoice must have a matching saved InvoiceDetail before line totals can be read.')
+
+    lines = list(
+        InvoiceLine.objects.filter(
+            invoice_id=invoice.pk,
+            line_code__in=COMPATIBILITY_LINE_CODES,
+        ).order_by('sort_order', 'line_code', 'pk')
+    )
+    if len(lines) != len(COMPATIBILITY_LINE_SPECS):
+        raise ValidationError('Invoice compatibility-line count is not exactly four.')
+
+    lines_by_code = {line.line_code: line for line in lines}
+    if set(lines_by_code) != set(COMPATIBILITY_LINE_CODES):
+        raise ValidationError('Invoice compatibility-line codes are incomplete or duplicated.')
+
+    expected_values = _compatibility_line_values(detail)
+    for spec in COMPATIBILITY_LINE_SPECS:
+        line = lines_by_code[spec['line_code']]
+        values = expected_values[spec['line_code']]
+        if line.legacy_detail_id != detail.pk:
+            raise ValidationError(
+                f'Compatibility line {line.line_code} is not owned by the matching InvoiceDetail.'
+            )
+        if line.line_type != spec['line_type'] or line.direction != InvoiceLine.DIRECTION_CHARGE:
+            raise ValidationError(f'Compatibility line {line.line_code} has conflicting financial semantics.')
+        if line.service_definition_id is not None or line.meter_reading_id is not None:
+            raise ValidationError(f'Compatibility line {line.line_code} has an unexpected source relationship.')
+        if (
+            line.quantity != values['quantity']
+            or line.unit_price != values['unit_price']
+            or line.amount != values['amount']
+        ):
+            raise ValidationError(f'Compatibility line {line.line_code} does not match its snapshot values.')
+
+    line_total = sum(
+        (lines_by_code[spec['line_code']].signed_amount for spec in COMPATIBILITY_LINE_SPECS),
+        Decimal('0.00'),
+    )
+    if line_total != detail.total_line_amount:
+        raise ValidationError('Invoice compatibility-line total does not match its snapshot total.')
+    return line_total
+
+
 @transaction.atomic
 def synchronize_compatibility_lines(detail):
     if not detail.pk or not detail.invoice_id:
@@ -108,21 +154,7 @@ def synchronize_compatibility_lines(detail):
             },
         )
 
-    synchronized_lines = list(
-        InvoiceLine.objects.filter(
-            invoice_id=detail.invoice_id,
-            line_code__in=COMPATIBILITY_LINE_CODES,
-        ).order_by('sort_order')
-    )
-    if len(synchronized_lines) != len(COMPATIBILITY_LINE_SPECS):
-        raise ValidationError('InvoiceDetail compatibility-line count is not exactly four.')
-    if any(line.legacy_detail_id != detail.pk for line in synchronized_lines):
-        raise ValidationError('InvoiceDetail compatibility-line ownership is inconsistent.')
-
-    line_total = sum((line.signed_amount for line in synchronized_lines), Decimal('0.00'))
-    if line_total != detail.total_line_amount:
-        raise ValidationError('InvoiceDetail compatibility-line total does not match its snapshot total.')
-    return line_total
+    return validated_compatibility_line_total(detail.invoice, detail=detail)
 
 
 @transaction.atomic
