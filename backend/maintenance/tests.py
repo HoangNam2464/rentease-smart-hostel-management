@@ -85,3 +85,94 @@ class MaintenanceRelationshipInvariantTests(TestCase):
                 message="Must not be persisted",
                 notification_type=Notification.TYPE_INVOICE,
             )
+
+from django.utils import timezone
+from datetime import timedelta
+from .models import MaintenanceRecord
+
+class MaintenanceRecordLifecycleTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        owner_user = get_user_model().objects.create_user(
+            username="maintenance_owner",
+            password="local-test-password",
+            user_type="OWNER",
+        )
+        owner = UserProfile.objects.create(user=owner_user, full_name="Maintenance Owner")
+        property_record = Property.objects.create(
+            owner=owner,
+            property_code="MAINTENANCE-PROP",
+            name="Maintenance Prop",
+        )
+        cls.room1 = Room.objects.create(
+            owner=owner,
+            property=property_record,
+            room_code="RM-1",
+            room_name="Room 1",
+            default_rent="5000000.00",
+        )
+        cls.room2 = Room.objects.create(
+            owner=owner,
+            property=property_record,
+            room_code="RM-2",
+            room_name="Room 2",
+            default_rent="5000000.00",
+        )
+        cls.repair_request1 = RepairRequest.objects.create(
+            room=cls.room1,
+            title="Fix AC",
+            description="AC is not cooling.",
+            priority=RepairRequest.PRIORITY_MEDIUM,
+            status=RepairRequest.STATUS_PENDING,
+        )
+
+    def test_repair_request_room_mismatch(self):
+        record = MaintenanceRecord(
+            room=self.room2,
+            repair_request=self.repair_request1,
+            maintenance_type="AC Repair",
+            description="Test description",
+            status=MaintenanceRecord.STATUS_SCHEDULED,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            record.clean()
+        self.assertIn('repair_request', ctx.exception.error_dict)
+
+    def test_completed_requires_completed_at(self):
+        record = MaintenanceRecord(
+            room=self.room1,
+            maintenance_type="AC Repair",
+            description="Test description",
+            status=MaintenanceRecord.STATUS_COMPLETED,
+            completed_at=None,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            record.clean()
+        self.assertIn('completed_at', ctx.exception.error_dict)
+
+    def test_completed_at_cannot_be_before_started_at(self):
+        now = timezone.now()
+        record = MaintenanceRecord(
+            room=self.room1,
+            maintenance_type="AC Repair",
+            description="Test description",
+            status=MaintenanceRecord.STATUS_COMPLETED,
+            started_at=now,
+            completed_at=now - timedelta(hours=1),
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            record.clean()
+        self.assertIn('completed_at', ctx.exception.error_dict)
+
+    def test_valid_completed_record(self):
+        now = timezone.now()
+        record = MaintenanceRecord(
+            room=self.room1,
+            maintenance_type="AC Repair",
+            description="Test description",
+            status=MaintenanceRecord.STATUS_COMPLETED,
+            started_at=now - timedelta(hours=1),
+            completed_at=now,
+        )
+        # Should not raise
+        record.clean()

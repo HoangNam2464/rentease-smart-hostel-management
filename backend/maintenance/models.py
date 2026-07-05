@@ -118,7 +118,10 @@ class MaintenanceRecord(models.Model):
     )
     vendor_name = models.CharField(max_length=150, blank=True)
     performed_by = models.CharField(max_length=150, blank=True)
-    performed_date = models.DateField()
+    performed_date = models.DateField(null=True, blank=True)
+    scheduled_for = models.DateField(null=True, blank=True)
+    started_at = models.DateTimeField(null=True, blank=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_SCHEDULED)
     note = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -126,13 +129,13 @@ class MaintenanceRecord(models.Model):
 
     class Meta:
         db_table = 'bao_tri'
-        ordering = ['-performed_date', '-created_at']
+        ordering = ['-scheduled_for', '-created_at']
         verbose_name = 'Maintenance Record'
         verbose_name_plural = 'Maintenance Records'
         indexes = [
             models.Index(fields=['status']),
             models.Index(fields=['maintenance_type']),
-            models.Index(fields=['performed_date']),
+            models.Index(fields=['scheduled_for']),
             models.Index(fields=['room']),
         ]
 
@@ -142,6 +145,12 @@ class MaintenanceRecord(models.Model):
     def clean(self):
         if self.repair_request_id and self.room_id and self.repair_request.room_id != self.room_id:
             raise ValidationError({'repair_request': 'Repair request room must match maintenance room.'})
+            
+        if self.status == self.STATUS_COMPLETED and not self.completed_at:
+            raise ValidationError({'completed_at': 'Maintenance record must have a completion time when status is completed.'})
+            
+        if self.completed_at and self.started_at and self.completed_at < self.started_at:
+            raise ValidationError({'completed_at': 'Completion time cannot be before start time.'})
 
     def save(self, *args, **kwargs):
         self.full_clean()

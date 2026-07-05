@@ -44,7 +44,8 @@ class MaintenanceRecordAdmin(admin.ModelAdmin):
         'vendor_name',
         'status',
         'cost',
-        'performed_date',
+        'scheduled_for',
+        'completed_at',
         'performed_by',
     ]
     search_fields = [
@@ -54,7 +55,7 @@ class MaintenanceRecordAdmin(admin.ModelAdmin):
         'vendor_name',
         'performed_by',
     ]
-    list_filter = ['status', 'maintenance_type', 'performed_date']
+    list_filter = ['status', 'maintenance_type', 'scheduled_for', 'completed_at']
     readonly_fields = ['created_at', 'updated_at']
     list_select_related = ['room', 'repair_request']
 

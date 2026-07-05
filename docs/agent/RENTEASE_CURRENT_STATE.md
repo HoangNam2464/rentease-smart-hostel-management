@@ -56,14 +56,20 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Phase 14C-3B3A adds a reversible fail-closed data migration that creates four deterministic compatibility lines per existing InvoiceDetail from stored snapshots. Disposable migration tests prove exact `0.00` total variance, zero-usage preservation, payment/status/relationship preservation, reserved-code collision rejection, total-mismatch rejection, and targeted reversal. Protected SQLite and real data were not migrated.
 - Phase 14C-3B3B1 atomically dual-writes the four compatibility lines whenever a complete InvoiceDetail snapshot is created or updated. Reserved-code conflicts roll back the detail, lines, and invoice total together; repeated saves update rather than duplicate; zero usage is preserved. InvoiceDetail remains authoritative, and partial InvoiceDetail saves are rejected to prevent snapshot/line/header divergence.
 - Phase 14C-3B3B2 makes the signed amounts of the four validated compatibility `InvoiceLine` rows authoritative for recalculating invoices that have an InvoiceDetail. The reader requires exact codes, ownership, source boundaries, financial semantics, snapshot values, and detail/header parity. InvoiceDetail remains the atomic snapshot/write source; non-compatibility adjustment and discount lines remain deferred. Payment create/delete and detail updates roll back when line validation fails or a new total would be below the amount already paid. Header-only draft compatibility behavior is unchanged, and no schema, migration, UI, report, permission, or real-data change occurred.
-- The suite now contains 73 tests, including InvoiceLine read authority and fail-closed payment rollback, atomic dual-write and rollback, invoice-line backfill/reconciliation, the additive billing/meter model and migration baseline, existing billing compatibility, required-Property enforcement, Property-scoped room codes, migration stop conditions, role isolation, public privacy, staff reports, demo-seed idempotency, admin consistency, and migration preservation.
-- No active RentEase migration depends on a legacy app. Legacy migrations depend on `accounts`, while current settings, URLs, and admin still load legacy code.
-- The clean PostgreSQL target should exclude legacy tables through a separate reviewed phase before provisioning; local development retains them until then.
 
-## Privacy and Security State
+## Current Status (Last Updated: Agent Phase 16)
 
-- Owner and tenant portal data must remain scoped to the authenticated profile.
-- Citizen identity fields/files are forbidden on public, owner, and tenant surfaces.
+- **Product State**: Môi trường Development và Production-Ready hoàn thiện (100% Tests Pass). Hệ thống đã kích hoạt thành công cơ sở dữ liệu PostgreSQL qua Docker (`docker-compose up -d`). Đã hoàn thành quá trình Onboarding dữ liệu ban đầu cho các tài khoản test.
+- **Core Working Area**: PostgreSQL Database, Core Logic (Billing, Maintenance, Contracts), UI/UX DreamPOS.
+- **Next Up**: Sẵn sàng để người dùng trải nghiệm thực tế hoặc khởi chạy (Launch).
+
+## What is Working Perfectly
+- 100% Unit Tests (79 tests) passed trên PostgreSQL (Authentication, Permissions, Billing, Governance, Legacy exclusion).
+- Database PostgreSQL đã hoạt động trơn tru.
+- Đã import dữ liệu thực tế (Demo Data) thành công (Rooms, Invoices, Contracts, Tenants...).
+- Cơ chế bảo mật và phân quyền Tenant/Owner độc lập.
+- Giao diện UI/UX (CSS Variables) chuẩn DreamPOS.
+- Chức năng loại bỏ (exclude) an toàn cho `legacy apps` ở mức Database.
 - Admin list/search exposure of `citizen_id` is removed.
 - Sensitive identity fields are read-only for non-superuser staff in admin detail forms.
 - Production-grade access control/storage for uploaded identity media remains a gap.

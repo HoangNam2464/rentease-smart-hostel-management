@@ -34,7 +34,7 @@
   <h2>Bảo trì đã hoàn thành</h2>
   <div class="report-table-wrap">
     <table class="report-table">
-      <thead><tr><th>Loại bảo trì</th><th>Phòng</th><th>Nhà cung cấp</th><th>Chi phí</th><th>Ngày thực hiện</th></tr></thead>
+      <thead><tr><th>Loại bảo trì</th><th>Phòng</th><th>Nhà cung cấp</th><th>Chi phí</th><th>Hoàn thành lúc</th></tr></thead>
       <tbody>
         {% for record in completed_maintenance_records %}
         <tr>
@@ -42,7 +42,7 @@
           <td>{{ record.room.room_code }}</td>
           <td>{{ record.vendor_name|default:"-" }}</td>
           <td>{{ record.cost }}</td>
-          <td>{{ record.performed_date }}</td>
+          <td>{{ record.completed_at }}</td>
         </tr>
         {% empty %}
         <tr><td class="empty-report-row" colspan="5">Không có bản ghi bảo trì đã hoàn thành.</td></tr>

@@ -128,7 +128,7 @@ def maintenance_report():
         'pending_repair_requests': RepairRequest.objects.select_related('room', 'tenant').filter(
             status=RepairRequest.STATUS_PENDING,
         ).order_by('-requested_at'),
-        'completed_maintenance_records': completed_records.select_related('room', 'repair_request').order_by('-performed_date'),
+        'completed_maintenance_records': completed_records.select_related('room', 'repair_request').order_by('-completed_at'),
         'maintenance_cost_summary': money_sum(completed_records, 'cost'),
     }
 

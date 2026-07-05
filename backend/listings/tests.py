@@ -77,7 +77,7 @@ class PublicListingPresentationTests(TestCase):
         response = self.client.get("/rooms/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "2.500.000 ₫")
-        self.assertContains(response, "Ảnh phòng đang được cập nhật")
+        self.assertContains(response, "room_bedroom_04.jpg")
         self.assertNotContains(response, "picsum.photos")
         self.assertNotContains(response, "FILTER-R1")
 

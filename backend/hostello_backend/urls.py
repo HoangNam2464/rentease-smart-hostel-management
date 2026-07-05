@@ -2,8 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-# from fees.admin import FeesAdminSite
-from fees import admin as fees_admin 
 from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
@@ -11,12 +9,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("rooms/", include("listings.urls")),
     path('', include('portal.urls')),
-    path('legacy/', include('students.urls')),
     path("reports/", include("reports.urls")),
     path("accounts/login/", RedirectView.as_view(url="/login/", permanent=False))
-    
-    
 ]
+
+if getattr(settings, 'INCLUDE_LEGACY_APPS', False):
+    from fees import admin as fees_admin 
+    urlpatterns += [
+        path('legacy/', include('students.urls')),
+    ]
 
 # Serve media files in development
 if settings.DEBUG:

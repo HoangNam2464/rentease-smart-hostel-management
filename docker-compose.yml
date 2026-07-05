@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: rentease_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: rentease_db
+      POSTGRES_USER: rentease_user
+      POSTGRES_PASSWORD: rentease_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - rentease_pgdata:/var/lib/postgresql/data
+
+volumes:
+  rentease_pgdata:

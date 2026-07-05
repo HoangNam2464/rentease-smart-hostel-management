@@ -61,7 +61,9 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 ]
 
-LOCAL_APPS = [
+INCLUDE_LEGACY_APPS = config('INCLUDE_LEGACY_APPS', default=False, cast=bool)
+
+RENTEASE_APPS = [
     'accounts',
     'properties',
     'tenants',
@@ -71,12 +73,20 @@ LOCAL_APPS = [
     'listings',
     'reports',
     'portal',
+    'governance',
+]
+
+LEGACY_APPS = [
     'students',
     'attendance',
     'requests',
     'fees',
     'notices',
 ]
+
+LOCAL_APPS = RENTEASE_APPS
+if INCLUDE_LEGACY_APPS:
+    LOCAL_APPS += LEGACY_APPS
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -120,9 +130,11 @@ WSGI_APPLICATION = 'hostello_backend.wsgi.application'
 # Uses DATABASE_URL env var if available (e.g. postgres://user:pass@host/db).
 # Falls back to SQLite for local development.
 
+DATABASE_URL = config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+    'default': dj_database_url.parse(
+        DATABASE_URL,
         conn_max_age=600,
     )
 }
