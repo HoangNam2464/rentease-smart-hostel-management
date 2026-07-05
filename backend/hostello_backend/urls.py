@@ -8,6 +8,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('admin/', admin.site.urls),
     path("rooms/", include("listings.urls")),
+    path("api/billing/", include("billing.api.urls")),
     path('', include('portal.urls')),
     path("reports/", include("reports.urls")),
     path("accounts/login/", RedirectView.as_view(url="/login/", permanent=False))

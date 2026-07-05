@@ -751,10 +751,12 @@ def owner_invoice_detail(request, pk):
 
     invoice = get_object_or_404(owner_invoices_queryset(profile), pk=pk)
     payments = owner_payments_queryset(profile).filter(invoice=invoice).order_by('-paid_at', '-created_at')
+    payment_intents = invoice.payment_intents.filter(status__in=['pending', 'review']).order_by('-created_at')
     return render(request, 'portal/owner_invoice_detail.html', {
         'profile': profile,
         'invoice': invoice,
         'payments': payments,
+        'payment_intents': payment_intents,
     })
 
 
@@ -1178,3 +1180,61 @@ def tenant_notification_detail(request, pk):
 
 def access_denied(request):
     return render(request, 'portal/access_denied.html', status=403)
+
+
+import time
+from billing.models import PaymentIntent, Invoice
+from billing.gateways.payos_adapter import PayOSGateway
+
+@tenant_required
+def tenant_invoice_payos_checkout(request, pk):
+    tenant = get_tenant_profile(request.user)
+    if not tenant:
+        return render_missing_tenant_profile(request)
+
+    invoice = get_object_or_404(tenant_invoices_queryset(tenant), pk=pk)
+    
+    if invoice.status == Invoice.STATUS_PAID:
+        messages.error(request, 'Hóa đơn đã được thanh toán.')
+        return redirect('portal:tenant_invoice_detail', pk=invoice.pk)
+
+    if request.method == 'POST':
+        amount = invoice.remaining_amount
+        if amount <= 0:
+            return redirect('portal:tenant_invoice_detail', pk=invoice.pk)
+
+        # Generate unique order code < 53-bit
+        order_code = int(f"{invoice.pk}{int(time.time())}")
+        
+        # Build URLs
+        domain = request.build_absolute_uri('/')[:-1] 
+        return_url = f"{domain}/tenant/invoices/{invoice.pk}/"
+        cancel_url = f"{domain}/tenant/invoices/{invoice.pk}/"
+        
+        gateway = PayOSGateway()
+        try:
+            payment_data = gateway.create_payment_link(
+                order_code=order_code,
+                amount=int(amount),
+                description=f"HD {invoice.invoice_code}",
+                return_url=return_url,
+                cancel_url=cancel_url
+            )
+            
+            PaymentIntent.objects.create(
+                invoice=invoice,
+                provider='payos',
+                amount=amount,
+                order_code=str(order_code),
+                payment_link_id=payment_data.get('paymentLinkId', ''),
+                status=PaymentIntent.STATUS_PENDING
+            )
+            
+            checkout_url = payment_data.get('checkoutUrl')
+            if checkout_url:
+                return redirect(checkout_url)
+        except Exception as e:
+            messages.error(request, f"Lỗi kết nối cổng thanh toán: {str(e)}")
+            return redirect('portal:tenant_invoice_detail', pk=invoice.pk)
+
+    return redirect('portal:tenant_invoice_detail', pk=invoice.pk)

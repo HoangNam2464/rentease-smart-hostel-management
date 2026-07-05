@@ -125,6 +125,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'hostello_backend.wsgi.application'
 
 # =============================================================================
+# PAYOS CONFIGURATION
+# =============================================================================
+
+PAYOS_CLIENT_ID = config('PAYOS_CLIENT_ID', default='')
+PAYOS_API_KEY = config('PAYOS_API_KEY', default='')
+PAYOS_CHECKSUM_KEY = config('PAYOS_CHECKSUM_KEY', default='')
+
+# =============================================================================
 # DATABASE
 # =============================================================================
 # Uses DATABASE_URL env var if available (e.g. postgres://user:pass@host/db).

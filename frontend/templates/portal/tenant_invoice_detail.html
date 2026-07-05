@@ -22,6 +22,12 @@
             <li><span>Trạng thái</span><strong><span class="status-badge {% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% endif %}">{{ invoice.get_status_display }}</span></strong></li>
         </ul>
         <div class="page-actions">
+            {% if invoice.remaining_amount > 0 and invoice.status != 'cancelled' %}
+            <form method="POST" action="{% url 'portal:tenant_invoice_payos_checkout' invoice.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="button cta"><i class="bi bi-qr-code-scan"></i> Thanh toán VietQR</button>
+            </form>
+            {% endif %}
             <a class="button" href="{% url 'portal:tenant_invoices_list' %}">Quay lại hóa đơn</a>
             <a class="button ghost" href="{% url 'portal:tenant_payments_list' %}">Xem lịch sử thanh toán</a>
         </div>

@@ -65,6 +65,33 @@
     </div>
 </section>
 
+{% if payment_intents %}
+<section class="section resource-section" aria-labelledby="payment-intents-title">
+    <div class="toolbar resource-section-toolbar">
+        <div><p class="resource-list-kicker">Cổng thanh toán</p><h2 id="payment-intents-title">Giao dịch QR đang chờ</h2><p>Các khoản thanh toán qua PayOS đang chờ quét hoặc cần kiểm tra.</p></div>
+    </div>
+    <div class="card resource-card">
+        <div class="table-wrap resource-table financial-table">
+            <table class="data-table">
+                <thead><tr><th>Mã giao dịch</th><th>Số tiền</th><th>Trạng thái</th><th>Hết hạn lúc</th></tr></thead>
+                <tbody>
+                    {% for intent in payment_intents %}
+                        <tr>
+                            <td><strong>{{ intent.order_code }}</strong></td>
+                            <td><strong class="money-value">{{ intent.amount|vnd }}</strong></td>
+                            <td>
+                                <span class="badge badge-{% if intent.status == 'review' %}danger{% else %}warning{% endif %}">{{ intent.get_status_display }}</span>
+                            </td>
+                            <td>{{ intent.expires_at|date:"d/m/Y H:i"|default:"-" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <section class="section resource-section" aria-labelledby="payment-history-title">
     <div class="toolbar resource-section-toolbar">
         <div><p class="resource-list-kicker">Đối soát</p><h2 id="payment-history-title">Lịch sử thanh toán</h2><p>Các khoản đã được ghi nhận cho hóa đơn này.</p></div>

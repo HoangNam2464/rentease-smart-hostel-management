@@ -619,3 +619,57 @@ class PaymentHistory(models.Model):
             result = super().delete(*args, **kwargs)
             invoice.recalculate_totals()
             return result
+
+
+class PaymentIntent(models.Model):
+    STATUS_PENDING = 'pending'
+    STATUS_PAID = 'paid'
+    STATUS_CANCELLED = 'cancelled'
+    STATUS_EXPIRED = 'expired'
+    STATUS_FAILED = 'failed'
+    STATUS_REVIEW = 'review'
+
+    STATUS_CHOICES = (
+        (STATUS_PENDING, 'Pending'),
+        (STATUS_PAID, 'Paid'),
+        (STATUS_CANCELLED, 'Cancelled'),
+        (STATUS_EXPIRED, 'Expired'),
+        (STATUS_FAILED, 'Failed'),
+        (STATUS_REVIEW, 'Review Needed'),
+    )
+
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='payment_intents')
+    provider = models.CharField(max_length=50, default='payos')
+    amount = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+    order_code = models.CharField(max_length=100, unique=True)
+    payment_link_id = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    payment_history = models.OneToOneField(
+        PaymentHistory, on_delete=models.SET_NULL, null=True, blank=True, related_name='payment_intent'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'payment_intent'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.order_code} - {self.get_status_display()}'
+
+
+class PaymentWebhookEvent(models.Model):
+    provider = models.CharField(max_length=50, default='payos')
+    order_code = models.CharField(max_length=100, db_index=True)
+    event_name = models.CharField(max_length=100)
+    payload = models.JSONField()
+    is_processed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'payment_webhook_event'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.event_name} - {self.order_code}'
