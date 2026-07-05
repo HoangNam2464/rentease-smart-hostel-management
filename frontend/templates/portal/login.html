@@ -8,58 +8,454 @@
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        body { background: var(--re-bg-soft); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .login-wrap { width: 100%; max-width: 420px; padding: 16px; }
-        .login-brand { text-align: center; margin-bottom: 28px; }
-        .login-brand-mark {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 52px; height: 52px; border-radius: 12px;
-            background: var(--re-primary); color: #fff;
-            font-size: 1.6rem; font-weight: 900; margin-bottom: 12px;
+        /* ── Reset ───────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f0f5f3;
+            display: flex;
+            align-items: stretch;
+            -webkit-font-smoothing: antialiased;
         }
-        .login-brand h1 { font-size: 1.6rem; font-weight: 900; color: var(--re-heading); margin: 0; }
-        .login-brand p { color: var(--re-muted); margin: 4px 0 0; font-size: 0.92rem; }
-        .login-card { background: var(--re-card-bg); border: 1px solid var(--re-card-border); border-radius: 12px; padding: 32px 28px; }
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; font-weight: 700; font-size: 0.88rem; color: var(--re-heading); margin-bottom: 7px; }
-        .form-group label .bi { margin-right: 6px; color: var(--re-primary); }
-        .form-group input { width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1.5px solid var(--re-card-border); border-radius: 10px; font-family: inherit; font-size: 0.95rem; color: var(--re-text); background: var(--re-bg); transition: border-color 0.15s; }
-        .form-group input:focus { outline: none; border-color: var(--re-primary); box-shadow: 0 0 0 3px var(--re-primary-soft); }
-        .login-btn { width: 100%; padding: 13px; border: none; border-radius: 8px; background: var(--re-primary); color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.01em; transition: background 0.15s; }
-        .login-btn:hover { background: var(--re-primary-dark); }
-        .login-footer { text-align: center; margin-top: 20px; color: var(--re-muted); font-size: 0.88rem; }
-        .login-footer a { color: var(--re-primary); font-weight: 600; text-decoration: none; }
-        .login-footer a:hover { text-decoration: underline; }
-        .error-list { background: var(--re-danger-soft); border: 1px solid var(--re-danger); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; color: var(--re-danger); font-size: 0.9rem; }
-        .error-list ul { margin: 0; padding-left: 18px; }
-        .login-note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--re-card-border); color: var(--re-muted); font-size: 0.82rem; line-height: 1.55; }
+
+        /* ── Shell ───────────────────────────────────────── */
+        .login-shell {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* ── LEFT BRAND PANEL ────────────────────────────── */
+        .login-brand-panel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 52px;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(87, 217, 197, 0.18), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.14), transparent 50%),
+                linear-gradient(160deg, #0c2f2b 0%, #103b36 40%, #0e2d4a 100%);
+            overflow: hidden;
+        }
+
+        .login-brand-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.022'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .login-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            flex-shrink: 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .login-brand-name {
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .login-brand-tagline {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        /* ── Central hero copy ───────────────────────────── */
+        .login-hero {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .login-hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 20px;
+            padding: 6px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            width: fit-content;
+        }
+
+        .login-hero h1 {
+            margin: 0 0 18px;
+            color: #ffffff;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+        }
+
+        .login-hero h1 em {
+            font-style: normal;
+            color: #5ddeca;
+        }
+
+        .login-hero p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 0.96rem;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        /* ── Feature bullets ─────────────────────────────── */
+        .login-features {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .login-feature-item {
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+        }
+
+        .login-feature-item i {
+            display: block;
+            font-size: 1.2rem;
+            color: #5ddeca;
+            margin-bottom: 10px;
+        }
+
+        .login-feature-item strong {
+            display: block;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .login-feature-item span {
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 0.72rem;
+            line-height: 1.45;
+        }
+
+        /* ── RIGHT FORM PANEL ────────────────────────────── */
+        .login-form-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+            padding: 52px 48px;
+            border-left: 1px solid #e5eeeb;
+        }
+
+        .login-form-header {
+            margin-bottom: 32px;
+        }
+
+        .login-form-header h2 {
+            margin: 0 0 6px;
+            color: #16221f;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .login-form-header p {
+            margin: 0;
+            color: #62706b;
+            font-size: 0.88rem;
+        }
+
+        /* ── Form groups ─────────────────────────────────── */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: #16221f;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .bi {
+            color: var(--re-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #dce5e2;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: #17212b;
+            background: #fafcfb;
+            transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--re-primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+        }
+
+        .form-field-error {
+            margin-top: 6px;
+            color: var(--re-danger);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* ── Error messages ──────────────────────────────── */
+        .error-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(194, 65, 53, 0.3);
+            border-radius: 10px;
+            background: var(--re-danger-soft);
+            color: var(--re-danger);
+            font-size: 0.875rem;
+        }
+
+        .success-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(21, 128, 61, 0.25);
+            border-radius: 10px;
+            background: var(--re-success-soft);
+            color: var(--re-success);
+            font-size: 0.875rem;
+        }
+
+        /* ── Submit button ───────────────────────────────── */
+        .login-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 6px;
+            border: none;
+            border-radius: 10px;
+            background: var(--re-primary);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.96rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+            transition: background 0.15s, box-shadow 0.15s, transform 0.12s;
+            box-shadow: 0 2px 8px rgba(15, 95, 89, 0.22);
+        }
+
+        .login-submit:hover {
+            background: var(--re-primary-dark);
+            box-shadow: 0 4px 14px rgba(15, 95, 89, 0.28);
+            transform: translateY(-1px);
+        }
+
+        .login-submit:active {
+            transform: translateY(0);
+        }
+
+        /* ── Footer links ────────────────────────────────── */
+        .login-form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #eef3f1;
+        }
+
+        .login-form-footer a {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #627386;
+            font-size: 0.83rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.14s;
+        }
+
+        .login-form-footer a:hover {
+            color: var(--re-primary);
+        }
+
+        .login-form-footer .sep {
+            color: #dce5e2;
+        }
+
+        /* ── Login note ──────────────────────────────────── */
+        .login-note {
+            margin-top: 20px;
+            padding: 13px 14px;
+            border: 1px solid #dce5e2;
+            border-radius: 10px;
+            background: #f4f6f5;
+            color: #627386;
+            font-size: 0.8rem;
+            line-height: 1.55;
+        }
+
+        /* ── Responsive ──────────────────────────────────── */
+        @media (max-width: 860px) {
+            .login-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .login-brand-panel {
+                padding: 32px 28px;
+                min-height: auto;
+            }
+
+            .login-hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .login-features {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .login-hero {
+                padding: 28px 0;
+            }
+
+            .login-form-panel {
+                padding: 40px 28px 48px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .login-features {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .login-brand-panel {
+                padding: 24px 20px;
+            }
+
+            .login-form-panel {
+                padding: 32px 20px 40px;
+            }
+
+            .login-hero {
+                padding: 20px 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="login-wrap">
+    <div class="login-shell">
 
-        <div class="login-brand">
-            <div class="login-brand-mark">R</div>
-            <h1>RentEase</h1>
-            <p>Hệ thống quản lý nhà trọ</p>
+        <!-- ── LEFT: Brand & hero panel ───────────────────── -->
+        <div class="login-brand-panel">
+            <a class="login-brand-logo" href="/">
+                <div class="login-brand-mark">R</div>
+                <div>
+                    <div class="login-brand-name">RentEase</div>
+                    <div class="login-brand-tagline">Quản lý nhà trọ</div>
+                </div>
+            </a>
+
+            <div class="login-hero">
+                <span class="login-hero-eyebrow">
+                    <i class="bi bi-shield-check" aria-hidden="true"></i>
+                    Hệ thống đã xác thực vai trò
+                </span>
+                <h1>Vận hành nhà trọ<br><em>rõ ràng, gọn việc.</em></h1>
+                <p>Chủ trọ theo dõi phòng, hợp đồng và công nợ. Khách thuê kiểm tra hóa đơn và yêu cầu hỗ trợ. Tất cả trong một màn hình.</p>
+            </div>
+
+            <div class="login-features">
+                <div class="login-feature-item">
+                    <i class="bi bi-buildings" aria-hidden="true"></i>
+                    <strong>Chủ trọ</strong>
+                    <span>Phòng, hợp đồng, hóa đơn, sửa chữa</span>
+                </div>
+                <div class="login-feature-item">
+                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                    <strong>Khách thuê</strong>
+                    <span>Hóa đơn, thanh toán, thông báo</span>
+                </div>
+                <div class="login-feature-item">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <strong>Công khai</strong>
+                    <span>Xem phòng, đặt lịch xem không cần đăng nhập</span>
+                </div>
+            </div>
         </div>
 
-        <div class="login-card">
-            <h2 style="font-size:1.2rem;margin:0 0 20px;color:var(--re-heading);">
-                <i class="bi bi-box-arrow-in-right" style="color:var(--re-primary);margin-right:8px;"></i>Đăng nhập
-            </h2>
+        <!-- ── RIGHT: Form panel ──────────────────────────── -->
+        <div class="login-form-panel">
+            <div class="login-form-header">
+                <h2>Đăng nhập</h2>
+                <p>Nhập tài khoản được cấp bởi quản trị viên.</p>
+            </div>
 
             {% if form.non_field_errors %}
-                <div class="error-list">
-                    <i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i>
-                    {{ form.non_field_errors }}
+                <div class="error-banner" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                    <span>{{ form.non_field_errors|join:", " }}</span>
                 </div>
             {% endif %}
 
             {% if messages %}
                 {% for message in messages %}
-                    <div class="error-list" style="{% if 'success' in message.tags %}background:var(--re-success-soft);border-color:var(--re-success);color:var(--re-success);{% endif %}">
-                        {{ message }}
+                    <div class="{% if 'success' in message.tags %}success-banner{% else %}error-banner{% endif %}" role="alert">
+                        <i class="bi bi-{% if 'success' in message.tags %}check-circle-fill{% else %}exclamation-triangle-fill{% endif %}" aria-hidden="true"></i>
+                        <span>{{ message }}</span>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -72,7 +468,7 @@
 
                 <div class="form-group">
                     <label for="{{ form.username.id_for_label }}">
-                        <i class="bi bi-person"></i>Tên đăng nhập
+                        <i class="bi bi-person" aria-hidden="true"></i>Tên đăng nhập
                     </label>
                     <input
                         type="text"
@@ -83,15 +479,13 @@
                         autocomplete="username"
                         autofocus>
                     {% if form.username.errors %}
-                        <div style="color:var(--re-danger);font-size:0.82rem;margin-top:5px;">
-                            {{ form.username.errors|join:", " }}
-                        </div>
+                        <div class="form-field-error">{{ form.username.errors|join:", " }}</div>
                     {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="{{ form.password.id_for_label }}">
-                        <i class="bi bi-lock"></i>Mật khẩu
+                        <i class="bi bi-lock" aria-hidden="true"></i>Mật khẩu
                     </label>
                     <input
                         type="password"
@@ -100,25 +494,24 @@
                         placeholder="Nhập mật khẩu"
                         autocomplete="current-password">
                     {% if form.password.errors %}
-                        <div style="color:var(--re-danger);font-size:0.82rem;margin-top:5px;">
-                            {{ form.password.errors|join:", " }}
-                        </div>
+                        <div class="form-field-error">{{ form.password.errors|join:", " }}</div>
                     {% endif %}
                 </div>
 
-                <button type="submit" class="login-btn">
-                    <i class="bi bi-arrow-right-circle" style="margin-right:8px;"></i>Đăng nhập
+                <button type="submit" class="login-submit">
+                    <i class="bi bi-arrow-right-circle" aria-hidden="true"></i> Đăng nhập
                 </button>
             </form>
 
             <p class="login-note">Sau khi đăng nhập, hệ thống sẽ tự đưa bạn đến đúng khu vực dành cho chủ trọ, khách thuê hoặc quản trị viên.</p>
+
+            <div class="login-form-footer">
+                <a href="/"><i class="bi bi-arrow-left" aria-hidden="true"></i> Trang chủ</a>
+                <span class="sep">·</span>
+                <a href="/rooms/"><i class="bi bi-search" aria-hidden="true"></i> Xem phòng trống</a>
+            </div>
         </div>
 
-        <div class="login-footer">
-            <a href="/"><i class="bi bi-arrow-left"></i> Quay về trang chủ</a>
-            &nbsp;·&nbsp;
-            <a href="/rooms/"><i class="bi bi-search"></i> Xem phòng trống</a>
-        </div>
     </div>
 </body>
 </html>

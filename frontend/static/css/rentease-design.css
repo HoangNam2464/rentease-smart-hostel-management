@@ -2156,3 +2156,118 @@ body.re-public {
         min-height: 250px;
     }
 }
+
+/* =========================================================
+   UI MODERNIZATION v2 — Listing grid, placeholder, polish
+   ========================================================= */
+
+/* Make the home page work full-width (new home.html layout) */
+body.re-home .home-page,
+body.re-home .re-page.home-page {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* ── Listing grid: 3-column card layout ───────────────── */
+.listing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 4px;
+}
+
+/* ── Listing card improvements ────────────────────────── */
+.listing-card-grounded {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.listing-card-grounded:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(15, 36, 51, 0.10);
+    border-color: rgba(15, 118, 110, 0.22);
+}
+
+.listing-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Listing placeholder: compact, branded ────────────── */
+.listing-media,
+.listing-placeholder-grounded {
+    aspect-ratio: 4 / 3;
+}
+
+.listing-placeholder-grounded {
+    gap: 8px;
+    background: linear-gradient(135deg, #e8f0ee, #d6e6e2);
+    color: #8aada5;
+}
+
+.listing-placeholder-grounded i {
+    font-size: 2.4rem;
+    opacity: 0.55;
+}
+
+.listing-placeholder-grounded span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    opacity: 0.7;
+}
+
+/* ── Listing link hover fix ───────────────────────────── */
+.listing-card-grounded .listing-title a {
+    color: var(--re-heading);
+    text-decoration: none;
+    transition: color 0.14s ease;
+}
+
+.listing-card-grounded .listing-title a:hover {
+    color: var(--re-primary);
+}
+
+/* ── Text link "Xem thông tin và đặt lịch" ────────────── */
+.listing-card-content .text-link {
+    margin-top: auto;
+    padding-top: 2px;
+    font-size: 0.84rem;
+}
+
+/* ── Public listing section header ───────────────────── */
+.public-listing-header h1 {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    letter-spacing: -0.03em;
+}
+
+/* ── Filter bar: compact refinement ──────────────────── */
+.listing-filters {
+    background: #fff;
+    border-color: #e2e8e5;
+    box-shadow: 0 2px 8px rgba(15, 36, 51, 0.04);
+}
+
+/* ── Home page: override .home-page container to full ─── */
+.home-page {
+    max-width: 100%;
+}
+
+/* ── Listing grid responsive ──────────────────────────── */
+@media (max-width: 900px) {
+    .listing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 560px) {
+    .listing-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

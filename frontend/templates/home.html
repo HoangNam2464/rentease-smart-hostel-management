@@ -5,14 +5,462 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentEase - Quản lý nhà trọ rõ ràng, gọn việc</title>
+    <meta name="description" content="RentEase giúp chủ trọ theo dõi phòng, hợp đồng, hóa đơn và sửa chữa. Khách thuê kiểm tra thông tin thuê phòng của mình. Người tìm phòng đặt lịch xem không cần tài khoản.">
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* ── Home page specific overrides ─────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .home-page {
+            padding: 0;
+            max-width: 100%;
+            width: 100%;
+        }
+
+
+        /* ── TOPBAR ──────────────────────────────────────── */
+        .home-topbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--re-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .home-topbar-inner {
+            width: min(var(--re-container), calc(100% - 32px));
+            min-height: 68px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        /* ── HERO ────────────────────────────────────────── */
+        .home-hero {
+            position: relative;
+            padding: 80px 0 72px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 5% 10%, rgba(15, 118, 110, 0.10), transparent 40%),
+                radial-gradient(circle at 95% 85%, rgba(37, 99, 235, 0.08), transparent 40%),
+                linear-gradient(180deg, #fbfcfb 0%, #eef4f2 100%);
+        }
+
+        .home-hero-grid {
+            width: min(var(--re-container), calc(100% - 32px));
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+            gap: 48px;
+            align-items: center;
+        }
+
+
+        .home-hero-copy {}
+
+        .home-hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 20px;
+            padding: 6px 12px;
+            border: 1px solid rgba(15, 118, 110, 0.18);
+            border-radius: 999px;
+            background: var(--re-primary-soft);
+            color: var(--re-primary-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .home-hero-h1 {
+            margin: 0 0 20px;
+            color: var(--re-heading);
+            font-size: clamp(2rem, 4.5vw, 3.4rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 900;
+        }
+
+        .home-hero-h1 em {
+            font-style: normal;
+            color: var(--re-primary);
+        }
+
+        .home-hero-lead {
+            margin: 0 0 32px;
+            color: var(--re-muted);
+            font-size: 1.06rem;
+            line-height: 1.72;
+            max-width: 520px;
+        }
+
+        .home-hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ── Hero stats ──────────────────────────────────── */
+        .home-hero-stats {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-top: 40px;
+            padding-top: 28px;
+            border-top: 1px solid var(--re-border);
+        }
+
+        .home-stat {
+            text-align: left;
+        }
+
+        .home-stat strong {
+            display: block;
+            color: var(--re-heading);
+            font-size: 1.45rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .home-stat span {
+            display: block;
+            margin-top: 3px;
+            color: var(--re-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .home-stat-sep {
+            width: 1px;
+            height: 36px;
+            background: var(--re-border);
+            flex-shrink: 0;
+        }
+
+        /* ── Hero right panel ────────────────────────────── */
+        .home-hero-panel {
+            border: 1px solid var(--re-border);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 20px 60px rgba(15, 36, 51, 0.08);
+            overflow: hidden;
+        }
+
+        .home-hero-panel-header {
+            padding: 22px 24px;
+            background: linear-gradient(135deg, #0f766e, #1d4ed8);
+            color: #fff;
+        }
+
+        .home-hero-panel-header h2 {
+            margin: 0 0 6px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .home-hero-panel-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.85rem;
+            line-height: 1.55;
+        }
+
+        .home-task-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .home-task-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--re-border);
+        }
+
+        .home-task-list li:last-child {
+            border-bottom: 0;
+        }
+
+        .home-task-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 9px;
+            font-size: 0.9rem;
+        }
+
+        .home-task-icon.teal  { background: var(--re-primary-soft); color: var(--re-primary); }
+        .home-task-icon.blue  { background: #e8efff; color: var(--re-blue); }
+        .home-task-icon.amber { background: #fff5db; color: #b7791f; }
+
+        .home-task-list strong {
+            display: block;
+            color: var(--re-heading);
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .home-task-list span {
+            display: block;
+            color: var(--re-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .home-panel-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--re-border);
+            background: var(--re-surface-strong);
+        }
+
+        /* ── SECTION: Public entry ───────────────────────── */
+        .home-public-section {
+            background: #ffffff;
+            border-top: 1px solid var(--re-border);
+            border-bottom: 1px solid var(--re-border);
+        }
+
+        .home-public-inner {
+            width: min(var(--re-container), calc(100% - 32px));
+            margin: 0 auto;
+            padding: 64px 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .home-section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 14px;
+            color: var(--re-primary-dark);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .home-section-eyebrow i { font-size: 0.85rem; }
+
+        .home-public-h2 {
+            margin: 0 0 12px;
+            color: var(--re-heading);
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+        }
+
+        .home-public-desc {
+            margin: 0;
+            color: var(--re-muted);
+            font-size: 0.96rem;
+            line-height: 1.65;
+            max-width: 560px;
+        }
+
+        /* ── SECTION: Roles ──────────────────────────────── */
+        .home-roles-section {
+            padding: 72px 0;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(37, 99, 235, 0.06), transparent 40%),
+                #f4f6f5;
+        }
+
+        .home-roles-inner {
+            width: min(var(--re-container), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .home-roles-heading {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .home-roles-heading h2 {
+            margin: 0 0 10px;
+            color: var(--re-heading);
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .home-roles-heading p {
+            margin: 0;
+            color: var(--re-muted);
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .home-role-cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .home-role-card {
+            padding: 28px 24px;
+            border: 1px solid var(--re-border);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 28px rgba(15, 36, 51, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .home-role-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 44px rgba(15, 36, 51, 0.09);
+            border-color: rgba(15, 118, 110, 0.22);
+        }
+
+        .home-role-card-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .home-role-card-number.n1 { background: var(--re-primary-soft); color: var(--re-primary-dark); }
+        .home-role-card-number.n2 { background: #e8efff; color: #1d4ed8; }
+        .home-role-card-number.n3 { background: #fff5db; color: #b7791f; }
+
+        .home-role-card h3 {
+            margin: 0 0 8px;
+            color: var(--re-heading);
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        .home-role-card p {
+            margin: 0;
+            color: var(--re-muted);
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        .home-footer {
+            padding: 24px 0;
+            border-top: 1px solid var(--re-border);
+            background: #ffffff;
+        }
+
+        .home-footer-inner {
+            width: min(var(--re-container), calc(100% - 32px));
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .home-footer-copy {
+            color: var(--re-muted);
+            font-size: 0.85rem;
+        }
+
+        .home-footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .home-footer-links a {
+            color: var(--re-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.14s;
+        }
+
+        .home-footer-links a:hover { color: var(--re-primary); }
+
+        /* ── RESPONSIVE ──────────────────────────────────── */
+        @media (max-width: 900px) {
+            .home-hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .home-hero {
+                padding: 56px 0 52px;
+            }
+
+            .home-public-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .home-role-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .home-hero-stats {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .home-hero {
+                padding: 40px 0 36px;
+            }
+
+            .home-hero-actions {
+                flex-direction: column;
+            }
+
+            .home-hero-actions .button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .home-roles-section {
+                padding: 52px 0;
+            }
+
+            .home-footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
-<body class="re-home">
-    <header class="re-topbar">
-        <div class="re-topbar-inner">
-            <a class="re-brand" href="/">
-                <span class="re-brand-mark">R</span>
+<body class="re-home home-page">
+
+    <!-- ── TOPBAR ─────────────────────────────────────────── -->
+    <header class="home-topbar" role="banner">
+        <div class="home-topbar-inner">
+            <a class="re-brand" href="/" aria-label="RentEase - Trang chủ">
+                <span class="re-brand-mark"><i class="bi bi-buildings-fill" aria-hidden="true"></i></span>
                 <span>RentEase</span>
             </a>
             <nav class="re-nav" aria-label="Điều hướng chính">
@@ -22,75 +470,159 @@
         </div>
     </header>
 
-    <main class="re-page home-page">
-        <section class="home-intro" aria-labelledby="page-title">
-            <div class="home-intro-copy">
-                <p class="home-kicker">Quản lý nhà trọ, không quản lý bằng trí nhớ</p>
-                <h1 id="page-title">Phòng trống, tiền thuê và việc cần xử lý — rõ trong một màn hình.</h1>
-                <p class="home-lead">
-                    RentEase giúp chủ trọ theo dõi vận hành hằng ngày, khách thuê kiểm tra thông tin của mình
-                    và người tìm phòng đặt lịch xem phòng mà không cần gọi hỏi nhiều lần.
-                </p>
-                <div class="actions">
-                    <a class="button primary" href="/rooms/">Xem phòng đang trống</a>
-                    <a class="button subtle" href="/login/">Đăng nhập hệ thống</a>
+    <main id="main-content">
+
+        <!-- ── HERO ──────────────────────────────────────── -->
+        <section class="home-hero" aria-labelledby="page-title">
+            <div class="home-hero-grid">
+                <div class="home-hero-copy">
+                    <span class="home-hero-eyebrow">
+                        <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                        Quản lý nhà trọ, không quản lý bằng trí nhớ
+                    </span>
+                    <h1 id="page-title" class="home-hero-h1">
+                        Phòng trống, tiền thuê<br>
+                        và việc cần xử lý —<br>
+                        <em>rõ trong một màn hình.</em>
+                    </h1>
+                    <p class="home-hero-lead">
+                        RentEase giúp chủ trọ theo dõi vận hành hằng ngày, khách thuê kiểm tra thông tin của mình
+                        và người tìm phòng đặt lịch xem phòng mà không cần gọi hỏi nhiều lần.
+                    </p>
+                    <div class="home-hero-actions">
+                        <a class="button primary" href="/rooms/">
+                            <i class="bi bi-search" aria-hidden="true"></i>
+                            Xem phòng đang trống
+                        </a>
+                        <a class="button subtle" href="/login/">
+                            <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                            Đăng nhập hệ thống
+                        </a>
+                    </div>
+                    <div class="home-hero-stats">
+                        <div class="home-stat">
+                            <strong>3 vai trò</strong>
+                            <span>Chủ trọ · Khách thuê · Người tìm phòng</span>
+                        </div>
+                        <div class="home-stat-sep" aria-hidden="true"></div>
+                        <div class="home-stat">
+                            <strong>Phân tách</strong>
+                            <span>Dữ liệu riêng từng tài khoản</span>
+                        </div>
+                        <div class="home-stat-sep" aria-hidden="true"></div>
+                        <div class="home-stat">
+                            <strong>Thời gian thực</strong>
+                            <span>Tình trạng phòng và công nợ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="home-hero-panel" aria-labelledby="operations-title">
+                    <div class="home-hero-panel-header">
+                        <h2 id="operations-title">Dành cho chủ trọ</h2>
+                        <p>Những việc cần biết mỗi ngày trong một trang tổng quan.</p>
+                    </div>
+                    <ul class="home-task-list">
+                        <li>
+                            <span class="home-task-icon teal" aria-hidden="true">
+                                <i class="bi bi-door-open"></i>
+                            </span>
+                            <div>
+                                <strong>Phòng nào đang trống?</strong>
+                                <span>Kiểm tra tình trạng phòng và tin đang đăng.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="home-task-icon blue" aria-hidden="true">
+                                <i class="bi bi-receipt-cutoff"></i>
+                            </span>
+                            <div>
+                                <strong>Khoản nào chưa thu?</strong>
+                                <span>Theo dõi hóa đơn, thanh toán một phần và công nợ.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="home-task-icon amber" aria-hidden="true">
+                                <i class="bi bi-tools"></i>
+                            </span>
+                            <div>
+                                <strong>Việc nào cần xử lý trước?</strong>
+                                <span>Xem sửa chữa, hợp đồng sắp hết hạn và lịch xem phòng.</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="home-panel-footer">
+                        <a class="text-link" href="/login/">
+                            Vào khu vực quản lý <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ── PUBLIC ENTRY ───────────────────────────────── -->
+        <section class="home-public-section" aria-labelledby="public-title">
+            <div class="home-public-inner">
+                <div>
+                    <p class="home-section-eyebrow">
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        Đang tìm chỗ ở?
+                    </p>
+                    <h2 id="public-title" class="home-public-h2">Xem thông tin phòng trước khi đặt lịch</h2>
+                    <p class="home-public-desc">Giá thuê, tiền cọc, diện tích, sức chứa và thời gian có thể vào ở được trình bày ngay trên tin đăng. Đặt lịch xem phòng không cần tài khoản.</p>
+                </div>
+                <a class="button primary" href="/rooms/">
+                    <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
+                    Mở danh sách phòng
+                </a>
+            </div>
+        </section>
+
+        <!-- ── ROLES ──────────────────────────────────────── -->
+        <section class="home-roles-section" aria-labelledby="roles-title">
+            <div class="home-roles-inner">
+                <div class="home-roles-heading">
+                    <p class="home-section-eyebrow" style="justify-content:center;">
+                        <i class="bi bi-people" aria-hidden="true"></i>
+                        Một hệ thống, ba cách sử dụng
+                    </p>
+                    <h2 id="roles-title">Thông tin đúng với người cần xem</h2>
+                    <p>Mỗi vai trò chỉ thấy dữ liệu liên quan đến mình — không lẫn lộn, không thừa.</p>
+                </div>
+                <div class="home-role-cards">
+                    <article class="home-role-card">
+                        <div class="home-role-card-number n1" aria-hidden="true">01</div>
+                        <h3>Người tìm phòng</h3>
+                        <p>Xem phòng công khai và gửi lịch hẹn, không cần tài khoản. Thông tin giá, diện tích và ngày vào ở hiển thị ngay.</p>
+                    </article>
+                    <article class="home-role-card">
+                        <div class="home-role-card-number n2" aria-hidden="true">02</div>
+                        <h3>Chủ trọ</h3>
+                        <p>Quản lý phòng, hợp đồng, hóa đơn, thanh toán và các việc đang chờ trong một trang tổng quan vận hành.</p>
+                    </article>
+                    <article class="home-role-card">
+                        <div class="home-role-card-number n3" aria-hidden="true">03</div>
+                        <h3>Khách thuê</h3>
+                        <p>Theo dõi hợp đồng, khoản phải trả, yêu cầu sửa chữa và thông báo của chính mình.</p>
+                    </article>
                 </div>
             </div>
-
-            <aside class="home-operations" aria-labelledby="operations-title">
-                <p class="home-operations-label">Dành cho chủ trọ</p>
-                <h2 id="operations-title">Những việc cần biết mỗi ngày</h2>
-                <ul class="home-task-list">
-                    <li>
-                        <strong>Phòng nào đang trống?</strong>
-                        <span>Kiểm tra tình trạng phòng và tin đang đăng.</span>
-                    </li>
-                    <li>
-                        <strong>Khoản nào chưa thu?</strong>
-                        <span>Theo dõi hóa đơn, thanh toán một phần và công nợ.</span>
-                    </li>
-                    <li>
-                        <strong>Việc nào cần xử lý trước?</strong>
-                        <span>Xem sửa chữa, hợp đồng sắp hết hạn và lịch xem phòng.</span>
-                    </li>
-                </ul>
-                <a class="text-link" href="/login/">Vào khu vực quản lý <span aria-hidden="true">→</span></a>
-            </aside>
         </section>
 
-        <section class="home-public-entry" aria-labelledby="public-title">
-            <div>
-                <p class="home-section-label">Đang tìm chỗ ở?</p>
-                <h2 id="public-title">Xem thông tin phòng trước khi đặt lịch</h2>
-                <p>Giá thuê, tiền cọc, diện tích, sức chứa và thời gian có thể vào ở được trình bày ngay trên tin đăng.</p>
-            </div>
-            <a class="button primary" href="/rooms/">Mở danh sách phòng</a>
-        </section>
-
-        <section class="home-role-section" aria-labelledby="roles-title">
-            <div class="home-section-heading">
-                <p class="home-section-label">Một hệ thống, ba cách sử dụng</p>
-                <h2 id="roles-title">Thông tin đúng với người cần xem</h2>
-            </div>
-            <div class="home-role-list">
-                <article>
-                    <span>01</span>
-                    <div><h3>Người tìm phòng</h3><p>Xem phòng công khai và gửi lịch hẹn, không cần tài khoản.</p></div>
-                </article>
-                <article>
-                    <span>02</span>
-                    <div><h3>Chủ trọ</h3><p>Quản lý phòng, hợp đồng, hóa đơn, thanh toán và các việc đang chờ.</p></div>
-                </article>
-                <article>
-                    <span>03</span>
-                    <div><h3>Khách thuê</h3><p>Theo dõi hợp đồng, khoản phải trả, sửa chữa và thông báo của chính mình.</p></div>
-                </article>
-            </div>
-        </section>
-
-        <footer class="re-footer">
-            RentEase — Hệ thống quản lý nhà trọ với dữ liệu được phân tách theo vai trò.
-        </footer>
     </main>
+
+    <!-- ── FOOTER ─────────────────────────────────────────── -->
+    <footer class="home-footer" role="contentinfo">
+        <div class="home-footer-inner">
+            <p class="home-footer-copy">
+                © RentEase — Hệ thống quản lý nhà trọ với dữ liệu được phân tách theo vai trò.
+            </p>
+            <nav class="home-footer-links" aria-label="Liên kết phụ">
+                <a href="/rooms/">Xem phòng</a>
+                <a href="/login/">Đăng nhập</a>
+            </nav>
+        </div>
+    </footer>
+
 </body>
 </html>
