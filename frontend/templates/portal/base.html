@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     {% block extra_head %}{% endblock %}
 </head>
-<body class="app-body">
+<body class="app-body{% if request.user.is_owner %} role-owner{% elif request.user.is_tenant %} role-tenant{% elif request.user.is_staff %} role-staff{% endif %}">
+<a class="skip-link" href="#appContent">Đi thẳng đến nội dung</a>
 <div class="app-wrapper">
 
     <!-- ═══════════════════════════════════════════════════════════
@@ -221,11 +222,24 @@
                     {% endif %}
                     {% block breadcrumb %}{% endblock %}
                 </nav>
+
+                {% if request.user.is_authenticated %}
+                <div class="topbar-workspace" aria-label="Không gian làm việc hiện tại">
+                    <span class="topbar-workspace-icon" aria-hidden="true">
+                        <i class="bi bi-{% if request.user.is_tenant %}house-heart{% elif request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}shield-check{% else %}buildings{% endif %}"></i>
+                    </span>
+                    <span class="topbar-workspace-copy">
+                        <span>Không gian làm việc</span>
+                        <strong>{% if request.user.is_tenant %}Cổng khách thuê{% elif request.user.is_staff or request.user.is_superuser or request.user.is_rentease_admin %}Vận hành hệ thống{% else %}Quản lý nhà trọ{% endif %}</strong>
+                    </span>
+                </div>
+                {% endif %}
             </div>
 
             <div class="topbar-right">
-                <a class="topbar-btn" href="/rooms/" title="Xem phòng trống">
-                    <i class="bi bi-search"></i>
+                <a class="topbar-btn topbar-quick-link" href="/rooms/" title="Xem phòng đang đăng">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <span>Phòng đang đăng</span>
                 </a>
 
                 {% if request.user.is_authenticated %}
@@ -240,19 +254,21 @@
 
                 <div class="topbar-divider"></div>
 
+                <div class="topbar-account" aria-label="Tài khoản đang đăng nhập">
+                    <div class="topbar-user-avatar" aria-hidden="true">
+                        {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
+                    </div>
+                    <div class="topbar-user-copy">
+                        <div class="topbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</div>
+                        <div class="topbar-user-role">
+                            {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Quản trị viên{% else %}Người dùng{% endif %}
+                        </div>
+                    </div>
+                </div>
                 <form class="topbar-logout-form" action="{% url 'portal:logout' %}" method="post">
                     {% csrf_token %}
-                    <button class="topbar-user" type="submit" title="Đăng xuất" aria-label="Đăng xuất khỏi tài khoản {{ request.user.get_full_name|default:request.user.username }}">
-                        <div class="topbar-user-avatar">
-                            {{ request.user.get_full_name|slice:":1"|upper|default:request.user.username|slice:":1"|upper }}
-                        </div>
-                        <div class="topbar-user-copy">
-                            <div class="topbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</div>
-                            <div class="topbar-user-role">
-                                {% if request.user.is_owner %}Chủ trọ{% elif request.user.is_tenant %}Khách thuê{% elif request.user.is_staff %}Admin{% endif %}
-                            </div>
-                        </div>
-                        <i class="bi bi-box-arrow-right topbar-user-action" aria-hidden="true"></i>
+                    <button class="topbar-btn topbar-logout-button" type="submit" title="Đăng xuất" aria-label="Đăng xuất khỏi tài khoản {{ request.user.get_full_name|default:request.user.username }}">
+                        <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
                     </button>
                 </form>
                 {% else %}
@@ -264,7 +280,7 @@
         </header>
 
         <!-- Content -->
-        <main class="app-content" id="appContent">
+        <main class="app-content" id="appContent" tabindex="-1">
             <div class="app-content-inner">
             {% if messages %}
                 {% for message in messages %}

@@ -1,27 +1,40 @@
 {% extends "portal/base.html" %}
 
 {% block title %}{{ property_record.name }} - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><a href="{% url 'portal:owner_properties_list' %}">Cơ sở</a><span class="sep">/</span><span class="current">{{ property_record.property_code }}</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1><i class="page-icon bi bi-building"></i>{{ property_record.name }}</h1>
+            <p class="resource-list-kicker">Hồ sơ cơ sở</p>
+            <h1><i class="page-icon bi bi-building" aria-hidden="true"></i>{{ property_record.name }}</h1>
             <p>Thông tin vận hành của cơ sở {{ property_record.property_code }}.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_property_update' property_record.pk %}"><i class="bi bi-pencil-square"></i> Chỉnh sửa</a>
+        <div class="toolbar-actions">
+            <a class="button" href="{% url 'portal:owner_properties_list' %}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách</a>
+            <a class="button primary" href="{% url 'portal:owner_property_update' property_record.pk %}"><i class="bi bi-pencil" aria-hidden="true"></i> Chỉnh sửa</a>
+        </div>
     </div>
 </section>
 
-<section class="card">
+<section class="card entity-detail-card" aria-labelledby="property-overview-title">
+    <div class="entity-detail-header">
+        <div class="entity-detail-heading">
+            <span class="entity-detail-icon" aria-hidden="true"><i class="bi bi-buildings"></i></span>
+            <div>
+                <p class="resource-list-kicker">Thông tin chung</p>
+                <h2 id="property-overview-title">Hồ sơ vận hành</h2>
+            </div>
+        </div>
+        <span class="status-badge {% if property_record.status == 'active' %}status-active{% else %}status-muted{% endif %}">
+            {% if property_record.status == 'active' %}Hoạt động{% else %}Tạm ngưng{% endif %}
+        </span>
+    </div>
     <div class="card-body">
-        <ul class="info-list">
+        <ul class="info-list entity-info-list">
             <li><span>Mã cơ sở</span><strong>{{ property_record.property_code }}</strong></li>
             <li><span>Tên cơ sở</span><strong>{{ property_record.name }}</strong></li>
-            <li>
-                <span>Trạng thái</span>
-                <strong><span class="status-badge">{% if property_record.status == 'active' %}Hoạt động{% else %}Tạm ngưng{% endif %}</span></strong>
-            </li>
             <li><span>Địa chỉ</span><strong>{{ property_record.address|default:"Chưa cập nhật" }}</strong></li>
             <li><span>Phường/Xã</span><strong>{{ property_record.ward|default:"Chưa cập nhật" }}</strong></li>
             <li><span>Tỉnh/Thành phố</span><strong>{{ property_record.province_city|default:"Chưa cập nhật" }}</strong></li>
@@ -33,57 +46,52 @@
         </ul>
 
         {% if property_record.house_rules %}
-            <section class="section">
-                <h2>Nội quy</h2>
-                <p class="listing-description">{{ property_record.house_rules }}</p>
+            <section class="entity-description" aria-labelledby="house-rules-title">
+                <h3 id="house-rules-title">Nội quy</h3>
+                <p>{{ property_record.house_rules }}</p>
             </section>
         {% endif %}
     </div>
 </section>
 
-<section class="section">
-    <div class="toolbar">
+<section class="section resource-section" aria-labelledby="property-rooms-title">
+    <div class="toolbar resource-section-toolbar">
         <div>
-            <h2>Phòng thuộc cơ sở</h2>
-            <p class="help-text">Các phòng vẫn được kiểm soát theo hồ sơ chủ trọ trong giai đoạn chuyển tiếp.</p>
+            <p class="resource-list-kicker">Không gian trực thuộc</p>
+            <h2 id="property-rooms-title">Phòng thuộc cơ sở</h2>
+            <p>Kiểm tra nhanh tầng và trạng thái của từng phòng tại cơ sở này.</p>
         </div>
-        <a class="button" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-circle"></i> Thêm phòng</a>
+        <a class="button" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Thêm phòng</a>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            {% if rooms %}
-                <div class="table-wrap">
-                    <table class="data-table">
-                        <thead>
+    <div class="card resource-card">
+        {% if rooms %}
+            <div class="resource-list-header resource-list-header-compact">
+                <span class="resource-list-count">{{ rooms|length }} phòng</span>
+            </div>
+            <div class="table-wrap resource-table" role="region" aria-label="Phòng thuộc cơ sở {{ property_record.name }}" tabindex="0">
+                <table class="data-table">
+                    <thead><tr><th>Phòng</th><th>Tầng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                    <tbody>
+                        {% for room in rooms %}
                             <tr>
-                                <th>Phòng</th>
-                                <th>Tầng</th>
-                                <th>Trạng thái</th>
+                                <td>
+                                    <div class="resource-cell">
+                                        <span class="resource-cell-icon" aria-hidden="true"><i class="bi bi-door-closed"></i></span>
+                                        <div><a href="{% url 'portal:owner_room_detail' room.pk %}">{{ room.room_name }}</a><span class="resource-code">{{ room.room_code }}</span></div>
+                                    </div>
+                                </td>
+                                <td>{{ room.floor|default:"-" }}</td>
+                                <td><span class="status-badge">{{ room.get_status_display }}</span></td>
+                                <td><a class="table-action" href="{% url 'portal:owner_room_detail' room.pk %}"><i class="bi bi-arrow-right" aria-hidden="true"></i> Xem</a></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for room in rooms %}
-                                <tr>
-                                    <td><a href="{% url 'portal:owner_room_detail' room.pk %}">{{ room.room_code }} - {{ room.room_name }}</a></td>
-                                    <td>{{ room.floor|default:"-" }}</td>
-                                    <td><span class="status-badge">{{ room.get_status_display }}</span></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <div class="empty-state">
-                    <i class="bi bi-door-open"></i>
-                    <p>Cơ sở này chưa có phòng nào.</p>
-                </div>
-            {% endif %}
-        </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="card-body"><div class="empty-state"><i class="bi bi-door-open" aria-hidden="true"></i><p>Cơ sở này chưa có phòng nào.</p></div></div>
+        {% endif %}
     </div>
 </section>
-
-<div class="page-actions">
-    <a class="button" href="{% url 'portal:owner_properties_list' %}">Quay lại danh sách cơ sở</a>
-</div>
 {% endblock %}

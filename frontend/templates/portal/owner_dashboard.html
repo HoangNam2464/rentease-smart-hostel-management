@@ -5,7 +5,7 @@
 
 {% block content %}
 {% if missing_profile %}
-    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle-fill"></i> {{ message }}</div>
+    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> {{ message }}</div>
 {% else %}
     <div class="page-header dashboard-page-header">
         <div>
@@ -13,16 +13,22 @@
             <h1 class="page-title">Chào {{ profile.full_name }}</h1>
             <p class="page-subtitle">Ưu tiên các khoản cần thu và những việc đang chờ xử lý.</p>
         </div>
-        <div class="dashboard-header-actions">
-            <a class="btn btn-primary btn-sm" href="/owner/invoices/new/"><i class="bi bi-plus"></i> Lập hóa đơn</a>
-            <a class="btn btn-outline btn-sm" href="/owner/rooms/new/">Tạo phòng</a>
-            <a class="btn btn-outline btn-sm" href="/owner/listings/new/">Đăng tin</a>
+        <div class="dashboard-header-actions" aria-label="Tác vụ nhanh">
+            <a class="btn btn-primary btn-sm" href="/owner/invoices/new/"><i class="bi bi-plus-lg" aria-hidden="true"></i> Lập hóa đơn</a>
+            <a class="btn btn-outline btn-sm" href="/owner/rooms/new/"><i class="bi bi-door-open" aria-hidden="true"></i> Tạo phòng</a>
+            <a class="btn btn-outline btn-sm" href="/owner/listings/new/"><i class="bi bi-megaphone" aria-hidden="true"></i> Đăng tin</a>
         </div>
     </div>
 
     <section class="operations-overview" aria-labelledby="attention-title">
         <div class="operations-debt">
-            <p class="operations-label">Công nợ cần thu</p>
+            <div class="dashboard-card-label">
+                <span class="dashboard-card-icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+                <div>
+                    <p class="operations-label">Công nợ cần thu</p>
+                    <span>Giá trị còn lại trên các hóa đơn đang mở</span>
+                </div>
+            </div>
             <strong>{{ metrics.outstanding_debt|vnd }}</strong>
             <p>{{ metrics.unpaid_invoices }} hóa đơn chưa thanh toán · {{ metrics.partial_invoices }} hóa đơn thanh toán một phần</p>
             <a class="text-link text-link-light" href="/owner/invoices/">Kiểm tra hóa đơn <span aria-hidden="true">→</span></a>
@@ -31,47 +37,77 @@
         <div class="attention-panel">
             <div class="dashboard-section-heading">
                 <div><p class="dashboard-kicker">Cần chú ý</p><h2 id="attention-title">Việc đang chờ</h2></div>
+                <span class="dashboard-heading-note">Theo mức độ cần xử lý</span>
             </div>
             <div class="attention-list">
-                <a href="/owner/repairs/"><span>Sửa chữa chưa xử lý</span><strong>{{ metrics.pending_repairs }}</strong></a>
-                <a href="/owner/contracts/"><span>Hợp đồng hết hạn trong {{ ending_soon_days }} ngày</span><strong>{{ metrics.contracts_ending_soon }}</strong></a>
-                <a href="/owner/viewing-registrations/"><span>Lịch xem phòng chờ xác nhận</span><strong>{{ metrics.pending_viewing_registrations }}</strong></a>
-                <a href="/owner/rooms/"><span>Phòng đang bảo trì</span><strong>{{ metrics.maintenance_rooms }}</strong></a>
+                <a href="/owner/repairs/">
+                    <span class="attention-item-icon icon-warning" aria-hidden="true"><i class="bi bi-tools"></i></span>
+                    <span class="attention-item-copy">Sửa chữa chưa xử lý</span>
+                    <strong>{{ metrics.pending_repairs }}</strong>
+                    <i class="bi bi-chevron-right attention-item-arrow" aria-hidden="true"></i>
+                </a>
+                <a href="/owner/contracts/">
+                    <span class="attention-item-icon icon-info" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                    <span class="attention-item-copy">Hợp đồng hết hạn trong {{ ending_soon_days }} ngày</span>
+                    <strong>{{ metrics.contracts_ending_soon }}</strong>
+                    <i class="bi bi-chevron-right attention-item-arrow" aria-hidden="true"></i>
+                </a>
+                <a href="/owner/viewing-registrations/">
+                    <span class="attention-item-icon icon-primary" aria-hidden="true"><i class="bi bi-calendar-check"></i></span>
+                    <span class="attention-item-copy">Lịch xem phòng chờ xác nhận</span>
+                    <strong>{{ metrics.pending_viewing_registrations }}</strong>
+                    <i class="bi bi-chevron-right attention-item-arrow" aria-hidden="true"></i>
+                </a>
+                <a href="/owner/rooms/">
+                    <span class="attention-item-icon icon-muted" aria-hidden="true"><i class="bi bi-wrench-adjustable-circle"></i></span>
+                    <span class="attention-item-copy">Phòng đang bảo trì</span>
+                    <strong>{{ metrics.maintenance_rooms }}</strong>
+                    <i class="bi bi-chevron-right attention-item-arrow" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="operational-strip" aria-label="Tình hình vận hành">
-        <div><span>Phòng trống</span><strong>{{ metrics.available_rooms }}/{{ metrics.total_rooms }}</strong></div>
-        <div><span>Phòng đang thuê</span><strong>{{ metrics.occupied_rooms }}</strong></div>
-        <div><span>Hợp đồng hiệu lực</span><strong>{{ metrics.active_contracts }}</strong></div>
-        <div><span>Tin đang đăng</span><strong>{{ metrics.published_listings }}</strong></div>
+    <section class="dashboard-metrics-grid" aria-label="Tình hình vận hành">
+        <article class="dashboard-metric-card">
+            <span class="dashboard-metric-icon metric-available" aria-hidden="true"><i class="bi bi-door-open"></i></span>
+            <div><span>Phòng trống</span><strong>{{ metrics.available_rooms }}</strong><small>trên {{ metrics.total_rooms }} phòng</small></div>
+        </article>
+        <article class="dashboard-metric-card">
+            <span class="dashboard-metric-icon metric-occupied" aria-hidden="true"><i class="bi bi-person-check"></i></span>
+            <div><span>Phòng đang thuê</span><strong>{{ metrics.occupied_rooms }}</strong><small>đang có khách thuê</small></div>
+        </article>
+        <article class="dashboard-metric-card">
+            <span class="dashboard-metric-icon metric-contract" aria-hidden="true"><i class="bi bi-file-earmark-check"></i></span>
+            <div><span>Hợp đồng hiệu lực</span><strong>{{ metrics.active_contracts }}</strong><small>đang được theo dõi</small></div>
+        </article>
+        <article class="dashboard-metric-card">
+            <span class="dashboard-metric-icon metric-listing" aria-hidden="true"><i class="bi bi-megaphone"></i></span>
+            <div><span>Tin đang đăng</span><strong>{{ metrics.published_listings }}</strong><small>đang hiển thị công khai</small></div>
+        </article>
     </section>
 
     <div class="operations-grid">
         <section class="card operations-card" aria-labelledby="recent-invoices-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Tài chính</p><h2 id="recent-invoices-title">Hóa đơn gần đây</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-primary" aria-hidden="true"><i class="bi bi-receipt"></i></span>
+                        <div><p class="dashboard-kicker">Tài chính</p><h2 id="recent-invoices-title">Hóa đơn gần đây</h2></div>
+                    </div>
                     <a class="text-link" href="/owner/invoices/">Xem tất cả</a>
                 </div>
                 {% if recent.invoices %}
                     <div class="operations-feed">
                         {% for invoice in recent.invoices %}
                             <a class="operations-feed-row" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">
-                                <div>
-                                    <strong>{{ invoice.invoice_code|default:invoice.pk }}</strong>
-                                    <span>Tháng {{ invoice.month }}/{{ invoice.year }}</span>
-                                </div>
-                                <div class="operations-feed-value">
-                                    <strong>{{ invoice.remaining_amount|vnd }}</strong>
-                                    <span class="badge badge-{% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% else %}muted{% endif %}">{{ invoice.get_status_display }}</span>
-                                </div>
+                                <div><strong>{{ invoice.invoice_code|default:invoice.pk }}</strong><span>Tháng {{ invoice.month }}/{{ invoice.year }}</span></div>
+                                <div class="operations-feed-value"><strong>{{ invoice.remaining_amount|vnd }}</strong><span class="badge badge-{% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% else %}muted{% endif %}">{{ invoice.get_status_display }}</span></div>
                             </a>
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Chưa có hóa đơn nào.</p></div>
+                    <div class="empty-state"><i class="bi bi-receipt" aria-hidden="true"></i><p>Chưa có hóa đơn nào.</p></div>
                 {% endif %}
             </div>
         </section>
@@ -79,7 +115,10 @@
         <section class="card operations-card" aria-labelledby="viewings-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Cho thuê</p><h2 id="viewings-title">Lịch xem chờ xác nhận</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-info" aria-hidden="true"><i class="bi bi-calendar-check"></i></span>
+                        <div><p class="dashboard-kicker">Cho thuê</p><h2 id="viewings-title">Lịch xem chờ xác nhận</h2></div>
+                    </div>
                     <a class="text-link" href="/owner/viewing-registrations/">Xem tất cả</a>
                 </div>
                 {% if recent.pending_viewings %}
@@ -92,7 +131,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Không có lịch xem nào đang chờ.</p></div>
+                    <div class="empty-state"><i class="bi bi-calendar2-check" aria-hidden="true"></i><p>Không có lịch xem nào đang chờ.</p></div>
                 {% endif %}
             </div>
         </section>
@@ -100,7 +139,10 @@
         <section class="card operations-card" aria-labelledby="repairs-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Cơ sở vật chất</p><h2 id="repairs-title">Sửa chữa chưa xử lý</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-warning" aria-hidden="true"><i class="bi bi-tools"></i></span>
+                        <div><p class="dashboard-kicker">Cơ sở vật chất</p><h2 id="repairs-title">Sửa chữa chưa xử lý</h2></div>
+                    </div>
                     <a class="text-link" href="/owner/repairs/">Xem tất cả</a>
                 </div>
                 {% if recent.pending_repairs %}
@@ -113,7 +155,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Không có yêu cầu sửa chữa đang chờ.</p></div>
+                    <div class="empty-state"><i class="bi bi-tools" aria-hidden="true"></i><p>Không có yêu cầu sửa chữa đang chờ.</p></div>
                 {% endif %}
             </div>
         </section>
@@ -121,7 +163,10 @@
         <section class="card operations-card" aria-labelledby="contracts-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Hợp đồng</p><h2 id="contracts-title">Sắp hết hạn</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-muted" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                        <div><p class="dashboard-kicker">Hợp đồng</p><h2 id="contracts-title">Sắp hết hạn</h2></div>
+                    </div>
                     <a class="text-link" href="/owner/contracts/">Xem tất cả</a>
                 </div>
                 {% if recent.upcoming_contracts %}
@@ -134,7 +179,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Không có hợp đồng sắp hết hạn.</p></div>
+                    <div class="empty-state"><i class="bi bi-file-earmark-check" aria-hidden="true"></i><p>Không có hợp đồng sắp hết hạn.</p></div>
                 {% endif %}
             </div>
         </section>

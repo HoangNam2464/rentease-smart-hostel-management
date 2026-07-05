@@ -1,76 +1,52 @@
 {% extends "portal/base.html" %}
+{% load rentease_format %}
 
 {% block title %}Ghi nhận thanh toán - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><a href="{% url 'portal:owner_invoices_list' %}">Hóa đơn</a><span class="sep">/</span><a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a><span class="sep">/</span><span class="current">Thanh toán</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1><i class="page-icon bi bi-credit-card"></i>Ghi nhận thanh toán</h1>
-    <p>Ghi nhận một khoản thanh toán cho hóa đơn thuộc hợp đồng phòng của bạn.</p>
+    <h1><i class="page-icon bi bi-credit-card" aria-hidden="true"></i>Ghi nhận thanh toán</h1>
+    <p>Thêm một khoản thanh toán cho hóa đơn {{ invoice.invoice_code|default:invoice.pk }}.</p>
 </section>
 
-<section class="card">
-    <div class="card-body">
-        <h2>Tóm tắt hóa đơn</h2>
-        <ul class="info-list">
-            <li><span>Hóa đơn</span><strong>{{ invoice.invoice_code|default:invoice.pk }}</strong></li>
-            <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
-            <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
-            <li><span>Khách thuê</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
-            <li><span>Tháng/năm</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
-            <li><span>Tổng tiền</span><strong>{{ invoice.total_amount }}</strong></li>
-            <li><span>Đã thanh toán</span><strong>{{ invoice.paid_amount }}</strong></li>
-            <li><span>Còn lại</span><strong>{{ invoice.remaining_amount }}</strong></li>
-            <li><span>Trạng thái</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
-        </ul>
-    </div>
+<section class="payment-context-grid" aria-label="Tóm tắt hóa đơn trước khi thanh toán">
+    <article class="financial-summary-card financial-summary-primary">
+        <span>Số tiền còn lại</span><strong>{{ invoice.remaining_amount|vnd }}</strong><small>Không thể ghi nhận vượt quá số còn lại</small>
+    </article>
+    <article class="card payment-context-card">
+        <div class="card-body">
+            <div class="dashboard-section-heading"><div><p class="resource-list-kicker">Hóa đơn liên quan</p><h2>{{ invoice.invoice_code|default:invoice.pk }}</h2></div><span class="badge badge-{% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% else %}muted{% endif %}">{{ invoice.get_status_display }}</span></div>
+            <ul class="payment-context-list">
+                <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+                <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+                <li><span>Khách thuê</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
+                <li><span>Kỳ hóa đơn</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+                <li><span>Tổng tiền</span><strong>{{ invoice.total_amount|vnd }}</strong></li>
+                <li><span>Đã thanh toán</span><strong>{{ invoice.paid_amount|vnd }}</strong></li>
+            </ul>
+        </div>
+    </article>
 </section>
 
-<section class="card form-card section">
+<section class="card form-card financial-form-card section">
     <div class="card-body">
-        <p class="help-text">Ghi nhận một khoản thanh toán cho hóa đơn này. Hệ thống sẽ cập nhật số đã thanh toán, số còn lại và trạng thái hóa đơn.</p>
+        <div class="form-intro">
+            <span class="form-intro-icon" aria-hidden="true"><i class="bi bi-info-circle"></i></span>
+            <div><strong>Kiểm tra trước khi lưu</strong><p>Hệ thống sẽ cập nhật số đã thanh toán, số còn lại và trạng thái hóa đơn sau khi khoản này được ghi nhận.</p></div>
+        </div>
         <form method="post" novalidate>
             {% csrf_token %}
+            {% if form.non_field_errors %}<div class="alert alert-warning">{{ form.non_field_errors }}</div>{% endif %}
 
-            {% if form.non_field_errors %}
-                <div class="alert warning">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
+            <div class="form-section-heading"><span>Thông tin thanh toán</span></div>
+            <div class="form-field"><label for="{{ form.amount.id_for_label }}">Số tiền</label>{{ form.amount }}{{ form.amount.errors }}</div>
+            <div class="form-field"><label for="{{ form.method.id_for_label }}">Phương thức</label>{{ form.method }}{{ form.method.errors }}</div>
+            <div class="form-field"><label for="{{ form.transaction_code.id_for_label }}">Mã tham chiếu</label>{{ form.transaction_code }}{{ form.transaction_code.errors }}</div>
+            <div class="form-field"><label for="{{ form.paid_at.id_for_label }}">Ngày thanh toán</label>{{ form.paid_at }}{{ form.paid_at.errors }}</div>
+            <div class="form-field"><label for="{{ form.note.id_for_label }}">Ghi chú</label>{{ form.note }}{{ form.note.errors }}</div>
 
-            <div class="form-field">
-                <label for="{{ form.amount.id_for_label }}">Số tiền</label>
-                {{ form.amount }}
-                {{ form.amount.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.method.id_for_label }}">Phương thức</label>
-                {{ form.method }}
-                {{ form.method.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.transaction_code.id_for_label }}">Mã tham chiếu</label>
-                {{ form.transaction_code }}
-                {{ form.transaction_code.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.paid_at.id_for_label }}">Ngày thanh toán</label>
-                {{ form.paid_at }}
-                {{ form.paid_at.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
-                {{ form.note }}
-                {{ form.note.errors }}
-            </div>
-
-            <div class="page-actions">
-                <button class="button primary" type="submit">Ghi nhận thanh toán</button>
-                <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>
-            </div>
+            <div class="page-actions"><button class="button primary" type="submit">Ghi nhận thanh toán</button><a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a></div>
         </form>
     </div>
 </section>

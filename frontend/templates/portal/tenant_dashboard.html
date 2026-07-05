@@ -5,20 +5,23 @@
 
 {% block content %}
 {% if missing_profile %}
-    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle-fill"></i> {{ message }}</div>
+    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> {{ message }}</div>
 {% else %}
-    <div class="page-header dashboard-page-header">
+    <div class="page-header dashboard-page-header tenant-page-header">
         <div>
             <p class="dashboard-kicker">Thông tin thuê phòng</p>
             <h1 class="page-title">Chào {{ tenant.full_name }}</h1>
             <p class="page-subtitle">Kiểm tra khoản cần thanh toán, hợp đồng và các yêu cầu của bạn.</p>
         </div>
-        <a class="btn btn-primary btn-sm" href="/tenant/repairs/new/"><i class="bi bi-plus"></i> Gửi yêu cầu sửa chữa</a>
+        <a class="btn btn-primary btn-sm" href="/tenant/repairs/new/"><i class="bi bi-plus-lg" aria-hidden="true"></i> Gửi yêu cầu sửa chữa</a>
     </div>
 
     <section class="tenant-priority-grid" aria-label="Thông tin quan trọng">
         <div class="tenant-balance-panel">
-            <p class="operations-label">Số tiền còn cần thanh toán</p>
+            <div class="dashboard-card-label">
+                <span class="dashboard-card-icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+                <div><p class="operations-label">Số tiền còn cần thanh toán</p><span>Tổng số còn lại trên hóa đơn của bạn</span></div>
+            </div>
             <strong>{{ metrics.outstanding_balance|vnd }}</strong>
             <p>{{ metrics.unpaid_or_partial_invoices }} hóa đơn đang cần theo dõi</p>
             <a class="text-link text-link-light" href="/tenant/invoices/">Xem hóa đơn <span aria-hidden="true">→</span></a>
@@ -26,7 +29,10 @@
 
         <div class="tenant-contract-panel">
             <div class="dashboard-section-heading">
-                <div><p class="dashboard-kicker">Chỗ ở hiện tại</p><h2>Hợp đồng đang hiệu lực</h2></div>
+                <div class="dashboard-heading-with-icon">
+                    <span class="dashboard-section-icon icon-primary" aria-hidden="true"><i class="bi bi-house-check"></i></span>
+                    <div><p class="dashboard-kicker">Chỗ ở hiện tại</p><h2>Hợp đồng đang hiệu lực</h2></div>
+                </div>
                 <a class="text-link" href="/tenant/contracts/">Tất cả</a>
             </div>
             {% if metrics.current_contract %}
@@ -37,22 +43,37 @@
                 </dl>
                 <a class="text-link" href="{% url 'portal:tenant_contract_detail' metrics.current_contract.pk %}">Xem chi tiết hợp đồng <span aria-hidden="true">→</span></a>
             {% else %}
-                <div class="empty-state"><p>Bạn chưa có hợp đồng đang hiệu lực.</p></div>
+                <div class="empty-state"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><p>Bạn chưa có hợp đồng đang hiệu lực.</p></div>
             {% endif %}
         </div>
     </section>
 
-    <section class="tenant-status-strip" aria-label="Việc đang theo dõi">
-        <a href="/tenant/invoices/"><span>Hóa đơn cần thanh toán</span><strong>{{ metrics.unpaid_or_partial_invoices }}</strong></a>
-        <a href="/tenant/repairs/"><span>Sửa chữa đang xử lý</span><strong>{{ metrics.open_repair_requests }}</strong></a>
-        <a href="/tenant/notifications/"><span>Thông báo chưa đọc</span><strong>{{ metrics.unread_notifications }}</strong></a>
+    <section class="tenant-metrics-grid" aria-label="Việc đang theo dõi">
+        <a class="tenant-metric-card" href="/tenant/invoices/">
+            <span class="dashboard-metric-icon metric-listing" aria-hidden="true"><i class="bi bi-receipt"></i></span>
+            <div><span>Hóa đơn cần thanh toán</span><strong>{{ metrics.unpaid_or_partial_invoices }}</strong><small>Xem chi tiết công nợ</small></div>
+            <i class="bi bi-chevron-right tenant-metric-arrow" aria-hidden="true"></i>
+        </a>
+        <a class="tenant-metric-card" href="/tenant/repairs/">
+            <span class="dashboard-metric-icon metric-contract" aria-hidden="true"><i class="bi bi-tools"></i></span>
+            <div><span>Sửa chữa đang xử lý</span><strong>{{ metrics.open_repair_requests }}</strong><small>Theo dõi yêu cầu hỗ trợ</small></div>
+            <i class="bi bi-chevron-right tenant-metric-arrow" aria-hidden="true"></i>
+        </a>
+        <a class="tenant-metric-card" href="/tenant/notifications/">
+            <span class="dashboard-metric-icon metric-available" aria-hidden="true"><i class="bi bi-bell"></i></span>
+            <div><span>Thông báo chưa đọc</span><strong>{{ metrics.unread_notifications }}</strong><small>Kiểm tra cập nhật mới</small></div>
+            <i class="bi bi-chevron-right tenant-metric-arrow" aria-hidden="true"></i>
+        </a>
     </section>
 
     <div class="operations-grid tenant-operations-grid">
         <section class="card operations-card" aria-labelledby="tenant-invoices-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Thanh toán</p><h2 id="tenant-invoices-title">Hóa đơn gần đây</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-warning" aria-hidden="true"><i class="bi bi-receipt"></i></span>
+                        <div><p class="dashboard-kicker">Thanh toán</p><h2 id="tenant-invoices-title">Hóa đơn gần đây</h2></div>
+                    </div>
                     <a class="text-link" href="/tenant/invoices/">Xem tất cả</a>
                 </div>
                 {% if recent.invoices %}
@@ -65,7 +86,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Chưa có hóa đơn nào.</p></div>
+                    <div class="empty-state"><i class="bi bi-receipt" aria-hidden="true"></i><p>Chưa có hóa đơn nào.</p></div>
                 {% endif %}
             </div>
         </section>
@@ -73,7 +94,10 @@
         <section class="card operations-card" aria-labelledby="tenant-repairs-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Hỗ trợ</p><h2 id="tenant-repairs-title">Yêu cầu sửa chữa</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-info" aria-hidden="true"><i class="bi bi-tools"></i></span>
+                        <div><p class="dashboard-kicker">Hỗ trợ</p><h2 id="tenant-repairs-title">Yêu cầu sửa chữa</h2></div>
+                    </div>
                     <a class="text-link" href="/tenant/repairs/">Xem tất cả</a>
                 </div>
                 {% if recent.repairs %}
@@ -86,7 +110,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Chưa có yêu cầu sửa chữa nào.</p></div>
+                    <div class="empty-state"><i class="bi bi-tools" aria-hidden="true"></i><p>Chưa có yêu cầu sửa chữa nào.</p></div>
                 {% endif %}
             </div>
         </section>
@@ -94,7 +118,10 @@
         <section class="card operations-card tenant-notifications-card" aria-labelledby="tenant-notifications-title">
             <div class="card-body">
                 <div class="dashboard-section-heading">
-                    <div><p class="dashboard-kicker">Cập nhật</p><h2 id="tenant-notifications-title">Thông báo gần đây</h2></div>
+                    <div class="dashboard-heading-with-icon">
+                        <span class="dashboard-section-icon icon-primary" aria-hidden="true"><i class="bi bi-bell"></i></span>
+                        <div><p class="dashboard-kicker">Cập nhật</p><h2 id="tenant-notifications-title">Thông báo gần đây</h2></div>
+                    </div>
                     <a class="text-link" href="/tenant/notifications/">Xem tất cả</a>
                 </div>
                 {% if recent.notifications %}
@@ -107,7 +134,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="empty-state"><p>Chưa có thông báo nào.</p></div>
+                    <div class="empty-state"><i class="bi bi-bell" aria-hidden="true"></i><p>Chưa có thông báo nào.</p></div>
                 {% endif %}
             </div>
         </section>

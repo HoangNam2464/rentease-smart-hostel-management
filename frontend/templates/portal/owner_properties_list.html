@@ -1,67 +1,80 @@
 {% extends "portal/base.html" %}
 
 {% block title %}Cơ sở cho thuê - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><span class="current">Cơ sở cho thuê</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1><i class="page-icon bi bi-buildings"></i>Cơ sở cho thuê</h1>
+            <h1><i class="page-icon bi bi-buildings" aria-hidden="true"></i>Cơ sở cho thuê</h1>
             <p>Quản lý từng nhà trọ hoặc tòa nhà trước khi sắp xếp phòng.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_property_create' %}"><i class="bi bi-plus-circle"></i> Thêm cơ sở</a>
+        <a class="button primary" href="{% url 'portal:owner_property_create' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Thêm cơ sở</a>
     </div>
 </section>
 
-<section class="card">
-    <div class="card-body">
-        {% if properties %}
-            <div class="table-wrap">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Cơ sở</th>
-                            <th>Khu vực</th>
-                            <th>Số phòng</th>
-                            <th>Trạng thái</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for property_record in properties %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'portal:owner_property_detail' property_record.pk %}">{{ property_record.name }}</a>
-                                    <div class="help-text">{{ property_record.property_code }}</div>
-                                </td>
-                                <td>
-                                    {% if property_record.ward or property_record.province_city %}
-                                        {{ property_record.ward }}{% if property_record.ward and property_record.province_city %}, {% endif %}{{ property_record.province_city }}
-                                    {% else %}
-                                        Chưa cập nhật
-                                    {% endif %}
-                                </td>
-                                <td>{{ property_record.room_count }}</td>
-                                <td>
-                                    <span class="status-badge">
-                                        {% if property_record.status == 'active' %}Hoạt động{% else %}Tạm ngưng{% endif %}
-                                    </span>
-                                </td>
-                                <td><a href="{% url 'portal:owner_property_update' property_record.pk %}">Sửa</a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<section class="card resource-card" aria-labelledby="properties-list-title">
+    {% if properties %}
+        <div class="resource-list-header">
+            <div>
+                <p class="resource-list-kicker">Danh mục vận hành</p>
+                <h2 id="properties-list-title">Tất cả cơ sở</h2>
             </div>
-        {% else %}
+            <span class="resource-list-count">{{ properties|length }} cơ sở</span>
+        </div>
+        <div class="table-wrap resource-table" role="region" aria-label="Danh sách cơ sở cho thuê" tabindex="0">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Cơ sở</th>
+                        <th>Khu vực</th>
+                        <th>Số phòng</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property_record in properties %}
+                        <tr>
+                            <td>
+                                <div class="resource-cell">
+                                    <span class="resource-cell-icon" aria-hidden="true"><i class="bi bi-building"></i></span>
+                                    <div>
+                                        <a href="{% url 'portal:owner_property_detail' property_record.pk %}">{{ property_record.name }}</a>
+                                        <span class="resource-code">{{ property_record.property_code }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if property_record.ward or property_record.province_city %}
+                                    {{ property_record.ward }}{% if property_record.ward and property_record.province_city %}, {% endif %}{{ property_record.province_city }}
+                                {% else %}
+                                    <span class="muted-empty">Chưa cập nhật</span>
+                                {% endif %}
+                            </td>
+                            <td><span class="numeric-value">{{ property_record.room_count }}</span></td>
+                            <td>
+                                <span class="status-badge {% if property_record.status == 'active' %}status-active{% else %}status-muted{% endif %}">
+                                    {% if property_record.status == 'active' %}Hoạt động{% else %}Tạm ngưng{% endif %}
+                                </span>
+                            </td>
+                            <td><a class="table-action" href="{% url 'portal:owner_property_update' property_record.pk %}"><i class="bi bi-pencil" aria-hidden="true"></i> Sửa</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="card-body">
             <div class="empty-state">
-                <i class="bi bi-buildings"></i>
+                <i class="bi bi-buildings" aria-hidden="true"></i>
                 <p>Chưa có cơ sở cho thuê. Hãy tạo cơ sở đầu tiên trước khi thêm phòng.</p>
-                <div class="page-actions">
+                <div class="empty-state-action">
                     <a class="button primary" href="{% url 'portal:owner_property_create' %}">Thêm cơ sở</a>
                 </div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </section>
 {% endblock %}

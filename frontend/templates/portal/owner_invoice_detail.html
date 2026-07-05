@@ -1,65 +1,87 @@
 {% extends "portal/base.html" %}
+{% load rentease_format %}
 
 {% block title %}{{ invoice.invoice_code|default:invoice.pk }} - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><a href="{% url 'portal:owner_invoices_list' %}">Hóa đơn</a><span class="sep">/</span><span class="current">{{ invoice.invoice_code|default:invoice.pk }}</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1><i class="page-icon bi bi-receipt"></i>{{ invoice.invoice_code|default:invoice.pk }}</h1>
-    <p>Thông tin hóa đơn liên kết với một hợp đồng phòng của bạn.</p>
-</section>
-
-<section class="card">
-    <div class="card-body">
-        <ul class="info-list">
-            <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
-            <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
-            <li><span>Khách thuê</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
-            <li><span>Tháng/năm</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
-            <li><span>Ngày lập</span><strong>{{ invoice.issued_date }}</strong></li>
-            <li><span>Hạn thanh toán</span><strong>{{ invoice.due_date|default:"-" }}</strong></li>
-            <li><span>Tổng tiền</span><strong>{{ invoice.total_amount }}</strong></li>
-            <li><span>Đã thanh toán</span><strong>{{ invoice.paid_amount }}</strong></li>
-            <li><span>Còn lại</span><strong>{{ invoice.remaining_amount }}</strong></li>
-            <li><span>Trạng thái</span><strong><span class="status-badge">{{ invoice.get_status_display }}</span></strong></li>
-        </ul>
-        {% if invoice.note %}
-            <section class="section">
-                <h2>Ghi chú</h2>
-                <p class="listing-description">{{ invoice.note }}</p>
-            </section>
-        {% endif %}
-        <div class="page-actions">
+    <div class="toolbar">
+        <div>
+            <p class="resource-list-kicker">Chi tiết hóa đơn</p>
+            <h1><i class="page-icon bi bi-receipt" aria-hidden="true"></i>{{ invoice.invoice_code|default:invoice.pk }}</h1>
+            <p>Kỳ tháng {{ invoice.month }}/{{ invoice.year }} · Phòng {{ invoice.contract.room.room_code }}</p>
+        </div>
+        <div class="toolbar-actions">
+            <a class="button" href="{% url 'portal:owner_invoices_list' %}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách</a>
+            <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}"><i class="bi bi-pencil" aria-hidden="true"></i> Sửa hóa đơn</a>
             {% if invoice.remaining_amount %}
-                <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}"><i class="bi bi-credit-card"></i> Ghi nhận thanh toán</a>
+                <a class="button primary" href="{% url 'portal:owner_payment_create' invoice.pk %}"><i class="bi bi-credit-card" aria-hidden="true"></i> Ghi nhận thanh toán</a>
             {% endif %}
-            <a class="button" href="{% url 'portal:owner_invoice_update' invoice.pk %}"><i class="bi bi-pencil-square"></i> Sửa hóa đơn</a>
-            <a class="button" href="{% url 'portal:owner_invoices_list' %}">Quay lại danh sách hóa đơn</a>
         </div>
     </div>
 </section>
 
-<section class="card section">
+<section class="financial-summary-grid" aria-label="Tóm tắt tài chính hóa đơn">
+    <article class="financial-summary-card financial-summary-primary">
+        <span>Còn cần thanh toán</span>
+        <strong>{{ invoice.remaining_amount|vnd }}</strong>
+        <small>Hạn thanh toán: {{ invoice.due_date|date:"d/m/Y"|default:"Chưa đặt" }}</small>
+    </article>
+    <article class="financial-summary-card">
+        <span>Tổng hóa đơn</span>
+        <strong>{{ invoice.total_amount|vnd }}</strong>
+        <small>Giá trị đã xác nhận</small>
+    </article>
+    <article class="financial-summary-card">
+        <span>Đã thanh toán</span>
+        <strong>{{ invoice.paid_amount|vnd }}</strong>
+        <small>Tổng các khoản đã ghi nhận</small>
+    </article>
+    <article class="financial-summary-card">
+        <span>Trạng thái</span>
+        <strong class="financial-status"><span class="badge badge-{% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% else %}muted{% endif %}">{{ invoice.get_status_display }}</span></strong>
+        <small>Cập nhật theo lịch sử thanh toán</small>
+    </article>
+</section>
+
+<section class="card entity-detail-card" aria-labelledby="invoice-information-title">
+    <div class="entity-detail-header">
+        <div class="entity-detail-heading">
+            <span class="entity-detail-icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+            <div><p class="resource-list-kicker">Thông tin liên kết</p><h2 id="invoice-information-title">Thông tin hóa đơn</h2></div>
+        </div>
+    </div>
     <div class="card-body">
-        <h2>Lịch sử thanh toán</h2>
+        <ul class="info-list entity-info-list">
+            <li><span>Hợp đồng</span><strong>{{ invoice.contract.contract_code }}</strong></li>
+            <li><span>Phòng</span><strong>{{ invoice.contract.room.room_code }} - {{ invoice.contract.room.room_name }}</strong></li>
+            <li><span>Khách thuê</span><strong>{{ invoice.contract.tenant.full_name }}</strong></li>
+            <li><span>Tháng/Năm</span><strong>{{ invoice.month }}/{{ invoice.year }}</strong></li>
+            <li><span>Ngày lập</span><strong>{{ invoice.issued_date|date:"d/m/Y" }}</strong></li>
+            <li><span>Hạn thanh toán</span><strong>{{ invoice.due_date|date:"d/m/Y"|default:"Chưa đặt" }}</strong></li>
+        </ul>
+        {% if invoice.note %}<section class="entity-description"><h3>Ghi chú</h3><p>{{ invoice.note }}</p></section>{% endif %}
+    </div>
+</section>
+
+<section class="section resource-section" aria-labelledby="payment-history-title">
+    <div class="toolbar resource-section-toolbar">
+        <div><p class="resource-list-kicker">Đối soát</p><h2 id="payment-history-title">Lịch sử thanh toán</h2><p>Các khoản đã được ghi nhận cho hóa đơn này.</p></div>
+    </div>
+    <div class="card resource-card">
         {% if payments %}
-            <div class="table-wrap">
+            <div class="resource-list-header resource-list-header-compact"><span class="resource-list-count">{{ payments|length }} khoản thanh toán</span></div>
+            <div class="table-wrap resource-table financial-table" role="region" aria-label="Lịch sử thanh toán" tabindex="0">
                 <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Số tiền</th>
-                            <th>Phương thức</th>
-                            <th>Mã tham chiếu</th>
-                            <th>Ngày thanh toán</th>
-                            <th>Ghi chú</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Số tiền</th><th>Phương thức</th><th>Mã tham chiếu</th><th>Ngày thanh toán</th><th>Ghi chú</th></tr></thead>
                     <tbody>
                         {% for payment in payments %}
                             <tr>
-                                <td>{{ payment.amount }}</td>
+                                <td><strong class="money-value">{{ payment.amount|vnd }}</strong></td>
                                 <td>{{ payment.get_method_display }}</td>
                                 <td>{{ payment.transaction_code|default:"-" }}</td>
-                                <td>{{ payment.paid_at }}</td>
+                                <td>{{ payment.paid_at|date:"d/m/Y H:i" }}</td>
                                 <td>{{ payment.note|default:"-" }}</td>
                             </tr>
                         {% endfor %}
@@ -67,9 +89,7 @@
                 </table>
             </div>
         {% else %}
-            <div class="empty-state">
-                <p>Chưa có thanh toán nào được ghi nhận cho hóa đơn này.</p>
-            </div>
+            <div class="card-body"><div class="empty-state"><i class="bi bi-credit-card" aria-hidden="true"></i><p>Chưa có thanh toán nào được ghi nhận cho hóa đơn này.</p></div></div>
         {% endif %}
     </div>
 </section>

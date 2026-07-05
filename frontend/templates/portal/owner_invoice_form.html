@@ -1,70 +1,39 @@
 {% extends "portal/base.html" %}
 
 {% block title %}{{ form_title }} - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><a href="{% url 'portal:owner_invoices_list' %}">Hóa đơn</a><span class="sep">/</span><span class="current">{{ form_title }}</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1><i class="page-icon bi bi-receipt"></i>{{ form_title }}</h1>
-    <p>Tạo hoặc cập nhật thông tin hóa đơn cho hợp đồng phòng của bạn.</p>
+    <h1><i class="page-icon bi bi-receipt" aria-hidden="true"></i>{{ form_title }}</h1>
+    <p>Tạo hoặc cập nhật kỳ và thời hạn của hóa đơn cho hợp đồng phòng.</p>
 </section>
 
-<section class="card form-card">
+<section class="card form-card financial-form-card">
     <div class="card-body">
-        <p class="help-text">Biểu mẫu này chỉ chỉnh thông tin đầu hóa đơn. Tổng tiền, đã thanh toán, còn lại và trạng thái do logic thanh toán quản lý.</p>
+        <div class="form-intro">
+            <span class="form-intro-icon" aria-hidden="true"><i class="bi bi-shield-check"></i></span>
+            <div><strong>Phạm vi chỉnh sửa</strong><p>Tổng tiền, số đã thanh toán, số còn lại và trạng thái vẫn do logic thanh toán của hệ thống quản lý.</p></div>
+        </div>
         <form method="post" novalidate>
             {% csrf_token %}
+            {% if form.non_field_errors %}<div class="alert alert-warning">{{ form.non_field_errors }}</div>{% endif %}
 
-            {% if form.non_field_errors %}
-                <div class="alert warning">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
-
+            <div class="form-section-heading"><span>Thông tin kỳ hóa đơn</span></div>
             {% if form.contract %}
-                <div class="form-field">
-                    <label for="{{ form.contract.id_for_label }}">Hợp đồng</label>
-                    {{ form.contract }}
-                    {{ form.contract.errors }}
-                </div>
+                <div class="form-field"><label for="{{ form.contract.id_for_label }}">Hợp đồng</label>{{ form.contract }}{{ form.contract.errors }}</div>
             {% endif %}
+            <div class="form-field"><label for="{{ form.month.id_for_label }}">Tháng</label>{{ form.month }}{{ form.month.errors }}</div>
+            <div class="form-field"><label for="{{ form.year.id_for_label }}">Năm</label>{{ form.year }}{{ form.year.errors }}</div>
 
-            <div class="form-field">
-                <label for="{{ form.month.id_for_label }}">Tháng</label>
-                {{ form.month }}
-                {{ form.month.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.year.id_for_label }}">Năm</label>
-                {{ form.year }}
-                {{ form.year.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.issued_date.id_for_label }}">Ngày lập</label>
-                {{ form.issued_date }}
-                {{ form.issued_date.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.due_date.id_for_label }}">Hạn thanh toán</label>
-                {{ form.due_date }}
-                {{ form.due_date.errors }}
-            </div>
-
-            <div class="form-field">
-                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
-                {{ form.note }}
-                {{ form.note.errors }}
-            </div>
+            <div class="form-section-heading"><span>Thời hạn và ghi chú</span></div>
+            <div class="form-field"><label for="{{ form.issued_date.id_for_label }}">Ngày lập</label>{{ form.issued_date }}{{ form.issued_date.errors }}</div>
+            <div class="form-field"><label for="{{ form.due_date.id_for_label }}">Hạn thanh toán</label>{{ form.due_date }}{{ form.due_date.errors }}</div>
+            <div class="form-field"><label for="{{ form.note.id_for_label }}">Ghi chú</label>{{ form.note }}{{ form.note.errors }}</div>
 
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
-                {% if invoice %}
-                    <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>
-                {% else %}
-                    <a class="button" href="{% url 'portal:owner_invoices_list' %}">Hủy</a>
-                {% endif %}
+                {% if invoice %}<a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>{% else %}<a class="button" href="{% url 'portal:owner_invoices_list' %}">Hủy</a>{% endif %}
             </div>
         </form>
     </div>

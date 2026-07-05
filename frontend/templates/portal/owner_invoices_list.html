@@ -1,59 +1,62 @@
 {% extends "portal/base.html" %}
+{% load rentease_format %}
 
 {% block title %}Hóa đơn của chủ trọ - RentEase{% endblock %}
+{% block breadcrumb %}<span class="sep">/</span><span class="current">Hóa đơn</span>{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="toolbar">
         <div>
-            <h1><i class="page-icon bi bi-receipt"></i>Hóa đơn của tôi</h1>
-            <p>Hóa đơn liên kết với hợp đồng của các phòng do bạn quản lý.</p>
+            <h1><i class="page-icon bi bi-receipt" aria-hidden="true"></i>Hóa đơn của tôi</h1>
+            <p>Theo dõi kỳ hóa đơn, số tiền còn lại và trạng thái thanh toán của từng hợp đồng.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}"><i class="bi bi-plus-circle"></i> Lập hóa đơn</a>
+        <a class="button primary" href="{% url 'portal:owner_invoice_create' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Lập hóa đơn</a>
     </div>
 </section>
 
-<section class="card">
-    <div class="card-body">
-        {% if invoices %}
-            <div class="table-wrap">
-                <table class="data-table">
-                    <thead>
+<section class="card resource-card" aria-labelledby="invoices-list-title">
+    {% if invoices %}
+        <div class="resource-list-header">
+            <div><p class="resource-list-kicker">Theo dõi công nợ</p><h2 id="invoices-list-title">Tất cả hóa đơn</h2></div>
+            <span class="resource-list-count">{{ invoices|length }} hóa đơn</span>
+        </div>
+        <div class="table-wrap resource-table financial-table" role="region" aria-label="Danh sách hóa đơn" tabindex="0">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Hóa đơn</th><th>Hợp đồng</th><th>Phòng</th><th>Tổng tiền</th><th>Còn lại</th><th>Trạng thái</th><th>Thao tác</th></tr>
+                </thead>
+                <tbody>
+                    {% for invoice in invoices %}
                         <tr>
-                            <th>Hóa đơn</th>
-                            <th>Hợp đồng</th>
-                            <th>Phòng</th>
-                            <th>Tháng</th>
-                            <th>Tổng tiền</th>
-                            <th>Còn lại</th>
-                            <th>Trạng thái</th>
-                            <th>Thao tác</th>
+                            <td>
+                                <div class="resource-cell">
+                                    <span class="resource-cell-icon" aria-hidden="true"><i class="bi bi-receipt"></i></span>
+                                    <div>
+                                        <a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
+                                        <span class="resource-code">Tháng {{ invoice.month }}/{{ invoice.year }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ invoice.contract.contract_code }}</td>
+                            <td>{{ invoice.contract.room.room_code }}</td>
+                            <td><span class="money-value">{{ invoice.total_amount|vnd }}</span></td>
+                            <td><strong class="money-value {% if invoice.remaining_amount %}money-due{% endif %}">{{ invoice.remaining_amount|vnd }}</strong></td>
+                            <td><span class="badge badge-{% if invoice.status == 'paid' %}success{% elif invoice.status == 'partial' %}warning{% elif invoice.status == 'overdue' %}danger{% else %}muted{% endif %}">{{ invoice.get_status_display }}</span></td>
+                            <td><a class="table-action" href="{% url 'portal:owner_invoice_detail' invoice.pk %}"><i class="bi bi-arrow-right" aria-hidden="true"></i> Xem</a></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for invoice in invoices %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'portal:owner_invoice_detail' invoice.pk %}">{{ invoice.invoice_code|default:invoice.pk }}</a>
-                                </td>
-                                <td>{{ invoice.contract.contract_code }}</td>
-                                <td>{{ invoice.contract.room.room_code }}</td>
-                                <td>{{ invoice.month }}/{{ invoice.year }}</td>
-                                <td>{{ invoice.total_amount }}</td>
-                                <td>{{ invoice.remaining_amount }}</td>
-                                <td><span class="status-badge">{{ invoice.get_status_display }}</span></td>
-                                <td><a href="{% url 'portal:owner_invoice_update' invoice.pk %}">Sửa</a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="card-body">
             <div class="empty-state">
-                <i class="bi bi-receipt-cutoff"></i>
+                <i class="bi bi-receipt-cutoff" aria-hidden="true"></i>
                 <p>Chưa có hóa đơn nào. Hãy lập hóa đơn sau khi phòng và hợp đồng đã sẵn sàng.</p>
+                <div class="empty-state-action"><a class="button primary" href="{% url 'portal:owner_invoice_create' %}">Lập hóa đơn</a></div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </section>
 {% endblock %}
