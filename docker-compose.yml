@@ -1,9 +1,9 @@
-version: '3.8'
+name: rentease-management
 
 services:
   db:
     image: postgres:15-alpine
-    container_name: rentease_postgres
+    container_name: rentease-management-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: rentease_db
@@ -12,7 +12,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - rentease_pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  rentease_pgdata:
+  postgres_data:
+    name: rentease-management-postgres-data

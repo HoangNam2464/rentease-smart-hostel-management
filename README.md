@@ -56,7 +56,7 @@ docker-compose up -d
 docker-compose ps
 ```
 
-PostgreSQL chạy tại `localhost:5432`. Dữ liệu được lưu trong Docker named volume `rentease_pgdata`, không nằm trong Git và không tự động được chia sẻ sang máy khác.
+PostgreSQL chạy tại `localhost:5432`. Dữ liệu được lưu trong Docker named volume `rentease-management-postgres-data`, không nằm trong Git và không tự động được chia sẻ sang máy khác.
 
 ### 2. Tạo môi trường Python
 
