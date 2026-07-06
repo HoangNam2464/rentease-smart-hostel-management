@@ -1,5 +1,9 @@
+from datetime import timedelta
+
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.utils import timezone
 
 from billing.models import Invoice, PaymentHistory
 from contracts.models import Contract
@@ -124,7 +128,7 @@ class OwnerTenantForm(forms.ModelForm):
         ]
         widgets = {
             'address': forms.Textarea(attrs={'rows': 5}),
-            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
         }
 
 
@@ -152,9 +156,9 @@ class OwnerContractCreateForm(forms.ModelForm):
             'status',
         ]
         widgets = {
-            'signed_date': forms.DateInput(attrs={'type': 'date'}),
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'signed_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'start_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'end_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
         }
 
     def __init__(self, *args, owner_profile=None, **kwargs):
@@ -192,9 +196,9 @@ class OwnerContractUpdateForm(forms.ModelForm):
             'status',
         ]
         widgets = {
-            'signed_date': forms.DateInput(attrs={'type': 'date'}),
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'signed_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'start_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'end_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
         }
 
     def __init__(self, *args, owner_profile=None, **kwargs):
@@ -236,8 +240,8 @@ class OwnerInvoiceCreateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
             'note',
         ]
         widgets = {
-            'issued_date': forms.DateInput(attrs={'type': 'date'}),
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'issued_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'due_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'note': forms.Textarea(attrs={'rows': 5}),
         }
 
@@ -262,8 +266,8 @@ class OwnerInvoiceUpdateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
             'note',
         ]
         widgets = {
-            'issued_date': forms.DateInput(attrs={'type': 'date'}),
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'issued_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'due_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'note': forms.Textarea(attrs={'rows': 5}),
         }
 
@@ -383,7 +387,7 @@ class OwnerRoomListingForm(forms.ModelForm):
         ]
         widgets = {
             'description': forms.Textarea(attrs={'rows': 5}),
-            'available_from': forms.DateInput(attrs={'type': 'date'}),
+            'available_from': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'expired_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
         }
 
@@ -414,3 +418,93 @@ class OwnerViewingRegistrationProcessForm(forms.Form):
         if status not in dict(ViewingRegistration.STATUS_CHOICES):
             raise forms.ValidationError('Selected status is not valid.')
         return status
+
+
+class OwnerTenantOnboardingForm(UserCreationForm):
+    full_name = forms.CharField(label='Họ và tên', max_length=150)
+    phone_number = forms.CharField(label='Số điện thoại', max_length=15)
+    contract_code = forms.CharField(label='Mã hợp đồng', max_length=50)
+    signed_date = forms.DateField(label='Ngày ký', widget=forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'))
+    start_date = forms.DateField(label='Ngày bắt đầu', widget=forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'))
+    end_date = forms.DateField(label='Ngày kết thúc', widget=forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'))
+    rent_amount = forms.DecimalField(
+        label='Tiền thuê mỗi kỳ', max_digits=12, decimal_places=2, min_value=0
+    )
+    deposit_amount = forms.DecimalField(
+        label='Tiền cọc', max_digits=12, decimal_places=2, min_value=0, initial=0
+    )
+    payment_cycle = forms.ChoiceField(
+        label='Chu kỳ thanh toán', choices=Contract.PAYMENT_CYCLE_CHOICES, initial='monthly'
+    )
+
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = ('username', 'email')
+        labels = {'username': 'Tên đăng nhập', 'email': 'Email đăng nhập'}
+
+    def __init__(self, *args, registration=None, owner_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.registration = registration
+        self.owner_profile = owner_profile
+        self.fields['email'].required = False
+        self.fields['password1'].label = 'Mật khẩu tạm thời'
+        self.fields['password2'].label = 'Nhập lại mật khẩu'
+
+        if registration and not self.is_bound:
+            today = timezone.localdate()
+            start_date = max(today, registration.listing.available_from)
+            self.fields['full_name'].initial = registration.full_name
+            self.fields['phone_number'].initial = registration.phone
+            self.fields['email'].initial = registration.email or ''
+            self.fields['contract_code'].initial = f'HD-{today.year}-{registration.pk:04d}'
+            self.fields['signed_date'].initial = today
+            self.fields['start_date'].initial = start_date
+            self.fields['end_date'].initial = start_date + timedelta(days=365)
+            self.fields['rent_amount'].initial = registration.listing.listing_price
+            self.fields['deposit_amount'].initial = registration.listing.deposit_amount
+
+    def clean_contract_code(self):
+        contract_code = self.cleaned_data['contract_code'].strip()
+        if Contract.objects.filter(contract_code=contract_code).exists():
+            raise forms.ValidationError('Mã hợp đồng này đã tồn tại.')
+        return contract_code
+
+    def clean(self):
+        cleaned_data = super().clean()
+        registration = self.registration
+        owner_profile = self.owner_profile
+
+        if not registration or not owner_profile:
+            raise forms.ValidationError('Không thể xác định lịch xem phòng cần onboarding.')
+
+        listing = registration.listing
+        room = listing.room
+        allowed_statuses = {
+            ViewingRegistration.STATUS_CONFIRMED,
+            ViewingRegistration.STATUS_COMPLETED,
+        }
+
+        if room.owner_id != owner_profile.pk:
+            raise forms.ValidationError('Bạn không có quyền onboarding khách cho phòng này.')
+        if registration.tenant_id:
+            raise forms.ValidationError('Lịch xem này đã được liên kết với một người thuê.')
+        if registration.status not in allowed_statuses:
+            raise forms.ValidationError('Hãy xác nhận hoặc hoàn tất lịch xem trước khi tạo tài khoản.')
+        if listing.status != RoomListing.STATUS_PUBLISHED:
+            raise forms.ValidationError('Tin phòng không còn ở trạng thái đang đăng.')
+        if room.status != 'available':
+            raise forms.ValidationError('Phòng không còn ở trạng thái còn trống.')
+        if Contract.objects.filter(room=room, status='active').exists():
+            raise forms.ValidationError('Phòng này đã có hợp đồng đang hoạt động.')
+
+        signed_date = cleaned_data.get('signed_date')
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
+        if start_date and start_date < listing.available_from:
+            self.add_error('start_date', 'Ngày bắt đầu không được trước ngày phòng sẵn sàng.')
+        if start_date and end_date and end_date < start_date:
+            self.add_error('end_date', 'Ngày kết thúc phải từ ngày bắt đầu trở đi.')
+        if signed_date and end_date and signed_date > end_date:
+            self.add_error('signed_date', 'Ngày ký không được sau ngày kết thúc hợp đồng.')
+
+        return cleaned_data

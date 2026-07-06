@@ -6,7 +6,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -30,6 +30,7 @@ from .forms import (
     OwnerRoomForm,
     OwnerRoomListingForm,
     OwnerTenantForm,
+    OwnerTenantOnboardingForm,
     OwnerViewingRegistrationProcessForm,
     RentEaseAuthenticationForm,
     TenantRepairRequestForm,
@@ -936,9 +937,20 @@ def owner_viewing_registration_detail(request, pk):
         return render_missing_owner_profile(request)
 
     registration = get_object_or_404(owner_viewing_registrations_queryset(profile), pk=pk)
+    onboarding_available = (
+        registration.tenant_id is None
+        and registration.status in {
+            ViewingRegistration.STATUS_CONFIRMED,
+            ViewingRegistration.STATUS_COMPLETED,
+        }
+        and registration.listing.status == RoomListing.STATUS_PUBLISHED
+        and registration.listing.room.status == 'available'
+        and not Contract.objects.filter(room=registration.listing.room, status='active').exists()
+    )
     return render(request, 'portal/owner_viewing_registration_detail.html', {
         'profile': profile,
         'registration': registration,
+        'onboarding_available': onboarding_available,
     })
 
 
@@ -967,6 +979,106 @@ def owner_viewing_registration_process(request, pk):
         })
 
     return render(request, 'portal/owner_viewing_registration_process_form.html', {
+        'profile': profile,
+        'registration': registration,
+        'form': form,
+    })
+
+
+@owner_required
+def owner_viewing_registration_onboard(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    scoped_registrations = owner_viewing_registrations_queryset(profile)
+    registration = get_object_or_404(scoped_registrations, pk=pk)
+
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                registration = get_object_or_404(
+                    scoped_registrations.select_related(None).select_for_update(), pk=pk
+                )
+                listing = RoomListing.objects.select_for_update().get(
+                    pk=registration.listing_id, room__owner=profile
+                )
+                room = Room.objects.select_for_update().get(
+                    pk=listing.room_id, owner=profile
+                )
+                registration.listing = listing
+                registration.listing.room = room
+
+                form = OwnerTenantOnboardingForm(
+                    request.POST,
+                    registration=registration,
+                    owner_profile=profile,
+                )
+                if form.is_valid():
+                    user = form.save(commit=False)
+                    user.user_type = 'TENANT'
+                    user.phone_number = form.cleaned_data['phone_number']
+                    user.save()
+
+                    tenant = Tenant(
+                        account=user,
+                        full_name=form.cleaned_data['full_name'],
+                        email=form.cleaned_data['email'],
+                        phone_number=form.cleaned_data['phone_number'],
+                        citizen_id=f'PENDING-{registration.pk:012d}',
+                        status='active',
+                    )
+                    tenant.full_clean()
+                    tenant.save()
+
+                    contract = Contract(
+                        room=room,
+                        tenant=tenant,
+                        contract_code=form.cleaned_data['contract_code'],
+                        signed_date=form.cleaned_data['signed_date'],
+                        start_date=form.cleaned_data['start_date'],
+                        end_date=form.cleaned_data['end_date'],
+                        rent_amount=form.cleaned_data['rent_amount'],
+                        deposit_amount=form.cleaned_data['deposit_amount'],
+                        payment_cycle=form.cleaned_data['payment_cycle'],
+                        status='active',
+                    )
+                    contract.full_clean()
+                    contract.save()
+
+                    ViewingRegistration.objects.filter(pk=registration.pk).update(
+                        tenant=tenant,
+                        status=ViewingRegistration.STATUS_COMPLETED,
+                        updated_at=timezone.now(),
+                    )
+                    listing.status = RoomListing.STATUS_RENTED
+                    listing.save(update_fields=['status', 'updated_at'])
+                    room.status = 'occupied'
+                    room.full_clean()
+                    room.save(update_fields=['status', 'updated_at'])
+
+                    messages.success(
+                        request,
+                        'Đã tạo tài khoản người thuê và hợp đồng. Hãy bàn giao thông tin đăng nhập qua kênh riêng.',
+                    )
+                    return redirect('portal:owner_contract_detail', pk=contract.pk)
+        except (IntegrityError, ValidationError):
+            form = OwnerTenantOnboardingForm(
+                request.POST,
+                registration=registration,
+                owner_profile=profile,
+            )
+            form.add_error(
+                None,
+                'Không thể hoàn tất onboarding. Dữ liệu chưa được tạo; vui lòng kiểm tra và thử lại.',
+            )
+    else:
+        form = OwnerTenantOnboardingForm(
+            registration=registration,
+            owner_profile=profile,
+        )
+
+    return render(request, 'portal/owner_tenant_onboarding_form.html', {
         'profile': profile,
         'registration': registration,
         'form': form,
@@ -1078,6 +1190,60 @@ def tenant_invoice_detail(request, pk):
         return render_missing_tenant_profile(request)
 
     invoice = get_object_or_404(tenant_invoices_queryset(tenant), pk=pk)
+
+    # Check for synchronous redirect from PayOS (useful for localhost or immediate feedback)
+    code = request.GET.get('code')
+    order_code = request.GET.get('orderCode')
+    if code == '00' and order_code:
+        try:
+            from billing.models import PaymentIntent
+            from billing.gateways.payos_adapter import PayOSGateway
+            
+            intent = PaymentIntent.objects.filter(order_code=str(order_code), invoice=invoice).first()
+            if intent and intent.status == PaymentIntent.STATUS_PENDING:
+                gateway = PayOSGateway()
+                payment_info = gateway.get_payment_link_info(order_code)
+                
+                if payment_info.get('status') == 'PAID':
+                    with transaction.atomic():
+                        # Refresh intent from DB to prevent race condition if webhook arrives concurrently
+                        intent = PaymentIntent.objects.select_for_update().get(pk=intent.pk)
+                        if intent.status == PaymentIntent.STATUS_PENDING:
+                            received_amount = Decimal(str(payment_info.get('amountPaid', 0)))
+                            expected_amount = intent.amount
+                            
+                            if received_amount >= expected_amount:
+                                if received_amount == expected_amount:
+                                    intent.status = PaymentIntent.STATUS_PAID
+                                    intent.save()
+                                    
+                                    history = PaymentHistory.objects.create(
+                                        invoice=invoice,
+                                        amount=received_amount,
+                                        method=PaymentHistory.METHOD_BANK_TRANSFER,
+                                        transaction_code=str(order_code),
+                                        paid_at=timezone.now(),
+                                        note=f'PayOS thanh toán tự động (Mã GD: {order_code})'
+                                    )
+                                    intent.payment_history = history
+                                    intent.save()
+                                    messages.success(request, 'Thanh toán thành công qua VietQR.')
+                                else:
+                                    intent.status = PaymentIntent.STATUS_REVIEW
+                                    intent.save()
+                                    messages.warning(request, 'Số tiền thanh toán không khớp. Đang chờ xác nhận từ chủ nhà.')
+                            else:
+                                intent.status = PaymentIntent.STATUS_REVIEW
+                                intent.save()
+                                messages.warning(request, 'Số tiền thanh toán chưa đủ. Đang chờ xác nhận từ chủ nhà.')
+        except Exception as e:
+            pass # Fail silently, rely on webhook or retry
+            
+    # Handle user explicitly cancelling payment
+    cancel = request.GET.get('cancel')
+    if cancel == 'true':
+        messages.info(request, 'Bạn đã hủy quá trình thanh toán.')
+        
     return render(request, 'portal/tenant_invoice_detail.html', {
         'tenant': tenant,
         'invoice': invoice,

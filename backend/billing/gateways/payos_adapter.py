@@ -2,9 +2,10 @@ import hashlib
 import hmac
 import json
 import logging
+import urllib.request
+import urllib.error
 from typing import Dict, Any
 
-import requests
 from django.conf import settings
 from django.utils import timezone
 
@@ -53,6 +54,33 @@ class PayOSGateway:
         
         return signature
 
+    def _post_json(self, url: str, payload: dict, headers: dict, timeout: int = 10) -> dict:
+        """Send a POST request with JSON body using urllib (stdlib).
+
+        Uses ``urllib.request`` instead of the pip ``requests`` library
+        because the legacy Django app ``backend/requests/`` shadows it.
+        """
+        # Ensure User-Agent is set to avoid Cloudflare 403/1010 blocks
+        if 'User-Agent' not in headers:
+            headers['User-Agent'] = 'RentEase/1.0'
+        if 'Accept' not in headers:
+            headers['Accept'] = 'application/json'
+
+        data = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request(url, data=data, headers=headers, method='POST')
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            # Try to parse error body
+            try:
+                body = json.loads(e.read().decode('utf-8'))
+            except Exception:
+                body = {"code": str(e.code), "desc": f"HTTP Error {e.code}: {e.reason}"}
+            return body
+        except urllib.error.URLError as e:
+            raise PayOSGatewayError(f"PayOS network error: {str(e)}")
+
     def create_payment_link(self, order_code: int, amount: int, description: str, return_url: str, cancel_url: str) -> Dict:
         """
         Creates a payment link via PayOS.
@@ -78,14 +106,15 @@ class PayOSGateway:
         }
         
         try:
-            response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
-            response_data = response.json()
+            response_data = self._post_json(endpoint, payload, headers, timeout=10)
             
             if response_data.get('code') != '00':
                 raise PayOSGatewayError(f"PayOS API Error: {response_data.get('desc')}")
                 
             return response_data.get('data', {})
-        except requests.exceptions.RequestException as e:
+        except PayOSGatewayError:
+            raise
+        except Exception as e:
             logger.error(f"PayOS Request Failed: {e}")
             raise PayOSGatewayError(f"PayOS network error: {str(e)}")
 
@@ -142,8 +171,50 @@ class PayOSGateway:
         }
         
         try:
-            response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
-            response_data = response.json()
+            response_data = self._post_json(endpoint, payload, headers, timeout=10)
             return response_data.get('code') == '00'
-        except requests.exceptions.RequestException:
+        except Exception:
             return False
+
+    def _get_json(self, url: str, headers: dict, timeout: int = 10) -> dict:
+        """Send a GET request expecting JSON."""
+        if 'User-Agent' not in headers:
+            headers['User-Agent'] = 'RentEase/1.0'
+        if 'Accept' not in headers:
+            headers['Accept'] = 'application/json'
+
+        req = urllib.request.Request(url, headers=headers, method='GET')
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            try:
+                body = json.loads(e.read().decode('utf-8'))
+            except Exception:
+                body = {"code": str(e.code), "desc": f"HTTP Error {e.code}: {e.reason}"}
+            return body
+        except urllib.error.URLError as e:
+            raise PayOSGatewayError(f"PayOS network error: {str(e)}")
+
+    def get_payment_link_info(self, order_code: int) -> Dict:
+        """Get payment link information by order_code."""
+        endpoint = f"{self.BASE_URL}/v2/payment-requests/{order_code}"
+        
+        headers = {
+            "x-client-id": self.client_id,
+            "x-api-key": self.api_key,
+            "Content-Type": "application/json"
+        }
+        
+        try:
+            response_data = self._get_json(endpoint, headers, timeout=10)
+            
+            if response_data.get('code') != '00':
+                raise PayOSGatewayError(f"PayOS API Error: {response_data.get('desc')}")
+                
+            return response_data.get('data', {})
+        except PayOSGatewayError:
+            raise
+        except Exception as e:
+            logger.error(f"PayOS Request Failed: {e}")
+            raise PayOSGatewayError(f"PayOS network error: {str(e)}")

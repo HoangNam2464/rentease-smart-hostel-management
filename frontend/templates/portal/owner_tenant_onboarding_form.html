@@ -1,0 +1,52 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Tạo tài khoản người thuê - RentEase{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="page-icon bi bi-person-check"></i>Tạo tài khoản và hợp đồng</h1>
+    <p>Chuyển lịch xem đã xác nhận thành người thuê có thể đăng nhập và sử dụng cổng thanh toán.</p>
+</section>
+
+<section class="card form-card">
+    <div class="card-body">
+        <h2>Thông tin phòng đã chọn</h2>
+        <ul class="info-list">
+            <li><span>Khách đăng ký</span><strong>{{ registration.full_name }}</strong></li>
+            <li><span>Phòng</span><strong>{{ registration.listing.room.room_code }} - {{ registration.listing.room.room_name }}</strong></li>
+            <li><span>Tin đăng</span><strong>{{ registration.listing.title }}</strong></li>
+            <li><span>Giá niêm yết</span><strong>{{ registration.listing.listing_price }}</strong></li>
+            <li><span>Tiền cọc</span><strong>{{ registration.listing.deposit_amount }}</strong></li>
+            <li><span>Trạng thái lịch xem</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
+        </ul>
+        <p class="help-text">CCCD và ảnh giấy tờ không được nhập tại portal chủ trọ. Admin có thể hoàn thiện dữ liệu định danh trong khu vực bảo mật sau khi kiểm tra trực tiếp.</p>
+    </div>
+</section>
+
+<section class="card form-card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <h2>Thông tin tài khoản và hợp đồng</h2>
+            <p class="help-text">Mật khẩu chỉ được nhập tại đây và không hiển thị lại sau khi lưu. Hãy bàn giao cho người thuê qua kênh riêng.</p>
+
+            {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <div class="page-actions">
+                <button class="button primary" type="submit"><i class="bi bi-check2-circle"></i> Hoàn tất onboarding</button>
+                <a class="button" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Hủy</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

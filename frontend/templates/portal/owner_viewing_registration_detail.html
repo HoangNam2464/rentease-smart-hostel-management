@@ -28,6 +28,11 @@
         {% endif %}
         <div class="page-actions">
             <a class="button primary" href="{% url 'portal:owner_viewing_registration_process' registration.pk %}"><i class="bi bi-pencil-square"></i> Xử lý lịch xem</a>
+            {% if onboarding_available %}
+                <a class="button cta" href="{% url 'portal:owner_viewing_registration_onboard' registration.pk %}"><i class="bi bi-person-check"></i> Tạo tài khoản và hợp đồng</a>
+            {% elif registration.tenant %}
+                <span class="status-badge success">Đã tạo người thuê</span>
+            {% endif %}
             <a class="button" href="{% url 'portal:owner_viewing_registrations_list' %}">Quay lại lịch xem</a>
         </div>
     </div>
