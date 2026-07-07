@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+    color-scheme: light;
+
+    /* Brand */
+    --re-primary: #0f766e;
+    --re-primary-dark: #0b5f59;
+    --re-primary-soft: #dff3ef;
+    --re-accent: #2563eb;
+    --re-accent-soft: #e8efff;
+    --re-blue: var(--re-accent);
+    --re-blue-soft: var(--re-accent-soft);
+    --re-indigo: var(--re-accent);
+    --re-indigo-soft: var(--re-accent-soft);
+
+    /* Foundations */
+    --re-bg: #f4f6f5;
+    --re-bg-soft: #eef7f4;
+    --re-surface: #ffffff;
+    --re-surface-strong: #f9fbfa;
+    --re-card: var(--re-surface);
+    --re-heading: #0f2433;
+    --re-text: #17212b;
+    --re-muted: #627386;
+    --re-faint: #8b99a8;
+    --re-border: #dce5e2;
+    --re-border-strong: #cad8d4;
+
+    /* Semantic states */
+    --re-success: #15803d;
+    --re-success-soft: #e4f7eb;
+    --re-warning: #b7791f;
+    --re-warning-soft: #fff5db;
+    --re-danger: #c24135;
+    --re-danger-soft: #ffe9e6;
+    --re-info: #2563eb;
+    --re-info-soft: #e8efff;
+
+    /* Shape and elevation */
+    --re-radius-xs: 6px;
+    --re-radius-sm: 8px;
+    --re-radius-md: 12px;
+    --re-radius-lg: 16px;
+    --re-shadow-sm: 0 6px 18px rgba(15, 36, 51, 0.06);
+    --re-shadow-md: 0 12px 30px rgba(15, 36, 51, 0.09);
+    --re-shadow: var(--re-shadow-md);
+    --re-radius: var(--re-radius-lg);
+    --re-radius-sm: var(--re-radius-md);
+    --re-focus-ring: rgba(15, 118, 110, 0.24);
+    --re-container: 1180px;
+    --re-card-border: var(--re-border);
+    --re-dashboard-bg: var(--re-bg);
+
+    /* Authenticated shell */
+    --sidebar-bg: #173f3b;
+    --sidebar-border: rgba(223, 243, 239, 0.10);
+    --sidebar-text: #c9dedb;
+    --sidebar-text-hover: #ffffff;
+    --sidebar-section-color: #86aaa5;
+    --sidebar-active-bg: linear-gradient(118deg, #0f766e, #0b5f59);
+    --sidebar-active-border: transparent;
+    --topbar-bg: #ffffff;
+    --topbar-border: #dce5e2;
+    --content-bg: #f4f6f5;
+
+    /* Compatibility aliases used by existing portal components */
+    --brand-primary: var(--re-primary);
+    --brand-primary-dark: var(--re-primary-dark);
+    --brand-primary-soft: var(--re-primary-soft);
+    --brand-blue: var(--re-accent);
+    --card-bg: var(--re-surface);
+    --card-border: var(--re-border);
+    --card-border-strong: var(--re-border-strong);
+    --card-radius: var(--re-radius-md);
+    --card-shadow: var(--re-shadow-sm);
+    --card-shadow-elevated: var(--re-shadow-md);
+    --text-heading: var(--re-heading);
+    --text-body: var(--re-text);
+    --text-muted: var(--re-muted);
+    --text-faint: var(--re-faint);
+    --color-success: var(--re-success);
+    --color-success-soft: var(--re-success-soft);
+    --color-danger: var(--re-danger);
+    --color-danger-soft: var(--re-danger-soft);
+    --color-warning: var(--re-warning);
+    --color-warning-soft: var(--re-warning-soft);
+    --color-info: var(--re-info);
+    --color-info-soft: var(--re-info-soft);
+    --focus-ring: var(--re-focus-ring);
+}

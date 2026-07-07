@@ -2,52 +2,10 @@
    RENTEASE LAYOUT SYSTEM — DreamPOS-style modern admin layout
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
     --sidebar-width: 260px;
-    --sidebar-bg: #283046; /* DreamPOS Dark */
-    --sidebar-border: transparent;
-    --sidebar-text: #d0d2d6;
-    --sidebar-text-hover: #ffffff;
-    --sidebar-active-bg: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
-    --sidebar-active-border: transparent;
-    --sidebar-section-color: #676d7d;
-
     --topbar-height: 62px;
-    --topbar-bg: #ffffff;
-    --topbar-border: transparent;
-
-    --content-bg: #f8f8f8; 
     --content-padding: 24px 28px 40px;
-
-    --brand-primary: #7367f0; /* DreamPOS Purple/Blue */
-    --brand-primary-dark: #5e50ee;
-    --brand-primary-soft: rgba(115, 103, 240, 0.12);
-    --brand-blue: #00cfe8;
-
-    --card-bg: #ffffff;
-    --card-border: transparent;
-    --card-border-strong: #ebe9f1;
-    --card-radius: 10px;
-    --card-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
-    --card-shadow-elevated: 0 8px 30px 0 rgba(34, 41, 47, 0.15);
-
-    --text-heading: #5e5873;
-    --text-body: #6e6b7b;
-    --text-muted: #b9b9c3;
-    --text-faint: #d8d6de;
-
-    --color-success: #28c76f;
-    --color-success-soft: rgba(40, 199, 111, 0.12);
-    --color-danger: #ea5455;
-    --color-danger-soft: rgba(234, 84, 85, 0.12);
-    --color-warning: #ff9f43;
-    --color-warning-soft: rgba(255, 159, 67, 0.12);
-    --color-info: #00cfe8;
-    --color-info-soft: rgba(0, 207, 232, 0.12);
-
-    --focus-ring: rgba(115, 103, 240, 0.25);
     --section-gap: 24px;
 }
 
@@ -147,7 +105,7 @@ body.app-body {
     border-radius: 9px;
     border: none;
     background: var(--brand-primary);
-    box-shadow: 0 0 10px rgba(115, 103, 240, 0.4);
+    box-shadow: 0 0 10px rgba(15, 118, 110, 0.32);
     color: #fff;
     font-size: 1.1rem; font-weight: 900;
     display: flex; align-items: center; justify-content: center;
@@ -220,7 +178,7 @@ body.app-body {
     color: #ffffff;
     background: var(--sidebar-active-bg);
     font-weight: 500;
-    box-shadow: 0 4px 15px 0 rgba(115, 103, 240, 0.4);
+    box-shadow: 0 4px 15px 0 rgba(15, 118, 110, 0.30);
     transform: none;
 }
 
@@ -410,7 +368,7 @@ body.app-body {
 }
 
 .topbar-btn:hover {
-    background: rgba(115, 103, 240, 0.12);
+    background: var(--brand-primary-soft);
     color: var(--brand-primary);
 }
 
@@ -2949,13 +2907,13 @@ form > .form-section-heading:first-of-type {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 10px rgba(115, 103, 240, 0.3);
+    box-shadow: 0 4px 10px rgba(15, 118, 110, 0.24);
 }
 
 .btn-primary:hover {
     background-color: var(--brand-primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(115, 103, 240, 0.4);
+    box-shadow: 0 6px 15px rgba(15, 118, 110, 0.30);
     color: #fff;
 }
 

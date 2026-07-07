@@ -1,33 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
-
-:root {
-    color-scheme: light;
-    --re-bg: #f4f6f5;
-    --re-bg-soft: #eef7f4;
-    --re-surface: #ffffff;
-    --re-surface-strong: #f9fbfa;
-    --re-text: #17212b;
-    --re-heading: #0f2433;
-    --re-muted: #627386;
-    --re-primary: #0f766e;
-    --re-primary-dark: #0b5f59;
-    --re-primary-soft: #dff3ef;
-    --re-blue: #2563eb;
-    --re-blue-soft: #e8efff;
-    --re-border: #dce5e2;
-    --re-warning: #b7791f;
-    --re-warning-soft: #fff5db;
-    --re-danger: #c24135;
-    --re-danger-soft: #ffe9e6;
-    --re-success: #15803d;
-    --re-success-soft: #e4f7eb;
-    --re-shadow-sm: 0 8px 22px rgba(15, 36, 51, 0.06);
-    --re-shadow: 0 18px 45px rgba(15, 36, 51, 0.09);
-    --re-radius: 18px;
-    --re-radius-sm: 12px;
-    --re-container: 1180px;
-}
-
 * {
     box-sizing: border-box;
 }
@@ -134,6 +104,7 @@ a {
 .re-nav a,
 .button {
     display: inline-flex;
+    gap: 6px;
     min-height: 42px;
     align-items: center;
     justify-content: center;
@@ -853,14 +824,7 @@ a {
     }
 }
 
-/* Phase 20C reference-based visual direction */
-
-:root {
-    --re-indigo: #3346a3;
-    --re-indigo-soft: #edf0ff;
-    --re-card-border: #e2e8f0;
-    --re-dashboard-bg: #f6f8fb;
-}
+/* Reference-informed public components */
 
 body {
     background: var(--re-dashboard-bg);

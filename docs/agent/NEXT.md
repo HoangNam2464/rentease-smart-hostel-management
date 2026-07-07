@@ -3,20 +3,20 @@
 ## Immediate iteration
 
 ```text
-Reference-first design foundation
+Owner dashboard and navigation vertical slice
 ```
 
 ## Goal
 
-Stabilize the shared interface language before redesigning more screens.
+Apply the shared RentEase foundation to the owner's highest-frequency operational surface.
 
 ## Scope
 
-- Audit DreamPOS and other approved property-management references for reusable layout and interaction patterns.
-- Choose one RentEase visual identity and reconcile public/portal token differences.
-- Define shared shell, navigation, button, form, table, badge, card, empty-state, and responsive patterns.
-- Define the EN/VI terminology matrix for those components without enabling runtime i18n yet.
-- Select one representative owner page and one tenant page for the first vertical slice.
+- Render the current owner dashboard and navigation with a local demo owner.
+- Apply the teal shared tokens, compact operational hierarchy, and consistent icon/control spacing.
+- Preserve debt, occupancy, contracts, repairs, viewings, and quick actions as the primary hierarchy.
+- Replace hard-coded owner dashboard links with named Django URLs where available.
+- Verify desktop/mobile layout, empty data, long text, large amounts, focus, and owner scoping.
 
 ## Required evidence
 
@@ -30,5 +30,5 @@ Stabilize the shared interface language before redesigning more screens.
 
 - React migration or importing DreamPOS dependencies
 - Copying DreamPOS branding, assets, or POS-specific behavior
-- Runtime language switcher or bulk translation; that is the final UI phase
+- Tenant, reports, admin, runtime language switcher, or bulk translation
 - Model, migration, billing, permission, or legacy changes

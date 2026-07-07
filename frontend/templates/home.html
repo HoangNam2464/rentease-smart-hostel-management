@@ -6,18 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentEase - Nền tảng Tìm kiếm & Quản lý Nhà Trọ Tối Ưu</title>
     <meta name="description" content="RentEase giúp chủ trọ quản lý phòng, hóa đơn dễ dàng. Khách thuê và người tìm phòng tìm kiếm không gian sống lý tưởng.">
-    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}?v=3">
+    <link rel="stylesheet" href="{% static 'css/rentease-tokens.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}?v=4">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         :root {
-            --home-primary: #0f766e;
-            --home-primary-dark: #0b5f59;
-            --home-bg: #f8fafc;
-            --home-surface: #ffffff;
-            --home-text: #0f172a;
-            --home-muted: #64748b;
-            --home-border: #e2e8f0;
-            --home-accent: #3b82f6;
+            --home-primary: var(--re-primary);
+            --home-primary-dark: var(--re-primary-dark);
+            --home-bg: var(--re-bg);
+            --home-surface: var(--re-surface);
+            --home-text: var(--re-text);
+            --home-muted: var(--re-muted);
+            --home-border: var(--re-border);
+            --home-accent: var(--re-accent);
         }
 
         *, *::before, *::after { box-sizing: border-box; }

@@ -28,6 +28,13 @@ Interface work starts with evidence, not invention.
 
 DreamPOS is approved for learning admin shell, navigation, cards, tables, forms, badges, spacing, and dense operational layouts. Buildium/AppFolio may inform property-management workflows. Neither is a source for copied code or branding.
 
+### Applied foundation: 2026-07-07
+
+- Learned from DreamPOS: fixed 260px operational sidebar, grouped navigation, compact topbar, scannable status treatments, and dense table/form spacing.
+- Adapted for RentEase: teal brand, calmer shadows, visible borders, property-management vocabulary, role-specific navigation, and privacy-safe content.
+- Rejected: purple DreamPOS branding, POS modules, frontend dependencies, copied assets, decorative theme controls, and generic card-heavy dashboards.
+- Shared implementation source: `frontend/static/css/rentease-tokens.css`.
+
 ## Visual identity
 
 Use one RentEase identity across public and authenticated surfaces.
