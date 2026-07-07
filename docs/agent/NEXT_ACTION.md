@@ -3,24 +3,27 @@
 ## Immediate Next Phase
 
 ```text
-Phase 18 - Production Launch & Final Review
+Phase 18 - UI & Product Experience Polish
 ```
 
-Status: Phase 17 (PayOS Integration) is complete. We are now preparing for the final phase: production launch.
+Status: Phase 17 (PayOS Integration) is complete. We are now pivoting to polish the UI and product experience to ensure RentEase feels like a real, professional SaaS product before final production launch.
 
 ## Goal
 
-Kiểm tra và cấu hình toàn bộ hệ thống để sẵn sàng chạy thực tế.
-- Kiểm tra các biến môi trường Production (`DEBUG=False`, `ALLOWED_HOSTS`, `SECRET_KEY`).
-- Đóng gói và hướng dẫn khởi chạy.
-- Dọn dẹp các tệp dư thừa, tạm thời.
+Nâng cấp giao diện và trải nghiệm người dùng theo các nguyên tắc thiết kế mới tại `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`.
+- **Visitor**: Nâng cấp Home page chuẩn SaaS, luồng tìm phòng thực tế.
+- **Owner**: Hoàn thiện luồng đăng tin, đánh bóng dashboard (lấy cảm hứng từ DreamPOS/Buildium).
+- **Tenant**: Trải nghiệm xem hóa đơn, thanh toán, sửa chữa mượt mà.
+- **Admin**: Dọn dẹp tàn dư HOSTELLO, xây dựng giao diện Admin chuyên biệt cho RentEase.
+- **Data**: Đảm bảo sử dụng dữ liệu mẫu tiếng Việt chân thực (không dùng data "test").
 
 ## Current Problem
-Hệ thống đã hoàn thiện toàn bộ luồng nghiệp vụ cốt lõi, từ giao diện người dùng, quản lý CSDL PostgreSQL bằng Docker, cho đến thanh toán tự động qua PayOS. Bước cuối cùng là kiểm duyệt tổng thể (Production readiness).
+Hệ thống backend đã hoàn thiện luồng nghiệp vụ cốt lõi, nhưng giao diện và cảm giác sản phẩm (product feeling) vẫn còn mang dáng dấp của một project demo hoặc admin cũ. Cần nâng cấp UI/UX để sẵn sàng chào hàng (Production readiness).
 
 ## Expected First Step After Approval
-- Chạy hệ thống với `DEBUG=False`.
-- Thu thập static files (`collectstatic`).
+- Phân tích và nâng cấp `home.html` thành Landing Page chuẩn SaaS.
+- Áp dụng các thay đổi CSS/UI mà không can thiệp vào Models hay Backend Logic.
+- Đảm bảo tính Responsive trên thiết bị di động.
 
 ## Stop Conditions
-- Vượt qua kiểm tra toàn diện.
+- Giao diện đạt chuẩn SaaS chuyên nghiệp, các luồng UI hoạt động trơn tru với dữ liệu mẫu chân thực, vượt qua các bài kiểm tra giao diện (Visual QA).

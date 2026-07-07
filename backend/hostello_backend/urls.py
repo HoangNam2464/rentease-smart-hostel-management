@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView
+from listings.views import home_page_view
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', home_page_view, name='home'),
     path('admin/', admin.site.urls),
     path("rooms/", include("listings.urls")),
     path("api/billing/", include("billing.api.urls")),

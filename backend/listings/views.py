@@ -93,3 +93,13 @@ def viewing_registration_success(request, pk):
     return render(request, 'listings/viewing_registration_success.html', {
         'listing': listing,
     })
+
+
+def home_page_view(request):
+    """
+    Renders the home page with featured available rooms.
+    """
+    featured_rooms = published_listings().order_by('-created_at')[:4]
+    return render(request, 'home.html', {
+        'featured_rooms': featured_rooms,
+    })

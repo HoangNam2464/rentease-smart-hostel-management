@@ -9,22 +9,38 @@ Creative north star: calm operations for Vietnamese rentals.
 The interface should reduce the mental work of finding a room, running a boarding house, or understanding a tenancy. It should feel grounded, legible, and quietly capable rather than decorative or technology-led.
 
 Avoid these visual references:
-
 - the old HOSTELLO school-management interface
 - a generic SaaS dashboard made from repeated cards
 - a luxury real-estate marketplace that hides operational detail
 - a banking interface that makes routine rental tasks feel formal or intimidating
 
+**Inspiration References:**
+- **DreamPOS**: Learn sidebar, topbar, cards, tables, forms, buttons, badges, and spacing polish. Do not copy their code or branding.
+- **Buildium / AppFolio**: Learn real property management workflows and professional SaaS product feeling. Do not copy their assets.
+
 ## Product Direction
 
-RentEase is a practical Vietnamese boarding-house management product. It should feel trustworthy, clear, business-ready, and human-written rather than like a generic school admin template.
+RentEase must not feel like a student demo or old HOSTELLO admin project. It should feel like a real Vietnamese rental-room/property management SaaS.
 
 ### Role-Specific Surfaces
 
-- Public pages: room-listing product with clear browsing and viewing-registration actions.
-- Owner pages: compact small-business dashboard with strong hierarchy and efficient actions.
-- Tenant pages: simpler resident portal with readable status and financial information.
-- Admin/reports: operational, compact, staff-oriented, and privacy-safe.
+1. **Public Pages (Visitor Flow)**
+   - **Home Page**: Must be a modern SaaS-like home page highlighting product value, not a generic landing page.
+   - **Room Discovery**: A real room discovery flow for public visitors with search, filtering, and clear listing details.
+2. **Owner Pages (Small-Business Dashboard)**
+   - **Listing Workflow**: A real owner listing/posting workflow.
+   - **Operations**: Compact dashboard with strong hierarchy and efficient actions for rooms, contracts, invoices, and repairs.
+   - **Polish**: DreamPOS-inspired dashboard polish without copying DreamPOS directly.
+3. **Tenant Pages (Resident Portal)**
+   - **Experience**: A seamless tenant invoice, payment, repair, and notification experience.
+   - **Clarity**: Readable status and financial information.
+4. **Admin/Reports (Staff-Oriented)**
+   - **Cleanup**: Admin UI must be cleaned up from old HOSTELLO legacy concepts to a RentEase-specific admin.
+   - **Privacy**: Operational, compact, and privacy-safe.
+
+### Future Integrations Direction
+- **Zalo OA/ZNS**: Future direction for tenant and owner notifications.
+- **Facebook/Zalo**: Future direction for listing promotion and sharing.
 
 ## Active Files
 
@@ -67,16 +83,17 @@ Reuse existing CSS variables and component classes before introducing new ones.
 - Use cards when they improve grouping, not as a wrapper for every element.
 - Avoid excessive gradients, decorative shadows, giant radii, and generic dashboard ornament.
 
-## Copy
+## Copy and Data
 
-- Use Vietnamese-first, natural wording with proper diacritics.
+- **Vietnamese Focus**: Use Vietnamese-first, natural wording with proper diacritics.
+- **Realistic Demo Data**: Always use realistic Vietnamese demo data (e.g., "Phòng trọ Hoa Sữa", "Trần Hoàng Nam"). Do not use test-looking content (e.g., "test1", "foo").
 - Prefer concrete actions such as `Ghi nhận thanh toán` and `Xử lý yêu cầu sửa chữa`.
 - Avoid vague marketing promises, placeholder text, mixed-language labels, and production-readiness claims.
 - Never put credentials, identity data, internal notes, or permission fields in UI copy or screenshots.
 
 ## Responsive and Accessibility
 
-- Verify desktop around 1366px and mobile around 390px for affected surfaces.
+- **Mobile Quality**: Ensure high-quality mobile responsive behavior. Verify desktop around 1366px and mobile around 390px for affected surfaces.
 - Keep touch targets usable and focus states visible.
 - Preserve semantic headings, form labels, and keyboard navigation.
 - Ensure tables remain usable with horizontal scrolling where necessary.
@@ -94,6 +111,7 @@ Reuse existing CSS variables and component classes before introducing new ones.
 
 ## UI Definition of Done
 
+- **Visible Impact Rule**: UI changes must improve actual visible pages and workflows in the product, not just documentation.
 - Affected routes render for the correct role and reject the wrong role.
 - No raw Django template syntax is visible.
 - No sensitive or unrelated owner/tenant data is rendered.

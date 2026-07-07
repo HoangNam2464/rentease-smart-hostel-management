@@ -57,11 +57,11 @@ Remaining production work includes PostgreSQL migration planning/execution, prod
 - Phase 14C-3B3B1 atomically dual-writes the four compatibility lines whenever a complete InvoiceDetail snapshot is created or updated. Reserved-code conflicts roll back the detail, lines, and invoice total together; repeated saves update rather than duplicate; zero usage is preserved. InvoiceDetail remains authoritative, and partial InvoiceDetail saves are rejected to prevent snapshot/line/header divergence.
 - Phase 14C-3B3B2 makes the signed amounts of the four validated compatibility `InvoiceLine` rows authoritative for recalculating invoices that have an InvoiceDetail. The reader requires exact codes, ownership, source boundaries, financial semantics, snapshot values, and detail/header parity. InvoiceDetail remains the atomic snapshot/write source; non-compatibility adjustment and discount lines remain deferred. Payment create/delete and detail updates roll back when line validation fails or a new total would be below the amount already paid. Header-only draft compatibility behavior is unchanged, and no schema, migration, UI, report, permission, or real-data change occurred.
 
-## Current Status (Last Updated: Agent Phase 16)
+## Current Status (Last Updated: Agent Phase 18)
 
-- **Product State**: Môi trường Development và Production-Ready hoàn thiện (100% Tests Pass). Hệ thống đã kích hoạt thành công cơ sở dữ liệu PostgreSQL qua Docker (`docker-compose up -d`). Đã hoàn thành quá trình Onboarding dữ liệu ban đầu cho các tài khoản test.
-- **Core Working Area**: PostgreSQL Database, Core Logic (Billing, Maintenance, Contracts), UI/UX DreamPOS.
-- **Next Up**: Sẵn sàng để người dùng trải nghiệm thực tế hoặc khởi chạy (Launch).
+- **Product State**: Môi trường Development và Production-Ready backend hoàn thiện (100% Tests Pass). Tuy nhiên, giao diện hiện tại vẫn mang tính chất demo và cần được nâng cấp thành một sản phẩm SaaS chuyên nghiệp.
+- **Core Working Area**: Nâng cấp UI/UX, tối ưu hóa Frontend (Home page, Dashboards), chuẩn hóa nội dung tiếng Việt chân thực, dọn dẹp giao diện Admin.
+- **Next Up**: Nâng cấp giao diện theo hướng dẫn tại `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` trước khi khởi chạy (Launch).
 
 ## What is Working Perfectly
 - 100% Unit Tests (79 tests) passed trên PostgreSQL (Authentication, Permissions, Billing, Governance, Legacy exclusion).
