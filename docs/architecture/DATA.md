@@ -2,7 +2,7 @@
 
 This is the current comparison between the active Django model graph and the supplied `rentease.drawio` ERD. It is an architecture reference for PostgreSQL planning, not permission to change models or generate migrations.
 
-The approved target direction and staged implementation plan live in `docs/architecture/TARGET_DATA_MODEL.md`.
+The approved target direction and staged implementation plan live in `docs/architecture/TARGET.md`.
 
 ## Verdict
 

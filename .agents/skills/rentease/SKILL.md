@@ -12,8 +12,8 @@ Work on RentEase with the minimum relevant context. Treat current source files a
 Before editing:
 
 1. Read `AGENTS.md`.
-2. Read `docs/agent/RENTEASE_CURRENT_STATE.md`.
-3. Read `docs/agent/NEXT_ACTION.md`.
+2. Read `docs/agent/STATE.md`.
+3. Read `docs/agent/NEXT.md`.
 4. Run the root Git checks and backend Django checks required by `AGENTS.md`.
 5. Stop if the branch, worktree, Django check, or migration dry-run fails its gate.
 
@@ -44,11 +44,11 @@ For mixed tasks, load each relevant reference. Do not retrieve historical docume
 
 ## Canonical Context
 
-- Product: `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
-- Structure and active/legacy map: `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- Security: `docs/agent/RENTEASE_SECURITY_RULES.md`
-- UI: `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
-- Production order: `docs/agent/RENTEASE_PRODUCTION_ROADMAP.md`
+- Product: `docs/agent/PRODUCT.md`
+- Structure and active/legacy map: `docs/architecture/STRUCTURE.md`
+- Security: `docs/agent/SECURITY.md`
+- UI: `docs/ui/DESIGN.md`
+- Production order: `docs/agent/ROADMAP.md`
 - Documentation authority: `docs/README.md`
 - History retrieval: `docs/archive/README.md` and Git history/tags
 

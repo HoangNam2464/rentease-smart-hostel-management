@@ -1,6 +1,6 @@
 # RentEase Legacy Boundaries
 
-This is the current reference for deciding whether a RentEase task belongs to active product code or retained HOSTELLO code. Use `PROJECT_STRUCTURE_MAP.md` for the full repository map.
+This is the current reference for deciding whether a RentEase task belongs to active product code or retained HOSTELLO code. Use `STRUCTURE.md` for the full repository map.
 
 ## Active RentEase Areas
 

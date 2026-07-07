@@ -4,8 +4,8 @@ This is the mandatory starting point for every agent working in this repository.
 
 ## Start Here
 
-1. Read `docs/agent/RENTEASE_CURRENT_STATE.md`.
-2. Read `docs/agent/NEXT_ACTION.md`.
+1. Read `docs/agent/STATE.md`.
+2. Read `docs/agent/NEXT.md`.
 3. Use `.agents/skills/rentease/SKILL.md` for substantive RentEase work. It routes backend, UI, and documentation tasks to separate references.
 4. Verify the repository from the root:
 
@@ -38,15 +38,30 @@ Stop before editing if the branch is not `complete-product`, the starting worktr
 - Do not pull, merge, rebase, switch branches, push, or tag without explicit approval.
 - Preserve unrelated user changes if the worktree is already modified; this repository normally requires a clean starting tree.
 
+## Language Contract
+
+- Code is English-only: file names, identifiers, classes, functions, variables, URL names, CSS classes, tests, comments, docstrings, API fields, and new technical documentation.
+- Existing database names and migration history are compatibility exceptions; do not rename them without an approved migration plan.
+- Product UI supports exactly Vietnamese (`vi`) and English (`en`). Render only the selected language; do not mix both languages except proper nouns, trademarks, currency codes, or standard units.
+- UI wording belongs to the translation layer, never to Python identifiers or business-state values.
+- English is the source message language. Vietnamese is the default product locale and must be complete before the language switcher ships.
+
+## Reference-First Design Contract
+
+- Interface quality is the primary product priority until the UI program is complete.
+- Study the approved reference product or supplied source before creating a new surface. Record the layout, hierarchy, components, density, responsive behavior, and interactions being learned.
+- Adapt patterns to RentEase workflows and branding. Do not copy reference code, assets, branding, or irrelevant POS behavior.
+- Do not treat an AI-invented generic dashboard as design evidence. Every material UI change requires rendered desktop and mobile verification.
+
 ## Load Only Relevant Context
 
 | Task | Read |
 |---|---|
-| Product behavior or scope | `docs/agent/RENTEASE_PRODUCT_CONTEXT.md` |
-| Project paths | `docs/architecture/PROJECT_STRUCTURE_MAP.md` |
-| Active/legacy boundaries | `docs/architecture/LEGACY_BOUNDARIES.md` |
-| Django, permissions, data, billing, settings | `.agents/skills/rentease/references/backend-safety.md` and `docs/agent/RENTEASE_SECURITY_RULES.md` |
-| Templates, CSS, UX, responsive work | `.agents/skills/rentease-design/SKILL.md` and `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` |
+| Product behavior or scope | `docs/agent/PRODUCT.md` |
+| Project paths | `docs/architecture/STRUCTURE.md` |
+| Active/legacy boundaries | `docs/architecture/LEGACY.md` |
+| Django, permissions, data, billing, settings | `.agents/skills/rentease/references/backend-safety.md` and `docs/agent/SECURITY.md` |
+| Templates, CSS, UX, responsive work | `.agents/skills/rentease-design/SKILL.md` and `docs/ui/DESIGN.md` |
 | Documentation maintenance | `.agents/skills/rentease/references/documentation.md` and `docs/README.md` |
 | Historical decisions only | Git history/tags; retrieval guidance in `docs/archive/README.md` |
 
@@ -58,8 +73,8 @@ When documents disagree, use this order:
 
 1. User's current request
 2. `AGENTS.md`
-3. `docs/agent/RENTEASE_CURRENT_STATE.md`
-4. `docs/agent/NEXT_ACTION.md`
+3. `docs/agent/STATE.md`
+4. `docs/agent/NEXT.md`
 5. Task-specific canonical document from the table above
 6. Git history or recovered historical documents
 

@@ -100,4 +100,4 @@ Do not run the command against production or valuable data. Never commit or shar
 
 Capture the landing page, room list/detail, viewing form, owner dashboard and invoice flow, tenant dashboard and payment flow, admin/reports, and one mobile view. Before sharing, hide terminals, passwords, environment files, database paths, backups, and all private identity data.
 
-Use `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` as the visual reference.
+Use `docs/ui/DESIGN.md` as the visual reference.

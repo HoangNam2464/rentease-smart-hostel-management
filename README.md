@@ -325,13 +325,13 @@ Nguyên tắc quan trọng:
 
 - [`docs/README.md`](docs/README.md)
 - [`docs/demo/README.md`](docs/demo/README.md)
-- [`docs/agent/RENTEASE_CURRENT_STATE.md`](docs/agent/RENTEASE_CURRENT_STATE.md)
-- [`docs/agent/NEXT_ACTION.md`](docs/agent/NEXT_ACTION.md)
-- [`docs/agent/RENTEASE_PRODUCT_CONTEXT.md`](docs/agent/RENTEASE_PRODUCT_CONTEXT.md)
-- [`docs/agent/RENTEASE_SECURITY_RULES.md`](docs/agent/RENTEASE_SECURITY_RULES.md)
-- [`docs/architecture/PROJECT_STRUCTURE_MAP.md`](docs/architecture/PROJECT_STRUCTURE_MAP.md)
-- [`docs/architecture/LEGACY_BOUNDARIES.md`](docs/architecture/LEGACY_BOUNDARIES.md)
-- [`docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`](docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md)
+- [`docs/agent/STATE.md`](docs/agent/STATE.md)
+- [`docs/agent/NEXT.md`](docs/agent/NEXT.md)
+- [`docs/agent/PRODUCT.md`](docs/agent/PRODUCT.md)
+- [`docs/agent/SECURITY.md`](docs/agent/SECURITY.md)
+- [`docs/architecture/STRUCTURE.md`](docs/architecture/STRUCTURE.md)
+- [`docs/architecture/LEGACY.md`](docs/architecture/LEGACY.md)
+- [`docs/ui/DESIGN.md`](docs/ui/DESIGN.md)
 
 ## Liên Lạc và Hỗ Trợ
 

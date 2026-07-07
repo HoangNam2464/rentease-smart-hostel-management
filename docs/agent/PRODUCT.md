@@ -56,3 +56,11 @@ Production readiness requires:
 - Public pages expose only listing-safe data.
 - Owner data is owner-scoped; tenant data is tenant-scoped.
 - Citizen identity data and authentication internals are never product UI content.
+
+## Language Direction
+
+- The product supports Vietnamese and English only.
+- Vietnamese is the default market-facing locale; English is the source language for code and gettext message IDs.
+- A rendered page shows only the selected locale. Proper nouns, trademarks, currency codes, and standard units may remain unchanged.
+- Code terminology and interface vocabulary are separate concerns. Internal names must never be translated into Vietnamese identifiers.
+- The complete runtime i18n conversion is scheduled after the interface system and workflows are visually stable.

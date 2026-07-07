@@ -1,58 +1,38 @@
 # RentEase Documentation
 
-This directory contains only current, project-specific guidance. Load the minimum context required for the task.
+Only current project guidance belongs in this directory. Git history is the record for completed phases and superseded plans.
 
-## Read For Every Task
+## Required reading
 
-1. `AGENTS.md` - mandatory rules and startup checks
-2. `docs/agent/RENTEASE_CURRENT_STATE.md` - verified current truth and known gaps
-3. `docs/agent/NEXT_ACTION.md` - one recommended next task
+1. `AGENTS.md`
+2. `docs/agent/STATE.md`
+3. `docs/agent/NEXT.md`
 
-Use `.agents/skills/rentease/SKILL.md` for substantive project work and `$rentease-design` for focused UI design or visual QA.
+Use `.agents/skills/rentease/SKILL.md` for substantive work and `.agents/skills/rentease-design/SKILL.md` for interface work.
 
-## Current Documents
+## Current documents
 
 | Document | Responsibility |
 |---|---|
-| `agent/RENTEASE_CURRENT_STATE.md` | Current product, runtime, security, and documentation state |
-| `agent/NEXT_ACTION.md` | One immediate next action |
-| `agent/RENTEASE_PRODUCT_CONTEXT.md` | Product purpose, users, capabilities, and boundaries |
-| `agent/RENTEASE_SECURITY_RULES.md` | Owner/tenant scoping and sensitive-data rules |
-| `agent/RENTEASE_PRODUCTION_ROADMAP.md` | Ordered production-readiness work |
-| `architecture/PROJECT_STRUCTURE_MAP.md` | Backend, frontend, data, docs, and agent-resource map |
-| `architecture/LEGACY_BOUNDARIES.md` | Current RentEase-versus-HOSTELLO editing boundary |
-| `architecture/DATA_MODEL_ALIGNMENT.md` | Current Django model graph, supplied ERD differences, and PostgreSQL boundary |
-| `architecture/TARGET_DATA_MODEL.md` | Approved target relationships and staged pre-PostgreSQL implementation plan |
-| `features/README.md` | Non-active placeholders and activation rules for planned product capabilities |
-| `ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` | Product-specific UI and design direction |
-| `demo/README.md` | Local setup, seed data, walkthrough, verification, and screenshots |
-| `archive/README.md` | How to retrieve removed historical documents from Git |
+| `agent/STATE.md` | Verified runtime, product, UI, language, and delivery state |
+| `agent/NEXT.md` | The single immediate iteration |
+| `agent/PRODUCT.md` | Users, capabilities, product boundaries, and language direction |
+| `agent/SECURITY.md` | Permissions, privacy, billing, and sensitive-data rules |
+| `agent/ROADMAP.md` | Ordered work from UI completion through i18n and production readiness |
+| `architecture/STRUCTURE.md` | Repository structure and active paths |
+| `architecture/LEGACY.md` | RentEase/HOSTELLO boundary |
+| `architecture/DATA.md` | Current model alignment |
+| `architecture/TARGET.md` | Approved target data direction |
+| `ui/DESIGN.md` | Reference-first design system and bilingual UI vocabulary |
+| `features/README.md` | Inactive future capability placeholders |
+| `demo/README.md` | Local demo setup and walkthrough |
+| `archive/README.md` | Historical retrieval from Git |
 
-## Task Routing
+## Maintenance rules
 
-| Task | Load after the three startup documents |
-|---|---|
-| Django, permissions, billing, settings, database | Skill `references/backend-safety.md` and `RENTEASE_SECURITY_RULES.md` |
-| UI, templates, CSS, UX copy, responsive behavior | `$rentease-design` and the UI design system |
-| Architecture or legacy work | `PROJECT_STRUCTURE_MAP.md` and `LEGACY_BOUNDARIES.md` |
-| Data model, ERD, or PostgreSQL schema planning | `DATA_MODEL_ALIGNMENT.md`, `TARGET_DATA_MODEL.md`, and backend-safety guidance |
-| Planned product capabilities | `features/README.md`; open only the relevant placeholder area |
-| Local setup, demo data, presentation | `demo/README.md` |
-| Documentation maintenance | Skill `references/documentation.md` and this index |
-
-Do not read all documents by default.
-
-## History Policy
-
-- Phase reports, completed audits, old plans, SPQM coursework, duplicate guides, and the former work log are not kept in the active tree.
-- Git commits and tags remain the historical record. Use `archive/README.md` only when retrieval is necessary.
-- Recovered historical content is evidence, not current policy; verify it against source and the documents above.
-- Do not create a new phase report or chronological work log when a current source of truth can be updated instead.
-
-## Updating Documentation
-
-- Change current state only when verified project truth changes.
-- Change next action only when the recommended task changes.
-- Keep roadmap priorities and next action consistent.
-- Put durable product facts in product context, paths in the structure map, security rules in security rules, and visual rules in the UI guide.
-- Replace superseded instructions instead of creating another parallel document.
+- Keep file names short, English, uppercase for canonical documents, and stable after this consolidation.
+- Do not create phase reports, duplicate plans, work logs, or another design guide.
+- Update `STATE.md` only with verified facts.
+- Keep `NEXT.md` to one iteration and update it after every completed commit.
+- Keep UI terminology in `ui/DESIGN.md`; keep code naming rules in `AGENTS.md`.
+- Update every Markdown reference when a canonical path changes.

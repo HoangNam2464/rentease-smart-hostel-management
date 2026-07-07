@@ -1,6 +1,6 @@
 # RentEase Target Data Model
 
-This document records the approved architecture direction and implementation plan before PostgreSQL. It complements `DATA_MODEL_ALIGNMENT.md`: alignment describes current truth; this file describes the target and safe path toward it.
+This document records the approved architecture direction and implementation plan before PostgreSQL. It complements `DATA.md`: alignment describes current truth; this file describes the target and safe path toward it.
 
 No model, migration, settings, authentication, billing, database, or legacy change is authorized merely by this document. Each implementation stage remains approval-gated.
 

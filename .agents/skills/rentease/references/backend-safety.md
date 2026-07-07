@@ -4,11 +4,11 @@ Load this reference for Python, Django, admin, permissions, billing, settings, d
 
 ## Read Before Editing
 
-- `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- `docs/agent/RENTEASE_SECURITY_RULES.md`
+- `docs/architecture/STRUCTURE.md`
+- `docs/agent/SECURITY.md`
 - Directly related source files
 
-Read the production roadmap only for production work. For legacy work, read `docs/architecture/LEGACY_BOUNDARIES.md` and re-audit current imports, settings, URLs, migrations, admin registrations, and data dependencies; do not rely on recovered historical audits.
+Read `docs/agent/ROADMAP.md` only for production work. For legacy work, read `docs/architecture/LEGACY.md` and re-audit current imports, settings, URLs, migrations, admin registrations, and data dependencies; do not rely on recovered historical audits.
 
 ## Approval Gates
 

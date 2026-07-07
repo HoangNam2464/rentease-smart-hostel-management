@@ -5,13 +5,13 @@ Load this reference for agent instructions, project state, indexes, roadmaps, do
 ## Authority Model
 
 - Entry and hard rules: `AGENTS.md`
-- Current truth: `docs/agent/RENTEASE_CURRENT_STATE.md`
-- One next task: `docs/agent/NEXT_ACTION.md`
-- Product: `docs/agent/RENTEASE_PRODUCT_CONTEXT.md`
-- Structure: `docs/architecture/PROJECT_STRUCTURE_MAP.md`
-- Legacy boundary: `docs/architecture/LEGACY_BOUNDARIES.md`
-- Security: `docs/agent/RENTEASE_SECURITY_RULES.md`
-- UI: `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
+- Current truth: `docs/agent/STATE.md`
+- One next task: `docs/agent/NEXT.md`
+- Product: `docs/agent/PRODUCT.md`
+- Structure: `docs/architecture/STRUCTURE.md`
+- Legacy boundary: `docs/architecture/LEGACY.md`
+- Security: `docs/agent/SECURITY.md`
+- UI: `docs/ui/DESIGN.md`
 - Demo: `docs/demo/README.md`
 - Documentation index: `docs/README.md`
 

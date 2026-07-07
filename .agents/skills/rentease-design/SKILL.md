@@ -1,6 +1,6 @@
 ---
 name: rentease-design
-description: Design, redesign, shape, critique, audit, polish, adapt, harden, or clarify RentEase interfaces in Django templates and CSS. Use for public listings, owner dashboards, tenant portals, reports, admin styling, UX copy, responsive behavior, accessibility, component consistency, and visual QA. Enforces the RentEase design system, Vietnamese product voice, active/legacy boundaries, role privacy, and repository verification rules. Do not use for backend-only tasks.
+description: Design, redesign, shape, critique, audit, polish, adapt, harden, or clarify RentEase interfaces in Django templates and CSS. Use for public listings, owner dashboards, tenant portals, reports, admin styling, bilingual UX copy, responsive behavior, accessibility, component consistency, reference study, and visual QA. Do not use for backend-only tasks.
 ---
 
 # RentEase Design
@@ -11,13 +11,13 @@ Design and refine RentEase as a practical Vietnamese rental-management product. 
 
 Before editing:
 
-1. Read `AGENTS.md`, `docs/agent/RENTEASE_CURRENT_STATE.md`, and `docs/agent/NEXT_ACTION.md`.
-2. Read `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md` and `docs/architecture/LEGACY_BOUNDARIES.md`.
+1. Read `AGENTS.md`, `docs/agent/STATE.md`, and `docs/agent/NEXT.md`.
+2. Read `docs/ui/DESIGN.md` and `docs/architecture/LEGACY.md`.
 3. Inspect the affected template, its loaded CSS, and a representative neighboring surface.
-4. Read `docs/agent/RENTEASE_SECURITY_RULES.md` when the surface renders user, tenancy, billing, payment, repair, or identity-related data.
+4. Read `docs/agent/SECURITY.md` when the surface renders user, tenancy, billing, payment, repair, or identity-related data.
 5. Run the Git and Django startup checks required by `AGENTS.md`. Stop if a gate fails.
 
-Read `docs/agent/RENTEASE_PRODUCT_CONTEXT.md` when shaping a new surface or changing user-facing behavior.
+Read `docs/agent/PRODUCT.md` when shaping a new surface or changing user-facing behavior.
 
 ## Route The Request
 
@@ -52,7 +52,9 @@ If no mode is named, infer it from the request. Review-only language means `crit
 - Tenant pages should prioritize readable status, payment, contract, and repair information.
 - Admin and reports should remain compact, operational, staff-only, and privacy-safe.
 - Reuse existing tokens, components, template structure, and Django form behavior before inventing new patterns.
-- Keep Vietnamese copy natural, specific, concise, and correctly accented.
+- Keep an English source term and a natural Vietnamese product term for every user-facing concept.
+- Never show both translations at once. Render only the active locale.
+- Study an approved reference before materially redesigning a page; document what is adapted and why.
 - Do not edit legacy HOSTELLO surfaces for normal RentEase work.
 - Do not change views, forms, URLs, models, settings, permissions, or business logic during a design-only task without a separately approved plan.
 - Never expose citizen identity data, internal permission fields, private notes, or another owner/tenant's data.

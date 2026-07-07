@@ -55,9 +55,9 @@ Important paths:
 
 `students`, `attendance`, `fees`, `requests`, and `notices` remain installed with models, migrations, admin registrations, or cross-imports. Do not move, rename, or delete them without an approved legacy-removal plan.
 
-Read `docs/architecture/LEGACY_BOUNDARIES.md` for current editing boundaries. Re-audit imports, settings, URLs, migrations, admin registrations, and data dependencies before any legacy change.
+Read `docs/architecture/LEGACY.md` for current editing boundaries. Re-audit imports, settings, URLs, migrations, admin registrations, and data dependencies before any legacy change.
 
-Read `docs/architecture/DATA_MODEL_ALIGNMENT.md` and `docs/architecture/TARGET_DATA_MODEL.md` before ERD, PostgreSQL schema, or new-entity planning. The supplied diagram is a conceptual reference; reviewed Django migrations remain the executable schema source.
+Read `docs/architecture/DATA.md` and `docs/architecture/TARGET.md` before ERD, PostgreSQL schema, or new-entity planning. The supplied diagram is a conceptual reference; reviewed Django migrations remain the executable schema source.
 
 ## Frontend
 

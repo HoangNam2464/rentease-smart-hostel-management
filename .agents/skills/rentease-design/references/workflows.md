@@ -31,7 +31,7 @@ Do not edit unless the user also asks for fixes. Check:
 - semantic headings, labels, keyboard flow, visible focus, and contrast
 - desktop/mobile layout, overflow, tables, and touch targets
 - loading, empty, error, validation, success, and permission states
-- natural Vietnamese copy and long-content resilience
+- natural English/Vietnamese copy, active-locale isolation, and long-content resilience
 - design-token and component reuse
 - broken assets or raw Django template syntax
 - public/owner/tenant/staff data exposure and role boundaries
@@ -52,7 +52,7 @@ Handle realistic operational states: no data, partial data, long names, large cu
 
 ## Clarify
 
-Use concise Vietnamese-first copy. Prefer direct verbs and domain terms used elsewhere in RentEase. Labels must explain the data requested; errors must state what happened and what the user can do next. Do not expose credentials, implementation details, or internal permission language.
+Use concise active-locale copy from the terminology matrix in `docs/ui/DESIGN.md`. Prefer direct verbs and stable domain terms. Labels must explain the data requested; errors must state what happened and what the user can do next. Never render both languages at once. Do not expose credentials, implementation details, or internal permission language.
 
 ## Verification Evidence
 

@@ -6,8 +6,8 @@ For focused design work, invoke the repo-local `$rentease-design` skill. Keep th
 
 ## Read Before Editing
 
-- `docs/ui/RENTEASE_PROFESSIONAL_DESIGN_SYSTEM.md`
-- `docs/architecture/PROJECT_STRUCTURE_MAP.md`
+- `docs/ui/DESIGN.md`
+- `docs/architecture/STRUCTURE.md`
 - The affected template and its loaded CSS
 
 ## Active Surfaces

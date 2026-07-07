@@ -16,9 +16,9 @@ Nothing under `planned/` is active code. A folder name means only `PLANNED`; it 
 Before activating any placeholder:
 
 1. Confirm the user workflow and role permissions.
-2. Compare it with `docs/architecture/DATA_MODEL_ALIGNMENT.md`, `docs/architecture/TARGET_DATA_MODEL.md`, and current source.
+2. Compare it with `docs/architecture/DATA.md`, `docs/architecture/TARGET.md`, and current source.
 3. Produce an approved model, migration, rollback, privacy, and test plan.
 4. Create or extend a Django app only after the ownership boundary is clear.
 5. Replace the placeholder with task-specific implementation documentation; do not leave parallel plans.
 
-The immediate database task remains PostgreSQL planning in `docs/agent/NEXT_ACTION.md`.
+The single immediate iteration lives in `docs/agent/NEXT.md`.
