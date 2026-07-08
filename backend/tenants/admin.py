@@ -19,7 +19,7 @@ class TenantAdmin(admin.ModelAdmin):
             readonly += self.SENSITIVE_TENANT_FIELDS
         return readonly
     fieldsets = (
-        ('Tenant profile', {
+        ('Hồ sơ khách thuê', {
             'fields': (
                 'account',
                 'full_name',
@@ -31,7 +31,7 @@ class TenantAdmin(admin.ModelAdmin):
                 'gender',
             )
         }),
-        ('Sensitive identity data', {
+        ('Dữ liệu cá nhân nhạy cảm', {
             'classes': ('collapse',),
             'fields': (
                 'citizen_id',
@@ -39,7 +39,7 @@ class TenantAdmin(admin.ModelAdmin):
                 'citizen_id_back',
             )
         }),
-        ('Timestamps', {
+        ('Thời gian', {
             'classes': ('collapse',),
             'fields': (
                 'created_at',
@@ -64,7 +64,7 @@ class CoTenantAdmin(admin.ModelAdmin):
             readonly += self.SENSITIVE_COTENANT_FIELDS
         return readonly
     fieldsets = (
-        ('Co-tenant profile', {
+        ('Hồ sơ khách thuê chung', {
             'fields': (
                 'contract',
                 'full_name',
@@ -72,7 +72,7 @@ class CoTenantAdmin(admin.ModelAdmin):
                 'relationship',
             )
         }),
-        ('Sensitive identity data', {
+        ('Dữ liệu cá nhân nhạy cảm', {
             'classes': ('collapse',),
             'fields': (
                 'citizen_id',

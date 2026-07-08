@@ -271,17 +271,17 @@ STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
 # =============================================================================
 
 JAZZMIN_SETTINGS = {
-    "site_title": "RentEase Admin",
-    "site_header": "RentEase",
-    "site_brand": "RentEase",
+    "site_title": "RentEase",
+    "site_header": "RentEase Admin",
+    "site_brand": "RentEase Admin",
     "site_icon": None,
     "custom_css": "admin/css/custom_admin.css",
-    "welcome_sign": "Welcome to RentEase Admin Panel",
+    "welcome_sign": "Chào mừng đến với Bảng quản trị RentEase",
     "copyright": "RentEase © 2026",
-    "site_logo": None,
+    "site_logo": "rentease/img/brand/logo-rentease-icon.svg",
     "login_logo": None,
     "login_logo_dark": None,
-    "site_logo_classes": "img-circle",
+    "site_logo_classes": "",
     "search_model": [
         "properties.Room",
         "tenants.Tenant",

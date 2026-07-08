@@ -159,16 +159,16 @@ class InvoiceAdmin(admin.ModelAdmin):
     inlines = [InvoiceDetailInline, PaymentHistoryInline]
     actions = ['recalculate_selected_invoices', 'mark_selected_overdue']
 
-    @admin.action(description='Recalculate selected invoices')
+    @admin.action(description='Tính lại hóa đơn đã chọn')
     def recalculate_selected_invoices(self, request, queryset):
         for invoice in queryset:
             invoice.recalculate_totals()
-        self.message_user(request, f'Recalculated {queryset.count()} invoices.')
+        self.message_user(request, f'Đã tính lại {queryset.count()} hóa đơn.')
 
-    @admin.action(description='Mark selected invoices as overdue')
+    @admin.action(description='Đánh dấu hóa đơn đã chọn là quá hạn')
     def mark_selected_overdue(self, request, queryset):
         updated = queryset.exclude(status=Invoice.STATUS_PAID).update(status=Invoice.STATUS_OVERDUE)
-        self.message_user(request, f'Marked {updated} invoices as overdue.')
+        self.message_user(request, f'Đã đánh dấu {updated} hóa đơn là quá hạn.')
 
 
 @admin.register(InvoiceLine)

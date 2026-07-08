@@ -13,24 +13,24 @@ class RoomListingAdmin(admin.ModelAdmin):
     list_select_related = ['room', 'room__owner']
     actions = ['mark_published', 'mark_hidden', 'mark_expired']
 
-    @admin.action(description='Mark selected listings as published')
+    @admin.action(description='Đánh dấu tin đã đăng')
     def mark_published(self, request, queryset):
         updated = 0
         for listing in queryset:
             listing.status = RoomListing.STATUS_PUBLISHED
             listing.save()
             updated += 1
-        self.message_user(request, f'Marked {updated} listings as published.')
+        self.message_user(request, f'Đã đánh dấu {updated} tin là đã đăng.')
 
-    @admin.action(description='Mark selected listings as hidden')
+    @admin.action(description='Đánh dấu tin đã ẩn')
     def mark_hidden(self, request, queryset):
         updated = queryset.update(status=RoomListing.STATUS_HIDDEN)
-        self.message_user(request, f'Marked {updated} listings as hidden.')
+        self.message_user(request, f'Đã đánh dấu {updated} tin là đã ẩn.')
 
-    @admin.action(description='Mark selected listings as expired')
+    @admin.action(description='Đánh dấu tin đã hết hạn')
     def mark_expired(self, request, queryset):
         updated = queryset.update(status=RoomListing.STATUS_EXPIRED, expired_at=timezone.now())
-        self.message_user(request, f'Marked {updated} listings as expired.')
+        self.message_user(request, f'Đã đánh dấu {updated} tin là đã hết hạn.')
 
 
 @admin.register(ViewingRegistration)
@@ -49,22 +49,22 @@ class ViewingRegistrationAdmin(admin.ModelAdmin):
     list_select_related = ['listing', 'listing__room', 'tenant']
     actions = ['mark_confirmed', 'mark_completed', 'mark_cancelled', 'mark_no_show']
 
-    @admin.action(description='Mark selected registrations as confirmed')
+    @admin.action(description='Đánh dấu đăng ký đã xác nhận')
     def mark_confirmed(self, request, queryset):
         updated = queryset.update(status=ViewingRegistration.STATUS_CONFIRMED)
-        self.message_user(request, f'Marked {updated} registrations as confirmed.')
+        self.message_user(request, f'Đã đánh dấu {updated} đăng ký là đã xác nhận.')
 
-    @admin.action(description='Mark selected registrations as completed')
+    @admin.action(description='Đánh dấu đăng ký đã hoàn thành')
     def mark_completed(self, request, queryset):
         updated = queryset.update(status=ViewingRegistration.STATUS_COMPLETED)
-        self.message_user(request, f'Marked {updated} registrations as completed.')
+        self.message_user(request, f'Đã đánh dấu {updated} đăng ký là đã hoàn thành.')
 
-    @admin.action(description='Mark selected registrations as cancelled')
+    @admin.action(description='Đánh dấu đăng ký đã hủy')
     def mark_cancelled(self, request, queryset):
         updated = queryset.update(status=ViewingRegistration.STATUS_CANCELLED)
-        self.message_user(request, f'Marked {updated} registrations as cancelled.')
+        self.message_user(request, f'Đã đánh dấu {updated} đăng ký là đã hủy.')
 
-    @admin.action(description='Mark selected registrations as no-show')
+    @admin.action(description='Đánh dấu đăng ký không đến')
     def mark_no_show(self, request, queryset):
         updated = queryset.update(status=ViewingRegistration.STATUS_NO_SHOW)
-        self.message_user(request, f'Marked {updated} registrations as no-show.')
+        self.message_user(request, f'Đã đánh dấu {updated} đăng ký là không đến.')

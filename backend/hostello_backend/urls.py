@@ -5,6 +5,10 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from listings.views import home_page_view
 
+admin.site.site_header = 'RentEase Admin'
+admin.site.site_title = 'RentEase'
+admin.site.index_title = 'Bảng quản trị RentEase'
+
 urlpatterns = [
     path('', home_page_view, name='home'),
     path('admin/', admin.site.urls),

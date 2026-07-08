@@ -42,7 +42,7 @@ class PropertyAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(_room_count=Count('rooms'))
 
-    @admin.display(description='Rooms', ordering='_room_count')
+    @admin.display(description='Số phòng', ordering='_room_count')
     def room_count(self, obj):
         return obj._room_count
 

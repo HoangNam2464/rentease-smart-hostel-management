@@ -20,20 +20,20 @@ class RepairRequestAdmin(admin.ModelAdmin):
     list_select_related = ['room', 'room__owner', 'tenant']
     actions = ['mark_in_progress', 'mark_completed', 'mark_cancelled']
 
-    @admin.action(description='Mark selected requests as in progress')
+    @admin.action(description='Đánh dấu yêu cầu là đang xử lý')
     def mark_in_progress(self, request, queryset):
         updated = queryset.update(status=RepairRequest.STATUS_IN_PROGRESS, resolved_at=None)
-        self.message_user(request, f'Marked {updated} repair requests as in progress.')
+        self.message_user(request, f'Đã đánh dấu {updated} yêu cầu sửa chữa là đang xử lý.')
 
-    @admin.action(description='Mark selected requests as completed')
+    @admin.action(description='Đánh dấu yêu cầu là đã hoàn thành')
     def mark_completed(self, request, queryset):
         updated = queryset.update(status=RepairRequest.STATUS_COMPLETED, resolved_at=timezone.now())
-        self.message_user(request, f'Marked {updated} repair requests as completed.')
+        self.message_user(request, f'Đã đánh dấu {updated} yêu cầu sửa chữa là đã hoàn thành.')
 
-    @admin.action(description='Mark selected requests as cancelled')
+    @admin.action(description='Đánh dấu yêu cầu là đã hủy')
     def mark_cancelled(self, request, queryset):
         updated = queryset.update(status=RepairRequest.STATUS_CANCELLED, resolved_at=None)
-        self.message_user(request, f'Marked {updated} repair requests as cancelled.')
+        self.message_user(request, f'Đã đánh dấu {updated} yêu cầu sửa chữa là đã hủy.')
 
 
 @admin.register(MaintenanceRecord)
@@ -75,12 +75,12 @@ class NotificationAdmin(admin.ModelAdmin):
     list_select_related = ['tenant', 'invoice', 'repair_request']
     actions = ['mark_read', 'mark_unread']
 
-    @admin.action(description='Mark selected notifications as read')
+    @admin.action(description='Đánh dấu thông báo là đã đọc')
     def mark_read(self, request, queryset):
         updated = queryset.update(is_read=True, read_at=timezone.now())
-        self.message_user(request, f'Marked {updated} notifications as read.')
+        self.message_user(request, f'Đã đánh dấu {updated} thông báo là đã đọc.')
 
-    @admin.action(description='Mark selected notifications as unread')
+    @admin.action(description='Đánh dấu thông báo là chưa đọc')
     def mark_unread(self, request, queryset):
         updated = queryset.update(is_read=False, read_at=None)
-        self.message_user(request, f'Marked {updated} notifications as unread.')
+        self.message_user(request, f'Đã đánh dấu {updated} thông báo là chưa đọc.')
