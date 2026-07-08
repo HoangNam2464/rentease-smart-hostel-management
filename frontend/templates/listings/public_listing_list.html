@@ -31,9 +31,9 @@
                     <option value="price_desc"{% if filters.order == 'price_desc' %} selected{% endif %}>Giá cao trước</option>
                 </select>
             </div>
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;" type="submit">Áp dụng</button>
+            <button class="button primary" style="width: 100%; justify-content: center; margin-top: 8px; border-radius: 12px;" type="submit">Áp dụng</button>
             {% if filters.q or filters.max_price or filters.order != 'newest' %}
-                <a class="btn btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" href="/rooms/">Xóa lọc</a>
+                <a class="button ghost" style="width: 100%; justify-content: center; margin-top: 8px; border-radius: 12px;" href="/rooms/">Xóa lọc</a>
             {% endif %}
         </form>
     </aside>
@@ -104,7 +104,7 @@
                                     <span>Có thể vào ở:</span>
                                     <strong style="color:var(--re-heading);">{{ listing.available_from|date:"d/m/Y"|default:"Liên hệ xác nhận" }}</strong>
                                 </div>
-                                <a class="btn btn-outline" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem chi tiết <i class="bi bi-arrow-right" style="margin-left:6px;"></i></a>
+                                <a class="button ghost" style="border-radius: 12px;" href="{% url 'listings:public_listing_detail' listing.pk %}">Xem chi tiết <i class="bi bi-arrow-right" style="margin-left:6px;"></i></a>
                             </div>
                         </div>
                     </article>
@@ -115,7 +115,7 @@
             <div class="empty-state public-empty-state">
                 <h2>Chưa tìm thấy phòng phù hợp</h2>
                 <p>Thử bỏ bớt điều kiện lọc hoặc quay lại sau khi có tin mới.</p>
-                <a class="btn btn-primary" href="/rooms/">Xem tất cả phòng</a>
+                <a class="button primary" style="border-radius: 12px;" href="/rooms/">Xem tất cả phòng</a>
             </div>
         {% endif %}
     </main>
