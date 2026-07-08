@@ -12,9 +12,8 @@
 <body class="re-home">
     <header class="re-topbar" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--re-border); position: sticky; top: 0; z-index: 50;">
         <div class="re-topbar-inner" style="display: flex; align-items: center; justify-content: space-between; height: 72px; width: min(1200px, 100% - 48px); margin: 0 auto;">
-            <a class="re-brand" href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--re-text); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em;">
-                <img src="{% static 'rentease/img/logo.png' %}" alt="RentEase Logo" style="height: 40px; width: auto; object-fit: contain; border-radius: 8px;">
-                <span>RentEase</span>
+            <a class="re-brand" href="/" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="{% static 'rentease/img/logo.png' %}" alt="RentEase Logo" style="height: 48px; width: auto; object-fit: contain;">
             </a>
             <nav class="re-nav" aria-label="Điều hướng công khai" style="display: flex; gap: 24px; align-items: center;">
                 {% if request.path != '/rooms/' %}
