@@ -279,34 +279,6 @@
             font-size: 0.875rem;
         }
 
-        /* ── Submit button ───────────────────────────────── */
-        .login-submit {
-            width: 100%;
-            padding: 14px;
-            margin-top: 6px;
-            border: none;
-            border-radius: 10px;
-            background: var(--re-primary);
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.96rem;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 0.01em;
-            transition: background 0.15s, box-shadow 0.15s, transform 0.12s;
-            box-shadow: 0 2px 8px rgba(15, 95, 89, 0.22);
-        }
-
-        .login-submit:hover {
-            background: var(--re-primary-dark);
-            box-shadow: 0 4px 14px rgba(15, 95, 89, 0.28);
-            transform: translateY(-1px);
-        }
-
-        .login-submit:active {
-            transform: translateY(0);
-        }
-
         /* ── Footer links ────────────────────────────────── */
         .login-form-footer {
             display: flex;
@@ -499,8 +471,8 @@
                     {% endif %}
                 </div>
 
-                <button type="submit" class="login-submit">
-                    <i class="bi bi-arrow-right-circle" aria-hidden="true"></i> Đăng nhập
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px; margin-top: 6px; font-size: 1rem;">
+                    Đăng nhập
                 </button>
             </form>
 

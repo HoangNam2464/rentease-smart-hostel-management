@@ -13,12 +13,11 @@
         :root {
             --home-primary: var(--re-primary);
             --home-primary-dark: var(--re-primary-dark);
-            --home-bg: var(--re-bg);
-            --home-surface: var(--re-surface);
+            --home-bg: #f8fafc;
+            --home-surface: #ffffff;
             --home-text: var(--re-text);
             --home-muted: var(--re-muted);
             --home-border: var(--re-border);
-            --home-accent: var(--re-accent);
         }
 
         *, *::before, *::after { box-sizing: border-box; }
@@ -26,15 +25,15 @@
             width: 100%; max-width: 100%;
             margin: 0; padding: 0;
             overflow-x: hidden;
-            background: var(--home-surface);
+            background: var(--home-bg);
             color: var(--home-text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .container { width: min(1200px, calc(100% - 48px)); max-width: 100%; margin: 0 auto; }
-        .section { padding: 96px 0; }
+        .section { padding: 100px 0; }
         .section-light { background: var(--home-surface); }
-        .section-muted { background: #f8faf9; border-top: 1px solid var(--home-border); border-bottom: 1px solid var(--home-border); }
+        .section-muted { background: var(--home-bg); border-top: 1px solid var(--home-border); border-bottom: 1px solid var(--home-border); }
 
         /* ── TOPBAR ──────────────────────────────────────── */
         .home-topbar {
@@ -47,118 +46,120 @@
             display: flex; align-items: center; justify-content: space-between;
             height: 72px;
         }
-        .re-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--home-text); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
-        .re-brand-mark { color: var(--home-primary); font-size: 1.5rem; }
+        .re-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--home-text); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
+        .re-brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--home-primary); color: white; border-radius: 10px; font-weight: 900; font-size: 1.2rem; }
         .re-nav { display: flex; gap: 24px; align-items: center; }
         .re-nav a { text-decoration: none; color: var(--home-muted); font-weight: 600; font-size: 0.95rem; transition: color 0.2s; }
         .re-nav a:hover { color: var(--home-text); }
-        .re-nav a.btn-login { background: #f1f5f9; color: var(--home-text); padding: 8px 16px; border-radius: 8px; }
-        .re-nav a.btn-login:hover { background: #e2e8f0; }
-
+        
         /* ── HERO ────────────────────────────────────────── */
         .home-hero {
-            padding: 100px 0 80px;
-            background: radial-gradient(circle at top center, rgba(15, 118, 110, 0.04), transparent 60%);
+            padding: 120px 0 100px;
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(15, 118, 110, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 118, 110, 0.08) 0%, transparent 40%),
+                linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(248,250,252,1) 100%);
+            position: relative;
         }
-        .home-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+        .home-hero::before {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(#0f766e 0.5px, transparent 0.5px);
+            background-size: 24px 24px; opacity: 0.15;
+        }
+        .home-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; z-index: 2; }
         .home-hero-grid > * { min-width: 0; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: #ecfdf5; color: var(--home-primary); font-size: 0.85rem; font-weight: 700; border-radius: 999px; margin-bottom: 24px; border: 1px solid #a7f3d0; }
-        .home-hero h1 { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin: 0 0 24px; color: var(--home-text); }
-        .home-hero h1 span { color: var(--home-primary); }
-        .home-hero p { font-size: 1.15rem; line-height: 1.6; color: var(--home-muted); margin: 0 0 40px; max-width: 540px; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: #ecfdf5; color: var(--home-primary); font-size: 0.85rem; font-weight: 700; border-radius: 999px; margin-bottom: 24px; border: 1px solid #a7f3d0; box-shadow: 0 4px 12px rgba(167, 243, 208, 0.4); }
+        .home-hero h1 { font-size: clamp(2.8rem, 4.5vw, 4rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 24px; color: var(--home-text); }
+        .home-hero h1 span { color: var(--home-primary); position: relative; }
+        .home-hero h1 span::after {
+            content: ''; position: absolute; bottom: 6px; left: 0; width: 100%; height: 8px; background: rgba(15, 118, 110, 0.2); border-radius: 4px; z-index: -1;
+        }
+        .home-hero p { font-size: 1.2rem; line-height: 1.6; color: var(--home-muted); margin: 0 0 40px; max-width: 540px; }
+        
+        .hero-stats { display: flex; gap: 32px; margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08); }
+        .stat-item h4 { font-size: 1.75rem; font-weight: 800; color: var(--home-primary); margin: 0 0 4px; }
+        .stat-item p { font-size: 0.9rem; color: var(--home-muted); font-weight: 600; margin: 0; }
+        
         .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-        .btn-large { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 32px; font-size: 1.05rem; font-weight: 600; border-radius: 12px; text-decoration: none; transition: all 0.2s; }
-        .btn-primary { background: var(--home-primary); color: white; box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2); }
-        .btn-primary:hover { background: var(--home-primary-dark); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15, 118, 110, 0.3); }
-        .btn-secondary { background: white; color: var(--home-text); border: 1px solid var(--home-border); }
-        .btn-secondary:hover { background: #f8fafc; border-color: #cbd5e1; transform: translateY(-2px); }
-
-        /* Hero Image/Search Box */
-        .hero-visual { position: relative; width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); }
+        .btn-large { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 32px; font-size: 1.05rem; font-weight: 700; border-radius: 12px; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+        
+        /* Hero Visual */
+        .hero-visual { position: relative; width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2); transform: perspective(1000px) rotateY(-5deg); transition: transform 0.5s; }
+        .hero-visual:hover { transform: perspective(1000px) rotateY(0deg); }
         .hero-visual img { width: 100%; height: auto; display: block; }
         .hero-search-overlay { position: absolute; bottom: 24px; left: 24px; right: 24px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .hero-search-form { display: flex; gap: 12px; }
-        .hero-search-form input { flex: 1; min-width: 0; padding: 12px 16px; border: 1px solid var(--home-border); border-radius: 8px; font-size: 1rem; outline: none; }
-        .hero-search-form button { padding: 12px 24px; background: var(--home-primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .hero-search-form input { flex: 1; min-width: 0; padding: 14px 16px; border: 1px solid var(--home-border); border-radius: 8px; font-size: 1rem; outline: none; }
+        .hero-search-form button { padding: 14px 28px; background: var(--home-primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .hero-search-form button:hover { background: var(--home-primary-dark); }
 
         /* ── FEATURED ROOMS ──────────────────────────────── */
-        .section-header { margin-bottom: 48px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .section-title { font-size: 2rem; font-weight: 800; margin: 0 0 12px; letter-spacing: -0.02em; }
-        .section-desc { font-size: 1.05rem; color: var(--home-muted); margin: 0; max-width: 600px; line-height: 1.5; }
-        .section-link { color: var(--home-primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-        .section-link:hover { text-decoration: underline; }
+        .section-header { margin-bottom: 56px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .section-title { font-size: 2.25rem; font-weight: 800; margin: 0 0 16px; letter-spacing: -0.02em; }
+        .section-desc { font-size: 1.1rem; color: var(--home-muted); margin: 0; max-width: 600px; line-height: 1.6; }
+        .section-link { color: var(--home-primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; background: #ecfdf5; transition: background 0.2s; }
+        .section-link:hover { background: #d1fae5; }
 
-        .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px; }
         .featured-card { background: white; border: 1px solid var(--home-border); border-radius: 16px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .featured-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); border-color: rgba(15,118,110,0.3); }
-        .fc-img-wrap { position: relative; aspect-ratio: 4/3; background: #e2e8f0; }
-        .fc-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        .fc-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: var(--home-primary); }
-        .fc-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
-        .fc-price { font-size: 1.25rem; font-weight: 800; color: var(--home-primary); margin-bottom: 8px; }
-        .fc-title { font-size: 1.05rem; font-weight: 600; margin: 0 0 8px; color: var(--home-text); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .fc-meta { font-size: 0.85rem; color: var(--home-muted); display: flex; gap: 12px; margin-bottom: 12px; }
-        .fc-meta span { display: flex; align-items: center; gap: 4px; }
-        .fc-address { font-size: 0.85rem; color: var(--home-muted); margin-top: auto; padding-top: 12px; border-top: 1px solid var(--home-border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .featured-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border-color: rgba(15,118,110,0.3); }
+        .fc-img-wrap { position: relative; aspect-ratio: 4/3; background: #e2e8f0; overflow: hidden; }
+        .fc-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .featured-card:hover .fc-img-wrap img { transform: scale(1.05); }
+        .fc-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.95); padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: var(--home-primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .fc-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+        .fc-price { font-size: 1.35rem; font-weight: 800; color: var(--home-primary); margin-bottom: 8px; }
+        .fc-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 12px; color: var(--home-text); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .fc-meta { font-size: 0.9rem; color: var(--home-muted); display: flex; gap: 16px; margin-bottom: 16px; font-weight: 500; }
+        .fc-meta span { display: flex; align-items: center; gap: 6px; }
+        .fc-address { font-size: 0.9rem; color: var(--home-muted); margin-top: auto; padding-top: 16px; border-top: 1px solid var(--home-border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 
         /* ── OWNER WORKFLOW ──────────────────────────────── */
         .workflow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
-        .workflow-step { background: white; padding: 32px 24px; border-radius: 16px; border: 1px solid var(--home-border); text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        .wf-icon { width: 64px; height: 64px; margin: 0 auto 20px; background: #f1f5f9; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; color: var(--home-primary); transition: background 0.2s, color 0.2s; }
-        .workflow-step:hover .wf-icon { background: var(--home-primary); color: white; }
-        .workflow-step h3 { font-size: 1.1rem; font-weight: 700; margin: 0 0 12px; }
-        .workflow-step p { color: var(--home-muted); font-size: 0.9rem; line-height: 1.5; margin: 0; }
+        .workflow-step { background: white; padding: 40px 24px; border-radius: 20px; border: 1px solid var(--home-border); text-align: center; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .workflow-step:hover { transform: translateY(-5px); border-color: rgba(67, 56, 202, 0.3); }
+        .wf-icon { width: 72px; height: 72px; margin: 0 auto 24px; background: #e0e7ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #4338ca; transition: background 0.3s, color 0.3s, transform 0.3s; }
+        .workflow-step:hover .wf-icon { background: #4338ca; color: white; transform: scale(1.1) rotate(5deg); }
+        .workflow-step h3 { font-size: 1.15rem; font-weight: 800; margin: 0 0 12px; }
+        .workflow-step p { color: var(--home-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; }
 
         /* ── TENANT WORKFLOW ─────────────────────────────── */
-        .tenant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-        .tenant-visual { border-radius: 24px; overflow: hidden; background: #e2e8f0; aspect-ratio: 4/3; }
+        .tenant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .tenant-visual { border-radius: 24px; overflow: hidden; background: #e2e8f0; aspect-ratio: 4/3; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); }
         .tenant-visual img { width: 100%; height: 100%; object-fit: cover; }
-        .tenant-steps { display: flex; flex-direction: column; gap: 24px; }
-        .t-step { display: flex; gap: 16px; align-items: flex-start; }
-        .t-number { width: 32px; height: 32px; flex-shrink: 0; background: var(--home-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; }
-        .t-content h4 { margin: 0 0 8px; font-size: 1.1rem; font-weight: 700; }
-        .t-content p { margin: 0; color: var(--home-muted); font-size: 0.95rem; line-height: 1.5; }
+        .tenant-steps { display: flex; flex-direction: column; gap: 32px; }
+        .t-step { display: flex; gap: 20px; align-items: flex-start; }
+        .t-number { width: 40px; height: 40px; flex-shrink: 0; background: var(--home-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.3); }
+        .t-content h4 { margin: 0 0 8px; font-size: 1.2rem; font-weight: 800; }
+        .t-content p { margin: 0; color: var(--home-muted); font-size: 1rem; line-height: 1.6; }
 
         /* ── FOOTER ──────────────────────────────────────── */
-        .home-footer { padding: 48px 0; background: white; border-top: 1px solid var(--home-border); }
+        .home-footer { padding: 64px 0 48px; background: white; border-top: 1px solid var(--home-border); }
         .home-footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-        .home-footer-copy { color: var(--home-muted); font-size: 0.9rem; }
-        .home-footer-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
-        .home-footer-links a { color: var(--home-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+        .home-footer-copy { color: var(--home-muted); font-size: 0.95rem; font-weight: 500; }
+        .home-footer-links { display: flex; flex-wrap: wrap; gap: 16px 32px; }
+        .home-footer-links a { color: var(--home-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s; }
         .home-footer-links a:hover { color: var(--home-primary); }
 
         /* ── RESPONSIVE ──────────────────────────────────── */
         @media (max-width: 900px) {
-            .home-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+            .home-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
             .workflow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .tenant-grid { grid-template-columns: minmax(0, 1fr); }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .tenant-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .hero-visual { transform: none; }
+            .hero-visual:hover { transform: none; }
         }
         @media (max-width: 600px) {
-            html, body { max-width: 100vw; }
-            .home-page > * { max-width: 100vw; }
-            .container { width: calc(100vw - 32px); max-width: calc(100vw - 32px); }
-            .section { padding: 64px 0; }
-            .home-topbar-inner { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
-            .re-brand { font-size: 1.05rem; }
-            .re-nav { min-width: 0; gap: 6px; }
-            .re-nav a { padding: 8px 10px; font-size: 0.84rem; white-space: nowrap; }
-            .re-nav a.btn-login { padding: 8px 10px; }
-            .re-nav a:not(.btn-login) { display: none; }
-            .home-hero { padding: 56px 0 64px; }
-            .home-hero-grid { max-width: 100%; min-width: 0; }
-            .home-hero-grid > *,
-            .hero-actions { width: 100%; max-width: 100%; min-width: 0; }
-            .home-hero h1 { font-size: clamp(2.1rem, 11vw, 2.65rem); }
-            .home-hero p { font-size: 1rem; }
-            .hero-badge { max-width: 100%; font-size: 0.76rem; line-height: 1.4; }
-            .hero-actions { display: grid; grid-template-columns: 1fr; }
-            .btn-large { width: 100%; max-width: 100%; padding: 13px 20px; box-sizing: border-box; }
-            .workflow-grid { grid-template-columns: minmax(0, 1fr); }
+            .home-hero { padding: 80px 0 60px; }
+            .home-hero h1 { font-size: clamp(2.2rem, 11vw, 2.8rem); }
+            .hero-actions { flex-direction: column; }
+            .btn-large { width: 100%; }
             .hero-search-form { flex-direction: column; }
-            .hero-search-overlay { position: static; padding: 16px; border-radius: 0; }
-            .hero-visual { border-radius: 18px; }
-            .home-footer-links { gap: 10px 16px; }
+            .workflow-grid { grid-template-columns: minmax(0, 1fr); }
+            .hero-stats { flex-direction: column; gap: 24px; text-align: center; }
+            .re-nav a:not(.btn) { display: none; }
         }
     </style>
 </head>
@@ -167,12 +168,14 @@
     <header class="home-topbar" role="banner">
         <div class="container home-topbar-inner">
             <a class="re-brand" href="/" aria-label="RentEase - Trang chủ">
-                <span class="re-brand-mark"><i class="bi bi-buildings-fill" aria-hidden="true"></i></span>
+                <span class="re-brand-mark">R</span>
                 <span>RentEase</span>
             </a>
             <nav class="re-nav" aria-label="Điều hướng chính">
-                <a href="/rooms/">Xem phòng</a>
-                <a href="/login/" class="btn-login">Đăng nhập</a>
+                {% if request.path != '/rooms/' %}
+                <a href="/rooms/">Xem phòng trống</a>
+                {% endif %}
+                <a href="/login/" class="btn btn-outline" style="padding: 8px 16px; border-radius: 8px; font-weight: 600;">Đăng nhập</a>
             </nav>
         </div>
     </header>
@@ -183,7 +186,7 @@
             <div class="container home-hero-grid">
                 <div>
                     <span class="hero-badge">
-                        <i class="bi bi-shield-check"></i> Nền tảng Tìm & Quản lý Nhà Trọ Tối Ưu
+                        <i class="bi bi-shield-check"></i> Đạt chuẩn chất lượng 2026
                     </span>
                     <h1>
                         Tìm phòng ưng ý, <br>
@@ -191,15 +194,30 @@
                         <span>cùng RentEase.</span>
                     </h1>
                     <p>
-                        Dành cho người thuê tìm kiếm không gian sống lý tưởng. Dành cho chủ nhà tối ưu hóa dòng tiền, hợp đồng và hóa đơn điện tử.
+                        Không gian sống lý tưởng dành cho người thuê. Quy trình vận hành tự động, số hóa hợp đồng và hóa đơn dành cho chủ trọ.
                     </p>
                     <div class="hero-actions">
-                        <a href="/rooms/" class="btn-large btn-primary">
-                            Tìm phòng trống
+                        <a href="/rooms/" class="btn btn-primary btn-large" style="padding: 14px 28px; font-size: 1.1rem; border-radius: 12px; box-shadow: 0 8px 20px rgba(15,118,110,0.25);">
+                            Tìm phòng trống ngay
                         </a>
-                        <a href="#owner-workflow" class="btn-large btn-secondary">
+                        <a href="#owner-workflow" class="btn btn-outline btn-large" style="padding: 14px 28px; font-size: 1.1rem; border-radius: 12px; background: white;">
                             Dành cho Chủ Trọ
                         </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h4>5,000+</h4>
+                            <p>Phòng trọ & Căn hộ</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>10,000+</h4>
+                            <p>Người dùng tin tưởng</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>99%</h4>
+                            <p>Tỷ lệ hài lòng</p>
+                        </div>
                     </div>
                 </div>
 
@@ -208,7 +226,7 @@
                     <div class="hero-search-overlay">
                         <form class="hero-search-form" action="/rooms/" method="get">
                             <input type="text" name="q" placeholder="Nhập khu vực, quận huyện, tên đường..." aria-label="Tìm kiếm phòng">
-                            <button type="submit"><i class="bi bi-search"></i> Tìm kiếm</button>
+                            <button type="submit"><i class="bi bi-search"></i> Khám phá</button>
                         </form>
                     </div>
                 </div>
@@ -222,7 +240,7 @@
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Phòng đang trống nổi bật</h2>
-                        <p class="section-desc">Khám phá các phòng trọ, căn hộ dịch vụ chất lượng mới được cập nhật trên hệ thống.</p>
+                        <p class="section-desc">Khám phá các phòng trọ, căn hộ dịch vụ cao cấp mới được cập nhật trên hệ thống của chúng tôi.</p>
                     </div>
                     <a href="/rooms/" class="section-link">Xem tất cả <i class="bi bi-arrow-right"></i></a>
                 </div>
@@ -241,7 +259,7 @@
                             {% endif %}
                         </div>
                         <div class="fc-body">
-                            <div class="fc-price">{{ listing.listing_price|vnd }}<span style="font-size:0.85rem;font-weight:normal;color:var(--home-muted);">/tháng</span></div>
+                            <div class="fc-price">{{ listing.listing_price|vnd }}<span style="font-size:0.9rem;font-weight:600;color:var(--home-muted);">/tháng</span></div>
                             <h3 class="fc-title">{{ listing.title }}</h3>
                             <div class="fc-meta">
                                 {% if listing.room.area %}<span><i class="bi bi-arrows-fullscreen"></i> {{ listing.room.area|floatformat:"-1" }} m²</span>{% endif %}
@@ -267,34 +285,34 @@
         <!-- ── OWNER WORKFLOW ──────────────────────────────── -->
         <section id="owner-workflow" class="section section-light">
             <div class="container">
-                <div class="section-header" style="text-align: center; align-items: center; margin-bottom: 56px;">
+                <div class="section-header" style="text-align: center; align-items: center; margin-bottom: 64px;">
                     <div style="width: 100%;">
-                        <span class="hero-badge" style="background:#e0e7ff; color:#4338ca; border-color:#c7d2fe;">Dành Cho Chủ Trọ</span>
-                        <h2 class="section-title" style="margin-top:12px;">Quy trình quản lý khép kín & tự động</h2>
-                        <p class="section-desc" style="margin: 0 auto;">Từ lúc đăng phòng đến khi thu tiền, RentEase giúp bạn tối ưu hóa thời gian và giảm thiểu sai sót sổ sách.</p>
+                        <span class="hero-badge" style="background:#e0e7ff; color:#4338ca; border-color:#c7d2fe; margin-bottom: 16px;">Giải pháp toàn diện cho Chủ Trọ</span>
+                        <h2 class="section-title" style="margin-top:0;">Quy trình quản lý khép kín & tự động</h2>
+                        <p class="section-desc" style="margin: 0 auto; max-width: 650px;">Từ bước đăng phòng tìm khách đến khi thu tiền hàng tháng, RentEase số hóa toàn bộ giúp bạn tối ưu hóa dòng tiền và giảm tải áp lực quản lý.</p>
                     </div>
                 </div>
 
                 <div class="workflow-grid">
                     <div class="workflow-step">
                         <div class="wf-icon"><i class="bi bi-megaphone"></i></div>
-                        <h3>1. Đăng tin phòng</h3>
-                        <p>Tạo thông tin phòng trống, mức giá và tiện ích để khách thuê dễ dàng tìm kiếm.</p>
+                        <h3>1. Đăng tin tức thời</h3>
+                        <p>Tạo thông tin phòng trống, thiết lập mức giá và tiện ích để hiển thị ngay trên hệ thống tìm kiếm.</p>
                     </div>
                     <div class="workflow-step">
-                        <div class="wf-icon"><i class="bi bi-calendar-event"></i></div>
-                        <h3>2. Nhận lịch xem</h3>
-                        <p>Khách thuê tiềm năng gửi yêu cầu đặt lịch xem phòng trực tiếp trên hệ thống.</p>
+                        <div class="wf-icon"><i class="bi bi-calendar-check"></i></div>
+                        <h3>2. Nhận lịch hẹn xem</h3>
+                        <p>Tiếp nhận và quản lý yêu cầu đặt lịch xem phòng của khách thuê tiềm năng trực tuyến.</p>
                     </div>
                     <div class="workflow-step">
-                        <div class="wf-icon"><i class="bi bi-file-earmark-ruled"></i></div>
-                        <h3>3. Ký hợp đồng</h3>
-                        <p>Số hóa hợp đồng thuê nhà, ghi nhận tiền cọc và tự động nhắc nhở khi sắp hết hạn.</p>
+                        <div class="wf-icon"><i class="bi bi-file-earmark-text"></i></div>
+                        <h3>3. Ký hợp đồng số</h3>
+                        <p>Khởi tạo hợp đồng thuê nhà chuẩn hóa, ghi nhận tiền cọc và tự động theo dõi thời hạn.</p>
                     </div>
                     <div class="workflow-step">
                         <div class="wf-icon"><i class="bi bi-receipt"></i></div>
                         <h3>4. Thu tiền tự động</h3>
-                        <p>Chốt số điện nước, hệ thống tự xuất hóa đơn và gửi thông báo thanh toán qua ứng dụng.</p>
+                        <p>Nhập chỉ số điện nước, hệ thống tự động xuất hóa đơn và gửi SMS/Email nhắc nợ Khách thuê.</p>
                     </div>
                 </div>
             </div>
@@ -304,30 +322,30 @@
         <section class="section section-muted">
             <div class="container tenant-grid">
                 <div>
-                    <span class="hero-badge" style="background:#fce7f3; color:#be185d; border-color:#fbcfe8;">Dành Cho Khách Thuê</span>
-                    <h2 class="section-title" style="margin-top:12px;">Trải nghiệm thuê phòng minh bạch</h2>
-                    <p class="section-desc" style="margin-bottom:40px;">Bỏ qua những rắc rối khi phải lưu giữ hóa đơn giấy, tính toán điện nước phức tạp. Mọi thứ đều nằm gọn trong thiết bị của bạn.</p>
+                    <span class="hero-badge" style="background:#fce7f3; color:#be185d; border-color:#fbcfe8; margin-bottom: 16px;">Trải nghiệm tuyệt vời cho Khách Thuê</span>
+                    <h2 class="section-title" style="margin-top:0;">Không gian sống minh bạch, an tâm</h2>
+                    <p class="section-desc" style="margin-bottom:48px;">Tạm biệt những rắc rối về hóa đơn giấy hay tranh chấp điện nước. Tại RentEase, mọi thông tin của bạn đều rõ ràng và được bảo vệ.</p>
 
                     <div class="tenant-steps">
                         <div class="t-step">
                             <div class="t-number">1</div>
                             <div class="t-content">
-                                <h4>Tìm kiếm & Đặt lịch</h4>
-                                <p>Duyệt qua danh sách phòng chất lượng, xem hình ảnh chân thực và đặt lịch hẹn dễ dàng.</p>
+                                <h4>Tìm kiếm thông minh & Đặt lịch</h4>
+                                <p>Lọc phòng theo ngân sách, khu vực với hình ảnh chân thực. Gửi lịch hẹn ngay lập tức.</p>
                             </div>
                         </div>
                         <div class="t-step">
                             <div class="t-number">2</div>
                             <div class="t-content">
-                                <h4>Nhận hóa đơn điện tử</h4>
-                                <p>Xem chi tiết chỉ số điện nước hàng tháng cùng lịch sử thanh toán rõ ràng, chính xác.</p>
+                                <h4>Nhận hóa đơn điện tử chi tiết</h4>
+                                <p>Xem rõ ràng từng chỉ số điện nước sinh hoạt. Lưu trữ lịch sử thanh toán vĩnh viễn.</p>
                             </div>
                         </div>
                         <div class="t-step">
                             <div class="t-number">3</div>
                             <div class="t-content">
-                                <h4>Gửi yêu cầu hỗ trợ</h4>
-                                <p>Báo cáo sự cố hư hỏng thiết bị và theo dõi tiến độ xử lý trực tiếp từ chủ nhà.</p>
+                                <h4>Yêu cầu bảo trì nhanh chóng</h4>
+                                <p>Chỉ cần 1 chạm để gửi yêu cầu sửa chữa thiết bị hỏng hóc thẳng đến điện thoại chủ trọ.</p>
                             </div>
                         </div>
                     </div>
@@ -343,13 +361,13 @@
     <footer class="home-footer" role="contentinfo">
         <div class="container home-footer-inner">
             <p class="home-footer-copy">
-                © RentEase — Nền tảng quản lý nhà trọ hiện đại tại Việt Nam.
+                © RentEase 2026 — Nền tảng quản lý nhà trọ thông minh số 1 Việt Nam.
             </p>
             <nav class="home-footer-links" aria-label="Liên kết phụ">
-                <a href="#">Giới thiệu</a>
-                <a href="#">Liên hệ</a>
-                <a href="#">Bảo mật</a>
-                <a href="#">Điều khoản</a>
+                <a href="#">Về chúng tôi</a>
+                <a href="#">Hỗ trợ chủ trọ</a>
+                <a href="#">Chính sách bảo mật</a>
+                <a href="#">Điều khoản sử dụng</a>
             </nav>
         </div>
     </footer>

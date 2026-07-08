@@ -10,16 +10,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body class="re-home">
-    <header class="re-topbar">
-        <div class="re-topbar-inner">
-            <a class="re-brand" href="/">
-                <span class="re-brand-mark">R</span>
+    <header class="re-topbar" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--re-border); position: sticky; top: 0; z-index: 50;">
+        <div class="re-topbar-inner" style="display: flex; align-items: center; justify-content: space-between; height: 72px; width: min(1200px, 100% - 48px); margin: 0 auto;">
+            <a class="re-brand" href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--re-text); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em;">
+                <span class="re-brand-mark" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--re-primary); color: white; border-radius: 10px; font-weight: 900; font-size: 1.2rem;">R</span>
                 <span>RentEase</span>
             </a>
-            <nav class="re-nav" aria-label="Điều hướng công khai">
-                <a href="/"><i class="bi bi-house"></i> Trang chủ</a>
-                <a href="/rooms/"><i class="bi bi-door-open"></i> Xem phòng</a>
-                <a href="/login/" class="primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</a>
+            <nav class="re-nav" aria-label="Điều hướng công khai" style="display: flex; gap: 24px; align-items: center;">
+                {% if request.path != '/rooms/' %}
+                <a href="/rooms/" style="text-decoration: none; color: var(--re-text); font-weight: 600; font-size: 0.95rem;">Xem phòng trống</a>
+                {% endif %}
+                <a href="/login/" class="btn btn-outline" style="padding: 8px 16px; border-radius: 8px; font-weight: 600;">Đăng nhập</a>
             </nav>
         </div>
     </header>

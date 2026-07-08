@@ -61,7 +61,7 @@
             <div><dt>Có thể vào ở</dt><dd>{{ listing.available_from|date:"d/m/Y"|default:"Liên hệ xác nhận" }}</dd></div>
             {% if listing.room.room_name %}<div><dt>Loại phòng</dt><dd>{{ listing.room.room_name }}</dd></div>{% endif %}
         </dl>
-        <a class="button primary" href="{% url 'listings:viewing_registration_create' listing.pk %}">Đăng ký xem phòng</a>
+        <a class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 16px;" href="{% url 'listings:viewing_registration_create' listing.pk %}">Đăng ký xem phòng</a>
         <p class="listing-summary-note">Không cần tài khoản. Chủ nhà sẽ liên hệ để xác nhận thời gian.</p>
     </aside>
 </div>
