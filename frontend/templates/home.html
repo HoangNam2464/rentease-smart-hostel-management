@@ -168,14 +168,14 @@
     <header class="home-topbar" role="banner">
         <div class="container home-topbar-inner">
             <a class="re-brand" href="/" aria-label="RentEase - Trang chủ">
-                <span class="re-brand-mark">R</span>
+                <img src="{% static 'rentease/img/logo.png' %}" alt="RentEase Logo" style="height: 40px; width: auto; object-fit: contain; border-radius: 8px;">
                 <span>RentEase</span>
             </a>
             <nav class="re-nav" aria-label="Điều hướng chính">
                 {% if request.path != '/rooms/' %}
-                <a href="/rooms/">Xem phòng trống</a>
+                <a href="/rooms/" class="btn btn-primary" style="padding: 10px 20px; border-radius: 12px; font-weight: 600; box-shadow: 0 4px 12px rgba(15,118,110,0.2);">Xem phòng trống</a>
                 {% endif %}
-                <a href="/login/" class="btn btn-outline" style="padding: 8px 16px; border-radius: 8px; font-weight: 600;">Đăng nhập</a>
+                <a href="/login/" class="btn btn-outline" style="padding: 10px 20px; border-radius: 12px; font-weight: 600;">Đăng nhập</a>
             </nav>
         </div>
     </header>
@@ -199,9 +199,6 @@
                     <div class="hero-actions">
                         <a href="/rooms/" class="btn btn-primary btn-large" style="padding: 14px 28px; font-size: 1.1rem; border-radius: 12px; box-shadow: 0 8px 20px rgba(15,118,110,0.25);">
                             Tìm phòng trống ngay
-                        </a>
-                        <a href="#owner-workflow" class="btn btn-outline btn-large" style="padding: 14px 28px; font-size: 1.1rem; border-radius: 12px; background: white;">
-                            Dành cho Chủ Trọ
                         </a>
                     </div>
                     
