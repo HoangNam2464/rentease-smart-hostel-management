@@ -2159,11 +2159,17 @@ form > .form-section-heading:first-of-type {
 .operations-debt,
 .tenant-balance-panel {
     padding: 28px;
-    border: none;
+    border: 1px solid rgba(223, 243, 239, 0.12);
     border-radius: var(--card-radius);
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); /* Modern orange warning gradient */
+    background: linear-gradient(135deg, #0f5f59 0%, #0b3f3b 100%);
     color: #fff;
-    box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.3), 0 4px 6px -4px rgba(234, 88, 12, 0.2);
+    box-shadow: 0 12px 28px rgba(11, 95, 89, 0.20);
+}
+
+.operations-debt .dashboard-card-icon {
+    border-color: rgba(253, 186, 116, 0.34);
+    background: rgba(249, 115, 22, 0.18);
+    color: #fed7aa;
 }
 
 .operations-debt .operations-label,
@@ -2223,7 +2229,7 @@ form > .form-section-heading:first-of-type {
     font-size: 1rem;
 }
 
-.text-link-light {
+.text-link.text-link-light {
     color: #fff;
 }
 
@@ -2250,7 +2256,7 @@ form > .form-section-heading:first-of-type {
     border-radius: 3px;
 }
 
-.text-link-light:hover {
+.text-link.text-link-light:hover {
     color: #d8fff8;
 }
 

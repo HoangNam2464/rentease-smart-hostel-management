@@ -43,7 +43,7 @@
                 <div class="nav-group">
                     <span class="nav-group-title">Chính</span>
                     <a class="nav-item {% if request.path == '/owner/dashboard/' %}active{% endif %}"
-                       href="/owner/dashboard/">
+                       href="{% url 'portal:owner_dashboard' %}">
                         <i class="bi bi-grid-1x2-fill"></i> Tổng quan
                     </a>
                 </div>
@@ -55,19 +55,19 @@
                         <i class="bi bi-buildings-fill"></i> Cơ sở cho thuê
                     </a>
                     <a class="nav-item {% if '/owner/rooms' in request.path %}active{% endif %}"
-                       href="/owner/rooms/">
+                       href="{% url 'portal:owner_rooms_list' %}">
                         <i class="bi bi-door-closed-fill"></i> Phòng trọ
                     </a>
                     <a class="nav-item {% if '/owner/listings' in request.path %}active{% endif %}"
-                       href="/owner/listings/">
+                       href="{% url 'portal:owner_listings_list' %}">
                         <i class="bi bi-megaphone-fill"></i> Tin đăng
                     </a>
                     <a class="nav-item {% if '/owner/tenants' in request.path %}active{% endif %}"
-                       href="/owner/tenants/">
+                       href="{% url 'portal:owner_tenants_list' %}">
                         <i class="bi bi-people-fill"></i> Khách thuê
                     </a>
                     <a class="nav-item {% if '/owner/contracts' in request.path %}active{% endif %}"
-                       href="/owner/contracts/">
+                       href="{% url 'portal:owner_contracts_list' %}">
                         <i class="bi bi-file-text-fill"></i> Hợp đồng
                     </a>
                 </div>
@@ -75,18 +75,18 @@
                 <div class="nav-group">
                     <span class="nav-group-title">Vận hành</span>
                     <a class="nav-item {% if '/owner/invoices' in request.path %}active{% endif %}"
-                       href="/owner/invoices/">
+                       href="{% url 'portal:owner_invoices_list' %}">
                         <i class="bi bi-receipt-cutoff"></i> Hóa đơn
                     </a>
                     <a class="nav-item {% if '/owner/repairs' in request.path %}active{% endif %}"
-                       href="/owner/repairs/">
+                       href="{% url 'portal:owner_repairs_list' %}">
                         <i class="bi bi-tools"></i> Sửa chữa
                         {% if pending_repairs_count and pending_repairs_count > 0 %}
                             <span class="nav-badge">{{ pending_repairs_count }}</span>
                         {% endif %}
                     </a>
                     <a class="nav-item {% if '/owner/viewing-registrations' in request.path %}active{% endif %}"
-                       href="/owner/viewing-registrations/">
+                       href="{% url 'portal:owner_viewing_registrations_list' %}">
                         <i class="bi bi-calendar-check-fill"></i> Lịch xem phòng
                         {% if pending_viewing_count and pending_viewing_count > 0 %}
                             <span class="nav-badge">{{ pending_viewing_count }}</span>
