@@ -1,6 +1,6 @@
-# RentEase Safety
+﻿# RentEase Safety
 
-Read `AGENTS.md`, `docs/agent/STATE.md`, and `docs/agent/NEXT.md` before editing.
+Read `AGENTS.md`, `docs/STATE.md`, and `docs/NEXT.md` before editing.
 
 From the repository root, require:
 

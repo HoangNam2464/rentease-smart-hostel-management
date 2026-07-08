@@ -1,4 +1,4 @@
----
+﻿---
 name: rentease-design
 description: Design, redesign, shape, critique, audit, polish, adapt, harden, or clarify RentEase interfaces in Django templates and CSS. Use for public listings, owner dashboards, tenant portals, reports, admin styling, bilingual UX copy, responsive behavior, accessibility, component consistency, reference study, and visual QA. Do not use for backend-only tasks.
 ---
@@ -11,13 +11,13 @@ Design and refine RentEase as a practical Vietnamese rental-management product. 
 
 Before editing:
 
-1. Read `AGENTS.md`, `docs/agent/STATE.md`, and `docs/agent/NEXT.md`.
-2. Read `docs/ui/DESIGN.md` and `docs/architecture/LEGACY.md`.
+1. Read `AGENTS.md`, `docs/STATE.md`, and `docs/NEXT.md`.
+2. Read `docs/DESIGN.md` and `docs/LEGACY.md`.
 3. Inspect the affected template, its loaded CSS, and a representative neighboring surface.
-4. Read `docs/agent/SECURITY.md` when the surface renders user, tenancy, billing, payment, repair, or identity-related data.
+4. Read `docs/SECURITY.md` when the surface renders user, tenancy, billing, payment, repair, or identity-related data.
 5. Run the Git and Django startup checks required by `AGENTS.md`. Stop if a gate fails.
 
-Read `docs/agent/PRODUCT.md` when shaping a new surface or changing user-facing behavior.
+Read `docs/PRODUCT.md` when shaping a new surface or changing user-facing behavior.
 
 ## Route The Request
 

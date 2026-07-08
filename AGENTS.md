@@ -1,11 +1,11 @@
-# RentEase Agent Entry
+﻿# RentEase Agent Entry
 
 This is the mandatory starting point for every agent working in this repository. Keep this file short; detailed guidance is loaded by task through the repo-local `rentease` skill.
 
 ## Start Here
 
-1. Read `docs/agent/STATE.md`.
-2. Read `docs/agent/NEXT.md`.
+1. Read `docs/STATE.md`.
+2. Read `docs/NEXT.md`.
 3. Use `.agents/skills/rentease/SKILL.md` for substantive RentEase work. It routes backend, UI, and documentation tasks to separate references.
 4. Verify the repository from the root:
 
@@ -57,11 +57,11 @@ Stop before editing if the branch is not `complete-product`, the starting worktr
 
 | Task | Read |
 |---|---|
-| Product behavior or scope | `docs/agent/PRODUCT.md` |
-| Project paths | `docs/architecture/STRUCTURE.md` |
-| Active/legacy boundaries | `docs/architecture/LEGACY.md` |
-| Django, permissions, data, billing, settings | `.agents/skills/rentease/references/backend-safety.md` and `docs/agent/SECURITY.md` |
-| Templates, CSS, UX, responsive work | `.agents/skills/rentease-design/SKILL.md` and `docs/ui/DESIGN.md` |
+| Product behavior or scope | `docs/PRODUCT.md` |
+| Project paths | `docs/STRUCTURE.md` |
+| Active/legacy boundaries | `docs/LEGACY.md` |
+| Django, permissions, data, billing, settings | `.agents/skills/rentease/references/backend-safety.md` and `docs/SECURITY.md` |
+| Templates, CSS, UX, responsive work | `.agents/skills/rentease-design/SKILL.md` and `docs/DESIGN.md` |
 | Documentation maintenance | `.agents/skills/rentease/references/documentation.md` and `docs/README.md` |
 | Historical decisions only | Git history/tags; retrieval guidance in `docs/archive/README.md` |
 
@@ -73,8 +73,8 @@ When documents disagree, use this order:
 
 1. User's current request
 2. `AGENTS.md`
-3. `docs/agent/STATE.md`
-4. `docs/agent/NEXT.md`
+3. `docs/STATE.md`
+4. `docs/NEXT.md`
 5. Task-specific canonical document from the table above
 6. Git history or recovered historical documents
 

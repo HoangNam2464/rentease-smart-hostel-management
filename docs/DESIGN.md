@@ -1,4 +1,4 @@
-# RentEase Design
+﻿# RentEase Design
 
 This is the canonical source for product UI, reference study, bilingual vocabulary, responsive behavior, accessibility, and visual QA.
 
@@ -83,7 +83,7 @@ Use one RentEase identity across public and authenticated surfaces.
 ### Reports and admin
 
 - Stay compact, operational, searchable, and staff-only.
-- Preserve all sensitive-data restrictions in `docs/agent/SECURITY.md`.
+- Preserve all sensitive-data restrictions in `docs/SECURITY.md`.
 
 ## Shared components
 
@@ -112,27 +112,27 @@ English is the gettext source language. Vietnamese translations must be natural,
 
 | Concept/code | English UI | Vietnamese UI |
 |---|---|---|
-| `property` | Property | Cơ sở cho thuê |
-| `room` | Room | Phòng trọ |
-| `listing` | Listing | Tin đăng |
-| `tenant` | Tenant | Khách thuê |
-| `contract` | Contract | Hợp đồng |
-| `invoice` | Invoice | Hóa đơn |
-| `payment` | Payment | Thanh toán |
-| `repair_request` | Repair request | Yêu cầu sửa chữa |
-| `viewing_registration` | Viewing request | Lịch xem phòng |
-| `dashboard` | Overview | Tổng quan |
-| `amount_due` | Amount due | Số tiền cần thanh toán |
-| `due_date` | Due date | Hạn thanh toán |
-| `available` | Available | Còn phòng |
-| `occupied` | Occupied | Đang thuê |
-| `overdue` | Overdue | Quá hạn |
-| `save` | Save | Lưu |
-| `cancel` | Cancel | Hủy |
-| `search` | Search | Tìm kiếm |
-| `filter` | Filter | Bộ lọc |
+| `property` | Property | CÆ¡ sá»Ÿ cho thuÃª |
+| `room` | Room | PhÃ²ng trá» |
+| `listing` | Listing | Tin Ä‘Äƒng |
+| `tenant` | Tenant | KhÃ¡ch thuÃª |
+| `contract` | Contract | Há»£p Ä‘á»“ng |
+| `invoice` | Invoice | HÃ³a Ä‘Æ¡n |
+| `payment` | Payment | Thanh toÃ¡n |
+| `repair_request` | Repair request | YÃªu cáº§u sá»­a chá»¯a |
+| `viewing_registration` | Viewing request | Lá»‹ch xem phÃ²ng |
+| `dashboard` | Overview | Tá»•ng quan |
+| `amount_due` | Amount due | Sá»‘ tiá»n cáº§n thanh toÃ¡n |
+| `due_date` | Due date | Háº¡n thanh toÃ¡n |
+| `available` | Available | CÃ²n phÃ²ng |
+| `occupied` | Occupied | Äang thuÃª |
+| `overdue` | Overdue | QuÃ¡ háº¡n |
+| `save` | Save | LÆ°u |
+| `cancel` | Cancel | Há»§y |
+| `search` | Search | TÃ¬m kiáº¿m |
+| `filter` | Filter | Bá»™ lá»c |
 
-Add terms here before introducing competing translations. Do not translate brand names, `VND`, `m²`, email addresses, or standard technical units.
+Add terms here before introducing competing translations. Do not translate brand names, `VND`, `mÂ²`, email addresses, or standard technical units.
 
 ### Display rule
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: rentease
 description: Use for RentEase repository tasks involving Django backend code, permissions, billing, settings, databases, templates, CSS, UI/UX, documentation, architecture, demo workflows, verification, or planning. Routes work to task-specific references while enforcing the repository startup checks, active/legacy boundaries, owner/tenant privacy, and approval gates.
 ---
@@ -12,8 +12,8 @@ Work on RentEase with the minimum relevant context. Treat current source files a
 Before editing:
 
 1. Read `AGENTS.md`.
-2. Read `docs/agent/STATE.md`.
-3. Read `docs/agent/NEXT.md`.
+2. Read `docs/STATE.md`.
+3. Read `docs/NEXT.md`.
 4. Run the root Git checks and backend Django checks required by `AGENTS.md`.
 5. Stop if the branch, worktree, Django check, or migration dry-run fails its gate.
 
@@ -44,11 +44,11 @@ For mixed tasks, load each relevant reference. Do not retrieve historical docume
 
 ## Canonical Context
 
-- Product: `docs/agent/PRODUCT.md`
-- Structure and active/legacy map: `docs/architecture/STRUCTURE.md`
-- Security: `docs/agent/SECURITY.md`
-- UI: `docs/ui/DESIGN.md`
-- Production order: `docs/agent/ROADMAP.md`
+- Product: `docs/PRODUCT.md`
+- Structure and active/legacy map: `docs/STRUCTURE.md`
+- Security: `docs/SECURITY.md`
+- UI: `docs/DESIGN.md`
+- Production order: `docs/ROADMAP.md`
 - Documentation authority: `docs/README.md`
 - History retrieval: `docs/archive/README.md` and Git history/tags
 

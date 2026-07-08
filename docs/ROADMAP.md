@@ -1,4 +1,4 @@
-# RentEase Roadmap
+﻿# RentEase Roadmap
 
 The current product priority is interface quality. Complete and stabilize the UI before enabling bilingual runtime behavior.
 
@@ -58,4 +58,4 @@ Deliver and verify one focused commit per surface group:
 
 ## Iteration contract
 
-Each iteration must be coherent, tested, committed separately, and pushed only after verification. `docs/agent/NEXT.md` names the single active iteration.
+Each iteration must be coherent, tested, committed separately, and pushed only after verification. `docs/NEXT.md` names the single active iteration.

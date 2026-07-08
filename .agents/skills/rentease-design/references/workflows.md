@@ -1,4 +1,4 @@
-# RentEase Design Workflows
+﻿# RentEase Design Workflows
 
 Load only the workflow that matches the requested mode.
 
@@ -52,7 +52,7 @@ Handle realistic operational states: no data, partial data, long names, large cu
 
 ## Clarify
 
-Use concise active-locale copy from the terminology matrix in `docs/ui/DESIGN.md`. Prefer direct verbs and stable domain terms. Labels must explain the data requested; errors must state what happened and what the user can do next. Never render both languages at once. Do not expose credentials, implementation details, or internal permission language.
+Use concise active-locale copy from the terminology matrix in `docs/DESIGN.md`. Prefer direct verbs and stable domain terms. Labels must explain the data requested; errors must state what happened and what the user can do next. Never render both languages at once. Do not expose credentials, implementation details, or internal permission language.
 
 ## Verification Evidence
 

@@ -1,4 +1,4 @@
-# UI and Design Work
+﻿# UI and Design Work
 
 Load this reference for templates, CSS, UX copy, responsive behavior, screenshots, or visual QA.
 
@@ -6,8 +6,8 @@ For focused design work, invoke the repo-local `$rentease-design` skill. Keep th
 
 ## Read Before Editing
 
-- `docs/ui/DESIGN.md`
-- `docs/architecture/STRUCTURE.md`
+- `docs/DESIGN.md`
+- `docs/STRUCTURE.md`
 - The affected template and its loaded CSS
 
 ## Active Surfaces

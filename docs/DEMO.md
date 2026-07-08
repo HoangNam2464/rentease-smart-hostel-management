@@ -1,4 +1,4 @@
-# RentEase Local Demo Guide
+﻿# RentEase Local Demo Guide
 
 RentEase is ready for a local demonstration, not a production deployment. This guide covers setup, fake demo data, the walkthrough, verification, and optional screenshots.
 
@@ -100,4 +100,4 @@ Do not run the command against production or valuable data. Never commit or shar
 
 Capture the landing page, room list/detail, viewing form, owner dashboard and invoice flow, tenant dashboard and payment flow, admin/reports, and one mobile view. Before sharing, hide terminals, passwords, environment files, database paths, backups, and all private identity data.
 
-Use `docs/ui/DESIGN.md` as the visual reference.
+Use `docs/DESIGN.md` as the visual reference.

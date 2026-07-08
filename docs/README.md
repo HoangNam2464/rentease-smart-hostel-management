@@ -1,12 +1,12 @@
-# RentEase Documentation
+﻿# RentEase Documentation
 
 Only current project guidance belongs in this directory. Git history is the record for completed phases and superseded plans.
 
 ## Required reading
 
 1. `AGENTS.md`
-2. `docs/agent/STATE.md`
-3. `docs/agent/NEXT.md`
+2. `docs/STATE.md`
+3. `docs/NEXT.md`
 
 Use `.agents/skills/rentease/SKILL.md` for substantive work and `.agents/skills/rentease-design/SKILL.md` for interface work.
 

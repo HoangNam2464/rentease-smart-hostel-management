@@ -1,4 +1,4 @@
-# RentEase Planned Features
+﻿# RentEase Planned Features
 
 This directory reserves product areas that are expected after the current RentEase foundation. It prevents future work from being hidden inside unrelated apps while avoiding premature Django apps, models, migrations, URLs, or settings.
 
@@ -16,9 +16,9 @@ Nothing under `planned/` is active code. A folder name means only `PLANNED`; it 
 Before activating any placeholder:
 
 1. Confirm the user workflow and role permissions.
-2. Compare it with `docs/architecture/DATA.md`, `docs/architecture/TARGET.md`, and current source.
+2. Compare it with `docs/DATA.md`, `docs/TARGET.md`, and current source.
 3. Produce an approved model, migration, rollback, privacy, and test plan.
 4. Create or extend a Django app only after the ownership boundary is clear.
 5. Replace the placeholder with task-specific implementation documentation; do not leave parallel plans.
 
-The single immediate iteration lives in `docs/agent/NEXT.md`.
+The single immediate iteration lives in `docs/NEXT.md`.

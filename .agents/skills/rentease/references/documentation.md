@@ -1,18 +1,18 @@
-# Documentation Work
+﻿# Documentation Work
 
 Load this reference for agent instructions, project state, indexes, roadmaps, documentation consolidation, or historical retrieval.
 
 ## Authority Model
 
 - Entry and hard rules: `AGENTS.md`
-- Current truth: `docs/agent/STATE.md`
-- One next task: `docs/agent/NEXT.md`
-- Product: `docs/agent/PRODUCT.md`
-- Structure: `docs/architecture/STRUCTURE.md`
-- Legacy boundary: `docs/architecture/LEGACY.md`
-- Security: `docs/agent/SECURITY.md`
-- UI: `docs/ui/DESIGN.md`
-- Demo: `docs/demo/README.md`
+- Current truth: `docs/STATE.md`
+- One next task: `docs/NEXT.md`
+- Product: `docs/PRODUCT.md`
+- Structure: `docs/STRUCTURE.md`
+- Legacy boundary: `docs/LEGACY.md`
+- Security: `docs/SECURITY.md`
+- UI: `docs/DESIGN.md`
+- Demo: `docs/DEMO.md`
 - Documentation index: `docs/README.md`
 
 Do not duplicate one document's responsibility in another.

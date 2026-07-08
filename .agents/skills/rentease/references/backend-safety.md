@@ -1,14 +1,14 @@
-# Backend and Django Safety
+﻿# Backend and Django Safety
 
 Load this reference for Python, Django, admin, permissions, billing, settings, database, deployment, or legacy work.
 
 ## Read Before Editing
 
-- `docs/architecture/STRUCTURE.md`
-- `docs/agent/SECURITY.md`
+- `docs/STRUCTURE.md`
+- `docs/SECURITY.md`
 - Directly related source files
 
-Read `docs/agent/ROADMAP.md` only for production work. For legacy work, read `docs/architecture/LEGACY.md` and re-audit current imports, settings, URLs, migrations, admin registrations, and data dependencies; do not rely on recovered historical audits.
+Read `docs/ROADMAP.md` only for production work. For legacy work, read `docs/LEGACY.md` and re-audit current imports, settings, URLs, migrations, admin registrations, and data dependencies; do not rely on recovered historical audits.
 
 ## Approval Gates
 

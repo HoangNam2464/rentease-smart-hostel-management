@@ -1,4 +1,4 @@
-# RentEase State
+﻿# RentEase State
 
 Last verified: 2026-07-07.
 
@@ -23,7 +23,7 @@ Re-run the checks before relying on this snapshot.
 - Production database target: PostgreSQL through environment-driven configuration
 - Local development may use the configured fallback; verify the active connection instead of assuming it
 - Active apps: `accounts`, `properties`, `tenants`, `contracts`, `billing`, `maintenance`, `listings`, `portal`, and `reports`
-- Legacy HOSTELLO apps remain installed and isolated; see `docs/architecture/LEGACY.md`
+- Legacy HOSTELLO apps remain installed and isolated; see `docs/LEGACY.md`
 
 ## Product
 
@@ -45,7 +45,7 @@ Re-run the checks before relying on this snapshot.
 
 - Current templates contain mostly hard-coded Vietnamese copy.
 - Django currently has i18n enabled but has no complete EN/VI translation catalog or language switcher.
-- Code-English and UI-bilingual rules are now canonical in `AGENTS.md` and `docs/ui/DESIGN.md`.
+- Code-English and UI-bilingual rules are now canonical in `AGENTS.md` and `docs/DESIGN.md`.
 - Runtime i18n conversion is intentionally the final product-language phase after the interface system is stable.
 
 ## Known gaps
@@ -59,4 +59,4 @@ Re-run the checks before relying on this snapshot.
 
 ## Next
 
-Follow `docs/agent/NEXT.md`.
+Follow `docs/NEXT.md`.
