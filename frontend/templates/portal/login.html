@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập - RentEase</title>
+    <link rel="icon" href="{% static 'rentease/img/brand/favicon.ico' %}" sizes="any">
+    <link rel="icon" href="{% static 'rentease/img/brand/favicon-32.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'rentease/img/brand/apple-touch-icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/rentease-tokens.css' %}?v=1">
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}?v=3">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -374,8 +377,8 @@
 
         <!-- ── LEFT: Brand & hero panel ───────────────────── -->
         <div class="login-brand-panel">
-            <a class="login-brand-logo" href="/">
-                <img src="{% static 'rentease/img/logo.png' %}" alt="RentEase Logo" style="height: 56px; width: auto; object-fit: contain;">
+            <a class="login-brand-logo" href="/" style="display: block; margin-bottom: 32px;">
+                <img src="{% static 'rentease/img/brand/logo-rentease-auth.svg' %}" alt="RentEase" style="height: 64px; width: auto; object-fit: contain;">
             </a>
 
             <div class="login-hero">

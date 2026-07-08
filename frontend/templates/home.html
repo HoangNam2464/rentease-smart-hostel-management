@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentEase - Nền tảng Tìm kiếm & Quản lý Nhà Trọ Tối Ưu</title>
     <meta name="description" content="RentEase giúp chủ trọ quản lý phòng, hóa đơn dễ dàng. Khách thuê và người tìm phòng tìm kiếm không gian sống lý tưởng.">
+    <meta property="og:image" content="{% static 'rentease/img/brand/rentease-og-image.png' %}">
+    <link rel="icon" href="{% static 'rentease/img/brand/favicon.ico' %}" sizes="any">
+    <link rel="icon" href="{% static 'rentease/img/brand/favicon-32.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'rentease/img/brand/apple-touch-icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/rentease-tokens.css' %}?v=1">
     <link rel="stylesheet" href="{% static 'css/rentease-design.css' %}?v=4">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -168,7 +172,7 @@
     <header class="home-topbar" role="banner">
         <div class="container home-topbar-inner">
             <a class="re-brand" href="/" aria-label="RentEase - Trang chủ">
-                <img src="{% static 'rentease/img/logo.png' %}" alt="RentEase Logo" style="height: 48px; width: auto; object-fit: contain;">
+                <img src="{% static 'rentease/img/brand/logo-rentease-horizontal.svg' %}" alt="RentEase" style="height: 44px; width: auto; object-fit: contain;">
             </a>
             <nav class="re-nav" aria-label="Điều hướng chính">
                 {% if request.path != '/rooms/' %}
