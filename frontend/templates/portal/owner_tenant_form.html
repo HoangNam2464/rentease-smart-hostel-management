@@ -15,7 +15,7 @@
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="alert warning">
+                <div class="alert alert-warning">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -63,8 +63,8 @@
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">{{ submit_label }}</button>
-                <a class="button" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Hủy</a>
+                <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+                <a class="btn btn-outline" href="{% url 'portal:owner_tenant_detail' tenant.pk %}">Hủy</a>
             </div>
         </form>
     </div>

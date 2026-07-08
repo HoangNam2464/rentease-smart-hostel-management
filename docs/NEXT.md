@@ -3,20 +3,20 @@
 ## Immediate iteration
 
 ```text
-Tenant dashboard and navigation vertical slice
+Owner core management (properties, rooms, listings, tenants, contracts) vertical slice
 ```
 
 ## Goal
 
-Apply the shared RentEase foundation to the tenant's primary operational surface.
+Apply the shared RentEase foundation to the owner's core management surfaces.
 
 ## Scope
 
-- Render the current tenant dashboard and navigation with a local demo tenant.
+- Render the owner properties, rooms, listings, tenants, and contracts lists, detail views, and forms.
 - Apply the teal shared tokens, consistent icon/control spacing, and a clean card/list layout.
-- Prioritize amount due, due date, payment state, current contract, repairs, and unread notices.
-- Explain financial and workflow status in plain language.
-- Verify desktop/mobile layout, empty data, long text, large amounts, focus, and tenant scoping.
+- Replace legacy classes (`button primary`, `status-badge`) with the standard ones (`btn btn-primary`, `badge badge-...`).
+- Ensure consistent data tables, empty states, and action buttons.
+- Verify desktop/mobile layout, empty data, long text, and responsive behavior.
 
 ## Required evidence
 

@@ -12,7 +12,7 @@
     <div class="card-body">
         <p class="help-text">Giữ thông tin phòng rõ ràng để dùng cho hợp đồng, tin đăng, hóa đơn và thông tin hiển thị cho khách thuê.</p>
         {% if not has_properties %}
-            <div class="alert warning">
+            <div class="alert alert-warning">
                 Bạn chưa có cơ sở cho thuê. Hãy <a href="{% url 'portal:owner_property_create' %}">tạo cơ sở trước</a> rồi quay lại thêm phòng.
             </div>
         {% endif %}
@@ -20,7 +20,7 @@
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="alert warning">
+                <div class="alert alert-warning">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -80,11 +80,11 @@
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">{{ submit_label }}</button>
+                <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
                 {% if room %}
-                    <a class="button" href="{% url 'portal:owner_room_detail' room.pk %}">Hủy</a>
+                    <a class="btn btn-outline" href="{% url 'portal:owner_room_detail' room.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_rooms_list' %}">Hủy</a>
+                    <a class="btn btn-outline" href="{% url 'portal:owner_rooms_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>

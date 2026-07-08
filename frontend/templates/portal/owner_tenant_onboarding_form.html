@@ -17,7 +17,7 @@
             <li><span>Tin đăng</span><strong>{{ registration.listing.title }}</strong></li>
             <li><span>Giá niêm yết</span><strong>{{ registration.listing.listing_price }}</strong></li>
             <li><span>Tiền cọc</span><strong>{{ registration.listing.deposit_amount }}</strong></li>
-            <li><span>Trạng thái lịch xem</span><strong><span class="status-badge">{{ registration.get_status_display }}</span></strong></li>
+            <li><span>Trạng thái lịch xem</span><strong><span class="badge badge-info">{{ registration.get_status_display }}</span></strong></li>
         </ul>
         <p class="help-text">CCCD và ảnh giấy tờ không được nhập tại portal chủ trọ. Admin có thể hoàn thiện dữ liệu định danh trong khu vực bảo mật sau khi kiểm tra trực tiếp.</p>
     </div>
@@ -28,7 +28,7 @@
         <form method="post" novalidate>
             {% csrf_token %}
             {% if form.non_field_errors %}
-                <div class="form-errors">{{ form.non_field_errors }}</div>
+                <div class="alert alert-warning">{{ form.non_field_errors }}</div>
             {% endif %}
 
             <h2>Thông tin tài khoản và hợp đồng</h2>
@@ -43,8 +43,8 @@
             {% endfor %}
 
             <div class="page-actions">
-                <button class="button primary" type="submit"><i class="bi bi-check2-circle"></i> Hoàn tất onboarding</button>
-                <a class="button" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Hủy</a>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle"></i> Hoàn tất onboarding</button>
+                <a class="btn btn-outline" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Hủy</a>
             </div>
         </form>
     </div>

@@ -9,7 +9,7 @@
             <h1><i class="page-icon bi bi-file-text"></i>Hợp đồng của tôi</h1>
             <p>Các hợp đồng thuê phòng liên kết với phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_contract_create' %}"><i class="bi bi-plus-circle"></i> Tạo hợp đồng</a>
+        <a class="btn btn-primary" href="{% url 'portal:owner_contract_create' %}"><i class="bi bi-plus-circle"></i> Tạo hợp đồng</a>
     </div>
 </section>
 
@@ -37,7 +37,7 @@
                                 <td>{{ contract.room.room_code }}</td>
                                 <td>{{ contract.start_date }}</td>
                                 <td>{{ contract.end_date }}</td>
-                                <td><span class="status-badge">{{ contract.get_status_display }}</span></td>
+                                <td><span class="badge badge-{% if contract.status == 'active' %}success{% elif contract.status == 'expired' or contract.status == 'terminated' %}muted{% else %}info{% endif %}">{{ contract.get_status_display }}</span></td>
                                 <td><a href="{% url 'portal:owner_contract_update' contract.pk %}">Sửa</a></td>
                             </tr>
                         {% endfor %}

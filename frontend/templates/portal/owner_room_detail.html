@@ -13,8 +13,8 @@
             <p>Thông tin phòng thuộc hồ sơ chủ trọ của bạn.</p>
         </div>
         <div class="toolbar-actions">
-            <a class="button" href="{% url 'portal:owner_rooms_list' %}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách</a>
-            <a class="button primary" href="{% url 'portal:owner_room_update' room.pk %}"><i class="bi bi-pencil" aria-hidden="true"></i> Sửa phòng</a>
+            <a class="btn btn-outline" href="{% url 'portal:owner_rooms_list' %}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách</a>
+            <a class="btn btn-primary" href="{% url 'portal:owner_room_update' room.pk %}"><i class="bi bi-pencil" aria-hidden="true"></i> Sửa phòng</a>
         </div>
     </div>
 </section>
@@ -28,7 +28,7 @@
                 <h2 id="room-overview-title">Thông tin vận hành phòng</h2>
             </div>
         </div>
-        <span class="status-badge">{{ room.get_status_display }}</span>
+        <span class="badge badge-{% if room.status == 'available' %}success{% elif room.status == 'occupied' %}primary{% else %}muted{% endif %}">{{ room.get_status_display }}</span>
     </div>
     <div class="card-body">
         <ul class="info-list entity-info-list">

@@ -10,7 +10,7 @@
             <h1><i class="page-icon bi bi-door-closed" aria-hidden="true"></i>Phòng của tôi</h1>
             <p>Theo dõi phòng, cơ sở trực thuộc, sức chứa và trạng thái vận hành.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Tạo phòng</a>
+        <a class="btn btn-primary" href="{% url 'portal:owner_room_create' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Tạo phòng</a>
     </div>
 </section>
 
@@ -58,7 +58,7 @@
                             <td>{{ room.floor|default:"-" }}</td>
                             <td>{{ room.area|default:"-" }}</td>
                             <td><span class="numeric-value">{{ room.max_occupants }}</span></td>
-                            <td><span class="status-badge">{{ room.get_status_display }}</span></td>
+                            <td><span class="badge badge-{% if room.status == 'available' %}success{% elif room.status == 'occupied' %}primary{% else %}muted{% endif %}">{{ room.get_status_display }}</span></td>
                             <td><a class="table-action" href="{% url 'portal:owner_room_detail' room.pk %}"><i class="bi bi-arrow-right" aria-hidden="true"></i> Xem</a></td>
                         </tr>
                     {% endfor %}
@@ -71,7 +71,7 @@
                 <i class="bi bi-door-open" aria-hidden="true"></i>
                 <p>Chưa có phòng nào. Hãy tạo phòng đầu tiên để bắt đầu quy trình quản lý.</p>
                 <div class="empty-state-action">
-                    <a class="button primary" href="{% url 'portal:owner_room_create' %}">Tạo phòng</a>
+                    <a class="btn btn-primary" href="{% url 'portal:owner_room_create' %}">Tạo phòng</a>
                 </div>
             </div>
         </div>

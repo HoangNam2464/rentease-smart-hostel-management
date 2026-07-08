@@ -28,7 +28,7 @@
                                 <td><a href="{% url 'portal:owner_tenant_detail' tenant.pk %}">{{ tenant.full_name }}</a></td>
                                 <td>{{ tenant.phone_number|default:"-" }}</td>
                                 <td>{{ tenant.email|default:"-" }}</td>
-                                <td><span class="status-badge">{{ tenant.get_status_display }}</span></td>
+                                <td><span class="badge badge-{% if tenant.status == 'active' %}success{% else %}muted{% endif %}">{{ tenant.get_status_display }}</span></td>
                                 <td><a href="{% url 'portal:owner_tenant_update' tenant.pk %}">Sửa</a></td>
                             </tr>
                         {% endfor %}

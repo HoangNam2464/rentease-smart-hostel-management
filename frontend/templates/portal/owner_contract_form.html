@@ -15,7 +15,7 @@
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="alert warning">
+                <div class="alert alert-warning">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -91,11 +91,11 @@
             </div>
 
             <div class="page-actions">
-                <button class="button primary" type="submit">{{ submit_label }}</button>
+                <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
                 {% if contract %}
-                    <a class="button" href="{% url 'portal:owner_contract_detail' contract.pk %}">Hủy</a>
+                    <a class="btn btn-outline" href="{% url 'portal:owner_contract_detail' contract.pk %}">Hủy</a>
                 {% else %}
-                    <a class="button" href="{% url 'portal:owner_contracts_list' %}">Hủy</a>
+                    <a class="btn btn-outline" href="{% url 'portal:owner_contracts_list' %}">Hủy</a>
                 {% endif %}
             </div>
         </form>

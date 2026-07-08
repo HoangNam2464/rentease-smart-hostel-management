@@ -9,7 +9,7 @@
             <h1><i class="page-icon bi bi-megaphone"></i>Tin phòng của tôi</h1>
             <p>Quản lý tin đăng công khai cho các phòng của bạn.</p>
         </div>
-        <a class="button primary" href="{% url 'portal:owner_listing_create' %}"><i class="bi bi-plus-circle"></i> Đăng tin phòng</a>
+        <a class="btn btn-primary" href="{% url 'portal:owner_listing_create' %}"><i class="bi bi-plus-circle"></i> Đăng tin phòng</a>
     </div>
 </section>
 
@@ -24,8 +24,8 @@
                 {% endfor %}
             </select>
         </div>
-        <button class="button" type="submit">Lọc tin</button>
-        {% if selected_property %}<a class="button subtle" href="{% url 'portal:owner_listings_list' %}">Xóa lọc</a>{% endif %}
+        <button class="btn btn-outline" type="submit">Lọc tin</button>
+        {% if selected_property %}<a class="btn btn-ghost" href="{% url 'portal:owner_listings_list' %}">Xóa lọc</a>{% endif %}
     </form>
 {% endif %}
 
@@ -59,7 +59,7 @@
                                 <td>{{ listing.room.room_code }}</td>
                                 <td>{{ listing.listing_price }}</td>
                                 <td>{{ listing.deposit_amount }}</td>
-                                <td><span class="status-badge">{{ listing.get_status_display }}</span></td>
+                                <td><span class="badge badge-{% if listing.status == 'published' %}success{% elif listing.status == 'archived' %}muted{% else %}info{% endif %}">{{ listing.get_status_display }}</span></td>
                                 <td>{{ listing.available_from }}</td>
                             </tr>
                         {% endfor %}

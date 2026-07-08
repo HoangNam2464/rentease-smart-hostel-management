@@ -27,7 +27,7 @@
             <li><span>Phòng</span><strong>{{ listing.room.room_code }} - {{ listing.room.room_name }}</strong></li>
             <li><span>Giá đăng</span><strong>{{ listing.listing_price }}</strong></li>
             <li><span>Tiền cọc</span><strong>{{ listing.deposit_amount }}</strong></li>
-            <li><span>Trạng thái</span><strong><span class="status-badge">{{ listing.get_status_display }}</span></strong></li>
+            <li><span>Trạng thái</span><strong><span class="badge badge-{% if listing.status == 'published' %}success{% elif listing.status == 'archived' %}muted{% else %}info{% endif %}">{{ listing.get_status_display }}</span></strong></li>
             <li><span>Có thể vào ở từ</span><strong>{{ listing.available_from }}</strong></li>
             <li><span>Ngày công khai</span><strong>{{ listing.published_at|default:"-" }}</strong></li>
             <li><span>Ngày hết hạn</span><strong>{{ listing.expired_at|default:"-" }}</strong></li>
@@ -37,8 +37,8 @@
             <p class="listing-description">{{ listing.description }}</p>
         </section>
         <div class="page-actions">
-            <a class="button primary" href="{% url 'portal:owner_listing_update' listing.pk %}"><i class="bi bi-pencil-square"></i> Sửa tin đăng</a>
-            <a class="button" href="{% url 'portal:owner_listings_list' %}">Quay lại danh sách tin</a>
+            <a class="btn btn-primary" href="{% url 'portal:owner_listing_update' listing.pk %}"><i class="bi bi-pencil-square"></i> Sửa tin đăng</a>
+            <a class="btn btn-outline" href="{% url 'portal:owner_listings_list' %}">Quay lại danh sách tin</a>
         </div>
     </div>
 </section>

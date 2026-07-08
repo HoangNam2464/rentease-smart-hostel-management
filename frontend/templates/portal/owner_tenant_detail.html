@@ -17,11 +17,11 @@
             <li><span>Địa chỉ</span><strong>{{ tenant.address|default:"-" }}</strong></li>
             <li><span>Ngày sinh</span><strong>{{ tenant.date_of_birth|default:"-" }}</strong></li>
             <li><span>Giới tính</span><strong>{{ tenant.get_gender_display|default:"-" }}</strong></li>
-            <li><span>Trạng thái</span><strong><span class="status-badge">{{ tenant.get_status_display }}</span></strong></li>
+            <li><span>Trạng thái</span><strong><span class="badge badge-{% if tenant.status == 'active' %}success{% else %}muted{% endif %}">{{ tenant.get_status_display }}</span></strong></li>
         </ul>
 
         {% if is_shared_tenant %}
-            <div class="alert warning section">
+            <div class="alert alert-warning section">
                 Khách thuê này đang liên kết với nhiều chủ trọ, nên hồ sơ dùng chung chỉ được xem trong khu vực chủ trọ.
             </div>
         {% endif %}
@@ -44,9 +44,9 @@
 
         <div class="page-actions">
             {% if not is_shared_tenant %}
-                <a class="button primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}"><i class="bi bi-pencil-square"></i> Sửa khách thuê</a>
+                <a class="btn btn-primary" href="{% url 'portal:owner_tenant_update' tenant.pk %}"><i class="bi bi-pencil-square"></i> Sửa khách thuê</a>
             {% endif %}
-            <a class="button" href="{% url 'portal:owner_tenants_list' %}">Quay lại khách thuê</a>
+            <a class="btn btn-outline" href="{% url 'portal:owner_tenants_list' %}">Quay lại khách thuê</a>
         </div>
     </div>
 </section>
