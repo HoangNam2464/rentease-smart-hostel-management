@@ -10,8 +10,8 @@ class Property(models.Model):
     STATUS_INACTIVE = 'inactive'
 
     STATUS_CHOICES = (
-        (STATUS_ACTIVE, 'Active'),
-        (STATUS_INACTIVE, 'Inactive'),
+        (STATUS_ACTIVE, 'Đang hoạt động'),
+        (STATUS_INACTIVE, 'Ngừng hoạt động'),
     )
 
     owner = models.ForeignKey(UserProfile, on_delete=models.PROTECT, related_name='properties')
@@ -44,13 +44,17 @@ class Property(models.Model):
     class Meta:
         db_table = 'co_so_cho_thue'
         ordering = ['owner', 'property_code']
-        verbose_name = 'Property'
-        verbose_name_plural = 'Properties'
+        verbose_name = 'Cơ sở cho thuê'
+        verbose_name_plural = 'Cơ sở cho thuê'
         constraints = [
             models.UniqueConstraint(
                 fields=['owner', 'property_code'],
                 name='unique_property_code_per_owner',
             ),
+        ]
+        indexes = [
+            models.Index(fields=['status']),
+            models.Index(fields=['property_code']),
         ]
         indexes = [
             models.Index(fields=['status']),
@@ -62,11 +66,16 @@ class Property(models.Model):
 
 
 class Room(models.Model):
+    STATUS_AVAILABLE = 'available'
+    STATUS_OCCUPIED = 'occupied'
+    STATUS_MAINTENANCE = 'maintenance'
+    STATUS_INACTIVE = 'inactive'
+
     STATUS_CHOICES = (
-        ('available', 'Available'),
-        ('occupied', 'Occupied'),
-        ('maintenance', 'Maintenance'),
-        ('inactive', 'Inactive'),
+        (STATUS_AVAILABLE, 'Còn trống'),
+        (STATUS_OCCUPIED, 'Đã thuê'),
+        (STATUS_MAINTENANCE, 'Đang bảo trì'),
+        (STATUS_INACTIVE, 'Ngừng sử dụng'),
     )
 
     owner = models.ForeignKey(UserProfile, on_delete=models.PROTECT, related_name='rooms')
@@ -82,7 +91,7 @@ class Room(models.Model):
     max_occupants = models.PositiveIntegerField(default=1)
     default_rent = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(0)])
     room_image = models.ImageField(upload_to='rentease/rooms/', blank=True, null=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_AVAILABLE)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -90,8 +99,8 @@ class Room(models.Model):
     class Meta:
         db_table = 'phong'
         ordering = ['owner', 'room_code']
-        verbose_name = 'Room'
-        verbose_name_plural = 'Rooms'
+        verbose_name = 'Phòng trọ'
+        verbose_name_plural = 'Phòng trọ'
         constraints = [
             models.UniqueConstraint(fields=['property', 'room_code'], name='unique_room_code_per_property'),
         ]

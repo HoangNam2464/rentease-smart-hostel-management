@@ -18,10 +18,10 @@ class RepairRequest(models.Model):
     PRIORITY_URGENT = 'urgent'
 
     PRIORITY_CHOICES = (
-        (PRIORITY_LOW, 'Low'),
-        (PRIORITY_MEDIUM, 'Medium'),
-        (PRIORITY_HIGH, 'High'),
-        (PRIORITY_URGENT, 'Urgent'),
+        (PRIORITY_LOW, 'Thấp'),
+        (PRIORITY_MEDIUM, 'Trung bình'),
+        (PRIORITY_HIGH, 'Cao'),
+        (PRIORITY_URGENT, 'Khẩn cấp'),
     )
 
     STATUS_PENDING = 'pending'
@@ -30,10 +30,10 @@ class RepairRequest(models.Model):
     STATUS_CANCELLED = 'cancelled'
 
     STATUS_CHOICES = (
-        (STATUS_PENDING, 'Pending'),
-        (STATUS_IN_PROGRESS, 'In Progress'),
-        (STATUS_COMPLETED, 'Completed'),
-        (STATUS_CANCELLED, 'Cancelled'),
+        (STATUS_PENDING, 'Đang chờ'),
+        (STATUS_IN_PROGRESS, 'Đang xử lý'),
+        (STATUS_COMPLETED, 'Đã hoàn thành'),
+        (STATUS_CANCELLED, 'Đã hủy'),
     )
 
     room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name='repair_requests')
@@ -58,8 +58,8 @@ class RepairRequest(models.Model):
     class Meta:
         db_table = 'yeu_cau_sua_chua'
         ordering = ['-requested_at', '-created_at']
-        verbose_name = 'Repair Request'
-        verbose_name_plural = 'Repair Requests'
+        verbose_name = 'Yêu cầu sửa chữa'
+        verbose_name_plural = 'Yêu cầu sửa chữa'
         indexes = [
             models.Index(fields=['status']),
             models.Index(fields=['priority']),
@@ -94,10 +94,10 @@ class MaintenanceRecord(models.Model):
     STATUS_CANCELLED = 'cancelled'
 
     STATUS_CHOICES = (
-        (STATUS_SCHEDULED, 'Scheduled'),
-        (STATUS_IN_PROGRESS, 'In Progress'),
-        (STATUS_COMPLETED, 'Completed'),
-        (STATUS_CANCELLED, 'Cancelled'),
+        (STATUS_SCHEDULED, 'Đã lên lịch'),
+        (STATUS_IN_PROGRESS, 'Đang thực hiện'),
+        (STATUS_COMPLETED, 'Đã hoàn thành'),
+        (STATUS_CANCELLED, 'Đã hủy'),
     )
 
     room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name='maintenance_records')
@@ -130,8 +130,8 @@ class MaintenanceRecord(models.Model):
     class Meta:
         db_table = 'bao_tri'
         ordering = ['-scheduled_for', '-created_at']
-        verbose_name = 'Maintenance Record'
-        verbose_name_plural = 'Maintenance Records'
+        verbose_name = 'Lịch bảo trì'
+        verbose_name_plural = 'Lịch bảo trì'
         indexes = [
             models.Index(fields=['status']),
             models.Index(fields=['maintenance_type']),
@@ -166,12 +166,12 @@ class Notification(models.Model):
     TYPE_MAINTENANCE = 'maintenance'
 
     NOTIFICATION_TYPE_CHOICES = (
-        (TYPE_GENERAL, 'General'),
-        (TYPE_INVOICE, 'Invoice'),
-        (TYPE_PAYMENT, 'Payment'),
-        (TYPE_OVERDUE, 'Overdue'),
-        (TYPE_REPAIR, 'Repair'),
-        (TYPE_MAINTENANCE, 'Maintenance'),
+        (TYPE_GENERAL, 'Thông báo chung'),
+        (TYPE_INVOICE, 'Hóa đơn'),
+        (TYPE_PAYMENT, 'Thanh toán'),
+        (TYPE_OVERDUE, 'Quá hạn'),
+        (TYPE_REPAIR, 'Sửa chữa'),
+        (TYPE_MAINTENANCE, 'Bảo trì'),
     )
 
     tenant = models.ForeignKey(
@@ -205,8 +205,8 @@ class Notification(models.Model):
     class Meta:
         db_table = 'thong_bao'
         ordering = ['-created_at']
-        verbose_name = 'Notification'
-        verbose_name_plural = 'Notifications'
+        verbose_name = 'Thông báo'
+        verbose_name_plural = 'Thông báo'
         indexes = [
             models.Index(fields=['tenant']),
             models.Index(fields=['invoice']),

@@ -8,15 +8,14 @@ from tenants.models import Tenant
 
 class Contract(models.Model):
     PAYMENT_CYCLE_CHOICES = (
-        ('monthly', 'Monthly'),
-        ('quarterly', 'Quarterly'),
-        ('yearly', 'Yearly'),
+        ('monthly', 'Theo tháng'),
+        ('yearly', 'Theo năm'),
     )
     STATUS_CHOICES = (
-        ('draft', 'Draft'),
-        ('active', 'Active'),
-        ('expired', 'Expired'),
-        ('terminated', 'Terminated'),
+        ('draft', 'Bản nháp'),
+        ('active', 'Đang hiệu lực'),
+        ('expired', 'Đã hết hạn'),
+        ('terminated', 'Đã chấm dứt'),
     )
 
     room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name='contracts')
@@ -42,8 +41,8 @@ class Contract(models.Model):
     class Meta:
         db_table = 'hop_dong'
         ordering = ['-start_date', 'contract_code']
-        verbose_name = 'Contract'
-        verbose_name_plural = 'Contracts'
+        verbose_name = 'Hợp đồng'
+        verbose_name_plural = 'Hợp đồng'
         indexes = [
             models.Index(fields=['status']),
             models.Index(fields=['start_date', 'end_date']),

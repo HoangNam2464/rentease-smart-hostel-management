@@ -19,7 +19,7 @@
             <li><span>Tiền cọc</span><strong>{{ registration.listing.deposit_amount }}</strong></li>
             <li><span>Trạng thái lịch xem</span><strong><span class="badge badge-info">{{ registration.get_status_display }}</span></strong></li>
         </ul>
-        <p class="help-text">CCCD và ảnh giấy tờ không được nhập tại portal chủ trọ. Admin có thể hoàn thiện dữ liệu định danh trong khu vực bảo mật sau khi kiểm tra trực tiếp.</p>
+        <p class="help-text">Thông tin CCCD và ảnh giấy tờ không được nhập tại khu vực chủ trọ. Quản trị viên sẽ bổ sung dữ liệu định danh trong khu vực bảo mật sau khi kiểm tra trực tiếp.</p>
     </div>
 </section>
 
@@ -43,7 +43,7 @@
             {% endfor %}
 
             <div class="page-actions">
-                <button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle"></i> Hoàn tất onboarding</button>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle"></i> Tạo tài khoản và hợp đồng</button>
                 <a class="btn btn-outline" href="{% url 'portal:owner_viewing_registration_detail' registration.pk %}">Hủy</a>
             </div>
         </form>

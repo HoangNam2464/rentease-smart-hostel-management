@@ -1,12 +1,25 @@
-import os, base64
-from PIL import Image, ImageDraw
+import os
 
 BRAND_DIR = '../frontend/static/rentease/img/brand'
 os.makedirs(BRAND_DIR, exist_ok=True)
 
-with open('icon.png', 'rb') as f:
-    icon_b64 = base64.b64encode(f.read()).decode('utf-8')
-icon_href = f"data:image/png;base64,{icon_b64}"
+# Pure SVG representation of the Teal/Green gradient house with an "R"
+PURE_ICON_SVG = """
+  <linearGradient id="tealGreenGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#0f766e"/>
+    <stop offset="1" stop-color="#10b981"/>
+  </linearGradient>
+  <rect x="5" y="5" width="90" height="90" rx="22" fill="url(#tealGreenGrad)" />
+  <path d="M 50 22 L 22 50 L 30 50 L 30 78 L 70 78 L 70 50 L 78 50 Z" fill="white" stroke="white" stroke-width="4" stroke-linejoin="round" />
+  <text x="50" y="60" font-family="Inter, sans-serif" font-weight="800" font-size="28" fill="#0f766e" text-anchor="middle" dominant-baseline="middle">R</text>
+"""
+
+# Horizontal alignment version
+HORIZONTAL_ICON_SVG = """
+  <g transform="translate(0, 10) scale(0.8)">
+""" + PURE_ICON_SVG + """
+  </g>
+"""
 
 def write_svg(filename, width, height, content):
     svg = f"""<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">
@@ -23,48 +36,40 @@ def write_svg(filename, width, height, content):
     with open(os.path.join(BRAND_DIR, filename), 'w', encoding='utf-8') as f:
         f.write(svg)
 
-# Notice: I increased width from 80 to 90 because the fixed icon has a slightly wider crop relative to its height.
-write_svg('logo-rentease-icon.svg', 100, 100, f'<image href="{icon_href}" x="0" y="0" width="100" height="100" />')
+# 1. Icon only (100x100)
+write_svg('logo-rentease-icon.svg', 100, 100, PURE_ICON_SVG)
 
+# 2. Horizontal (Primary) (380x100)
 write_svg('logo-rentease-horizontal.svg', 380, 100, f"""
-  <image href="{icon_href}" x="0" y="10" width="80" height="80" />
-  <text x="92" y="66" class="font-sans" font-size="50" font-weight="800" letter-spacing="-1.5">
-    <tspan fill="#0f2433">Rent</tspan><tspan fill="#0f766e">Ease</tspan>
-  </text>
+  {HORIZONTAL_ICON_SVG}
+  <text x="90" y="55" class="font-sans" font-size="48" font-weight="800" fill="#0f766e" dominant-baseline="middle">Rent<tspan fill="#1e293b">Ease</tspan></text>
 """)
 
-write_svg('logo-rentease-primary.svg', 500, 120, f"""
-  <image href="{icon_href}" x="0" y="10" width="90" height="90" />
-  <text x="104" y="62" class="font-sans" font-size="50" font-weight="800" letter-spacing="-1.5">
-    <tspan fill="#0f2433">Rent</tspan><tspan fill="#0f766e">Ease</tspan>
-  </text>
-  <text x="106" y="88" class="font-sans" font-size="14" font-weight="600" fill="#627386" letter-spacing="0.3">
-    Smart Rental Room Management System
-  </text>
-""")
-
-write_svg('logo-rentease-compact.svg', 200, 200, f"""
-  <image href="{icon_href}" x="50" y="10" width="100" height="100" />
-  <text x="100" y="150" class="font-sans" font-size="36" font-weight="800" letter-spacing="-1" text-anchor="middle">
-    <tspan fill="#0f2433">Rent</tspan><tspan fill="#0f766e">Ease</tspan>
-  </text>
-""")
-
+# 3. Horizontal (White text for dark backgrounds)
 write_svg('logo-rentease-white.svg', 380, 100, f"""
-  <image href="{icon_href}" x="0" y="10" width="80" height="80" filter="url(#white-tint)" />
-  <text x="92" y="66" class="font-sans" font-size="50" font-weight="800" letter-spacing="-1.5" fill="#ffffff">RentEase</text>
+  {HORIZONTAL_ICON_SVG}
+  <text x="90" y="55" class="font-sans" font-size="48" font-weight="800" fill="#ffffff" dominant-baseline="middle">Rent<tspan fill="#e2e8f0">Ease</tspan></text>
 """)
 
+# 4. Horizontal (Compact) (300x80)
+write_svg('logo-rentease-compact.svg', 300, 80, f"""
+  <g transform="scale(0.8)">
+    {HORIZONTAL_ICON_SVG}
+    <text x="90" y="55" class="font-sans" font-size="48" font-weight="800" fill="#0f766e" dominant-baseline="middle">Rent<tspan fill="#1e293b">Ease</tspan></text>
+  </g>
+""")
+
+# 5. Auth / Login Page Logo (Centered stacked layout) (300x240)
+write_svg('logo-rentease-auth.svg', 300, 240, f"""
+  <g transform="translate(100, 10)">
+    {PURE_ICON_SVG}
+  </g>
+  <text x="150" y="150" class="font-sans" font-size="44" font-weight="800" fill="#0f766e" text-anchor="middle">Rent<tspan fill="#1e293b">Ease</tspan></text>
+  <text x="150" y="190" class="font-sans" font-size="16" font-weight="600" fill="#64748b" text-anchor="middle" letter-spacing="1.5">PROPERTY MANAGEMENT</text>
+""")
+
+# 6. Primary Monotone (for flat styles / printing)
 write_svg('logo-rentease-mono.svg', 380, 100, f"""
-  <image href="{icon_href}" x="0" y="10" width="80" height="80" filter="url(#mono-tint)" />
-  <text x="92" y="66" class="font-sans" font-size="50" font-weight="800" letter-spacing="-1.5" fill="#0f2433">RentEase</text>
-""")
-
-write_svg('logo-rentease-auth.svg', 360, 140, f"""
-  <image href="{icon_href}" x="130" y="0" width="100" height="100" />
-  <text x="180" y="130" class="font-sans" font-size="42" font-weight="800" letter-spacing="-1" text-anchor="middle">
-    <tspan fill="#0f2433">Rent</tspan><tspan fill="#0f766e">Ease</tspan>
-  </text>
 """)
 
 print("SVG Logos Regenerated!")

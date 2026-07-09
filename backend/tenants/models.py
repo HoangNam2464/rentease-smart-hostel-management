@@ -4,14 +4,14 @@ from django.db import models
 
 class Tenant(models.Model):
     GENDER_CHOICES = (
-        ('male', 'Male'),
-        ('female', 'Female'),
-        ('other', 'Other'),
+        ('male', 'Nam'),
+        ('female', 'Nữ'),
+        ('other', 'Khác'),
     )
     STATUS_CHOICES = (
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-        ('blocked', 'Blocked'),
+        ('active', 'Đang thuê'),
+        ('inactive', 'Ngừng thuê'),
+        ('blocked', 'Đã khóa'),
     )
 
     account = models.OneToOneField(
@@ -37,8 +37,8 @@ class Tenant(models.Model):
     class Meta:
         db_table = 'khach_thue'
         ordering = ['full_name']
-        verbose_name = 'Tenant'
-        verbose_name_plural = 'Tenants'
+        verbose_name = 'Khách thuê'
+        verbose_name_plural = 'Khách thuê'
         indexes = [
             models.Index(fields=['phone_number']),
             models.Index(fields=['email']),
@@ -59,8 +59,8 @@ class CoTenant(models.Model):
     class Meta:
         db_table = 'nguoi_o_cung'
         ordering = ['full_name']
-        verbose_name = 'Co-tenant'
-        verbose_name_plural = 'Co-tenants'
+        verbose_name = 'Người ở cùng'
+        verbose_name_plural = 'Người ở cùng'
         indexes = [
             models.Index(fields=['citizen_id']),
         ]

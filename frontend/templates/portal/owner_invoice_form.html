@@ -13,29 +13,132 @@
     <div class="card-body">
         <div class="form-intro">
             <span class="form-intro-icon" aria-hidden="true"><i class="bi bi-shield-check"></i></span>
-            <div><strong>Phạm vi chỉnh sửa</strong><p>Tổng tiền, số đã thanh toán, số còn lại và trạng thái vẫn do logic thanh toán của hệ thống quản lý.</p></div>
+            <div>
+                <strong>Phạm vi chỉnh sửa</strong>
+                <p>Tổng tiền có thể tự lấy từ hợp đồng hoặc nhập thủ công nếu cần chỉnh sửa.</p>
+            </div>
         </div>
+
         <form method="post" novalidate>
             {% csrf_token %}
-            {% if form.non_field_errors %}<div class="alert alert-warning">{{ form.non_field_errors }}</div>{% endif %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-warning">{{ form.non_field_errors }}</div>
+            {% endif %}
 
             <div class="form-section-heading"><span>Thông tin kỳ hóa đơn</span></div>
-            {% if form.contract %}
-                <div class="form-field"><label for="{{ form.contract.id_for_label }}">Hợp đồng</label>{{ form.contract }}{{ form.contract.errors }}</div>
-            {% endif %}
-            <div class="form-field"><label for="{{ form.month.id_for_label }}">Tháng</label>{{ form.month }}{{ form.month.errors }}</div>
-            <div class="form-field"><label for="{{ form.year.id_for_label }}">Năm</label>{{ form.year }}{{ form.year.errors }}</div>
 
-            <div class="form-section-heading"><span>Thời hạn và ghi chú</span></div>
-            <div class="form-field"><label for="{{ form.issued_date.id_for_label }}">Ngày lập</label>{{ form.issued_date }}{{ form.issued_date.errors }}</div>
-            <div class="form-field"><label for="{{ form.due_date.id_for_label }}">Hạn thanh toán</label>{{ form.due_date }}{{ form.due_date.errors }}</div>
-            <div class="form-field"><label for="{{ form.note.id_for_label }}">Ghi chú</label>{{ form.note }}{{ form.note.errors }}</div>
+            {% if form.contract %}
+                <div class="form-field">
+                    <label for="{{ form.contract.id_for_label }}">Hợp đồng</label>
+                    {{ form.contract }}
+                    {{ form.contract.errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.month.id_for_label }}">Tháng</label>
+                {{ form.month }}
+                {{ form.month.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.year.id_for_label }}">Năm</label>
+                {{ form.year }}
+                {{ form.year.errors }}
+            </div>
+
+            <div class="form-section-heading"><span>Thời hạn và số tiền</span></div>
+
+            <div class="form-field">
+                <label for="{{ form.issued_date.id_for_label }}">Ngày lập</label>
+                {{ form.issued_date }}
+                {{ form.issued_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.due_date.id_for_label }}">Hạn thanh toán</label>
+                {{ form.due_date }}
+                {{ form.due_date.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.total_amount.id_for_label }}">Tổng tiền</label>
+                {{ form.total_amount }}
+                {{ form.total_amount.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.note.id_for_label }}">Ghi chú</label>
+                {{ form.note }}
+                {{ form.note.errors }}
+            </div>
 
             <div class="page-actions">
                 <button class="button primary" type="submit">{{ submit_label }}</button>
-                {% if invoice %}<a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>{% else %}<a class="button" href="{% url 'portal:owner_invoices_list' %}">Hủy</a>{% endif %}
+                {% if invoice %}
+                    <a class="button" href="{% url 'portal:owner_invoice_detail' invoice.pk %}">Hủy</a>
+                {% else %}
+                    <a class="button" href="{% url 'portal:owner_invoices_list' %}">Hủy</a>
+                {% endif %}
             </div>
         </form>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const contractSelect = document.getElementById('id_contract');
+    const totalAmountInput = document.getElementById('id_total_amount');
+    const monthInput = document.getElementById('id_month');
+    const yearInput = document.getElementById('id_year');
+
+    if (!contractSelect || !totalAmountInput) {
+        return;
+    }
+
+    let rentMap = {};
+
+    try {
+        rentMap = JSON.parse(contractSelect.dataset.rentMap || '{}');
+    } catch (error) {
+        rentMap = {};
+    }
+
+    function setCurrentMonthYearIfEmpty() {
+        const today = new Date();
+
+        if (monthInput && !monthInput.value) {
+            monthInput.value = today.getMonth() + 1;
+        }
+
+        if (yearInput && !yearInput.value) {
+            yearInput.value = today.getFullYear();
+        }
+    }
+
+    function updateTotalAmount() {
+        const contractId = contractSelect.value;
+        const rentAmount = rentMap[contractId];
+
+        if (rentAmount) {
+            totalAmountInput.value = rentAmount;
+        }
+
+        setCurrentMonthYearIfEmpty();
+    }
+
+    contractSelect.addEventListener('change', updateTotalAmount);
+
+    if (
+        !totalAmountInput.value ||
+        totalAmountInput.value === '0' ||
+        totalAmountInput.value === '0,00' ||
+        totalAmountInput.value === '0.00'
+    ) {
+        updateTotalAmount();
+    }
+
+    setCurrentMonthYearIfEmpty();
+});
+</script>
 {% endblock %}

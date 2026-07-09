@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+import json
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -228,7 +230,25 @@ class OwnerInvoiceValidationMixin:
         return year
 
 
+class InvoiceContractChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f'{obj.contract_code} - {obj.room.room_code} - {obj.tenant.full_name}'
+
+
 class OwnerInvoiceCreateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
+    contract = InvoiceContractChoiceField(queryset=Contract.objects.none())
+
+    total_amount = forms.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        min_value=0,
+        localize=False,
+        widget=forms.NumberInput(attrs={
+            'min': '0',
+            'step': '1000',
+        }),
+    )
+
     class Meta:
         model = Invoice
         fields = [
@@ -237,6 +257,7 @@ class OwnerInvoiceCreateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
             'year',
             'issued_date',
             'due_date',
+            'total_amount',
             'note',
         ]
         widgets = {
@@ -247,12 +268,43 @@ class OwnerInvoiceCreateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
 
     def __init__(self, *args, owner_profile=None, **kwargs):
         super().__init__(*args, **kwargs)
+
         owner_contracts = (
-            Contract.objects.filter(room__owner=owner_profile)
+            Contract.objects
+            .filter(room__owner=owner_profile)
+            .select_related('room', 'tenant')
             if owner_profile
             else Contract.objects.none()
         )
-        self.fields['contract'].queryset = owner_contracts.order_by('-start_date', 'contract_code')
+
+        contracts = list(owner_contracts.order_by('-start_date', 'contract_code'))
+
+        self.fields['contract'].queryset = Contract.objects.filter(
+            pk__in=[contract.pk for contract in contracts]
+        ).select_related('room', 'tenant').order_by('-start_date', 'contract_code')
+
+        rent_map = {
+            str(contract.pk): str(int(contract.rent_amount))
+            for contract in contracts
+        }
+
+        self.fields['contract'].widget.attrs.update({
+            'data-rent-map': json.dumps(rent_map),
+        })
+
+        self.fields['total_amount'].localize = False
+        self.fields['total_amount'].widget.is_localized = False
+
+        today = timezone.localdate()
+
+        if not self.is_bound:
+            self.fields['month'].initial = today.month
+            self.fields['year'].initial = today.year
+
+            if contracts:
+                first_contract = contracts[0]
+                self.fields['contract'].initial = first_contract.pk
+                self.fields['total_amount'].initial = int(first_contract.rent_amount)
 
 
 class OwnerInvoiceUpdateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
@@ -263,11 +315,13 @@ class OwnerInvoiceUpdateForm(OwnerInvoiceValidationMixin, forms.ModelForm):
             'year',
             'issued_date',
             'due_date',
+            'total_amount',
             'note',
         ]
         widgets = {
             'issued_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'due_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'total_amount': forms.NumberInput(attrs={'min': '0', 'step': '0.01'}),
             'note': forms.Textarea(attrs={'rows': 5}),
         }
 
@@ -387,22 +441,41 @@ class OwnerRoomListingForm(forms.ModelForm):
         ]
         widgets = {
             'description': forms.Textarea(attrs={'rows': 5}),
+            'listing_price': forms.NumberInput(attrs={
+                'min': '0',
+                'step': '1000',
+            }),
+            'deposit_amount': forms.NumberInput(attrs={
+                'min': '0',
+                'step': '1000',
+            }),
             'available_from': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'expired_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
         }
 
     def __init__(self, *args, allowed_rooms=None, **kwargs):
         super().__init__(*args, **kwargs)
+
         room_model = RoomListing._meta.get_field('room').remote_field.model
         self.allowed_rooms = allowed_rooms if allowed_rooms is not None else room_model.objects.none()
+
         self.fields['room'].queryset = self.allowed_rooms
         self.fields['room'].required = True
         self.fields['expired_at'].input_formats = ['%Y-%m-%dT%H:%M']
 
+        for field_name in ['listing_price', 'deposit_amount']:
+            self.fields[field_name].localize = False
+            self.fields[field_name].widget.is_localized = False
+
+            if self.instance and self.instance.pk and not self.is_bound:
+                value = getattr(self.instance, field_name, None)
+                if value is not None and value == value.to_integral_value():
+                    self.initial[field_name] = int(value)
+
     def clean_room(self):
         room = self.cleaned_data['room']
         if not self.allowed_rooms.filter(pk=room.pk).exists():
-            raise forms.ValidationError('Selected room is not linked to your owner profile.')
+            raise forms.ValidationError('Phòng đã chọn không thuộc quyền quản lý của bạn.')
         return room
 
 

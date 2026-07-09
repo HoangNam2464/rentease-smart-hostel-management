@@ -50,8 +50,8 @@ class ServiceDefinition(models.Model):
     CHARGE_USAGE = 'usage'
 
     CHARGE_METHOD_CHOICES = (
-        (CHARGE_FIXED, 'Fixed'),
-        (CHARGE_USAGE, 'Usage-based'),
+        (CHARGE_FIXED, 'Cố định'),
+        (CHARGE_USAGE, 'Theo mức sử dụng'),
     )
 
     property = models.ForeignKey(Property, on_delete=models.PROTECT, related_name='service_definitions')
@@ -239,11 +239,11 @@ class Invoice(models.Model):
     STATUS_OVERDUE = 'overdue'
 
     STATUS_CHOICES = (
-        (STATUS_DRAFT, 'Draft'),
-        (STATUS_UNPAID, 'Unpaid'),
-        (STATUS_PARTIAL, 'Partial'),
-        (STATUS_PAID, 'Paid'),
-        (STATUS_OVERDUE, 'Overdue'),
+        (STATUS_DRAFT, 'Bản nháp'),
+        (STATUS_UNPAID, 'Chưa thanh toán'),
+        (STATUS_PARTIAL, 'Chưa thanh toán'),
+        (STATUS_PAID, 'Đã thanh toán'),
+        (STATUS_OVERDUE, 'Quá hạn'),
     )
 
     contract = models.ForeignKey(Contract, on_delete=models.PROTECT, related_name='invoices')
@@ -263,8 +263,8 @@ class Invoice(models.Model):
     class Meta:
         db_table = 'hoa_don'
         ordering = ['-year', '-month', 'contract__contract_code']
-        verbose_name = 'Invoice'
-        verbose_name_plural = 'Invoices'
+        verbose_name = 'Hóa đơn'
+        verbose_name_plural = 'Hóa đơn'
         constraints = [
             models.UniqueConstraint(fields=['contract', 'month', 'year'], name='unique_invoice_per_contract_month'),
         ]
@@ -341,12 +341,13 @@ class Invoice(models.Model):
     def _status_for_amounts(self):
         if self.total_amount <= MONEY_ZERO and self.paid_amount <= MONEY_ZERO:
             return self.STATUS_DRAFT
+
         if self.remaining_amount <= MONEY_ZERO:
             return self.STATUS_PAID
-        if self.paid_amount > MONEY_ZERO:
-            return self.STATUS_PARTIAL
+
         if self.due_date and self.due_date < timezone.localdate():
             return self.STATUS_OVERDUE
+
         return self.STATUS_UNPAID
 
     def save(self, *args, **kwargs):
@@ -436,20 +437,20 @@ class InvoiceLine(models.Model):
     TYPE_DISCOUNT = 'discount'
 
     LINE_TYPE_CHOICES = (
-        (TYPE_RENT, 'Rent'),
-        (TYPE_ELECTRICITY, 'Electricity'),
-        (TYPE_WATER, 'Water'),
-        (TYPE_SERVICE, 'Service'),
-        (TYPE_ADJUSTMENT, 'Adjustment'),
-        (TYPE_DISCOUNT, 'Discount'),
+        (TYPE_RENT, 'Tiền phòng'),
+        (TYPE_ELECTRICITY, 'Tiền điện'),
+        (TYPE_WATER, 'Tiền nước'),
+        (TYPE_SERVICE, 'Phí dịch vụ'),
+        (TYPE_ADJUSTMENT, 'Điều chỉnh'),
+        (TYPE_DISCOUNT, 'Giảm giá'),
     )
 
     DIRECTION_CHARGE = 'charge'
     DIRECTION_CREDIT = 'credit'
 
     DIRECTION_CHOICES = (
-        (DIRECTION_CHARGE, 'Charge'),
-        (DIRECTION_CREDIT, 'Credit'),
+        (DIRECTION_CHARGE, 'Khoản thu'),
+        (DIRECTION_CREDIT, 'Khoản giảm trừ'),
     )
 
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='lines')
@@ -504,8 +505,9 @@ class InvoiceLine(models.Model):
     class Meta:
         db_table = 'dong_hoa_don'
         ordering = ['invoice', 'sort_order', 'pk']
-        verbose_name = 'Invoice Line'
-        verbose_name_plural = 'Invoice Lines'
+        verbose_name = 'Dòng hóa đơn'
+        verbose_name_plural = 'Dòng hóa đơn'
+        
         constraints = [
             models.UniqueConstraint(fields=['invoice', 'line_code'], name='unique_line_code_per_invoice'),
             models.CheckConstraint(condition=models.Q(quantity__gte=0), name='invoice_line_quantity_nonnegative'),
@@ -558,10 +560,10 @@ class PaymentHistory(models.Model):
     METHOD_OTHER = 'other'
 
     METHOD_CHOICES = (
-        (METHOD_CASH, 'Cash'),
-        (METHOD_BANK_TRANSFER, 'Bank Transfer'),
-        (METHOD_E_WALLET, 'E-Wallet'),
-        (METHOD_OTHER, 'Other'),
+        (METHOD_CASH, 'Tiền mặt'),
+        (METHOD_BANK_TRANSFER, 'Chuyển khoản ngân hàng'),
+        (METHOD_E_WALLET, 'Ví điện tử'),
+        (METHOD_OTHER, 'Khác'),
     )
 
     invoice = models.ForeignKey(Invoice, on_delete=models.PROTECT, related_name='payments')
@@ -630,12 +632,12 @@ class PaymentIntent(models.Model):
     STATUS_REVIEW = 'review'
 
     STATUS_CHOICES = (
-        (STATUS_PENDING, 'Pending'),
-        (STATUS_PAID, 'Paid'),
-        (STATUS_CANCELLED, 'Cancelled'),
-        (STATUS_EXPIRED, 'Expired'),
-        (STATUS_FAILED, 'Failed'),
-        (STATUS_REVIEW, 'Review Needed'),
+        (STATUS_PENDING, 'Đang chờ'),
+        (STATUS_PAID, 'Đã thanh toán'),
+        (STATUS_CANCELLED, 'Đã hủy'),
+        (STATUS_EXPIRED, 'Đã hết hạn'),
+        (STATUS_FAILED, 'Thanh toán thất bại'),
+        (STATUS_REVIEW, 'Cần kiểm tra'),
     )
 
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='payment_intents')

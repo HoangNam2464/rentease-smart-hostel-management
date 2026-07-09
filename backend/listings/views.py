@@ -79,7 +79,7 @@ def viewing_registration_create(request, pk):
         registration = form.save(commit=False)
         registration.listing = listing
         registration.save()
-        messages.success(request, 'Your viewing registration has been submitted.')
+        messages.success(request, 'Yêu cầu đăng ký xem phòng của bạn đã được gửi.')
         return redirect('listings:viewing_registration_success', pk=listing.pk)
 
     return render(request, 'listings/viewing_registration_form.html', {

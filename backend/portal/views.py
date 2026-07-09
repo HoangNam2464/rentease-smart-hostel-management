@@ -529,8 +529,8 @@ def owner_contract_create(request):
     return render(request, 'portal/owner_contract_form.html', {
         'profile': profile,
         'form': form,
-        'form_title': 'Create Contract',
-        'submit_label': 'Create Contract',
+        'form_title': 'Tạo hợp đồng',
+        'submit_label': 'Tạo hợp đồng',
     })
 
 
@@ -564,8 +564,8 @@ def owner_contract_update(request, pk):
         'profile': profile,
         'contract': contract,
         'form': form,
-        'form_title': 'Edit Contract',
-        'submit_label': 'Save Changes',
+        'form_title': 'Chỉnh sửa hợp đồng',
+        'submit_label': 'Lưu thay đổi',
     })
 
 
@@ -633,8 +633,8 @@ def owner_listing_create(request):
     return render(request, 'portal/owner_listing_form.html', {
         'profile': profile,
         'form': form,
-        'form_title': 'Create Room Listing',
-        'submit_label': 'Create Listing',
+        'form_title': 'Tạo tin đăng phòng',
+        'submit_label': 'Tạo tin đăng',
     })
 
 
@@ -664,8 +664,8 @@ def owner_listing_update(request, pk):
         'profile': profile,
         'listing': listing,
         'form': form,
-        'form_title': 'Edit Room Listing',
-        'submit_label': 'Save Changes',
+        'form_title': 'Chỉnh sửa thông tin phòng',
+        'submit_label': 'Lưu thay đổi',
     })
 
 
@@ -726,8 +726,8 @@ def owner_tenant_update(request, pk):
         'profile': profile,
         'tenant': tenant,
         'form': form,
-        'form_title': 'Edit Tenant',
-        'submit_label': 'Save Changes',
+        'form_title': 'Chỉnh sửa thông tin khách thuê',
+        'submit_label': 'Lưu thay đổi',
     })
 
 
@@ -772,6 +772,7 @@ def owner_invoice_create(request):
         if form.is_valid():
             try:
                 invoice = form.save()
+                invoice.recalculate_totals()
             except ValidationError as exc:
                 form.add_error(None, exc)
             except IntegrityError:
@@ -785,8 +786,8 @@ def owner_invoice_create(request):
     return render(request, 'portal/owner_invoice_form.html', {
         'profile': profile,
         'form': form,
-        'form_title': 'Create Invoice',
-        'submit_label': 'Create Invoice',
+        'form_title': 'Tạo hóa đơn',
+        'submit_label': 'Tạo hóa đơn',
     })
 
 
@@ -801,22 +802,18 @@ def owner_invoice_update(request, pk):
     if request.method == 'POST':
         original_contract = invoice.contract
         original_invoice_code = invoice.invoice_code
-        original_total_amount = invoice.total_amount
         original_paid_amount = invoice.paid_amount
-        original_remaining_amount = invoice.remaining_amount
-        original_status = invoice.status
 
         form = OwnerInvoiceUpdateForm(request.POST, instance=invoice)
         if form.is_valid():
             updated_invoice = form.save(commit=False)
             updated_invoice.contract = original_contract
             updated_invoice.invoice_code = original_invoice_code
-            updated_invoice.total_amount = original_total_amount
             updated_invoice.paid_amount = original_paid_amount
-            updated_invoice.remaining_amount = original_remaining_amount
-            updated_invoice.status = original_status
+            
             try:
                 updated_invoice.save()
+                updated_invoice.recalculate_totals()
             except ValidationError as exc:
                 form.add_error(None, exc)
             except IntegrityError:
@@ -831,9 +828,26 @@ def owner_invoice_update(request, pk):
         'profile': profile,
         'invoice': invoice,
         'form': form,
-        'form_title': 'Edit Invoice',
-        'submit_label': 'Save Changes',
+        'form_title': 'Chỉnh sửa hóa đơn',
+        'submit_label': 'Lưu thay đổi',
     })
+
+
+@owner_required
+def owner_invoice_delete(request, pk):
+    profile = get_owner_profile(request.user)
+    if not profile:
+        return render_missing_owner_profile(request)
+
+    invoice = get_object_or_404(owner_invoices_queryset(profile), pk=pk)
+    
+    if request.method == 'POST':
+        invoice.delete()
+        messages.success(request, 'Invoice deleted successfully.')
+        return redirect('portal:owner_invoices_list')
+        
+    # We'll just do a post-only delete directly from the detail page
+    return redirect('portal:owner_invoice_detail', pk=invoice.pk)
 
 
 @owner_required

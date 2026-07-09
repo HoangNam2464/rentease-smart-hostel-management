@@ -17,11 +17,11 @@ class RoomListing(models.Model):
     STATUS_EXPIRED = 'expired'
 
     STATUS_CHOICES = (
-        (STATUS_DRAFT, 'Draft'),
-        (STATUS_PUBLISHED, 'Published'),
-        (STATUS_HIDDEN, 'Hidden'),
-        (STATUS_RENTED, 'Rented'),
-        (STATUS_EXPIRED, 'Expired'),
+        (STATUS_DRAFT, 'Bản nháp'),
+        (STATUS_PUBLISHED, 'Đã đăng'),
+        (STATUS_HIDDEN, 'Đã ẩn'),
+        (STATUS_RENTED, 'Đã thuê'),
+        (STATUS_EXPIRED, 'Hết hạn'),
     )
 
     room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name='listings')
@@ -45,8 +45,8 @@ class RoomListing(models.Model):
     class Meta:
         db_table = 'tin_phong'
         ordering = ['-published_at', '-created_at']
-        verbose_name = 'Room Listing'
-        verbose_name_plural = 'Room Listings'
+        verbose_name = 'Tin đăng phòng'
+        verbose_name_plural = 'Tin đăng phòng'
         indexes = [
             models.Index(fields=['room']),
             models.Index(fields=['status']),
@@ -86,11 +86,11 @@ class ViewingRegistration(models.Model):
     STATUS_NO_SHOW = 'no_show'
 
     STATUS_CHOICES = (
-        (STATUS_PENDING, 'Pending'),
-        (STATUS_CONFIRMED, 'Confirmed'),
-        (STATUS_COMPLETED, 'Completed'),
-        (STATUS_CANCELLED, 'Cancelled'),
-        (STATUS_NO_SHOW, 'No Show'),
+        (STATUS_PENDING, 'Đang chờ'),
+        (STATUS_CONFIRMED, 'Đã xác nhận'),
+        (STATUS_COMPLETED, 'Đã hoàn thành'),
+        (STATUS_CANCELLED, 'Đã hủy'),
+        (STATUS_NO_SHOW, 'Không đến xem'),
     )
 
     listing = models.ForeignKey(RoomListing, on_delete=models.PROTECT, related_name='viewing_registrations')
@@ -115,8 +115,8 @@ class ViewingRegistration(models.Model):
     class Meta:
         db_table = 'dang_ky_xem_phong'
         ordering = ['-created_at']
-        verbose_name = 'Viewing Registration'
-        verbose_name_plural = 'Viewing Registrations'
+        verbose_name = 'Đăng ký xem phòng'
+        verbose_name_plural = 'Đăng ký xem phòng'
         indexes = [
             models.Index(fields=['listing']),
             models.Index(fields=['tenant']),
